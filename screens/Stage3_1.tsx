@@ -4,11 +4,11 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from '../App';
 
-type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage2_1'>;
+type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage3_1'>;
 
 const { width, height } = Dimensions.get('window');
 
-const Stage3 = () => {
+const Stage3_1 = () => {
   const navigation = useNavigation<NavigationProp>();
 
   const handleMapPress = () => {
@@ -16,7 +16,7 @@ const Stage3 = () => {
   };
 
   const handleNextStage = () => {
-    navigation.navigate('Stage3Camera');
+    navigation.navigate('Stage3_2'); // ✅ Stage2_2으로 이동하도록 수정
   };
 
   return (
@@ -52,14 +52,14 @@ const Stage3 = () => {
         <View style={styles.box}>
           {/* ✅ 하얀색 박스 위에 waytostage2.png 추가 */}
           <Image 
-            source={require('../assets/deer.png')} 
+            source={require('../assets/soomoong.png')} 
             style={styles.wayImage} 
             resizeMode="contain"
           />
-          <Text style={styles.text}>다양한 식물들 사이에 우리 학교의 마스코트인 사슴이 숨어있다는데?</Text>
+          <Text style={styles.text}>정말 잘 찾는데??</Text>
           <Text style={styles.subText}>
-            이 친구를 찾아서 카메라로 찍어보자!
-            </Text>
+            위 사진이 바로 우리 학교의 마스코트인 수뭉이야!
+          </Text>
         </View>
 
         {/* ✅ 다음 스테이지로 이동 버튼 */}
@@ -68,7 +68,7 @@ const Stage3 = () => {
           onPress={handleNextStage}
           activeOpacity={0.7}
         >
-          <Text style={styles.buttonText}>카메라 📸</Text>
+          <Text style={styles.buttonText}>다음 ➡️</Text>
         </TouchableOpacity>
       </ImageBackground>
     </View>
@@ -163,4 +163,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Stage3;
+export default Stage3_1;
