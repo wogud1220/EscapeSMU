@@ -56,7 +56,7 @@ const Stage3 = () => {
             style={styles.wayImage} 
             resizeMode="contain"
           />
-          <Text style={styles.text}>다음 스테이지는 식물관이야ㅣ!</Text>
+          <Text style={styles.text}>다음 스테이지는 식물관이야!!</Text>
           <Text style={styles.subText}>
             위 사진을 참고해서 식물관으로 가는 길을 찾아보자!
           </Text>
