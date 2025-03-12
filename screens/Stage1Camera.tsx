@@ -237,11 +237,11 @@
 
 // export default Stage1Camera;
 
-import React, { useEffect, useRef, useState } from 'react';
-import { Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { Camera, CameraDevice } from 'react-native-vision-camera';
+import React, {useEffect, useRef, useState} from 'react';
+import {Platform, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {Camera, CameraDevice} from 'react-native-vision-camera';
 
-const Stage1Camera = ({ navigation }: { navigation: any }) => {
+const Stage1Camera = ({navigation}: {navigation: any}) => {
   const [permission, setPermission] = useState<boolean | null>(null);
   const [device, setDevice] = useState<CameraDevice | undefined>();
   const camera = useRef<Camera>(null);
@@ -252,8 +252,9 @@ const Stage1Camera = ({ navigation }: { navigation: any }) => {
       console.log(`🔍 현재 권한 상태: ${cameraPermission}`);
 
       // 🚀 강제 변환하여 권한 값 정확히 반영
-      const isGranted = cameraPermission === 'granted' || cameraPermission === 'authorized';
-      
+      const isGranted =
+        cameraPermission === 'granted' || cameraPermission === 'authorized';
+
       setTimeout(() => setPermission(isGranted), 100);
     };
 
@@ -261,7 +262,9 @@ const Stage1Camera = ({ navigation }: { navigation: any }) => {
       const availableDevices = await Camera.getAvailableCameraDevices();
       console.log('📷 사용 가능한 장치 목록:', availableDevices);
 
-      const selectedCamera = availableDevices.find(dev => dev.position === 'back');
+      const selectedCamera = availableDevices.find(
+        dev => dev.position === 'back',
+      );
       console.log('🎯 선택된 카메라 상태:', selectedCamera);
 
       if (selectedCamera) {
@@ -282,17 +285,29 @@ const Stage1Camera = ({ navigation }: { navigation: any }) => {
   }
 
   if (!permission) {
-    return <Text>⚠️ 카메라 권한이 필요합니다.</Text>;
+    return (
+      <Text style={styles.permissionText}>⚠️ 카메라 권한이 필요합니다.{'\n\n'}iOS: Setting -> EscampeSMU -> Camera ON!!</Text>
+    );
   }
 
   if (!device) {
-    return <Text>⚠️ 카메라 장치를 찾을 수 없습니다. 실제 기기에서 실행하세요.</Text>;
+    return (
+      <Text>⚠️ 카메라 장치를 찾을 수 없습니다. 실제 기기에서 실행하세요.</Text>
+    );
   }
 
   return (
     <View style={styles.container}>
-      <Camera ref={camera} style={styles.camera} device={device} isActive={true} photo={true} />
-      <TouchableOpacity onPress={() => console.log('📸 사진 촬영')} style={styles.captureButton}>
+      <Camera
+        ref={camera}
+        style={styles.camera}
+        device={device}
+        isActive={true}
+        photo={true}
+      />
+      <TouchableOpacity
+        onPress={() => console.log('📸 사진 촬영')}
+        style={styles.captureButton}>
         <Text style={styles.buttonText}>📸</Text>
       </TouchableOpacity>
     </View>
@@ -300,10 +315,24 @@ const Stage1Camera = ({ navigation }: { navigation: any }) => {
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#000' },
-  camera: { width: '100%', height: '100%' },
-  captureButton: { position: 'absolute', bottom: 40, alignSelf: 'center', backgroundColor: '#fff', padding: 20, borderRadius: 50 },
-  buttonText: { fontSize: 20 },
+  container: {flex: 1, backgroundColor: '#000'},
+  camera: {width: '100%', height: '100%'},
+  captureButton: {
+    position: 'absolute',
+    bottom: 40,
+    alignSelf: 'center',
+    backgroundColor: '#fff',
+    padding: 20,
+    borderRadius: 50,
+  },
+  buttonText: {fontSize: 20},
+  permissionText: {
+    color: 'black',
+    fontSize: 20,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginTop: 300,
+  },
 });
 
 export default Stage1Camera;
