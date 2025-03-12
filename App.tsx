@@ -3,10 +3,16 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Main from './screens/Main';
 import StageList from './screens/StageList';
+import Stage1 from './screens/Stage1';
+import Stage1Camera from './screens/Stage1Camera';
+import Map from './screens/Map';
 
 export type RootStackParamList = {
   Main: undefined;
   StageList: undefined;
+  Stage1: undefined;
+  Stage1Camera: undefined;
+  Map: undefined;
 };
 
 const Stack = createStackNavigator<RootStackParamList>();
@@ -23,7 +29,21 @@ const App = () => {
         <Stack.Screen 
           name="StageList" 
           component={StageList} 
-          options={{ title: 'Stage 목록' }}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen 
+          name="Stage1" 
+          component={Stage1} 
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Stage1Camera"
+          component={Stage1Camera}
+          options={{ headerShown: false}} />
+        <Stack.Screen 
+          name="Map" 
+          component={Map} 
+          options={{ headerShown: false }}
         />
       </Stack.Navigator>
     </NavigationContainer>
