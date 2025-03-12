@@ -3,7 +3,6 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Camera, CameraDevice } from 'react-native-vision-camera';
 
 const Stage1Camera = ({ navigation }: { navigation: any }) => {
-  const [permission, setPermission] = useState(false);
   const [device, setDevice] = useState<CameraDevice | undefined>();
   const camera = useRef<Camera>(null);
 
@@ -13,12 +12,7 @@ const Stage1Camera = ({ navigation }: { navigation: any }) => {
       console.log(`현재 권한 상태: ${cameraPermission}`);
 
       if (cameraPermission === 'not-determined') {
-        const status = await Camera.requestCameraPermission();
-        setPermission(status === 'authorized');
-      } else if (cameraPermission === 'authorized') {
-        setPermission(true);
-      } else {
-        setPermission(false);
+        await Camera.requestCameraPermission();
       }
     };
 
@@ -41,9 +35,8 @@ const Stage1Camera = ({ navigation }: { navigation: any }) => {
 
       console.log('선택된 백 카메라 상태:', backCamera);
 
-      // ✅ 장치 설정이 늦어질 경우 강제로 상태 갱신
       if (backCamera) {
-        setTimeout(() => setDevice(backCamera), 100); // ✅ 살짝 딜레이 후 장치 상태 업데이트
+        setTimeout(() => setDevice(backCamera), 100);
       }
     };
 
@@ -59,17 +52,18 @@ const Stage1Camera = ({ navigation }: { navigation: any }) => {
     }
   };
 
-  if (!device) {
-    return <Text>⚠️ 카메라 장치를 찾을 수 없습니다. 실제 기기에서 실행하세요.</Text>;
-  }
+  const goToNextStage = () => {
+    navigation.navigate('Stage1_2'); // ✅ Stage1_2로 이동
+  };
 
-  if (!permission) {
-    return <Text>⚠️ 카메라 권한이 필요합니다.</Text>;
+  if (!device) {
+    // ✅ 장치가 없으면 아무것도 렌더링하지 않음
+    return <View style={styles.container} />;
   }
 
   return (
     <View style={styles.container}>
-      {/* ✅ 카메라 컴포넌트 크기 명확히 설정 */}
+      {/* ✅ 카메라 컴포넌트 */}
       <Camera
         ref={camera}
         style={styles.camera}
@@ -77,8 +71,20 @@ const Stage1Camera = ({ navigation }: { navigation: any }) => {
         isActive={true}
         photo={true}
       />
+
+      {/* ✅ 사진 촬영 버튼 */}
       <TouchableOpacity onPress={takePicture} style={styles.captureButton}>
         <Text style={styles.buttonText}>📸</Text>
+      </TouchableOpacity>
+
+      {/* ✅ 다음 버튼 */}
+      <TouchableOpacity onPress={goToNextStage} style={styles.nextButton}>
+        <Text style={styles.buttonText}>다음 ➡️</Text>
+      </TouchableOpacity>
+
+      {/* ✅ 임시 Stage1_2 이동 버튼 */}
+      <TouchableOpacity onPress={goToNextStage} style={styles.tempButton}>
+        <Text style={styles.buttonText}>Stage1_2로 이동</Text>
       </TouchableOpacity>
     </View>
   );
@@ -90,19 +96,39 @@ const styles = StyleSheet.create({
     backgroundColor: '#000',
   },
   camera: {
-    width: '100%', // ✅ 크기 명확히 지정
-    height: '100%', // ✅ 크기 명확히 지정
+    width: '100%',
+    height: '100%',
   },
   captureButton: {
     position: 'absolute',
-    bottom: 40,
+    bottom: 100,
     alignSelf: 'center',
     backgroundColor: '#fff',
     padding: 20,
     borderRadius: 50,
   },
+  nextButton: {
+    position: 'absolute',
+    bottom: 30,
+    alignSelf: 'center',
+    backgroundColor: '#1E90FF', // ✅ 파란색 버튼 스타일
+    paddingVertical: 15,
+    paddingHorizontal: 30,
+    borderRadius: 50,
+  },
+  tempButton: {
+    position: 'absolute',
+    bottom: 150, // ✅ 하단에서 약간 위로 배치
+    alignSelf: 'center',
+    backgroundColor: '#32CD32', // ✅ 연두색 스타일
+    paddingVertical: 15,
+    paddingHorizontal: 30,
+    borderRadius: 50,
+  },
   buttonText: {
-    fontSize: 20,
+    fontSize: 18,
+    color: '#fff',
+    fontWeight: 'bold',
   },
 });
 
