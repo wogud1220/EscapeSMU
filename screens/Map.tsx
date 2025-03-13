@@ -105,6 +105,7 @@ const KAKAO_MAP_HTML = `
     <div id="map"></div>
 <script>
     let map;
+    let marker = null; // 기존 마커를 추적하는 변수
 
     function initializeMap() {
         console.log("✅ Kakao Maps API 로드 완료");
@@ -126,7 +127,14 @@ const KAKAO_MAP_HTML = `
         console.log("📍 지도 위치 업데이트:", lat, lng);
         var moveLatLon = new kakao.maps.LatLng(lat, lng);
         map.setCenter(moveLatLon);
-        new kakao.maps.Marker({ position: moveLatLon, map: map });
+        
+         // 기존 마커가 있으면 제거
+        if (marker) {
+            marker.setMap(null);
+        }
+
+        // 새로운 마커 생성 및 지도에 추가
+        marker = new kakao.maps.Marker({ position: moveLatLon, map: map });
     }
 
     window.addEventListener("message", function(event) {
