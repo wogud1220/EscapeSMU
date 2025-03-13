@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Kakao 지도 시작하기</title>
+    <script
+      type="text/javascript"
+      src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=9d681cdfc0dc6764e525f7c54dca0e0e"></script>
+  </head>
+  <body>
+    <div id="map" style="width: 500px; height: 400px"></div>
+
+    <script>
+      window.onload = function () {
+        // ✅ 로드 후 실행
+        if (typeof kakao !== 'undefined') {
+          console.log('✅ Kakao Maps API 로드 완료');
+          var container = document.getElementById('map');
+          var options = {
+            center: new kakao.maps.LatLng(37.2528023260744, 127.1175888963635),
+            level: 3,
+          };
+          var map = new kakao.maps.Map(container, options);
+        } else {
+          console.error('❌ Kakao Maps API 로드 실패');
+        }
+      };
+    </script>
+  </body>
+</html>
