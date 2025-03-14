@@ -1,4 +1,4 @@
-//청록관 가는 화면
+//본관 동상 찾아가기 화면
 
 import React from 'react';
 import { View, Text, ImageBackground, StyleSheet, Dimensions, Image, TouchableOpacity } from 'react-native';
@@ -6,11 +6,11 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from '../App';
 
-type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage2'>;
+type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage4_3'>;
 
 const { width, height } = Dimensions.get('window');
 
-const Stage2 = () => {
+const Stage4_3 = () => {
   const navigation = useNavigation<NavigationProp>();
 
   const handleMapPress = () => {
@@ -18,7 +18,7 @@ const Stage2 = () => {
   };
 
   const handleNextStage = () => {
-    navigation.navigate('Stage2_1'); // ✅ Stage2_1으로 이동하도록 수정
+    navigation.navigate('Stage4_4'); // ✅ Stage4_4로 이동
   };
 
   return (
@@ -52,15 +52,15 @@ const Stage2 = () => {
 
         {/* ✅ 가운데 투명한 흰색 박스 */}
         <View style={styles.box}>
-          {/* ✅ 하얀색 박스 위에 waytostage2.png 추가 */}
+          {/* ✅ 하얀색 박스 위에 bae.png 추가 */}
           <Image 
-            source={require('../assets/waytostage2.png')} 
+            source={require('../assets/bae.png')} 
             style={styles.wayImage} 
             resizeMode="contain"
           />
-          <Text style={styles.text}>이제 청록관으로 가야할 차례야!</Text>
+          <Text style={styles.text}>두 글자를 찾았어!</Text>
           <Text style={styles.subText}>
-            청록관으로 가려면 위에 있는 사진의 방향으로 가면 된다는데? 가보자!
+            나머지 한 글자에 대한 힌트는 사진에 있는 동상이 알고 있다는데? 동상을 본관에서 찾아보자!
           </Text>
         </View>
 
@@ -159,10 +159,10 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   wayImage: {
-    width: width * 0.6, // ✅ waytostage2.png 크기 조정
+    width: width * 0.6, // ✅ bae.png 크기 조정
     height: height * 0.5,
     marginBottom: height * 0.005, // ✅ 이미지와 텍스트 간격
   },
 });
 
-export default Stage2;
+export default Stage4_3;

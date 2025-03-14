@@ -1,4 +1,4 @@
-//청록관 가는 화면
+//식물과학관에서 본관으로 이동하는 화면
 
 import React from 'react';
 import { View, Text, ImageBackground, StyleSheet, Dimensions, Image, TouchableOpacity } from 'react-native';
@@ -6,11 +6,11 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from '../App';
 
-type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage2'>;
+type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage4'>;
 
 const { width, height } = Dimensions.get('window');
 
-const Stage2 = () => {
+const Stage4 = () => {
   const navigation = useNavigation<NavigationProp>();
 
   const handleMapPress = () => {
@@ -18,7 +18,7 @@ const Stage2 = () => {
   };
 
   const handleNextStage = () => {
-    navigation.navigate('Stage2_1'); // ✅ Stage2_1으로 이동하도록 수정
+    navigation.navigate('Stage4_1'); // ✅ Stage4_1으로 이동하
   };
 
   return (
@@ -54,13 +54,13 @@ const Stage2 = () => {
         <View style={styles.box}>
           {/* ✅ 하얀색 박스 위에 waytostage2.png 추가 */}
           <Image 
-            source={require('../assets/waytostage2.png')} 
+            source={require('../assets/waytobongwan.png')} 
             style={styles.wayImage} 
             resizeMode="contain"
           />
-          <Text style={styles.text}>이제 청록관으로 가야할 차례야!</Text>
+          <Text style={styles.text}>다시 이동해볼까?</Text>
           <Text style={styles.subText}>
-            청록관으로 가려면 위에 있는 사진의 방향으로 가면 된다는데? 가보자!
+            우리의 다음 목적지는 본관이야! 본관은 식물 과학관에서 나와서 바로 정면에 있는 건물이야! 사진을 참고해보자!
           </Text>
         </View>
 
@@ -165,4 +165,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Stage2;
+export default Stage4;

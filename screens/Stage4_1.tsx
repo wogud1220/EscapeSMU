@@ -1,4 +1,4 @@
-//정문에서 학교 설립일 맞추는 화면
+//본관 물품 보관함 문제
 
 import React, { useState } from 'react';
 import { View, Text, ImageBackground, StyleSheet, Dimensions, Image, TouchableOpacity, TextInput, Alert } from 'react-native';
@@ -6,11 +6,11 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from '../types';
 
-type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage1_2'>;
+type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage4_1'>;
 
 const { width, height } = Dimensions.get('window');
 
-const Stage1_2 = () => {
+const Stage4_1 = () => {
   const navigation = useNavigation<NavigationProp>();
   const [answer, setAnswer] = useState(''); // ✅ 정답 상태값 설정
 
@@ -20,11 +20,11 @@ const Stage1_2 = () => {
 
   const handleNextStage = () => {
     // ✅ 정답 체크 로직
-    if (answer.trim() === '1985') {
+    if (answer.trim() === '100') {
       Alert.alert('정답입니다!', '다음 스테이지로 이동합니다.', [
         { 
           text: '확인', 
-          onPress: () => navigation.navigate('Stage2') // ✅ Stage2로 이동
+          onPress: () => navigation.navigate('Stage4_2') 
         },
       ]);
     } else {
@@ -67,9 +67,17 @@ const Stage1_2 = () => {
 
         {/* ✅ 가운데 흰색 박스 */}
         <View style={styles.box}>
-          <Text style={styles.text}>정문에서 풀어야 할 문제가 발견되었어!</Text>
+          <Text style={styles.text}>본관은 대학본부 역할과 함께 공과대학의 강의/실습실의 역할을 겸하고 있어!</Text>
+          
+          {/* ✅ 텍스트와 텍스트 사이에 이미지 추가 */}
+          <Image 
+            source={require('../assets/bongwan4th.png')} 
+            style={styles.inlineImage}
+            resizeMode="contain"
+          />
+
           <Text style={styles.subText}>
-            1984년 6월 29일에 천안 캠퍼스를 준공하였고, 1984년 10월 6일에 상명 여자 대학 천안 캠퍼스 개설 인가를 받았어! 그렇다면, 상명대학교 천안캠퍼스가 개교한 연도는 언제일까?
+            본관 4층에는 학생들이 자유롭게 사용할 수 있는 물품 보관함이 있어! 그렇다면, 이 물품 보관함은 몇 번까지 존재할까?
           </Text>
         </View>
 
@@ -116,8 +124,9 @@ const styles = StyleSheet.create({
   },
   box: {
     backgroundColor: 'rgba(255, 255, 255, 0.7)',
+    marginTop: height * 0.15,
     width: width * 0.8,
-    height: height * 0.3, // ✅ 높이 고정
+    height: height * 0.7,
     padding: height * 0.03,
     borderRadius: width * 0.04,
     alignItems: 'center',
@@ -132,18 +141,23 @@ const styles = StyleSheet.create({
     color: '#333',
     fontSize: width * 0.06,
     fontWeight: 'bold',
-    marginBottom: height * 0.01,
+    marginBottom: height * 0.005, // ✅ 텍스트와 이미지 간격 줄이기
     textAlign: 'center',
   },
   subText: {
     color: '#555',
     fontSize: width * 0.045,
     textAlign: 'center',
-    marginTop: height * 0.02,
+    marginTop: height * 0.005, // ✅ 이미지와 텍스트 간격 줄이기
+  },
+  inlineImage: {
+    width: width * 0.7,
+    height: height * 0.4,
+    marginVertical: height * 0.01, // ✅ 이미지 상하 간격 최소화
   },
   inputContainer: {
     flexDirection: 'row',
-    marginTop: height * 0.15, // ✅ 흰색 박스와 간격 설정
+    marginTop: height * 0.05, // ✅ 기존 0.1 → 0.05로 줄임 (간격 축소)
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -158,12 +172,14 @@ const styles = StyleSheet.create({
     color: '#333',
     backgroundColor: '#fff',
     marginRight: width * 0.02,
+    marginBottom: height * 0.1, // ✅ 기존 0.2 → 0.1로 줄임
   },
   submitButton: {
     backgroundColor: '#1E90FF',
     paddingVertical: height * 0.015,
     paddingHorizontal: width * 0.06,
     borderRadius: width * 0.03,
+    marginBottom: height * 0.1, // ✅ 기존 0.2 → 0.1로 줄임
   },
   buttonText: {
     color: '#FFFFFF',
@@ -194,4 +210,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Stage1_2;
+export default Stage4_1;

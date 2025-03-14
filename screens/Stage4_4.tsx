@@ -1,4 +1,4 @@
-//정문에서 학교 설립일 맞추는 화면
+//본관 배상명 이름 맞추기
 
 import React, { useState } from 'react';
 import { View, Text, ImageBackground, StyleSheet, Dimensions, Image, TouchableOpacity, TextInput, Alert } from 'react-native';
@@ -6,11 +6,11 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from '../types';
 
-type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage1_2'>;
+type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage4_4'>;
 
 const { width, height } = Dimensions.get('window');
 
-const Stage1_2 = () => {
+const Stage4_4 = () => {
   const navigation = useNavigation<NavigationProp>();
   const [answer, setAnswer] = useState(''); // ✅ 정답 상태값 설정
 
@@ -20,11 +20,11 @@ const Stage1_2 = () => {
 
   const handleNextStage = () => {
     // ✅ 정답 체크 로직
-    if (answer.trim() === '1985') {
+    if (answer.trim() === '배상명') {
       Alert.alert('정답입니다!', '다음 스테이지로 이동합니다.', [
         { 
           text: '확인', 
-          onPress: () => navigation.navigate('Stage2') // ✅ Stage2로 이동
+          onPress: () => navigation.navigate('Stage5') // ✅ 다음 스테이지로 이동
         },
       ]);
     } else {
@@ -67,13 +67,21 @@ const Stage1_2 = () => {
 
         {/* ✅ 가운데 흰색 박스 */}
         <View style={styles.box}>
-          <Text style={styles.text}>정문에서 풀어야 할 문제가 발견되었어!</Text>
+          <Text style={styles.text}>동상의 이름을 확인해서 입력해보자!</Text>
+          
+          {/* ✅ 텍스트와 텍스트 사이에 이미지 추가 */}
+          <Image 
+            source={require('../assets/bae.png')} 
+            style={styles.inlineImage}
+            resizeMode="contain"
+          />
+
           <Text style={styles.subText}>
-            1984년 6월 29일에 천안 캠퍼스를 준공하였고, 1984년 10월 6일에 상명 여자 대학 천안 캠퍼스 개설 인가를 받았어! 그렇다면, 상명대학교 천안캠퍼스가 개교한 연도는 언제일까?
+            동상의 이름은 무엇일까?
           </Text>
         </View>
 
-        {/* ✅ 입력 필드 + 제출 버튼 (흰색 박스 바깥에 배치) */}
+        {/* ✅ 입력 필드 + 제출 버튼 */}
         <View style={styles.inputContainer}>
           <TextInput
             style={styles.input}
@@ -81,7 +89,8 @@ const Stage1_2 = () => {
             onChangeText={setAnswer}
             placeholder="정답 입력"
             placeholderTextColor="#999"
-            keyboardType="numeric"
+            keyboardType="default" // ✅ 문자 입력 가능하도록 설정
+            autoCapitalize="none" // ✅ 대소문자 구분 없음
           />
           <TouchableOpacity 
             style={styles.submitButton}
@@ -116,8 +125,9 @@ const styles = StyleSheet.create({
   },
   box: {
     backgroundColor: 'rgba(255, 255, 255, 0.7)',
+    marginTop: height * 0.15,
     width: width * 0.8,
-    height: height * 0.3, // ✅ 높이 고정
+    height: height * 0.7,
     padding: height * 0.03,
     borderRadius: width * 0.04,
     alignItems: 'center',
@@ -139,11 +149,16 @@ const styles = StyleSheet.create({
     color: '#555',
     fontSize: width * 0.045,
     textAlign: 'center',
-    marginTop: height * 0.02,
+    marginTop: height * 0.005,
+  },
+  inlineImage: {
+    width: width * 0.7,
+    height: height * 0.4,
+    marginVertical: height * 0.01, // ✅ 이미지 상하 간격 최소화
   },
   inputContainer: {
     flexDirection: 'row',
-    marginTop: height * 0.15, // ✅ 흰색 박스와 간격 설정
+    marginTop: height * 0.05, // ✅ 간격 축소
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -158,12 +173,14 @@ const styles = StyleSheet.create({
     color: '#333',
     backgroundColor: '#fff',
     marginRight: width * 0.02,
+    marginBottom: height * 0.1, // ✅ 간격 줄임
   },
   submitButton: {
-    backgroundColor: '#1E90FF',
+    backgroundColor: 'rgba(0, 0, 255, 0.7)',
     paddingVertical: height * 0.015,
     paddingHorizontal: width * 0.06,
     borderRadius: width * 0.03,
+    marginBottom: height * 0.1, // ✅ 간격 줄임
   },
   buttonText: {
     color: '#FFFFFF',
@@ -194,4 +211,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Stage1_2;
+export default Stage4_4;

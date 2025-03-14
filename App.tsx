@@ -12,7 +12,17 @@ import Stage2_1 from './screens/Stage2_1';
 import Stage3 from './screens/Stage3';
 import Stage3_1 from './screens/Stage3_1';
 import Stage3Camera from './screens/Stage3Camera';
-// import Stage3_2 from './screens/Stage3_2';
+import Stage4 from './screens/Stage4';
+import Stage4_1 from './screens/Stage4_1';
+import Stage4_2 from './screens/Stage4_2';
+import Stage4_3 from './screens/Stage4_3';
+import Stage4_4 from './screens/Stage4_4';
+import Stage5 from './screens/Stage5';
+import Stage5_1 from './screens/Stage5_1';
+import Stage5_2 from './screens/Stage5_2';
+import Stage5_3 from './screens/Stage5_3';
+import Stage5_4 from './screens/Stage5_4';
+import Guestbook from './screens/Guestbook';
 
 export type RootStackParamList = {
   Main: undefined;
@@ -28,6 +38,17 @@ export type RootStackParamList = {
   Stage3_1: undefined;
   Stage3_2: undefined;
   Stage3Camera: undefined;
+  Stage4: undefined;
+  Stage4_1: undefined;
+  Stage4_2: undefined;
+  Stage4_3: undefined;
+  Stage4_4: undefined;
+  Stage5: undefined;
+  Stage5_1: undefined;
+  Stage5_2: undefined;
+  Stage5_3: undefined;
+  Stage5_4: undefined;
+  Guestbook: undefined;
 };
 
 const Stack = createStackNavigator<RootStackParamList>();
@@ -90,11 +111,61 @@ const App = () => {
           component={Stage3Camera}
           options={{ headerShown: false }}
         />
-        {/* <Stack.Screen
-          name="Stage3_2"
-          component={Stage3_2}
+        <Stack.Screen
+          name="Stage4"
+          component={Stage4}
           options={{ headerShown: false }}
-        /> */}
+        />
+        <Stack.Screen
+          name="Stage4_1"
+          component={Stage4_1}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Stage4_2"
+          component={Stage4_2}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Stage4_3"
+          component={Stage4_3}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Stage4_4"
+          component={Stage4_4}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Stage5"
+          component={Stage5}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Stage5_1"
+          component={Stage5_1}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Stage5_2"
+          component={Stage5_2}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Stage5_3"
+          component={Stage5_3}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Stage5_4"
+          component={Stage5_4}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Guestbook"
+          component={Guestbook}
+          options={{ headerShown: false }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

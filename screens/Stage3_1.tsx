@@ -1,3 +1,5 @@
+//사슴찍기 클리어 화면
+
 import React from 'react';
 import { View, Text, ImageBackground, StyleSheet, Dimensions, Image, TouchableOpacity } from 'react-native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -16,7 +18,7 @@ const Stage3_1 = () => {
   };
 
   const handleNextStage = () => {
-    navigation.navigate('Stage3_2'); // ✅ Stage2_2으로 이동하도록 수정
+    navigation.navigate('Stage4'); // ✅ Stage4로
   };
 
   return (
