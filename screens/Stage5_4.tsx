@@ -6,7 +6,7 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from '../App';
 
-type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage5_1'>;
+type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage5_4'>;
 
 const { width, height } = Dimensions.get('window');
 
@@ -18,7 +18,7 @@ const Stage5_4 = () => {
   };
 
   const handleNextStage = () => {
-    navigation.navigate('Stage5_2');
+    navigation.navigate('Stage5_5');
   };
 
   const handleGoToGuestbook = () => {
@@ -65,12 +65,12 @@ const Stage5_4 = () => {
           </Text>
 
           <TouchableOpacity 
-    style={styles.guestbookButton}
-    onPress={handleGoToGuestbook}
-    activeOpacity={0.7}
-  >
-    <Text style={styles.guestbookButtonText}>방명록 남기러 가기</Text>
-  </TouchableOpacity>
+          style={styles.guestbookButton}
+          onPress={handleGoToGuestbook}
+          activeOpacity={0.7}
+          >
+            <Text style={styles.guestbookButtonText}>방명록 남기러 가기</Text>
+          </TouchableOpacity>
         </View>
 
         {/* ✅ 다음 스테이지로 이동 버튼 */}

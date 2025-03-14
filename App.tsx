@@ -23,6 +23,10 @@ import Stage5_2 from './screens/Stage5_2';
 import Stage5_3 from './screens/Stage5_3';
 import Stage5_4 from './screens/Stage5_4';
 import Guestbook from './screens/Guestbook';
+import Stage5_5 from './screens/Stage5_5';
+import Stage5_6 from './screens/Stage5_6';
+import Stage5_7 from './screens/Stage5_7';
+import Stage6_1 from './screens/Stage6_1';
 
 export type RootStackParamList = {
   Main: undefined;
@@ -49,6 +53,10 @@ export type RootStackParamList = {
   Stage5_3: undefined;
   Stage5_4: undefined;
   Guestbook: undefined;
+  Stage5_5: undefined;
+  Stage5_6: undefined;
+  Stage5_7: undefined;
+  Stage6_1: undefined;
 };
 
 const Stack = createStackNavigator<RootStackParamList>();
@@ -56,7 +64,7 @@ const Stack = createStackNavigator<RootStackParamList>();
 const App = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Main">
+      <Stack.Navigator initialRouteName="Stage5_4">
         <Stack.Screen 
           name="Main" 
           component={Main} 
@@ -164,6 +172,26 @@ const App = () => {
         <Stack.Screen
           name="Guestbook"
           component={Guestbook}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Stage5_5"
+          component={Stage5_5}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Stage5_6"
+          component={Stage5_6}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Stage5_7"
+          component={Stage5_7}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Stage6_1"
+          component={Stage6_1}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>
