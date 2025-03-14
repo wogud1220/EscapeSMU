@@ -27,6 +27,7 @@ import Stage5_5 from './screens/Stage5_5';
 import Stage5_6 from './screens/Stage5_6';
 import Stage5_7 from './screens/Stage5_7';
 import Stage6_1 from './screens/Stage6_1';
+import Stage6_2 from './screens/Stage6_2';
 
 export type RootStackParamList = {
   Main: undefined;
@@ -57,6 +58,7 @@ export type RootStackParamList = {
   Stage5_6: undefined;
   Stage5_7: undefined;
   Stage6_1: undefined;
+  Stage6_2: undefined;
 };
 
 const Stack = createStackNavigator<RootStackParamList>();
@@ -192,6 +194,11 @@ const App = () => {
         <Stack.Screen
           name="Stage6_1"
           component={Stage6_1}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Stage6_2"
+          component={Stage6_2}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>

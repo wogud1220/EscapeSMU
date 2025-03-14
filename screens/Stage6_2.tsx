@@ -6,11 +6,11 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from '../App';
 
-type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage6_1'>;
+type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage6_2'>;
 
 const { width, height } = Dimensions.get('window');
 
-const Stage6_1 = () => {
+const Stage6_2 = () => {
   const navigation = useNavigation<NavigationProp>();
 
   const handleMapPress = () => {
@@ -18,7 +18,7 @@ const Stage6_1 = () => {
   };
 
   const handleNextStage = () => {
-    navigation.navigate('Stage6_2'); // ✅ Stage6_1 가즈아
+    navigation.navigate('Stage2_1'); // ✅ Stage2_1으로 이동하도록 수정
   };
 
   return (
@@ -53,13 +53,16 @@ const Stage6_1 = () => {
         <View style={styles.box}>
           {/* ✅ 텍스트 위에 이미지 추가 */}
           <Image 
-          source={require('../assets/dokdo.png')} 
-          style={styles.dokdoImage} 
+          source={require('../assets/shouting.png')} 
+          style={styles.wayImage} 
           resizeMode="contain"
           />
           <Text style={styles.text}>
-            한누리관 옆에 무슨 조형물이 있는데? {'\n'}
-            확인해보자!
+            독도 조형물이야!
+            </Text>
+            <Text style={styles.subText}>
+            실제 독도 모습을 축소한 조형물을 설치해 '독도사랑, 나라사랑' 정신을 되새기게 하기 위한 목적으로 설치되었어!{'\n'}{'\n'}
+            조형물 앞에 있는 안내판 앞에 서서 {'\n'} '독도는 우리땅'을 외쳐보자!
             </Text>
             </View>
 
@@ -69,7 +72,7 @@ const Stage6_1 = () => {
           onPress={handleNextStage}
           activeOpacity={0.7}
         >
-          <Text style={styles.buttonText}>다음 ➡️</Text>
+          <Text style={styles.buttonText}>마이크(아직 기능 안 넣음) ➡️</Text>
         </TouchableOpacity>
       </ImageBackground>
     </View>
@@ -112,9 +115,9 @@ const styles = StyleSheet.create({
     color: '#333',
     fontSize: width * 0.055,
     fontWeight: 'bold',
-    marginBottom: height * 0.01,
+    marginBottom: height * 0.005, // ✅ 간격 축소
     textAlign: 'center',
-    lineHeight: height * 0.035, // ✅ 줄 간격
+    lineHeight: height * 0.03, // ✅ 줄 간격 축소
   },
   subText: {
     color: '#555',
@@ -159,16 +162,10 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   wayImage: {
-    width: width * 0.6, // ✅ waytostage2.png 크기 조정
-    height: height * 0.5,
-    marginBottom: height * 0.005, // ✅ 이미지와 텍스트 간격
+    width: width * 0.6, // ✅ 이미지 크기 설정
+    height: height * 0.3, // ✅ 높이 줄이기
+    marginBottom: height * 0.01, // ✅ 간격 줄이기
   },
-  dokdoImage: {
-    width: width * 0.7, // ✅ 이미지 크기 설정
-    height: height * 0.4, // ✅ 이미지 높이 설정
-    marginBottom: height * 0.02, // ✅ 이미지와 텍스트 사이 간격 조정
-  },
-  
 });
 
-export default Stage6_1;
+export default Stage6_2;
