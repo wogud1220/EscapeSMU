@@ -42,6 +42,11 @@ import Stage8_6 from './screens/Stage8_6';
 import Stage9_1 from './screens/Stage9_1';
 import Stage9Camera from './screens/Stage9Camera';
 import Stage9_2 from './screens/Stage9_2';
+import Stage9_3 from './screens/Stage9_3';
+import Stage9Camera_2 from './screens/Stage9Camera_2';
+import Stage9_4 from './screens/Stage9_4';
+import Stage10_1 from './screens/Stage10_1';
+import Stage10_2 from './screens/Stage10_2';
 
 export type RootStackParamList = {
   Main: undefined;
@@ -87,6 +92,11 @@ export type RootStackParamList = {
   Stage9_1: undefined;
   Stage9Camera: undefined;
   Stage9_2: undefined;
+  Stage9_3: undefined;
+  Stage9Camera_2: undefined;
+  Stage9_4: undefined;
+  Stage10_1: undefined;
+  Stage10_2: undefined;
 };
 
 const Stack = createStackNavigator<RootStackParamList>();
@@ -297,6 +307,31 @@ const App = () => {
         <Stack.Screen
           name="Stage9_2"
           component={Stage9_2}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Stage9_3"
+          component={Stage9_3}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Stage9Camera_2"
+          component={Stage9Camera_2}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Stage9_4"
+          component={Stage9_4}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Stage10_1"
+          component={Stage10_1}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Stage10_2"
+          component={Stage10_2}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>

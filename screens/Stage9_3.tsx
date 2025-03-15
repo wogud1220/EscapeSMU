@@ -1,4 +1,4 @@
-//디자인관 개구리 사진찍기
+//상명갤러리 사진 찍기
 
 import React from 'react';
 import { View, Text, ImageBackground, StyleSheet, Dimensions, Image, TouchableOpacity } from 'react-native';
@@ -18,7 +18,7 @@ const Stage9_2 = () => {
   };
 
   const handleNextStage = () => {
-    navigation.navigate('Stage9Camera');
+    navigation.navigate('Stage9Camera_2');
   };
 
   return (
@@ -52,16 +52,15 @@ const Stage9_2 = () => {
 
         {/* ✅ 가운데 투명한 흰색 박스 */}
         <View style={styles.box}>
-          {/* ✅ 하얀색 박스 위에 waytostage2.png 추가 */}
           <Image 
-            source={require('../assets/temp.png')} 
+            source={require('../assets/smugallery.png')} 
             style={styles.wayImage} 
             resizeMode="contain"
           />
-          <Text style={styles.text}>디자인 놀이터, 고고장, 스토밍, 모임터
+          <Text style={styles.text}>상명갤러리 찾았니?
           </Text>
           <Text style={styles.subText}>
-            다음으로는 2층으로 향하여 '상명갤러리'로 가보자!
+            위 이미지와 똑같이 사진을 찍어보자!
           </Text>
         </View>
 
