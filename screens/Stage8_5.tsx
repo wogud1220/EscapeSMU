@@ -1,4 +1,4 @@
-//독도 가는 화면
+//학생생활관 정보프라자 유도 화면
 
 import React from 'react';
 import { View, Text, ImageBackground, StyleSheet, Dimensions, Image, TouchableOpacity } from 'react-native';
@@ -6,11 +6,11 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from '../App';
 
-type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage6_2'>;
+type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage8_5'>;
 
 const { width, height } = Dimensions.get('window');
 
-const Stage6_2 = () => {
+const Stage8_5 = () => {
   const navigation = useNavigation<NavigationProp>();
 
   const handleMapPress = () => {
@@ -18,7 +18,7 @@ const Stage6_2 = () => {
   };
 
   const handleNextStage = () => {
-    navigation.navigate('Stage6_3'); // ✅ Stage6_3으로 이동하도록 수정
+    navigation.navigate('Stage8_6'); // ✅ Stage6_1으로 이동하도록 수정
   };
 
   return (
@@ -50,21 +50,16 @@ const Stage6_2 = () => {
           />
         </TouchableOpacity>
 
+        {/* ✅ 가운데 투명한 흰색 박스 */}
         <View style={styles.box}>
-          {/* ✅ 텍스트 위에 이미지 추가 */}
-          <Image 
-          source={require('../assets/shouting.png')} 
-          style={styles.wayImage} 
-          resizeMode="contain"
-          />
-          <Text style={styles.text}>
-            독도 조형물이야!
-            </Text>
-            <Text style={styles.subText}>
-            실제 독도 모습을 축소한 조형물을 설치해 '독도사랑, 나라사랑' 정신을 되새기게 하기 위한 목적으로 설치되었어!{'\n'}{'\n'}
-            조형물 앞에 있는 안내판 앞에 서서 {'\n'} '독도는 우리땅'을 외쳐보자!
-            </Text>
-            </View>
+          <Text style={styles.text}>학생생활관 2층에는 컴퓨터실(정보프라자)가 있어.
+          </Text>
+          <Text style={styles.subText}>
+            이 곳에는 일정 금액을 내고 프린트를 이용하거나 컴퓨터를 사용할 수 있어!{'\n'}{'\n'}
+            다음 장소로 가기 위한 힌트는 컴퓨터를 켜서 확인해보자!
+          </Text>
+
+        </View>
 
         {/* ✅ 다음 스테이지로 이동 버튼 */}
         <TouchableOpacity 
@@ -72,7 +67,7 @@ const Stage6_2 = () => {
           onPress={handleNextStage}
           activeOpacity={0.7}
         >
-          <Text style={styles.buttonText}>마이크(아직 기능 안 넣음) ➡️</Text>
+          <Text style={styles.buttonText}>다음 ➡️</Text>
         </TouchableOpacity>
       </ImageBackground>
     </View>
@@ -100,7 +95,7 @@ const styles = StyleSheet.create({
   box: {
     backgroundColor: 'rgba(255, 255, 255, 0.7)',
     width: width * 0.8,
-    height: height * 0.6, // ✅ 높이 조정 (이미지 공간 포함)
+    height: height * 0.4, // ✅ 높이 조정 (이미지 공간 포함)
     padding: height * 0.03,
     borderRadius: width * 0.04,
     alignItems: 'center',
@@ -115,9 +110,9 @@ const styles = StyleSheet.create({
     color: '#333',
     fontSize: width * 0.055,
     fontWeight: 'bold',
-    marginBottom: height * 0.005, // ✅ 간격 축소
+    marginBottom: height * 0.01,
     textAlign: 'center',
-    lineHeight: height * 0.03, // ✅ 줄 간격 축소
+    lineHeight: height * 0.035, // ✅ 줄 간격
   },
   subText: {
     color: '#555',
@@ -162,10 +157,10 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   wayImage: {
-    width: width * 0.6, // ✅ 이미지 크기 설정
-    height: height * 0.3, // ✅ 높이 줄이기
-    marginBottom: height * 0.01, // ✅ 간격 줄이기
+    width: width * 0.6, // ✅ waytostage2.png 크기 조정
+    height: height * 0.5,
+    marginBottom: height * 0.005, // ✅ 이미지와 텍스트 간격
   },
 });
 
-export default Stage6_2;
+export default Stage8_5;

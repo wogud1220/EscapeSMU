@@ -9,7 +9,7 @@ import {
   PermissionsAndroid,
 } from 'react-native';
 import WebView from 'react-native-webview';
-//import {request, PERMISSIONS, RESULTS} from 'react-native-permissions';
+import {request, PERMISSIONS, RESULTS} from 'react-native-permissions';
 // import Geolocation from 'react-native-geolocation-service';
 import {useNavigation} from '@react-navigation/native';
 import Geolocation from '@react-native-community/geolocation';
