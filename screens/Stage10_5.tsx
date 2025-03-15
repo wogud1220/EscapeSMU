@@ -1,4 +1,4 @@
-//학생회관 안내
+//학생회관 2층
 
 import React from 'react';
 import { View, Text, ImageBackground, StyleSheet, Dimensions, Image, TouchableOpacity } from 'react-native';
@@ -6,11 +6,11 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from '../App';
 
-type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage10_2'>;
+type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage9_1'>;
 
 const { width, height } = Dimensions.get('window');
 
-const Stage10_2 = () => {
+const Stage9_1 = () => {
   const navigation = useNavigation<NavigationProp>();
 
   const handleMapPress = () => {
@@ -18,7 +18,7 @@ const Stage10_2 = () => {
   };
 
   const handleNextStage = () => {
-    navigation.navigate('Stage10_3'); // ✅ Stage6_1으로 이동하도록 수정
+    navigation.navigate('Stage10_2'); // ✅ Stage9_1 가즈아
   };
 
   return (
@@ -50,18 +50,19 @@ const Stage10_2 = () => {
           />
         </TouchableOpacity>
 
-        {/* ✅ 가운데 투명한 흰색 박스 */}
         <View style={styles.box}>
-          <Text style={styles.text}>학생회관에는 많은 학생들이{'\n'}
-            이용하고 있는 학생식당이 있어!{'\n'}
-            엘리시온은 조식을 운영하고 있어.{'\n'}
-            조식으로 간편식과 라면을 제공하고 있으며 조식은
-            오전 8시부터 오전 10시 30분까지 운영하고 있어.
+          {/* ✅ 텍스트 위에 이미지 추가 */}
+          <Image 
+          source={require('../assets/center.png')} 
+          style={styles.dokdoImage} 
+          resizeMode="contain"
+          />
+          <Text style={styles.text}>
+            다음으로 방문할 곳은 학생회관이야!
           </Text>
           <Text style={styles.subText}>
           </Text>
-
-        </View>
+            </View>
 
         {/* ✅ 다음 스테이지로 이동 버튼 */}
         <TouchableOpacity 
@@ -97,7 +98,7 @@ const styles = StyleSheet.create({
   box: {
     backgroundColor: 'rgba(255, 255, 255, 0.7)',
     width: width * 0.8,
-    height: height * 0.5, // ✅ 높이 조정 (이미지 공간 포함)
+    height: height * 0.7, // ✅ 높이 조정 (이미지 공간 포함)
     padding: height * 0.03,
     borderRadius: width * 0.04,
     alignItems: 'center',
@@ -109,19 +110,18 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   text: {
-    marginTop: height * 0.05,
     color: '#333',
     fontSize: width * 0.055,
     fontWeight: 'bold',
+    marginTop: height * 0.04, // ✅ 위쪽 간격
     marginBottom: height * 0.01,
     textAlign: 'center',
-    lineHeight: height * 0.05, // ✅ 줄 간격
+    lineHeight: height * 0.035, // ✅ 줄 간격
   },
   subText: {
     color: '#555',
     fontSize: width * 0.045,
     textAlign: 'center',
-    marginTop: height * 0.02,
   },
   mapButton: {
     position: 'absolute',
@@ -164,6 +164,12 @@ const styles = StyleSheet.create({
     height: height * 0.5,
     marginBottom: height * 0.005, // ✅ 이미지와 텍스트 간격
   },
+  dokdoImage: {
+    width: width * 0.7, // ✅ 이미지 크기 설정
+    height: height * 0.4, // ✅ 이미지 높이 설정
+    marginBottom: height * 0.02, // ✅ 이미지와 텍스트 사이 간격 조정
+  },
+  
 });
 
-export default Stage10_2;
+export default Stage9_1;

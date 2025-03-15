@@ -1,4 +1,4 @@
-//한누리관 휴게실 퀴즈(틀릴 시 5분)
+//학생회관 편의시설 퀴즈!
 
 import React, { useState, useEffect } from 'react';
 import { View, Text, ImageBackground, StyleSheet, Dimensions, Image, TouchableOpacity, Alert } from 'react-native';
@@ -11,13 +11,13 @@ type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage5_4'>;
 const { width, height } = Dimensions.get('window');
 
 const options = [
-  { label: '8층', value: 8 },
-  { label: '7층', value: 7 },
-  { label: '6층', value: 6 },
-  { label: '3층', value: 3 },
+  { label: '기념품점', value: 1 },
+  { label: '안경점', value: 2 },
+  { label: '미용실', value: 3 },
+  { label: '우체국', value: 4 },
 ];
 
-const Stage5_3 = () => {
+const Stage10_4 = () => {
   const navigation = useNavigation<NavigationProp>();
   const [disabled, setDisabled] = useState(false); // ✅ 버튼 활성화 상태
   const [countdown, setCountdown] = useState<number | null>(null); // ✅ 남은 시간 상태
@@ -47,7 +47,7 @@ const Stage5_3 = () => {
   const handleOptionPress = (value: number) => {
     if (disabled) return;
 
-    if (value === 6) {
+    if (value === 4) {
       Alert.alert('정답입니다!', '다음 스테이지로 이동합니다.', [
         { text: '확인', onPress: () => navigation.navigate('Stage5_4') },
       ]);
@@ -94,12 +94,12 @@ const Stage5_3 = () => {
         {/* 흰색 박스 */}
         <View style={styles.box}>
           <Text style={styles.text}>
-            다음 중 휴게실이 존재하지 <Text style={styles.highlight}>않는</Text> 층수로{"\n"}옳은 것은?
+            학생회관에는 식당 뿐만 아니라, 다양한 편의시설도 존재하고 있어. 그렇다면 다음 보기 중 학생회관에 존재하지 <Text style={styles.highlight}>않는</Text> 시설을 골라봐!
           </Text>
 
           {/* 서브텍스트 추가 */}
           <Text style={styles.subText}>
-            한누리관에는 다양한 층에 휴게실이 있지만 {"\n"}일부 층에는 존재하지 않아. {"\n"}{"\n"}틀릴 시에는 다시 입력하기까지 <Text style={styles.highlight}>5분</Text>을 기다려야해... 신중하자!
+            서점은 2025년 1학기에 없어졌어... {"\n"}{"\n"}틀릴 시에는 다시 입력하기까지 <Text style={styles.highlight}>5분</Text>을 기다려야해... 신중하자!
           </Text>
 
           {/* ✅ 타이머 표시 */}
@@ -153,7 +153,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(255, 255, 255, 0.85)',
     marginTop: height * 0.12,
     width: width * 0.85,
-    height: height * 0.65,
+    height: height * 0.7,
     padding: height * 0.03,
     borderRadius: width * 0.04,
     alignItems: 'center',
@@ -228,4 +228,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Stage5_3;
+export default Stage10_4;
