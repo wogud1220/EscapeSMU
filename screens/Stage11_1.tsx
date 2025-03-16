@@ -18,7 +18,7 @@ const Stage11_1 = () => {
   };
 
   const handleNextStage = () => {
-    navigation.navigate('Stage10_2'); // ✅ Stage11_1 가즈아
+    navigation.navigate('Stage11_2'); // ✅ Stage11_1 가즈아
   };
 
   return (

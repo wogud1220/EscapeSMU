@@ -1,4 +1,4 @@
-//상명 스포츠센터 가는길
+//계당관 가는길
 
 import React from 'react';
 import { View, Text, ImageBackground, StyleSheet, Dimensions, Image, TouchableOpacity } from 'react-native';
@@ -6,11 +6,11 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from '../App';
 
-type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage11_2'>;
+type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage12_1'>;
 
 const { width, height } = Dimensions.get('window');
 
-const Stage11_2 = () => {
+const Stage12_1 = () => {
   const navigation = useNavigation<NavigationProp>();
 
   const handleMapPress = () => {
@@ -18,7 +18,7 @@ const Stage11_2 = () => {
   };
 
   const handleNextStage = () => {
-    navigation.navigate('Stage11_3'); // ✅ Stage11_2 가즈아
+    navigation.navigate('Stage12_2'); // ✅ Stage12_1 가즈아
   };
 
   return (
@@ -53,15 +53,16 @@ const Stage11_2 = () => {
         <View style={styles.box}>
           {/* ✅ 텍스트 위에 이미지 추가 */}
           <Image 
-          source={require('../assets/run.png')} 
+          source={require('../assets/gyedang.png')} 
           style={styles.dokdoImage} 
           resizeMode="contain"
           />
           <Text style={styles.text}>
-            스포츠센터를 방문하는 김에 {'\n'}
+            좋았어! 이제 마지막까지 {'\n'} 얼마 안 남은 것 같아!
           </Text>
           <Text style={styles.subText}>
-          잠시 스트레칭을 할 겸, 달리기를 해보자!
+          조금만 더 힘내보도록 하자!{'\n'}
+          다음 장소는 바로 '계당관'이야!
           </Text>
             </View>
 
@@ -173,4 +174,4 @@ const styles = StyleSheet.create({
   
 });
 
-export default Stage11_2;
+export default Stage12_1;

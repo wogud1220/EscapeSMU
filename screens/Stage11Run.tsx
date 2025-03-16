@@ -6,11 +6,11 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from '../App';
 
-type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage11_2'>;
+type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage11Run'>;
 
 const { width, height } = Dimensions.get('window');
 
-const Stage11_2 = () => {
+const Stage11Run = () => {
   const navigation = useNavigation<NavigationProp>();
 
   const handleMapPress = () => {
@@ -18,7 +18,7 @@ const Stage11_2 = () => {
   };
 
   const handleNextStage = () => {
-    navigation.navigate('Stage11_3'); // ✅ Stage11_2 가즈아
+    navigation.navigate('Stage11_4'); // ✅ Stage11Run 가즈아
   };
 
   return (
@@ -53,12 +53,12 @@ const Stage11_2 = () => {
         <View style={styles.box}>
           {/* ✅ 텍스트 위에 이미지 추가 */}
           <Image 
-          source={require('../assets/run.png')} 
+          source={require('../assets/temp.png')} 
           style={styles.dokdoImage} 
           resizeMode="contain"
           />
           <Text style={styles.text}>
-            스포츠센터를 방문하는 김에 {'\n'}
+            현재 속도는? {'\n'}
           </Text>
           <Text style={styles.subText}>
           잠시 스트레칭을 할 겸, 달리기를 해보자!
@@ -173,4 +173,4 @@ const styles = StyleSheet.create({
   
 });
 
-export default Stage11_2;
+export default Stage11Run;

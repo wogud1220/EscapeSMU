@@ -1,4 +1,4 @@
-//상명 스포츠센터 가는길
+//스포츠센터 사진 찍기
 
 import React from 'react';
 import { View, Text, ImageBackground, StyleSheet, Dimensions, Image, TouchableOpacity } from 'react-native';
@@ -6,11 +6,11 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from '../App';
 
-type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage11_2'>;
+type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage11_6'>;
 
 const { width, height } = Dimensions.get('window');
 
-const Stage11_2 = () => {
+const Stage11_6 = () => {
   const navigation = useNavigation<NavigationProp>();
 
   const handleMapPress = () => {
@@ -18,7 +18,7 @@ const Stage11_2 = () => {
   };
 
   const handleNextStage = () => {
-    navigation.navigate('Stage11_3'); // ✅ Stage11_2 가즈아
+    navigation.navigate('Stage11Camera');
   };
 
   return (
@@ -50,20 +50,21 @@ const Stage11_2 = () => {
           />
         </TouchableOpacity>
 
+        {/* ✅ 가운데 투명한 흰색 박스 */}
         <View style={styles.box}>
-          {/* ✅ 텍스트 위에 이미지 추가 */}
           <Image 
-          source={require('../assets/run.png')} 
-          style={styles.dokdoImage} 
-          resizeMode="contain"
+            source={require('../assets/sportspic.png')} 
+            style={styles.wayImage} 
+            resizeMode="contain"
           />
           <Text style={styles.text}>
-            스포츠센터를 방문하는 김에 {'\n'}
+            스포츠센터에 대해 {'\n'}아직 잘 모르겠다면
           </Text>
           <Text style={styles.subText}>
-          잠시 스트레칭을 할 겸, 달리기를 해보자!
+            건물 내부에 위치해있는 내부도를 살펴보자!{'\n'}
+            빨간색 네모가 쳐진 부분을 사진으로 찍어서 제출해보자!
           </Text>
-            </View>
+        </View>
 
         {/* ✅ 다음 스테이지로 이동 버튼 */}
         <TouchableOpacity 
@@ -71,7 +72,7 @@ const Stage11_2 = () => {
           onPress={handleNextStage}
           activeOpacity={0.7}
         >
-          <Text style={styles.buttonText}>다음 ➡️</Text>
+          <Text style={styles.buttonText}>카메라 📸</Text>
         </TouchableOpacity>
       </ImageBackground>
     </View>
@@ -112,17 +113,16 @@ const styles = StyleSheet.create({
   },
   text: {
     color: '#333',
-    fontSize: width * 0.055,
+    fontSize: width * 0.06,
     fontWeight: 'bold',
-    marginTop: height * 0.04, // ✅ 위쪽 간격
     marginBottom: height * 0.01,
     textAlign: 'center',
-    lineHeight: height * 0.035, // ✅ 줄 간격
   },
   subText: {
     color: '#555',
     fontSize: width * 0.045,
     textAlign: 'center',
+    marginTop: height * 0.02,
   },
   mapButton: {
     position: 'absolute',
@@ -162,15 +162,9 @@ const styles = StyleSheet.create({
   },
   wayImage: {
     width: width * 0.6, // ✅ waytostage2.png 크기 조정
-    height: height * 0.5,
+    height: height * 0.3,
     marginBottom: height * 0.005, // ✅ 이미지와 텍스트 간격
   },
-  dokdoImage: {
-    width: width * 0.7, // ✅ 이미지 크기 설정
-    height: height * 0.4, // ✅ 이미지 높이 설정
-    marginBottom: height * 0.02, // ✅ 이미지와 텍스트 사이 간격 조정
-  },
-  
 });
 
-export default Stage11_2;
+export default Stage11_6;

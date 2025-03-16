@@ -18,7 +18,7 @@ const Stage11_2 = () => {
   };
 
   const handleNextStage = () => {
-    navigation.navigate('Stage11_3'); // ✅ Stage11_2 가즈아
+    navigation.navigate('Stage11_5'); // ✅ Stage11_2 가즈아
   };
 
   return (
@@ -52,16 +52,12 @@ const Stage11_2 = () => {
 
         <View style={styles.box}>
           {/* ✅ 텍스트 위에 이미지 추가 */}
-          <Image 
-          source={require('../assets/run.png')} 
-          style={styles.dokdoImage} 
-          resizeMode="contain"
-          />
+
           <Text style={styles.text}>
-            스포츠센터를 방문하는 김에 {'\n'}
+            좋아! 몸 잘 풀었지?
           </Text>
           <Text style={styles.subText}>
-          잠시 스트레칭을 할 겸, 달리기를 해보자!
+          이제 스포츠센터 내부로 들어가볼까?
           </Text>
             </View>
 
@@ -99,7 +95,7 @@ const styles = StyleSheet.create({
   box: {
     backgroundColor: 'rgba(255, 255, 255, 0.7)',
     width: width * 0.8,
-    height: height * 0.7, // ✅ 높이 조정 (이미지 공간 포함)
+    height: height * 0.2, // ✅ 높이 조정 (이미지 공간 포함)
     padding: height * 0.03,
     borderRadius: width * 0.04,
     alignItems: 'center',
@@ -114,7 +110,6 @@ const styles = StyleSheet.create({
     color: '#333',
     fontSize: width * 0.055,
     fontWeight: 'bold',
-    marginTop: height * 0.04, // ✅ 위쪽 간격
     marginBottom: height * 0.01,
     textAlign: 'center',
     lineHeight: height * 0.035, // ✅ 줄 간격
