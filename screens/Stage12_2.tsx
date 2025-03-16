@@ -24,7 +24,7 @@ const Stage12_2 = () => {
       Alert.alert('정답입니다!', '다음 스테이지로 이동합니다.', [
         { 
           text: '확인', 
-          onPress: () => navigation.navigate('Stage5_7') // ✅ 다음 스테이지로 이동
+          onPress: () => navigation.navigate('Stage12_3') // ✅ 다음 스테이지로 이동
         },
       ]);
     } else {
