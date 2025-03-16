@@ -1,4 +1,4 @@
-//학술정보관 가는길
+//계당관 쉐어라운지 마무리
 
 import React from 'react';
 import { View, Text, ImageBackground, StyleSheet, Dimensions, Image, TouchableOpacity } from 'react-native';
@@ -6,11 +6,11 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from '../App';
 
-type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage13_1'>;
+type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage12_5'>;
 
 const { width, height } = Dimensions.get('window');
 
-const Stage13_1 = () => {
+const Stage13_2 = () => {
   const navigation = useNavigation<NavigationProp>();
 
   const handleMapPress = () => {
@@ -18,7 +18,7 @@ const Stage13_1 = () => {
   };
 
   const handleNextStage = () => {
-    navigation.navigate('Stage13_2'); // ✅ Stage13_1 가즈아
+    navigation.navigate('Stage12_5');
   };
 
   return (
@@ -50,20 +50,19 @@ const Stage13_1 = () => {
           />
         </TouchableOpacity>
 
+        {/* ✅ 가운데 투명한 흰색 박스 */}
         <View style={styles.box}>
-          {/* ✅ 텍스트 위에 이미지 추가 */}
-          <Image 
-          source={require('../assets/library.png')} 
-          style={styles.dokdoImage} 
-          resizeMode="contain"
-          />
           <Text style={styles.text}>
-            다음으로 방문할 장소는 학술정보관(L, 도서관)이야!
+          클리커로 자리 한 번 맡아보게 시키기{"\n"}
+          플레이스토어에서{"\n"}
+          상명대학교 천안캠퍼스 학술정보관{"\n"}
+          어플 다운로드, clicker를 이용해{"\n"}
+          1층 일반열람실 자리 예약해보기
           </Text>
           <Text style={styles.subText}>
-            이제 마지막 스테이지야! 힘내자!
           </Text>
-            </View>
+
+        </View>
 
         {/* ✅ 다음 스테이지로 이동 버튼 */}
         <TouchableOpacity 
@@ -99,7 +98,7 @@ const styles = StyleSheet.create({
   box: {
     backgroundColor: 'rgba(255, 255, 255, 0.7)',
     width: width * 0.8,
-    height: height * 0.7, // ✅ 높이 조정 (이미지 공간 포함)
+    height: height * 0.4, // ✅ 높이 조정 (이미지 공간 포함)
     padding: height * 0.03,
     borderRadius: width * 0.04,
     alignItems: 'center',
@@ -111,10 +110,10 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   text: {
+    marginTop: height * 0.05,
     color: '#333',
     fontSize: width * 0.055,
     fontWeight: 'bold',
-    marginTop: height * 0.04, // ✅ 위쪽 간격
     marginBottom: height * 0.01,
     textAlign: 'center',
     lineHeight: height * 0.035, // ✅ 줄 간격
@@ -123,6 +122,7 @@ const styles = StyleSheet.create({
     color: '#555',
     fontSize: width * 0.045,
     textAlign: 'center',
+    marginTop: height * 0.02,
   },
   mapButton: {
     position: 'absolute',
@@ -161,16 +161,10 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   wayImage: {
-    width: width * 0.6, // ✅ waytostage2.png 크기 조정
+    width: width * 0.6,
     height: height * 0.5,
-    marginBottom: height * 0.005, // ✅ 이미지와 텍스트 간격
+    marginBottom: height * 0.005,
   },
-  dokdoImage: {
-    width: width * 0.7, // ✅ 이미지 크기 설정
-    height: height * 0.4, // ✅ 이미지 높이 설정
-    marginBottom: height * 0.02, // ✅ 이미지와 텍스트 사이 간격 조정
-  },
-  
 });
 
-export default Stage13_1;
+export default Stage13_2;
