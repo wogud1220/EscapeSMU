@@ -1,10 +1,20 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
-
+    <queries>
+        <package android:name="com.google.android.gms"/>
+    </queries>
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA"/>
     <uses-feature android:name="android.hardware.camera" />
-
-
+    <!--위치 권한 추가-->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
+    <!-- GPS나 네트워크 기반 위치를 필수로 요구하지 않고, 사용 가능할 때만 접근-->
+    <!-- <uses-feature android:name="android.hardware.location" android:required="false"/>
+    <uses-feature android:name="android.hardware.location.gps" android:required="false"/>
+    <uses-feature android:name="android.hardware.location.network" android:required="false"/> -->
+    <!-- 걷기, 뛰기 감지-->
+    <!-- <uses-permission android:name="android.permission.ACTIVITY_RECOGNITION" /> -->
     <application
       android:name=".MainApplication"
       android:label="@string/app_name"
