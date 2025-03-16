@@ -35,13 +35,13 @@
 	<key>NSCameraUsageDescription</key>	<!--카메라 권한 추가-->
   	<string>NsCamera 사용하여 사진 촬영</string>
 
-	<key>NSLocationWhenInUseUsageDescription</key>	<!--위치 권한-->
+	<key>NSLocationWhenInUseUsageDescription</key>	<!--현재 위치 권한-->
 	<string>현재 위치 정보 확인</string>
 
-	<key>NSLocationWhenInUseUsageDescription</key>	<!--위치 권한-->
+	<key>NSLocationWhenInUseUsageDescription</key>	<!--백그라운드 위치 권한-->
 	<string>백그라운드에서도 추적 권한</string>
 
-	<key>NSLocationTemporaryUsageDescriptionDictionary</key>	<!--위치 권한-->
+	<key>NSLocationTemporaryUsageDescriptionDictionary</key>	<!--precision 위치 권한-->
 	<dict>
   		<key>LocationAccuracy</key>
   		<string>정확한 위치 추적을 위해 고정밀 위치 권한</string>
