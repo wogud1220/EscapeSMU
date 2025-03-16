@@ -6,11 +6,11 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from '../App';
 
-type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage9_2'>;
+type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage9_3'>;
 
 const { width, height } = Dimensions.get('window');
 
-const Stage9_2 = () => {
+const Stage9_3 = () => {
   const navigation = useNavigation<NavigationProp>();
 
   const handleMapPress = () => {
@@ -165,4 +165,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Stage9_2;
+export default Stage9_3;

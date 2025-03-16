@@ -1,4 +1,4 @@
-//한누리관 1층 비대면 주문 어플 이름 맞추기
+//학생회관 5층 동아리 관련 문제
 
 import React, { useState } from 'react';
 import { View, Text, ImageBackground, StyleSheet, Dimensions, Image, TouchableOpacity, TextInput, Alert } from 'react-native';
@@ -6,11 +6,11 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from '../App';
 
-type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage5_6'>;
+type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage10_7'>;
 
 const { width, height } = Dimensions.get('window');
 
-const Stage5_6 = () => {
+const Stage10_7 = () => {
   const navigation = useNavigation<NavigationProp>();
   const [answer, setAnswer] = useState(''); // ✅ 정답 상태값 설정
 
@@ -20,11 +20,11 @@ const Stage5_6 = () => {
 
   const handleNextStage = () => {
     // ✅ 정답 체크 로직
-    if (answer.trim() === '시크릿오더') {
+    if (answer.trim() === '1') {
       Alert.alert('정답입니다!', '다음 스테이지로 이동합니다.', [
         { 
           text: '확인', 
-          onPress: () => navigation.navigate('Stage5_7') // ✅ 다음 스테이지로 이동
+          onPress: () => navigation.navigate('Stage11_1') // ✅ 다음 스테이지로 이동
         },
       ]);
     } else {
@@ -65,14 +65,25 @@ const Stage5_6 = () => {
           />
         </TouchableOpacity>
 
-        {/* ✅ 가운데 흰색 박스 */}
         <View style={styles.box}>
-          <Text style={styles.text}>한누리관 1층으로 다시 돌아왔어! 한누리관 1층에는 피곤한 대학생들을 위한 카페가 있어!</Text>
-          <Text style={styles.subText}>
-            직접 가서 주문해도 되겠지만, 카페 ing에서는 어플로도 비대면 주문이 {"\n"}가능하다는 거 알아?{"\n"}{"\n"}
-            그렇다면, 어플 이름이 뭘까?
-          </Text>
-        </View>
+  <Text style={styles.text}>
+    학생회관 5층에는 동아리들이 사용할 수 있는 동방이 있어!
+  </Text>
+  <Text style={styles.subText}>
+    여러 중앙 동아리 중, {' '}
+    <View style={styles.inlineContainer}>
+      <Image 
+        source={require('../assets/codecure.png')} 
+        style={styles.inlineImage}
+        resizeMode="contain"
+      />
+      <Text style={styles.highlight}>CodeCure</Text>
+    </View>
+    {' '}가 사용하는 동방의 호수는 몇 호일까?
+  </Text>
+</View>
+
+
 
         {/* ✅ 입력 필드 + 제출 버튼 */}
         <View style={styles.inputContainer}>
@@ -144,11 +155,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginTop: height * 0.005,
   },
-  inlineImage: {
-    width: width * 0.7,
-    height: height * 0.4,
-    marginVertical: height * 0.01, // ✅ 이미지 상하 간격 최소화
-  },
   inputContainer: {
     flexDirection: 'row',
     marginTop: height * 0.05, // ✅ 간격 축소
@@ -202,6 +208,23 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
   },
+  inlineContainer: {
+    flexDirection: 'row', // 가로 정렬
+    alignItems: 'center', // 세로축 중앙 정렬
+  },
+  inlineImage: {
+    width: width * 0.08, // 이미지 크기 조정
+    height: width * 0.08, 
+    marginRight: width * 0.01, // 글씨와의 간격 조정
+  },
+  highlight: {
+    color: '#0000FF', // 파란색 글씨
+    fontWeight: 'bold',
+    paddingHorizontal: 4,
+    borderRadius: 4,
+  },
+  
+  
 });
 
-export default Stage5_6;
+export default Stage10_7;

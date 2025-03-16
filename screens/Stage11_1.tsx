@@ -1,4 +1,4 @@
-//학생회관 2층
+//상명 스포츠센터 가는길
 
 import React from 'react';
 import { View, Text, ImageBackground, StyleSheet, Dimensions, Image, TouchableOpacity } from 'react-native';
@@ -6,11 +6,11 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from '../App';
 
-type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage10_5'>;
+type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage11_1'>;
 
 const { width, height } = Dimensions.get('window');
 
-const Stage10_5 = () => {
+const Stage11_1 = () => {
   const navigation = useNavigation<NavigationProp>();
 
   const handleMapPress = () => {
@@ -18,7 +18,7 @@ const Stage10_5 = () => {
   };
 
   const handleNextStage = () => {
-    navigation.navigate('Stage10_6'); // ✅ Stage10_5 가즈아
+    navigation.navigate('Stage10_2'); // ✅ Stage11_1 가즈아
   };
 
   return (
@@ -53,15 +53,15 @@ const Stage10_5 = () => {
         <View style={styles.box}>
           {/* ✅ 텍스트 위에 이미지 추가 */}
           <Image 
-          source={require('../assets/centerstair.png')} 
+          source={require('../assets/sportscenter.png')} 
           style={styles.dokdoImage} 
           resizeMode="contain"
           />
           <Text style={styles.text}>
-            정답이야!{'\n'}
-            자 이제, 학생회관 2층으로 가볼까?
+            다음으로 방문할 장소는 {'\n'}상명 스포츠센터야!
           </Text>
           <Text style={styles.subText}>
+          지도와 이미지를 참고해서 찾아가보자!
           </Text>
             </View>
 
@@ -173,4 +173,4 @@ const styles = StyleSheet.create({
   
 });
 
-export default Stage10_5;
+export default Stage11_1;

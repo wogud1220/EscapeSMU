@@ -6,11 +6,11 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from '../App';
 
-type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage10_5'>;
+type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage10_6'>;
 
 const { width, height } = Dimensions.get('window');
 
-const Stage10_5 = () => {
+const Stage10_6 = () => {
   const navigation = useNavigation<NavigationProp>();
 
   const handleMapPress = () => {
@@ -18,7 +18,7 @@ const Stage10_5 = () => {
   };
 
   const handleNextStage = () => {
-    navigation.navigate('Stage10_6'); // ✅ Stage10_5 가즈아
+    navigation.navigate('Stage10_7'); // ✅ Stage10_6 가즈아
   };
 
   return (
@@ -53,13 +53,14 @@ const Stage10_5 = () => {
         <View style={styles.box}>
           {/* ✅ 텍스트 위에 이미지 추가 */}
           <Image 
-          source={require('../assets/centerstair.png')} 
+          source={require('../assets/sharelounge.png')} 
           style={styles.dokdoImage} 
           resizeMode="contain"
           />
           <Text style={styles.text}>
-            정답이야!{'\n'}
-            자 이제, 학생회관 2층으로 가볼까?
+            이곳은 학생회관 '쉐어라운지'야!{'\n'}
+            누구나 자유롭게 이용가능해!{'\n'}
+            쉐어라운지 내의 세미나실은 예약 없이 선착순으로 사용할 수 있어!
           </Text>
           <Text style={styles.subText}>
           </Text>
@@ -99,7 +100,7 @@ const styles = StyleSheet.create({
   box: {
     backgroundColor: 'rgba(255, 255, 255, 0.7)',
     width: width * 0.8,
-    height: height * 0.7, // ✅ 높이 조정 (이미지 공간 포함)
+    height: height * 0.6, // ✅ 높이 조정 (이미지 공간 포함)
     padding: height * 0.03,
     borderRadius: width * 0.04,
     alignItems: 'center',
@@ -114,7 +115,7 @@ const styles = StyleSheet.create({
     color: '#333',
     fontSize: width * 0.055,
     fontWeight: 'bold',
-    marginTop: height * 0.04, // ✅ 위쪽 간격
+    marginTop: height * 0.0004, // ✅ 위쪽 간격
     marginBottom: height * 0.01,
     textAlign: 'center',
     lineHeight: height * 0.035, // ✅ 줄 간격
@@ -163,14 +164,14 @@ const styles = StyleSheet.create({
   wayImage: {
     width: width * 0.6, // ✅ waytostage2.png 크기 조정
     height: height * 0.5,
-    marginBottom: height * 0.005, // ✅ 이미지와 텍스트 간격
+    marginTop: height * 0.02,
   },
   dokdoImage: {
     width: width * 0.7, // ✅ 이미지 크기 설정
     height: height * 0.4, // ✅ 이미지 높이 설정
-    marginBottom: height * 0.02, // ✅ 이미지와 텍스트 사이 간격 조정
+    marginTop: height * -0.05, // ✅ 이미지와 텍스트 사이 간격 조정
   },
   
 });
 
-export default Stage10_5;
+export default Stage10_6;

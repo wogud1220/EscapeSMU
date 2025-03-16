@@ -49,7 +49,7 @@ const Stage10_4 = () => {
 
     if (value === 4) {
       Alert.alert('정답입니다!', '다음 스테이지로 이동합니다.', [
-        { text: '확인', onPress: () => navigation.navigate('Stage5_4') },
+        { text: '확인', onPress: () => navigation.navigate('Stage10_5') },
       ]);
     } else {
       Alert.alert('오답입니다.', '5분 뒤에 다시 시도해 보세요!');
