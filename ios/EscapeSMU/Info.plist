@@ -27,7 +27,7 @@
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>
-		<false/>
+		<true/> <!--Http 요청 수락 fetch 요청이 차단되지 않음.-->
 		<key>NSAllowsLocalNetworking</key>
 		<true/>
 	</dict>
