@@ -21,8 +21,7 @@ const Stage1Camera = ({navigation}: {navigation: any}) => {
       const cameraPermission = await Camera.getCameraPermissionStatus();
       console.log(`🔍 현재 권한 상태: ${cameraPermission}`);
 
-      const isGranted =
-        cameraPermission === 'granted' || cameraPermission === 'authorized';
+      const isGranted = cameraPermission === 'granted';
 
       setPermission(isGranted);
     };
@@ -74,7 +73,7 @@ const Stage1Camera = ({navigation}: {navigation: any}) => {
 
         if (data.result === 'Pass') {
           Alert.alert('✅ 성공!', '다음 단계로 이동합니다.');
-          navigation.navigate('NextStage'); // ✅ 다음 스테이지로 이동
+          navigation.navigate('Stage1_2'); // ✅ 다음 스테이지로 이동
         } else {
           Alert.alert('❌ 실패', '다시 시도해주세요.');
         }
