@@ -95,6 +95,9 @@ const Stage1Camera = ({navigation}: {navigation: any}) => {
       </Text>
     );
   }
+  const goToNextStage = () => {
+    navigation.navigate('Stage1_2'); // ✅ Stage1_2로 이동
+  };
 
   if (!device) {
     return (
@@ -141,13 +144,13 @@ const styles = StyleSheet.create({
     padding: 20,
     borderRadius: 50,
   },
-  buttonText: {fontSize: 20},
   permissionText: {
     color: 'black',
     fontSize: 20,
     fontWeight: 'bold',
     textAlign: 'center',
     marginTop: 300,
+  },
   nextButton: {
     position: 'absolute',
     bottom: 30,
