@@ -1,25 +1,35 @@
 import React from 'react';
-import { View, Text, ImageBackground, StyleSheet, TouchableOpacity, Dimensions } from 'react-native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { useNavigation } from '@react-navigation/native';
-import { RootStackParamList } from '../App';
+import {
+  View,
+  Text,
+  ImageBackground,
+  StyleSheet,
+  TouchableOpacity,
+  Dimensions,
+} from 'react-native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {useNavigation} from '@react-navigation/native';
+import {RootStackParamList} from '../App';
 
-const { width, height } = Dimensions.get('window'); // ✅ 반응형 값 가져오기
+const {width, height} = Dimensions.get('window'); // ✅ 반응형 값 가져오기
 
-type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'StageList'>;
+type NavigationProp = NativeStackNavigationProp<
+  RootStackParamList,
+  'StageList'
+>;
 
 const StageList = () => {
   const navigation = useNavigation<NavigationProp>();
 
   const buttons = [
-    '글로벌인문학부대학', 
-    '디자인대학', 
-    '예술대학', 
-    '융합기술대학', 
-    '스포츠융합학부', 
-    '공과대학', 
+    '글로벌인문학부대학',
+    '디자인대학',
+    '예술대학',
+    '융합기술대학',
+    '스포츠융합학부',
+    '공과대학',
     '자유전공학부대학',
-    '전체 탐험하기'
+    '전체 탐험하기',
   ];
 
   const handlePress = (title: string) => {
@@ -33,20 +43,18 @@ const StageList = () => {
   return (
     <View style={styles.container}>
       {/* ✅ 배경 이미지 설정 */}
-      <ImageBackground 
-        source={require('../assets/main.png')} 
+      <ImageBackground
+        source={require('../assets/main.png')}
         style={styles.image}
-        resizeMode="cover"
-      >
+        resizeMode="cover">
         {/* ✅ 투명 레이어 추가 */}
         <View style={styles.overlay}>
           {buttons.map((title, index) => (
-            <TouchableOpacity 
+            <TouchableOpacity
               key={index}
               style={styles.button}
               onPress={() => handlePress(title)}
-              activeOpacity={0.7}
-            >
+              activeOpacity={0.7}>
               <Text style={styles.buttonText}>{title}</Text>
             </TouchableOpacity>
           ))}
@@ -65,11 +73,10 @@ const styles = StyleSheet.create({
   },
   image: {
     flex: 1,
-    width: width , // ✅ 너비를 비율로 설정
+    width: width, // ✅ 너비를 비율로 설정
     height: height * 0.8, // ✅ 높이 비율로 설정
     justifyContent: 'center',
     alignItems: 'center',
-    
   },
   overlay: {
     ...StyleSheet.absoluteFillObject,
