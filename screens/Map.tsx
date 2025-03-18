@@ -872,6 +872,15 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(255, 255, 255, 0.8)',
     padding: 10,
     borderRadius: 5,
+  locationText: {
+    position: 'absolute',
+    bottom: 50,
+    alignSelf: 'center',
+    fontSize: 16,
+    color: '#000',
+    backgroundColor: 'rgba(255, 255, 255, 0.8)',
+    padding: 10,
+    borderRadius: 5,
   },
 });
 

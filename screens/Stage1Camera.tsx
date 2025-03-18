@@ -111,8 +111,20 @@ const Stage1Camera = ({navigation}: {navigation: any}) => {
         isActive={true}
         photo={true}
       />
+
+      {/* ✅ 사진 촬영 버튼 */}
       <TouchableOpacity onPress={takePicture} style={styles.captureButton}>
         <Text style={styles.buttonText}>📸</Text>
+      </TouchableOpacity>
+
+      {/* ✅ 다음 버튼 */}
+      <TouchableOpacity onPress={goToNextStage} style={styles.nextButton}>
+        <Text style={styles.buttonText}>다음 ➡️</Text>
+      </TouchableOpacity>
+
+      {/* ✅ 임시 Stage1_2 이동 버튼 */}
+      <TouchableOpacity onPress={goToNextStage} style={styles.tempButton}>
+        <Text style={styles.buttonText}>Stage1_2로 이동</Text>
       </TouchableOpacity>
     </View>
   );
@@ -123,7 +135,7 @@ const styles = StyleSheet.create({
   camera: {width: '100%', height: '100%'},
   captureButton: {
     position: 'absolute',
-    bottom: 40,
+    bottom: 100,
     alignSelf: 'center',
     backgroundColor: '#fff',
     padding: 20,
@@ -136,6 +148,28 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
     marginTop: 300,
+  nextButton: {
+    position: 'absolute',
+    bottom: 30,
+    alignSelf: 'center',
+    backgroundColor: '#1E90FF', // ✅ 파란색 버튼 스타일
+    paddingVertical: 15,
+    paddingHorizontal: 30,
+    borderRadius: 50,
+  },
+  tempButton: {
+    position: 'absolute',
+    bottom: 150, // ✅ 하단에서 약간 위로 배치
+    alignSelf: 'center',
+    backgroundColor: '#32CD32', // ✅ 연두색 스타일
+    paddingVertical: 15,
+    paddingHorizontal: 30,
+    borderRadius: 50,
+  },
+  buttonText: {
+    fontSize: 18,
+    color: '#fff',
+    fontWeight: 'bold',
   },
 });
 

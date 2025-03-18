@@ -1,4 +1,4 @@
-//정문  사진찍기 스테이지
+//한누리관 9층 가는 화면
 
 import React from 'react';
 import { View, Text, ImageBackground, StyleSheet, Dimensions, Image, TouchableOpacity } from 'react-native';
@@ -6,11 +6,11 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from '../App';
 
-type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage1'>;
+type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage5_1'>;
 
 const { width, height } = Dimensions.get('window');
 
-const Stage1 = () => {
+const Stage5_1 = () => {
   const navigation = useNavigation<NavigationProp>();
 
   const handleMapPress = () => {
@@ -18,7 +18,7 @@ const Stage1 = () => {
   };
 
   const handleNextStage = () => {
-    navigation.navigate('Stage1Camera');
+    navigation.navigate('Stage5_2');
   };
 
   return (
@@ -52,15 +52,15 @@ const Stage1 = () => {
 
         {/* ✅ 가운데 투명한 흰색 박스 */}
         <View style={styles.box}>
-          {/* ✅ 하얀색 박스 위에 waytostage2.png 추가 */}
+          {/* ✅ 하얀색 박스 위에 bae.png 추가 */}
           <Image 
-            source={require('../assets/frontdoor.png')} 
+            source={require('../assets/han1.png')} 
             style={styles.wayImage} 
             resizeMode="contain"
           />
-          <Text style={styles.text}>드디어 상명대학교 정문에 도착을 했어!</Text>
+          <Text style={styles.text}>위 사진이 어디일까?</Text>
           <Text style={styles.subText}>
-            정문을 통과해서 다음 스테이지에 가기 위해서는 카메라를 이용해 사진을 찍어야 한다는데..
+            엘레베이터를 타고 9층으로 이동하면 볼 수 있다는데? 가볼까?
           </Text>
         </View>
 
@@ -70,7 +70,7 @@ const Stage1 = () => {
           onPress={handleNextStage}
           activeOpacity={0.7}
         >
-          <Text style={styles.buttonText}>카메라 📸</Text>
+          <Text style={styles.buttonText}>다음 ➡️</Text>
         </TouchableOpacity>
       </ImageBackground>
     </View>
@@ -159,10 +159,10 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   wayImage: {
-    width: width * 0.6, // ✅ waytostage2.png 크기 조정
+    width: width * 0.6, // ✅ bae.png 크기 조정
     height: height * 0.5,
     marginBottom: height * 0.005, // ✅ 이미지와 텍스트 간격
   },
 });
 
-export default Stage1;
+export default Stage5_1;

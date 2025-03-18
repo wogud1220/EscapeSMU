@@ -1,4 +1,4 @@
-//정문  사진찍기 스테이지
+//청록관 가는 화면
 
 import React from 'react';
 import { View, Text, ImageBackground, StyleSheet, Dimensions, Image, TouchableOpacity } from 'react-native';
@@ -6,11 +6,11 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from '../App';
 
-type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage1'>;
+type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage2'>;
 
 const { width, height } = Dimensions.get('window');
 
-const Stage1 = () => {
+const Stage2 = () => {
   const navigation = useNavigation<NavigationProp>();
 
   const handleMapPress = () => {
@@ -18,7 +18,7 @@ const Stage1 = () => {
   };
 
   const handleNextStage = () => {
-    navigation.navigate('Stage1Camera');
+    navigation.navigate('Stage2_1'); // ✅ Stage2_1으로 이동하도록 수정
   };
 
   return (
@@ -54,13 +54,13 @@ const Stage1 = () => {
         <View style={styles.box}>
           {/* ✅ 하얀색 박스 위에 waytostage2.png 추가 */}
           <Image 
-            source={require('../assets/frontdoor.png')} 
+            source={require('../assets/waytostage2.png')} 
             style={styles.wayImage} 
             resizeMode="contain"
           />
-          <Text style={styles.text}>드디어 상명대학교 정문에 도착을 했어!</Text>
+          <Text style={styles.text}>이제 청록관으로 가야할 차례야!</Text>
           <Text style={styles.subText}>
-            정문을 통과해서 다음 스테이지에 가기 위해서는 카메라를 이용해 사진을 찍어야 한다는데..
+            청록관으로 가려면 위에 있는 사진의 방향으로 가면 된다는데? 가보자!
           </Text>
         </View>
 
@@ -70,7 +70,7 @@ const Stage1 = () => {
           onPress={handleNextStage}
           activeOpacity={0.7}
         >
-          <Text style={styles.buttonText}>카메라 📸</Text>
+          <Text style={styles.buttonText}>다음 ➡️</Text>
         </TouchableOpacity>
       </ImageBackground>
     </View>
@@ -165,4 +165,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Stage1;
+export default Stage2;

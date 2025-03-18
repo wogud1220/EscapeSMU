@@ -1,16 +1,14 @@
-//정문  사진찍기 스테이지
-
 import React from 'react';
 import { View, Text, ImageBackground, StyleSheet, Dimensions, Image, TouchableOpacity } from 'react-native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from '../App';
 
-type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage1'>;
+type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage2_1'>;
 
 const { width, height } = Dimensions.get('window');
 
-const Stage1 = () => {
+const Stage3 = () => {
   const navigation = useNavigation<NavigationProp>();
 
   const handleMapPress = () => {
@@ -18,7 +16,7 @@ const Stage1 = () => {
   };
 
   const handleNextStage = () => {
-    navigation.navigate('Stage1Camera');
+    navigation.navigate('Stage3Camera');
   };
 
   return (
@@ -54,14 +52,14 @@ const Stage1 = () => {
         <View style={styles.box}>
           {/* ✅ 하얀색 박스 위에 waytostage2.png 추가 */}
           <Image 
-            source={require('../assets/frontdoor.png')} 
+            source={require('../assets/deer.png')} 
             style={styles.wayImage} 
             resizeMode="contain"
           />
-          <Text style={styles.text}>드디어 상명대학교 정문에 도착을 했어!</Text>
+          <Text style={styles.text}>다양한 식물들 사이에 우리 학교의 마스코트인 사슴이 숨어있다는데?</Text>
           <Text style={styles.subText}>
-            정문을 통과해서 다음 스테이지에 가기 위해서는 카메라를 이용해 사진을 찍어야 한다는데..
-          </Text>
+            이 친구를 찾아서 카메라로 찍어보자!
+            </Text>
         </View>
 
         {/* ✅ 다음 스테이지로 이동 버튼 */}
@@ -165,4 +163,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Stage1;
+export default Stage3;
