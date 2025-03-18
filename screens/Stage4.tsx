@@ -1,4 +1,4 @@
-//정문  사진찍기 스테이지
+//식물과학관에서 본관으로 이동하는 화면
 
 import React from 'react';
 import { View, Text, ImageBackground, StyleSheet, Dimensions, Image, TouchableOpacity } from 'react-native';
@@ -6,11 +6,11 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from '../App';
 
-type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage1'>;
+type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage4'>;
 
 const { width, height } = Dimensions.get('window');
 
-const Stage1 = () => {
+const Stage4 = () => {
   const navigation = useNavigation<NavigationProp>();
 
   const handleMapPress = () => {
@@ -18,7 +18,7 @@ const Stage1 = () => {
   };
 
   const handleNextStage = () => {
-    navigation.navigate('Stage1Camera');
+    navigation.navigate('Stage4_1'); // ✅ Stage4_1으로 이동하
   };
 
   return (
@@ -54,13 +54,13 @@ const Stage1 = () => {
         <View style={styles.box}>
           {/* ✅ 하얀색 박스 위에 waytostage2.png 추가 */}
           <Image 
-            source={require('../assets/frontdoor.png')} 
+            source={require('../assets/waytobongwan.png')} 
             style={styles.wayImage} 
             resizeMode="contain"
           />
-          <Text style={styles.text}>드디어 상명대학교 정문에 도착을 했어!</Text>
+          <Text style={styles.text}>다시 이동해볼까?</Text>
           <Text style={styles.subText}>
-            정문을 통과해서 다음 스테이지에 가기 위해서는 카메라를 이용해 사진을 찍어야 한다는데..
+            우리의 다음 목적지는 본관이야! 본관은 식물 과학관에서 나와서 바로 정면에 있는 건물이야! 사진을 참고해보자!
           </Text>
         </View>
 
@@ -70,7 +70,7 @@ const Stage1 = () => {
           onPress={handleNextStage}
           activeOpacity={0.7}
         >
-          <Text style={styles.buttonText}>카메라 📸</Text>
+          <Text style={styles.buttonText}>다음 ➡️</Text>
         </TouchableOpacity>
       </ImageBackground>
     </View>
@@ -165,4 +165,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Stage1;
+export default Stage4;

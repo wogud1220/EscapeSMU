@@ -1,4 +1,4 @@
-//정문  사진찍기 스테이지
+//디자인관 개구리 사진찍기
 
 import React from 'react';
 import { View, Text, ImageBackground, StyleSheet, Dimensions, Image, TouchableOpacity } from 'react-native';
@@ -6,11 +6,11 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from '../App';
 
-type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage1'>;
+type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage9_2'>;
 
 const { width, height } = Dimensions.get('window');
 
-const Stage1 = () => {
+const Stage9_2 = () => {
   const navigation = useNavigation<NavigationProp>();
 
   const handleMapPress = () => {
@@ -18,7 +18,7 @@ const Stage1 = () => {
   };
 
   const handleNextStage = () => {
-    navigation.navigate('Stage1Camera');
+    navigation.navigate('Stage9Camera');
   };
 
   return (
@@ -54,13 +54,14 @@ const Stage1 = () => {
         <View style={styles.box}>
           {/* ✅ 하얀색 박스 위에 waytostage2.png 추가 */}
           <Image 
-            source={require('../assets/frontdoor.png')} 
+            source={require('../assets/temp.png')} 
             style={styles.wayImage} 
             resizeMode="contain"
           />
-          <Text style={styles.text}>드디어 상명대학교 정문에 도착을 했어!</Text>
+          <Text style={styles.text}>디자인 놀이터, 고고장, 스토밍, 모임터
+          </Text>
           <Text style={styles.subText}>
-            정문을 통과해서 다음 스테이지에 가기 위해서는 카메라를 이용해 사진을 찍어야 한다는데..
+            다음으로는 2층으로 향하여 '상명갤러리'로 가보자!
           </Text>
         </View>
 
@@ -159,10 +160,10 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   wayImage: {
-    width: width * 0.6, // ✅ waytostage2.png 크기 조정
-    height: height * 0.5,
+    width: width * 0.4, // ✅ waytostage2.png 크기 조정
+    height: height * 0.3,
     marginBottom: height * 0.005, // ✅ 이미지와 텍스트 간격
   },
 });
 
-export default Stage1;
+export default Stage9_2;

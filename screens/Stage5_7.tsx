@@ -1,4 +1,4 @@
-//정문  사진찍기 스테이지
+//청록관 가는 화면
 
 import React from 'react';
 import { View, Text, ImageBackground, StyleSheet, Dimensions, Image, TouchableOpacity } from 'react-native';
@@ -6,11 +6,11 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from '../App';
 
-type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage1'>;
+type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage6_1'>;
 
 const { width, height } = Dimensions.get('window');
 
-const Stage1 = () => {
+const Stage5_7 = () => {
   const navigation = useNavigation<NavigationProp>();
 
   const handleMapPress = () => {
@@ -18,7 +18,7 @@ const Stage1 = () => {
   };
 
   const handleNextStage = () => {
-    navigation.navigate('Stage1Camera');
+    navigation.navigate('Stage6_1'); // ✅ Stage6_1으로 이동하도록 수정
   };
 
   return (
@@ -52,15 +52,10 @@ const Stage1 = () => {
 
         {/* ✅ 가운데 투명한 흰색 박스 */}
         <View style={styles.box}>
-          {/* ✅ 하얀색 박스 위에 waytostage2.png 추가 */}
-          <Image 
-            source={require('../assets/frontdoor.png')} 
-            style={styles.wayImage} 
-            resizeMode="contain"
-          />
-          <Text style={styles.text}>드디어 상명대학교 정문에 도착을 했어!</Text>
-          <Text style={styles.subText}>
-            정문을 통과해서 다음 스테이지에 가기 위해서는 카메라를 이용해 사진을 찍어야 한다는데..
+          <Text style={styles.text}>시크릿 오더의 장점은 {'\n'}바로 비대면 주문이야!{'\n'}
+            강의실에 앉아서 주문하면 바로 주문이 완료돼!{'\n'}
+            스탬프도 쌓을 수 있어!{'\n'}
+            그럼 이제 다음 장소로 가볼까?
           </Text>
         </View>
 
@@ -70,7 +65,7 @@ const Stage1 = () => {
           onPress={handleNextStage}
           activeOpacity={0.7}
         >
-          <Text style={styles.buttonText}>카메라 📸</Text>
+          <Text style={styles.buttonText}>다음 ➡️</Text>
         </TouchableOpacity>
       </ImageBackground>
     </View>
@@ -98,7 +93,7 @@ const styles = StyleSheet.create({
   box: {
     backgroundColor: 'rgba(255, 255, 255, 0.7)',
     width: width * 0.8,
-    height: height * 0.7, // ✅ 높이 조정 (이미지 공간 포함)
+    height: height * 0.5, // ✅ 높이 조정 (이미지 공간 포함)
     padding: height * 0.03,
     borderRadius: width * 0.04,
     alignItems: 'center',
@@ -111,10 +106,11 @@ const styles = StyleSheet.create({
   },
   text: {
     color: '#333',
-    fontSize: width * 0.06,
+    fontSize: width * 0.055,
     fontWeight: 'bold',
     marginBottom: height * 0.01,
     textAlign: 'center',
+    lineHeight: height * 0.035, // ✅ 줄 간격
   },
   subText: {
     color: '#555',
@@ -165,4 +161,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Stage1;
+export default Stage5_7;

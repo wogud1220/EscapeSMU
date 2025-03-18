@@ -1,4 +1,4 @@
-//정문  사진찍기 스테이지
+//송백관 가는 화면
 
 import React from 'react';
 import { View, Text, ImageBackground, StyleSheet, Dimensions, Image, TouchableOpacity } from 'react-native';
@@ -6,11 +6,11 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from '../App';
 
-type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage1'>;
+type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage7_1'>;
 
 const { width, height } = Dimensions.get('window');
 
-const Stage1 = () => {
+const Stage7_1 = () => {
   const navigation = useNavigation<NavigationProp>();
 
   const handleMapPress = () => {
@@ -18,7 +18,7 @@ const Stage1 = () => {
   };
 
   const handleNextStage = () => {
-    navigation.navigate('Stage1Camera');
+    navigation.navigate('Stage7_2'); // ✅ Stage7_1 가즈아
   };
 
   return (
@@ -50,19 +50,17 @@ const Stage1 = () => {
           />
         </TouchableOpacity>
 
-        {/* ✅ 가운데 투명한 흰색 박스 */}
         <View style={styles.box}>
-          {/* ✅ 하얀색 박스 위에 waytostage2.png 추가 */}
+          {/* ✅ 텍스트 위에 이미지 추가 */}
           <Image 
-            source={require('../assets/frontdoor.png')} 
-            style={styles.wayImage} 
-            resizeMode="contain"
+          source={require('../assets/song.png')} 
+          style={styles.dokdoImage} 
+          resizeMode="contain"
           />
-          <Text style={styles.text}>드디어 상명대학교 정문에 도착을 했어!</Text>
-          <Text style={styles.subText}>
-            정문을 통과해서 다음 스테이지에 가기 위해서는 카메라를 이용해 사진을 찍어야 한다는데..
-          </Text>
-        </View>
+          <Text style={styles.text}>
+            정답이야! 그렇다면 이제 독도 조형물 뒤에 있는 송백관으로 향해보자! {'\n'}
+            </Text>
+            </View>
 
         {/* ✅ 다음 스테이지로 이동 버튼 */}
         <TouchableOpacity 
@@ -70,7 +68,7 @@ const Stage1 = () => {
           onPress={handleNextStage}
           activeOpacity={0.7}
         >
-          <Text style={styles.buttonText}>카메라 📸</Text>
+          <Text style={styles.buttonText}>다음 ➡️</Text>
         </TouchableOpacity>
       </ImageBackground>
     </View>
@@ -98,7 +96,7 @@ const styles = StyleSheet.create({
   box: {
     backgroundColor: 'rgba(255, 255, 255, 0.7)',
     width: width * 0.8,
-    height: height * 0.7, // ✅ 높이 조정 (이미지 공간 포함)
+    height: height * 0.6, // ✅ 높이 조정 (이미지 공간 포함)
     padding: height * 0.03,
     borderRadius: width * 0.04,
     alignItems: 'center',
@@ -111,10 +109,11 @@ const styles = StyleSheet.create({
   },
   text: {
     color: '#333',
-    fontSize: width * 0.06,
+    fontSize: width * 0.055,
     fontWeight: 'bold',
     marginBottom: height * 0.01,
     textAlign: 'center',
+    lineHeight: height * 0.035, // ✅ 줄 간격
   },
   subText: {
     color: '#555',
@@ -163,6 +162,12 @@ const styles = StyleSheet.create({
     height: height * 0.5,
     marginBottom: height * 0.005, // ✅ 이미지와 텍스트 간격
   },
+  dokdoImage: {
+    width: width * 0.7, // ✅ 이미지 크기 설정
+    height: height * 0.4, // ✅ 이미지 높이 설정
+    marginBottom: height * 0.02, // ✅ 이미지와 텍스트 사이 간격 조정
+  },
+  
 });
 
-export default Stage1;
+export default Stage7_1;
