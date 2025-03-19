@@ -1,16 +1,14 @@
-//청록관으로 이동하는 화면
-
 import React from 'react';
-import { View, Text, ImageBackground, StyleSheet, Dimensions, Image, TouchableOpacity } from 'react-native';
+import { View, Text, ImageBackground, StyleSheet, Dimensions, Image, TouchableOpacity, Alert } from 'react-native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from '../App';
 
-type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage2_1'>;
+type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage2_5'>;
 
 const { width, height } = Dimensions.get('window');
 
-const Stage2_1 = () => {
+const Stage2_5 = () => {
   const navigation = useNavigation<NavigationProp>();
 
   const handleMapPress = () => {
@@ -18,7 +16,16 @@ const Stage2_1 = () => {
   };
 
   const handleNextStage = () => {
-    navigation.navigate('Stage2_2'); // ✅ Stage2_2으로 이동하도록 수정
+    navigation.navigate('Stage3_1'); // ✅ Stage2_2으로 이동하도록 수정
+  };
+
+  // ✅ 힌트 기능 추가
+  const handleHint = () => {
+    Alert.alert(
+      '힌트',
+      '청록관/상록관에서 눈에 띄는 무언가가 있을 거야. 잘 찾아봐!',
+      [{ text: '확인' }]
+    );
   };
 
   return (
@@ -58,20 +65,21 @@ const Stage2_1 = () => {
             style={styles.wayImage} 
             resizeMode="contain"
           />
-          <Text style={styles.text}>이제 청록관으로 가야할 차례야!</Text>
+          <Text style={styles.text}>다음 스테이지로 넘어가기 전 마지막 단계야!</Text>
           <Text style={styles.subText}>
-            청록관으로 가려면 위에 있는 사진의 방향으로 가면 된다는데? 가보자!
+            이 퍼즐을 맞춰보자!
           </Text>
         </View>
 
-        {/* ✅ 다음 스테이지로 이동 버튼 */}
+        {/* ✅ 힌트 버튼 추가 */}
         <TouchableOpacity 
-          style={styles.nextButton}
-          onPress={handleNextStage}
+          style={styles.hintButton}
+          onPress={handleHint}
           activeOpacity={0.7}
         >
-          <Text style={styles.buttonText}>다음 ➡️</Text>
+          <Text style={styles.hintButtonText}>힌트 보기 💡</Text>
         </TouchableOpacity>
+
       </ImageBackground>
     </View>
   );
@@ -98,7 +106,7 @@ const styles = StyleSheet.create({
   box: {
     backgroundColor: 'rgba(255, 255, 255, 0.7)',
     width: width * 0.8,
-    height: height * 0.7, // ✅ 높이 조정 (이미지 공간 포함)
+    height: height * 0.7, 
     padding: height * 0.03,
     borderRadius: width * 0.04,
     alignItems: 'center',
@@ -136,7 +144,7 @@ const styles = StyleSheet.create({
   nextButton: {
     position: 'absolute',
     bottom: height * 0.05,
-    backgroundColor: 'rgba(0, 0, 255, 0.7)', // ✅ 파란색 버튼
+    backgroundColor: 'rgba(0, 0, 255, 0.7)', 
     paddingVertical: height * 0.02,
     paddingHorizontal: width * 0.2,
     borderRadius: width * 0.03,
@@ -159,10 +167,25 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   wayImage: {
-    width: width * 0.6, // ✅ waytostage2.png 크기 조정
+    width: width * 0.6, 
     height: height * 0.5,
-    marginBottom: height * 0.005, // ✅ 이미지와 텍스트 간격
+    marginBottom: height * 0.005, 
+  },
+  // ✅ 힌트 버튼 스타일 추가
+  hintButton: {
+    position: 'absolute',
+    bottom: height * 0.13,
+    backgroundColor: '#FF6347', 
+    paddingVertical: height * 0.015,
+    paddingHorizontal: width * 0.2,
+    borderRadius: width * 0.03,
+    alignItems: 'center',
+  },
+  hintButtonText: {
+    color: '#FFFFFF',
+    fontSize: width * 0.045,
+    fontWeight: 'bold',
   },
 });
 
-export default Stage2_1;
+export default Stage2_5;

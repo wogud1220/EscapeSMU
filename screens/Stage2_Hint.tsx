@@ -1,4 +1,4 @@
-//청록관으로 이동하는 화면
+//청록관/상록관 퍼즐
 
 import React from 'react';
 import { View, Text, ImageBackground, StyleSheet, Dimensions, Image, TouchableOpacity } from 'react-native';
@@ -18,7 +18,7 @@ const Stage2_1 = () => {
   };
 
   const handleNextStage = () => {
-    navigation.navigate('Stage2_2'); // ✅ Stage2_2으로 이동하도록 수정
+    navigation.navigate('Stage2_Hint'); // ✅ Stage2_2으로 이동하도록 수정
   };
 
   return (
@@ -52,15 +52,9 @@ const Stage2_1 = () => {
 
         {/* ✅ 가운데 투명한 흰색 박스 */}
         <View style={styles.box}>
-          {/* ✅ 하얀색 박스 위에 waytostage2.png 추가 */}
-          <Image 
-            source={require('../assets/cheong_temp.png')} 
-            style={styles.wayImage} 
-            resizeMode="contain"
-          />
-          <Text style={styles.text}>이제 청록관으로 가야할 차례야!</Text>
+          <Text style={styles.text}>이 그림은 어디 있는 그림일까?</Text>
           <Text style={styles.subText}>
-            청록관으로 가려면 위에 있는 사진의 방향으로 가면 된다는데? 가보자!
+            상록관 카페 뒤쪽으로 가서 좌회전하면 담장에 그림들이 보이네! 이제 풀 수 있을 것 같아!
           </Text>
         </View>
 
@@ -70,7 +64,7 @@ const Stage2_1 = () => {
           onPress={handleNextStage}
           activeOpacity={0.7}
         >
-          <Text style={styles.buttonText}>다음 ➡️</Text>
+          <Text style={styles.buttonText}>문제로 돌아가기</Text>
         </TouchableOpacity>
       </ImageBackground>
     </View>

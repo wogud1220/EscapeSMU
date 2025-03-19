@@ -6,11 +6,11 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from '../App';
 
-type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage2_1'>;
+type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage2_3'>;
 
 const { width, height } = Dimensions.get('window');
 
-const Stage2_1 = () => {
+const Stage2_3 = () => {
   const navigation = useNavigation<NavigationProp>();
 
   const handleMapPress = () => {
@@ -18,7 +18,7 @@ const Stage2_1 = () => {
   };
 
   const handleNextStage = () => {
-    navigation.navigate('Stage2_2'); // ✅ Stage2_2으로 이동하도록 수정
+    navigation.navigate('Stage2Camera_2'); // ✅ Stage2_3으로 이동하도록 수정
   };
 
   return (
@@ -54,13 +54,13 @@ const Stage2_1 = () => {
         <View style={styles.box}>
           {/* ✅ 하얀색 박스 위에 waytostage2.png 추가 */}
           <Image 
-            source={require('../assets/cheong_temp.png')} 
+            source={require('../assets/sangrokcafe.png')} 
             style={styles.wayImage} 
             resizeMode="contain"
           />
-          <Text style={styles.text}>이제 청록관으로 가야할 차례야!</Text>
+          <Text style={styles.text}>잘 찾았구나!</Text>
           <Text style={styles.subText}>
-            청록관으로 가려면 위에 있는 사진의 방향으로 가면 된다는데? 가보자!
+            상록관 1층에는 학생들이 자유롭게 쉴 수 있는 휴게실도 있어! 다음 이미지를 참고해서 카메라로 대보자!
           </Text>
         </View>
 
@@ -165,4 +165,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Stage2_1;
+export default Stage2_3;

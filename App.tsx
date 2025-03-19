@@ -9,6 +9,12 @@ import Map from './screens/Map';
 import Stage1_2 from './screens/Stage1_2';
 import Stage2 from './screens/Stage2';
 import Stage2_1 from './screens/Stage2_1';
+import Stage2_2 from './screens/Stage2_2';
+import Stage2_3 from './screens/Stage2_3';
+import Stage2_4 from './screens/Stage2_4';
+import Stage2_5 from './screens/Stage2_5';
+import Stage2Camera from './screens/Stage2Camera';
+import Stage2Camera_2 from './screens/Stage2Camera_2';
 import Stage3 from './screens/Stage3';
 import Stage3_1 from './screens/Stage3_1';
 import Stage3Camera from './screens/Stage3Camera';
@@ -82,6 +88,11 @@ export type RootStackParamList = {
   Stage2: undefined;
   Stage2_1: undefined;
   Stage2_2: undefined;
+  Stage2_3: undefined;
+  Stage2_4: undefined;
+  Stage2_5: undefined;
+  Stage2Camera: undefined;
+  Stage2Camera_2: undefined;
   Stage3: undefined;
   Stage3_1: undefined;
   Stage3_2: undefined;
@@ -190,6 +201,36 @@ const App = () => {
         <Stack.Screen
           name="Stage2_1"
           component={Stage2_1}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Stage2_2"
+          component={Stage2_2}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Stage2Camera"
+          component={Stage2Camera}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Stage2_3"
+          component={Stage2_3}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Stage2_4"
+          component={Stage2_4}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Stage2_5"
+          component={Stage2_5}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Stage2Camera_2"
+          component={Stage2Camera_2}
           options={{ headerShown: false }}
         />
         <Stack.Screen
