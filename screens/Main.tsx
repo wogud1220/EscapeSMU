@@ -18,21 +18,21 @@ const Main = () => {
   return (
     <View style={styles.container}>
       {/* ✅ 이미지 배경 설정 */}
-      <ImageBackground 
-        source={require('../assets/main.png')} 
+      <ImageBackground
+        source={require('../assets/main.png')}
         style={styles.image}
         resizeMode="cover"
       >
         {/* ✅ 메인 타이틀 이미지 추가 */}
-        <Image 
-          source={require('../assets/main_title.png')} 
+        <Image
+          source={require('../assets/main_title.png')}
           style={styles.titleImage}
           resizeMode="contain"
         />
-        
+
         {/* ✅ 버튼을 이미지 위에 배치 */}
-        <TouchableOpacity 
-          onPress={handleNavigate} 
+        <TouchableOpacity
+          onPress={handleNavigate}
           style={styles.button}
           activeOpacity={0.7}
         >
