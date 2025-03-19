@@ -152,7 +152,7 @@ const Stack = createStackNavigator<RootStackParamList>();
 const App = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Stage12_2">
+      <Stack.Navigator initialRouteName="Main">
         <Stack.Screen 
           name="Main" 
           component={Main} 
