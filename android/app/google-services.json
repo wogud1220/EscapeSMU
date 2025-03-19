@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "109058266640",
+    "project_id": "escapesmu",
+    "storage_bucket": "escapesmu.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:109058266640:android:71bdef512fe0e8b0051c95",
+        "android_client_info": {
+          "package_name": "com.escapesmu"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "109058266640-14i2rea7pnvrttd47cudb0u0780k3p9p.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.escapesmu",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "109058266640-5lipcplp01ms88kquhdr2sm4v8f36g55.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDJUzQ33Wll6dkgiujYGWhXytJRrhEpOEA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "109058266640-5lipcplp01ms88kquhdr2sm4v8f36g55.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "109058266640-tvnch0u65g8r8j58behbssfq0qj2lpqb.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.yoonwogud.escapesmu"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

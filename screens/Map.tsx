@@ -12,13 +12,6 @@ import WebView from 'react-native-webview';
 import {request, PERMISSIONS, RESULTS} from 'react-native-permissions';
 import {useNavigation} from '@react-navigation/native';
 import Geolocation from '@react-native-community/geolocation';
-import {
-  SensorTypes,
-  setUpdateIntervalForType,
-  accelerometer,
-  barometer,
-} from 'react-native-sensors';
-
 const KAKAO_MAP_HTML = `
 <!DOCTYPE html>
 <html lang="ko">

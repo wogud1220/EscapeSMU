@@ -1,6 +1,8 @@
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
+import LogIn from './screens/Member/LogIn';
+import SignIn from './screens/Member/SignIn';
 import Main from './screens/Main';
 import StageList from './screens/StageList';
 import Stage1 from './screens/Stage1';
@@ -73,6 +75,8 @@ import Stage13_1 from './screens/Stage13_1';
 import Stage13_2 from './screens/Stage13_2';
 
 export type RootStackParamList = {
+  LogIn: undefined;
+  SignIn: undefined;
   Main: undefined;
   StageList: undefined;
   Stage1: undefined;
@@ -159,6 +163,17 @@ const App = () => {
           options={{headerShown: false}}
         />
         <Stack.Screen
+          name="LogIn"
+          component={LogIn}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="SignIn"
+          component={SignIn}
+          options={{headerShown: false}}
+        />
+
+        <Stack.Screen
           name="StageList"
           component={StageList}
           options={{headerShown: false}}
@@ -171,336 +186,337 @@ const App = () => {
         <Stack.Screen
           name="Stage1Camera"
           component={Stage1Camera}
-          options={{ headerShown: false}} />
-        <Stack.Screen 
-          name="Map" 
-          component={Map} 
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="Map"
+          component={Map}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="Stage1_2"
           component={Stage1_2}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="Stage2"
           component={Stage2}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="Stage2_1"
           component={Stage2_1}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="Stage3"
           component={Stage3}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="Stage3_1"
           component={Stage3_1}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="Stage3Camera"
           component={Stage3Camera}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="Stage4"
           component={Stage4}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="Stage4_1"
           component={Stage4_1}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="Stage4_2"
           component={Stage4_2}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="Stage4_3"
           component={Stage4_3}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="Stage4_4"
           component={Stage4_4}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="Stage5"
           component={Stage5}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="Stage5_1"
           component={Stage5_1}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="Stage5_2"
           component={Stage5_2}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="Stage5_3"
           component={Stage5_3}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="Stage5_4"
           component={Stage5_4}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="Guestbook"
           component={Guestbook}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="Stage5_5"
           component={Stage5_5}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="Stage5_6"
           component={Stage5_6}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="Stage5_7"
           component={Stage5_7}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="Stage6_1"
           component={Stage6_1}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="Stage6_2"
           component={Stage6_2}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="Stage6_3"
           component={Stage6_3}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="Stage7_1"
           component={Stage7_1}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="Stage7_2"
           component={Stage7_2}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="Stage7_3"
           component={Stage7_3}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="Stage7_4"
           component={Stage7_4}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="Stage8_1"
           component={Stage8_1}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="Stage8_2"
           component={Stage8_2}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="Stage8_3"
           component={Stage8_3}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="Stage8_4"
           component={Stage8_4}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="Stage8_5"
           component={Stage8_5}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="Stage8_6"
           component={Stage8_6}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="Stage9_1"
           component={Stage9_1}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="Stage9Camera"
           component={Stage9Camera}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="Stage9_2"
           component={Stage9_2}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="Stage9_3"
           component={Stage9_3}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="Stage9Camera_2"
           component={Stage9Camera_2}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="Stage9_4"
           component={Stage9_4}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="Stage10_1"
           component={Stage10_1}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="Stage10_2"
           component={Stage10_2}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="Stage10_3"
           component={Stage10_3}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="Stage10Camera"
           component={Stage10Camera}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="Stage10_4"
           component={Stage10_4}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="Stage10_5"
           component={Stage10_5}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="Stage10_6"
           component={Stage10_6}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="Stage10_7"
           component={Stage10_7}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="Stage11_1"
           component={Stage11_1}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="Stage11_2"
           component={Stage11_2}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="Stage11_3"
           component={Stage11_3}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="Stage11Run"
           component={Stage11Run}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="Stage11_4"
           component={Stage11_4}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="Stage11_5"
           component={Stage11_5}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="Stage11_6"
           component={Stage11_6}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="Stage11Camera"
           component={Stage11Camera}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="Stage12_1"
           component={Stage12_1}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="Stage12_2"
           component={Stage12_2}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="Stage12Camera"
           component={Stage12Camera}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="Stage12_3"
           component={Stage12_3}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="Stage12_4"
           component={Stage12_4}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="Stage12_5"
           component={Stage12_5}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="Stage12Camera_2"
           component={Stage12Camera_2}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="Stage12_6"
           component={Stage12_6}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="Stage13_1"
           component={Stage13_1}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="Stage13_2"
           component={Stage13_2}
-          options={{ headerShown: false }}
+          options={{headerShown: false}}
         />
       </Stack.Navigator>
     </NavigationContainer>
