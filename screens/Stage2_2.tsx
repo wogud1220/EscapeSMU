@@ -58,7 +58,7 @@ const Stage2_2 = () => {
             style={styles.wayImage} 
             resizeMode="contain"
           />
-          <Text style={styles.text}>이 곳이 청록관이구나! 그 옆 건물은 상록관이야!</Text>
+          <Text style={styles.text}>이 곳이 청록관이구나! {'\n'}그 옆 건물은 상록관이야!</Text>
           <Text style={styles.subText}>
             청록관에는 스튜디오, 소극장, 강의실, 교수연구실 등이 위치한 건물이야!
             이 곳 2층 어딘가에는 다음과 같은 Galary라고 빨간색 글씨가 써져 있는 텔레비전이 있다는데 찾아서 카메라를 갖다대보자!
@@ -71,7 +71,7 @@ const Stage2_2 = () => {
           onPress={handleNextStage}
           activeOpacity={0.7}
         >
-          <Text style={styles.buttonText}>다음 ➡️</Text>
+          <Text style={styles.buttonText}>카메라 📸</Text>
         </TouchableOpacity>
       </ImageBackground>
     </View>
@@ -116,12 +116,14 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: height * 0.01,
     textAlign: 'center',
+    marginTop: height * -0.1,
   },
   subText: {
     color: '#555',
     fontSize: width * 0.045,
     textAlign: 'center',
     marginTop: height * 0.02,
+    marginBottom: height * 0.15,
   },
   mapButton: {
     position: 'absolute',
@@ -162,7 +164,7 @@ const styles = StyleSheet.create({
   wayImage: {
     width: width * 0.6, // ✅ waytostage2.png 크기 조정
     height: height * 0.5,
-    marginBottom: height * 0.005, // ✅ 이미지와 텍스트 간격
+    marginBottom: height * 0.002, // ✅ 이미지와 텍스트 간격
   },
 });
 

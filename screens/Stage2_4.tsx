@@ -52,8 +52,11 @@ const Stage2_4 = () => {
 
         {/* ✅ 가운데 투명한 흰색 박스 */}
         <View style={styles.box}>
-          이 곳도 잘 찾아냈어!
-          <Text style={styles.text}>다른 휴게실들 자리가 없으면 이 곳도 이용해보자! 전자레인지도 있어!
+          <Text style={styles.text}>
+          이 곳도 잘 찾았구나!
+          </Text>
+          <Text style={styles.subText}>
+          이 곳은 다른 휴게실들에 비해 {'\n'}상대적으로 학생들이 적게 오는 곳인데다가 전자레인지도 있으니 갈 곳 없을 때 이용해보는 것도 좋을 것 같아!
           </Text>
         </View>
 
