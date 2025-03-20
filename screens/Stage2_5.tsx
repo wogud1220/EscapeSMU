@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, ImageBackground, StyleSheet, Dimensions, Image, TouchableOpacity, Alert } from 'react-native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
@@ -8,8 +8,7 @@ type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage2_5'>;
 
 const { width, height } = Dimensions.get('window');
 
-// ✅ 정적 배열로 이미지 설정
-const puzzleImages = [
+const correctPuzzleImages = [
   require('../assets/puzzle/1_1_1.png'),
   require('../assets/puzzle/1_1_2.png'),
   require('../assets/puzzle/1_1_3.png'),
@@ -37,9 +36,46 @@ const puzzleImages = [
   require('../assets/puzzle/1_5_5.png'),
 ];
 
+const shuffleArray = (array: any[]) => {
+  const newArray = [...array];
+  for (let i = newArray.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+  }
+  return newArray;
+};
+
 const Stage2_5 = () => {
   const navigation = useNavigation<NavigationProp>();
+  const [puzzleImages, setPuzzleImages] = useState(() => shuffleArray([...correctPuzzleImages]));
   const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(null);
+
+
+// ✅ 경로 문자열로 변환 후 비교하기 위해 미리 변환
+const correctPaths = correctPuzzleImages.map((img) =>
+  Image.resolveAssetSource(img).uri
+);
+
+const checkCompletion = () => {
+  const currentPaths = puzzleImages.map((img) =>
+    Image.resolveAssetSource(img).uri
+  );
+
+  // ✅ 문자열 비교로 수정됨
+  if (currentPaths.every((path, index) => path === correctPaths[index])) {
+    Alert.alert(
+      '성공 🎉',
+      '퍼즐을 완성했어요! 다음 스테이지로 이동합니다.',
+      [{ text: '확인', onPress: () => navigation.navigate('Stage3_1') }]
+    );
+  }
+};
+  
+  useEffect(() => {
+    setPuzzleImages(shuffleArray([...correctPuzzleImages]));
+  }, []);
+
+
 
   const handleMapPress = () => {
     navigation.navigate('Map');
@@ -48,19 +84,32 @@ const Stage2_5 = () => {
   const handleHint = () => {
     Alert.alert(
       '힌트',
-      '청록관/상록관에서 눈에 띄는 무언가가 있을 거야. 잘 찾아봐!',
+      '상록관 카페 뒤쪽으로 가서 왼쪽을 바라보면, 담장에 그림이 있을거야!',
       [{ text: '확인' }]
     );
   };
 
   const handleImagePress = (index: number) => {
-    setSelectedImageIndex(index);
-    console.log(`Selected Image Index: ${index}`);
+    if (selectedImageIndex === null) {
+      setSelectedImageIndex(index);
+    } else {
+      swapImages(selectedImageIndex, index);
+      setSelectedImageIndex(null);
+    }
+  };
+
+  const swapImages = (index1: number, index2: number) => {
+    const newPuzzleImages = [...puzzleImages];
+    [newPuzzleImages[index1], newPuzzleImages[index2]] = [newPuzzleImages[index2], newPuzzleImages[index1]];
+    setPuzzleImages(newPuzzleImages);
+
+    setTimeout(() => {
+      checkCompletion();
+    }, 200);
   };
 
   return (
     <View style={styles.container}>
-      {/* ✅ 배경 이미지 설정 */}
       <ImageBackground 
         source={require('../assets/main.png')} 
         style={styles.image}
@@ -68,7 +117,6 @@ const Stage2_5 = () => {
       >
         <View style={styles.overlay} />
 
-        {/* ✅ 맵 버튼 */}
         <TouchableOpacity onPress={handleMapPress} style={styles.mapButton}>
           <Image 
             source={require('../assets/map.png')}
@@ -77,7 +125,6 @@ const Stage2_5 = () => {
           />
         </TouchableOpacity>
 
-        {/* ✅ 홈 버튼 */}
         <TouchableOpacity onPress={() => navigation.navigate('Main')} style={styles.backButton}>
           <Image 
             source={require('../assets/home.png')}
@@ -86,12 +133,10 @@ const Stage2_5 = () => {
           />
         </TouchableOpacity>
 
-        {/* ✅ 하얀색 박스 */}
         <View style={styles.box}>
           <Text style={styles.text}>다음 스테이지로 넘어가기 전 마지막 단계야!</Text>
           <Text style={styles.subText}>이 퍼즐을 맞춰보자!</Text>
 
-          {/* ✅ 5x5 퍼즐 그리드 */}
           <View style={styles.grid}>
             {puzzleImages.map((image, index) => (
               <TouchableOpacity 
@@ -106,9 +151,14 @@ const Stage2_5 = () => {
               </TouchableOpacity>
             ))}
           </View>
+          <Text style={styles.subText}>
+            두 이미지를 클릭해서 서로의 위치를 교환할 수 있어!{'\n'}
+            <Text style={styles.highlightText}>
+              완성한 것 같으면 가운데 이미지를 더블클릭해보자!
+              </Text>
+              </Text>
         </View>
 
-        {/* ✅ 힌트 버튼 */}
         <TouchableOpacity 
           style={styles.hintButton}
           onPress={handleHint}
@@ -121,9 +171,8 @@ const Stage2_5 = () => {
   );
 };
 
-// ✅ 그리드 크기 설정
-const gridSize = 7;
-const gridItemSize = width * 1.0 / gridSize;
+const gridSize = 5;
+const gridItemSize = width * 0.7 / gridSize;
 
 const styles = StyleSheet.create({
   container: {
@@ -204,13 +253,13 @@ const styles = StyleSheet.create({
     fontSize: width * 0.045,
     fontWeight: 'bold',
   },
-  // ✅ 수정된 부분: 고정 크기로 버튼 설정
+
   mapButton: {
     position: 'absolute',
     top: height * 0.05,
     right: width * 0.05,
-    width: 40, // 고정된 크기 설정
-    height: 40, // 고정된 크기 설정
+    width: 40,
+    height: 40,
   },
   mapImage: {
     width: '100%',
@@ -220,13 +269,18 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: height * 0.05,
     left: width * 0.05,
-    width: 40, // 고정된 크기 설정
-    height: 40, // 고정된 크기 설정
+    width: 40,
+    height: 40,
   },
   backImage: {
     width: '100%',
     height: '100%',
   },
+  highlightText: {
+    color: 'red',
+    fontWeight: 'bold',
+  },
+  
 });
 
 
