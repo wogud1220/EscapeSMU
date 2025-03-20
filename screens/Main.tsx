@@ -26,24 +26,6 @@ const Main = () => {
   const navigation = useNavigation<NavigationProp>();
   const [userEmail, setUserEmail] = useState<string | null>(null);
 
-  // ✅ 로그인 상태 감지
-  // useEffect(() => {
-  //   if (!auth) {
-  //     console.error('Firebase Auth 객체가 초기화되지 않았습니다.');
-  //     return;
-  //   }
-
-  //   const unsubscribe = onAuthStateChanged(auth, user => {
-  //     if (user && user.email) {
-  //       setUserEmail(user.email); // 로그인된 경우 이메일 저장
-  //     } else {
-  //       setUserEmail(null); // 로그아웃 시 초기화
-  //     }
-  //   });
-
-  //   return unsubscribe; // ✅ 컴포넌트 언마운트 시 구독 해제
-  // }, []);
-
   // ✅ 로그인 상태 감지 (정상 작동 확인)
   useEffect(() => {
     if (!auth) {
