@@ -17,6 +17,7 @@ import Stage2Camera from './screens/Stage2Camera';
 import Stage2Camera_2 from './screens/Stage2Camera_2';
 import Stage3 from './screens/Stage3';
 import Stage3_1 from './screens/Stage3_1';
+import Stage3_2 from './screens/Stage3_2';
 import Stage3Camera from './screens/Stage3Camera';
 import Stage4 from './screens/Stage4';
 import Stage4_1 from './screens/Stage4_1';
@@ -241,6 +242,11 @@ const App = () => {
         <Stack.Screen
           name="Stage3_1"
           component={Stage3_1}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Stage3_2"
+          component={Stage3_2}
           options={{ headerShown: false }}
         />
         <Stack.Screen

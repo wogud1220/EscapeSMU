@@ -53,7 +53,7 @@ const Stage3Camera = ({ navigation }: { navigation: any }) => {
   };
 
   const goToNextStage = () => {
-    navigation.navigate('Stage3_1'); // ✅ Stage1_2로 이동
+    navigation.navigate('Stage3_2'); // ✅ Stage3_2로 이동
   };
 
   if (!device) {

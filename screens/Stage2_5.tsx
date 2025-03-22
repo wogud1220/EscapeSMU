@@ -61,12 +61,11 @@ const checkCompletion = () => {
     Image.resolveAssetSource(img).uri
   );
 
-  // ✅ 문자열 비교로 수정됨
   if (currentPaths.every((path, index) => path === correctPaths[index])) {
     Alert.alert(
       '성공 🎉',
-      '퍼즐을 완성했어요! 다음 스테이지로 이동합니다.',
-      [{ text: '확인', onPress: () => navigation.navigate('Stage3_1') }]
+      '퍼즐을 완성했구나! 다음 스테이지로 이동하자!',
+      [{ text: '확인', onPress: () => navigation.navigate('Stage3') }]
     );
   }
 };
