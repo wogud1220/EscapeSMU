@@ -1,4 +1,4 @@
-//프라임홀 가게 시키기
+//정보검색실
 
 import React from 'react';
 import { View, Text, ImageBackground, StyleSheet, Dimensions, Image, TouchableOpacity } from 'react-native';
@@ -6,7 +6,7 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from '../App';
 
-type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage12_5'>;
+type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage13_7'>;
 
 const { width, height } = Dimensions.get('window');
 
@@ -18,7 +18,7 @@ const Stage13_2 = () => {
   };
 
   const handleNextStage = () => {
-    navigation.navigate('Stage13_3');
+    navigation.navigate('Stage13_8');
   };
 
   return (
@@ -53,11 +53,11 @@ const Stage13_2 = () => {
         {/* ✅ 가운데 투명한 흰색 박스 */}
         <View style={styles.box}>
           <Text style={styles.text}>
-          1층으로 가보자!
+          2층의 정보검색실로 이동해볼까?
           </Text>
           <Text style={styles.subText}>
-          1층에는 자유롭게 공부할 수 있는 공간인 프라임홀, 열람실, KB 홀이 있어!{"\n"}{"\n"}
-          복사실, 도서관이 있는 층은 2층이니{"\n"} 헷갈리지 말자!
+          정보검색실은 도서관의 자료를 검색하고 찾을 수 있는 공간이야!{'\n'}
+          PC를 켜서 인터넷을 통해{'\n'} 학술정보관 페이지로 들어가보자!
           </Text>
 
         </View>

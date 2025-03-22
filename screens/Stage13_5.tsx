@@ -1,4 +1,4 @@
-//프라임홀 가게 시키기
+//프라임홀 클리커 문제
 
 import React from 'react';
 import { View, Text, ImageBackground, StyleSheet, Dimensions, Image, TouchableOpacity } from 'react-native';
@@ -6,11 +6,11 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from '../App';
 
-type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage12_5'>;
+type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage13_5'>;
 
 const { width, height } = Dimensions.get('window');
 
-const Stage13_2 = () => {
+const Stage13_5 = () => {
   const navigation = useNavigation<NavigationProp>();
 
   const handleMapPress = () => {
@@ -18,7 +18,7 @@ const Stage13_2 = () => {
   };
 
   const handleNextStage = () => {
-    navigation.navigate('Stage13_3');
+    navigation.navigate('Stage13_6');
   };
 
   return (
@@ -53,11 +53,11 @@ const Stage13_2 = () => {
         {/* ✅ 가운데 투명한 흰색 박스 */}
         <View style={styles.box}>
           <Text style={styles.text}>
-          1층으로 가보자!
+          좋아! 앞으로 시험기간에 {'\n'}열람실을 이용하기 전에
           </Text>
           <Text style={styles.subText}>
-          1층에는 자유롭게 공부할 수 있는 공간인 프라임홀, 열람실, KB 홀이 있어!{"\n"}{"\n"}
-          복사실, 도서관이 있는 층은 2층이니{"\n"} 헷갈리지 말자!
+          '클리커'를 이용해서 남는 자리가 있는지{'\n'} 확인해보고 갈 수도 있겠어!{'\n'}{'\n'}
+          이제 위로 올라가보자!
           </Text>
 
         </View>
@@ -165,4 +165,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Stage13_2;
+export default Stage13_5;

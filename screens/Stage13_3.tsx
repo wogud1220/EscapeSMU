@@ -10,7 +10,7 @@ type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage12_5'>
 
 const { width, height } = Dimensions.get('window');
 
-const Stage13_2 = () => {
+const Stage13_3 = () => {
   const navigation = useNavigation<NavigationProp>();
 
   const handleMapPress = () => {
@@ -18,7 +18,7 @@ const Stage13_2 = () => {
   };
 
   const handleNextStage = () => {
-    navigation.navigate('Stage13_3');
+    navigation.navigate('Stage13_4');
   };
 
   return (
@@ -53,11 +53,11 @@ const Stage13_2 = () => {
         {/* ✅ 가운데 투명한 흰색 박스 */}
         <View style={styles.box}>
           <Text style={styles.text}>
-          1층으로 가보자!
+          프라임홀은 누구나 자유롭게 {"\n"}사용할 수 있는 공간이야.
           </Text>
           <Text style={styles.subText}>
-          1층에는 자유롭게 공부할 수 있는 공간인 프라임홀, 열람실, KB 홀이 있어!{"\n"}{"\n"}
-          복사실, 도서관이 있는 층은 2층이니{"\n"} 헷갈리지 말자!
+          열람실은 프라임홀에 있는 키오스크를 통해 예약을 하거나{"\n"}{"\n"}
+          '클리커'라는 앱을 다운로드 받아서{"\n"} 예약을 할 수 있어!
           </Text>
 
         </View>
@@ -165,4 +165,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Stage13_2;
+export default Stage13_3;

@@ -79,6 +79,12 @@ import Stage12Camera_2 from './screens/Stage12Camera_2';
 import Stage12_6 from './screens/Stage12_6';
 import Stage13_1 from './screens/Stage13_1';
 import Stage13_2 from './screens/Stage13_2';
+import Stage13_3 from './screens/Stage13_3';
+import Stage13_4 from './screens/Stage13_4';
+import Stage13_5 from './screens/Stage13_5';
+import Stage13_6 from './screens/Stage13_6';
+import Stage13_7 from './screens/Stage13_7';
+import Stage13_8 from './screens/Stage13_8';
 
 export type RootStackParamList = {
   Main: undefined;
@@ -159,6 +165,12 @@ export type RootStackParamList = {
   Stage12_6: undefined;
   Stage13_1: undefined;
   Stage13_2: undefined;
+  Stage13_3: undefined;
+  Stage13_4: undefined;
+  Stage13_5: undefined;
+  Stage13_6: undefined;
+  Stage13_7: undefined;
+  Stage13_8: undefined;
 };
 
 const Stack = createStackNavigator<RootStackParamList>();
@@ -166,7 +178,7 @@ const Stack = createStackNavigator<RootStackParamList>();
 const App = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Stage12_1">
+      <Stack.Navigator initialRouteName="Stage13_5">
         <Stack.Screen 
           name="Main" 
           component={Main} 
@@ -554,6 +566,36 @@ const App = () => {
         <Stack.Screen
           name="Stage13_2"
           component={Stage13_2}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Stage13_3"
+          component={Stage13_3}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Stage13_4"
+          component={Stage13_4}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Stage13_5"
+          component={Stage13_5}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Stage13_6"
+          component={Stage13_6}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Stage13_7"
+          component={Stage13_7}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Stage13_8"
+          component={Stage13_8}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>

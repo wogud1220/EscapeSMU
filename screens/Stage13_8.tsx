@@ -1,4 +1,4 @@
-//프라임홀 가게 시키기
+//정보검색실
 
 import React from 'react';
 import { View, Text, ImageBackground, StyleSheet, Dimensions, Image, TouchableOpacity } from 'react-native';
@@ -6,11 +6,11 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from '../App';
 
-type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage12_5'>;
+type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage13_8'>;
 
 const { width, height } = Dimensions.get('window');
 
-const Stage13_2 = () => {
+const Stage13_8 = () => {
   const navigation = useNavigation<NavigationProp>();
 
   const handleMapPress = () => {
@@ -18,7 +18,7 @@ const Stage13_2 = () => {
   };
 
   const handleNextStage = () => {
-    navigation.navigate('Stage13_3');
+    navigation.navigate('Stage13_8');
   };
 
   return (
@@ -53,11 +53,20 @@ const Stage13_2 = () => {
         {/* ✅ 가운데 투명한 흰색 박스 */}
         <View style={styles.box}>
           <Text style={styles.text}>
-          1층으로 가보자!
+          이제 도서를 검색해볼거야!
           </Text>
           <Text style={styles.subText}>
-          1층에는 자유롭게 공부할 수 있는 공간인 프라임홀, 열람실, KB 홀이 있어!{"\n"}{"\n"}
-          복사실, 도서관이 있는 층은 2층이니{"\n"} 헷갈리지 말자!
+          문학 이방인 5권{'\n'}
+          문학 노인과바다 4권{'\n'}
+          문학 메리골드 마음세탁소 3권{'\n'}
+          문학 눈먼 자들의 도시 3권{'\n'}
+          문학 흰 =  The Elegy of Whiteness : 한강소설 3권{'\n'}
+          문학 불편한 편의점 : 김호연 장편소설 3권 {'\n'}
+          문학 인간실격 7권{'\n'}
+          문학 듄 1 4권{'\n'}
+          문학 눈먼 자들의 도시 3권{'\n'}
+          문학 파우스트 4권{'\n'}
+          위의 책 제목을 학술정보관 페이지의 자료검색을 통해 청구기호를 찾아서 입력해줘!
           </Text>
 
         </View>
@@ -96,7 +105,7 @@ const styles = StyleSheet.create({
   box: {
     backgroundColor: 'rgba(255, 255, 255, 0.7)',
     width: width * 0.8,
-    height: height * 0.4, // ✅ 높이 조정 (이미지 공간 포함)
+    height: height * 0.6, // ✅ 높이 조정 (이미지 공간 포함)
     padding: height * 0.03,
     borderRadius: width * 0.04,
     alignItems: 'center',
@@ -165,4 +174,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Stage13_2;
+export default Stage13_8;
