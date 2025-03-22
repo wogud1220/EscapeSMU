@@ -1,63 +1,38 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, ImageBackground, StyleSheet, Dimensions, Image, TouchableOpacity, Animated } from 'react-native';
+//어문학자료실에서 도서 찾기
+
+import React from 'react';
+import { View, Text, ImageBackground, StyleSheet, Dimensions, Image, TouchableOpacity } from 'react-native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from '../App';
 
-type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage13_8'>;
+type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage13_9'>;
 
 const { width, height } = Dimensions.get('window');
 
-const bookList = [
-  '이방인',
-  '노인과 바다',
-  '메리골드 마음세탁소',
-  '눈먼 자들의 도시',
-  '흰 = The Elegy of Whiteness',
-  '불편한 편의점',
-  '인간실격',
-  '듄 1',
-  '파우스트',
-];
-
-const Stage13_8 = () => {
+const Stage13_9 = () => {
   const navigation = useNavigation<NavigationProp>();
-  const [randomBook, setRandomBook] = useState<string | null>(null);
-  const fadeAnim = useState(new Animated.Value(0))[0];
-
-  // ✅ 책 제목 무작위 선택 및 애니메이션 효과
-  useEffect(() => {
-    const randomIndex = Math.floor(Math.random() * bookList.length);
-    setRandomBook(bookList[randomIndex]);
-
-    // ✅ 페이드 인 애니메이션 설정
-    Animated.timing(fadeAnim, {
-      toValue: 1,
-      duration: 1000,
-      useNativeDriver: true,
-    }).start();
-  }, []);
 
   const handleMapPress = () => {
     navigation.navigate('Map');
   };
 
   const handleNextStage = () => {
-    navigation.navigate('Stage13_9');
+    navigation.navigate('Stage13_Sound');
   };
 
   return (
     <View style={styles.container}>
-      {/* ✅ 배경 설정 */}
+      {/* ✅ main.png를 배경으로 설정 */}
       <ImageBackground 
         source={require('../assets/main.png')} 
         style={styles.image}
         resizeMode="cover"
       >
-        {/* ✅ 투명 레이어 */}
+        {/* 🔥 투명 레이어 추가 */}
         <View style={styles.overlay} />
 
-        {/* ✅ 지도 버튼 */}
+        {/* ✅ 🗺️ 오른쪽 상단의 map.png */}
         <TouchableOpacity onPress={handleMapPress} style={styles.mapButton}>
           <Image 
             source={require('../assets/map.png')}
@@ -66,7 +41,7 @@ const Stage13_8 = () => {
           />
         </TouchableOpacity>
 
-        {/* ✅ 홈 버튼 */}
+        {/* ✅ 홈으로 이동 버튼 */}
         <TouchableOpacity onPress={() => navigation.navigate('Main')} style={styles.backButton}>
           <Image 
             source={require('../assets/home.png')}
@@ -75,31 +50,27 @@ const Stage13_8 = () => {
           />
         </TouchableOpacity>
 
-        {/* ✅ 가운데 박스 */}
+        {/* ✅ 가운데 투명한 흰색 박스 */}
         <View style={styles.box}>
           <Text style={styles.text}>
-            이제 도서를 검색해볼거야!
+          2층의 어문학 자료실로 이동해볼까?
           </Text>
-
-          {/* ✅ 무작위 책 제목 애니메이션 적용 */}
-          {randomBook && (
-            <Animated.Text style={[styles.bookTitle, { opacity: fadeAnim }]}>
-              {randomBook}
-            </Animated.Text>
-          )}
-
           <Text style={styles.subText}>
-            위의 책 제목을 학술정보관 페이지의 자료검색을 통해 청구기호를 찾아서 입력해줘!
+            도서관에서는 당연히 정숙해야 해!{'\n'}
+            지금부터 <Text style={styles.highlight}>데시벨 측정</Text>이 시작될 거야.{'\n'}
+            일정 데시벨을 넘어가면 찾아야 하는 도서가 
+            <Text style={styles.highlight}> 초기화</Text>되니 조심해!
           </Text>
+
         </View>
 
-        {/* ✅ 다음 스테이지 버튼 */}
+        {/* ✅ 다음 스테이지로 이동 버튼 */}
         <TouchableOpacity 
           style={styles.nextButton}
           onPress={handleNextStage}
           activeOpacity={0.7}
         >
-          <Text style={styles.buttonText}>다음 ➡️</Text>
+          <Text style={styles.buttonText}>시작!</Text>
         </TouchableOpacity>
       </ImageBackground>
     </View>
@@ -107,6 +78,10 @@ const Stage13_8 = () => {
 };
 
 const styles = StyleSheet.create({
+  highlight: {
+    color: 'red',
+    fontWeight: 'bold',
+  },
   container: {
     flex: 1,
     backgroundColor: '#F5E6C4',
@@ -126,8 +101,8 @@ const styles = StyleSheet.create({
   },
   box: {
     backgroundColor: 'rgba(255, 255, 255, 0.7)',
-    width: width * 0.85,
-    height: height * 0.4,
+    width: width * 0.8,
+    height: height * 0.4, // ✅ 높이 조정 (이미지 공간 포함)
     padding: height * 0.03,
     borderRadius: width * 0.04,
     alignItems: 'center',
@@ -139,21 +114,13 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   text: {
+    marginTop: height * 0.05,
     color: '#333',
-    fontSize: width * 0.05,
+    fontSize: width * 0.055,
     fontWeight: 'bold',
-    marginBottom: height * 0.02,
+    marginBottom: height * 0.01,
     textAlign: 'center',
-  },
-  bookTitle: {
-    color: '#FF5733', // ✅ 강조 색상 (주황색)
-    fontSize: width * 0.07, // ✅ 폰트 크기 증가
-    fontWeight: 'bold', // ✅ 굵게 표시
-    textAlign: 'center',
-    marginVertical: height * 0.01,
-    textShadowColor: 'rgba(0, 0, 0, 0.3)', // ✅ 텍스트에 그림자 효과 추가
-    textShadowOffset: { width: 2, height: 2 },
-    textShadowRadius: 4,
+    lineHeight: height * 0.035, // ✅ 줄 간격
   },
   subText: {
     color: '#555',
@@ -197,6 +164,11 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
   },
+  wayImage: {
+    width: width * 0.6,
+    height: height * 0.5,
+    marginBottom: height * 0.005,
+  },
 });
 
-export default Stage13_8;
+export default Stage13_9;

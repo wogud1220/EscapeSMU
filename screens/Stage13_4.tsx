@@ -1,5 +1,4 @@
-//계당관 호 맞추기
-//모달 적용해봄
+//열람실1 좌석 개수, 모달 사용
 
 import React, { useState } from 'react';
 import {

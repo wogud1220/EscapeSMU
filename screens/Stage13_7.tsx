@@ -56,7 +56,7 @@ const Stage13_2 = () => {
           2층의 정보검색실로 이동해볼까?
           </Text>
           <Text style={styles.subText}>
-          정보검색실은 도서관의 자료를 검색하고 찾을 수 있는 공간이야!{'\n'}
+          정보검색실은 도서관의 자료를 검색하고{'\n'} 찾을 수 있는 공간이야!{'\n'}{'\n'}
           PC를 켜서 인터넷을 통해{'\n'} 학술정보관 페이지로 들어가보자!
           </Text>
 
@@ -136,7 +136,7 @@ const styles = StyleSheet.create({
   nextButton: {
     position: 'absolute',
     bottom: height * 0.05,
-    backgroundColor: 'rgba(0, 0, 255, 0.7)', // ✅ 파란색 버튼
+    backgroundColor: 'rgba(0, 0, 255, 0.7)',
     paddingVertical: height * 0.02,
     paddingHorizontal: width * 0.2,
     borderRadius: width * 0.03,

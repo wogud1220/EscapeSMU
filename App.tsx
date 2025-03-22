@@ -85,6 +85,9 @@ import Stage13_5 from './screens/Stage13_5';
 import Stage13_6 from './screens/Stage13_6';
 import Stage13_7 from './screens/Stage13_7';
 import Stage13_8 from './screens/Stage13_8';
+import Stage13_9 from './screens/Stage13_9';
+import Stage13_Sound from './screens/Stage13_Sound';
+import StageFinal from './screens/StageFinal';
 
 export type RootStackParamList = {
   Main: undefined;
@@ -171,6 +174,9 @@ export type RootStackParamList = {
   Stage13_6: undefined;
   Stage13_7: undefined;
   Stage13_8: undefined;
+  Stage13_9: undefined;
+  Stage13_Sound: undefined;
+  StageFinal: undefined;
 };
 
 const Stack = createStackNavigator<RootStackParamList>();
@@ -178,7 +184,7 @@ const Stack = createStackNavigator<RootStackParamList>();
 const App = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Stage13_5">
+      <Stack.Navigator initialRouteName="Stage13_6">
         <Stack.Screen 
           name="Main" 
           component={Main} 
@@ -596,6 +602,21 @@ const App = () => {
         <Stack.Screen
           name="Stage13_8"
           component={Stage13_8}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Stage13_9"
+          component={Stage13_9}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Stage13_Sound"
+          component={Stage13_Sound}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="StageFinal"
+          component={StageFinal}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>
