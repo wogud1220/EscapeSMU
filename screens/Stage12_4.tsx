@@ -18,7 +18,7 @@ const Stage12_4 = () => {
   };
 
   const handleNextStage = () => {
-    navigation.navigate('Stage12_5');
+    navigation.navigate('Stage12_5_1');
   };
 
   return (
@@ -53,7 +53,7 @@ const Stage12_4 = () => {
         {/* ✅ 가운데 투명한 흰색 박스 */}
         <View style={styles.box}>
           <Text style={styles.text}>
-          좋아!계당관 쉐어라운지에서는 
+          좋아! 계당관 쉐어라운지에서는 
           자유롭게 대화를 나눠도 되지만 {'\n'} 큰 소음을 유발하거나 취식, 훼손과
           같은 행위는 금지되는 거 명심하자!
           </Text>

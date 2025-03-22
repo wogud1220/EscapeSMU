@@ -1,4 +1,4 @@
-//로봇 사진 찍기
+//계당관 내부에서 포스터 찾기
 
 import React from 'react';
 import { View, Text, ImageBackground, StyleSheet, Dimensions, Image, TouchableOpacity } from 'react-native';

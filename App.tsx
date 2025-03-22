@@ -74,6 +74,7 @@ import Stage12Camera from './screens/Stage12Camera';
 import Stage12_3 from './screens/Stage12_3';
 import Stage12_4 from './screens/Stage12_4';
 import Stage12_5 from './screens/Stage12_5';
+import Stage12_5_1 from './screens/Stage12_5_1';
 import Stage12Camera_2 from './screens/Stage12Camera_2';
 import Stage12_6 from './screens/Stage12_6';
 import Stage13_1 from './screens/Stage13_1';
@@ -153,6 +154,7 @@ export type RootStackParamList = {
   Stage12_3: undefined;
   Stage12_4: undefined;
   Stage12_5: undefined;
+  Stage12_5_1: undefined;
   Stage12Camera_2: undefined;
   Stage12_6: undefined;
   Stage13_1: undefined;
@@ -527,6 +529,11 @@ const App = () => {
         <Stack.Screen
           name="Stage12_5"
           component={Stage12_5}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Stage12_5_1"
+          component={Stage12_5_1}
           options={{ headerShown: false }}
         />
         <Stack.Screen
