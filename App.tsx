@@ -11,8 +11,15 @@ import Map from './screens/Map';
 import Stage1_2 from './screens/Stage1_2';
 import Stage2 from './screens/Stage2';
 import Stage2_1 from './screens/Stage2_1';
+import Stage2_2 from './screens/Stage2_2';
+import Stage2_3 from './screens/Stage2_3';
+import Stage2_4 from './screens/Stage2_4';
+import Stage2_5 from './screens/Stage2_5';
+import Stage2Camera from './screens/Stage2Camera';
+import Stage2Camera_2 from './screens/Stage2Camera_2';
 import Stage3 from './screens/Stage3';
 import Stage3_1 from './screens/Stage3_1';
+import Stage3_2 from './screens/Stage3_2';
 import Stage3Camera from './screens/Stage3Camera';
 import Stage4 from './screens/Stage4';
 import Stage4_1 from './screens/Stage4_1';
@@ -69,10 +76,20 @@ import Stage12Camera from './screens/Stage12Camera';
 import Stage12_3 from './screens/Stage12_3';
 import Stage12_4 from './screens/Stage12_4';
 import Stage12_5 from './screens/Stage12_5';
+import Stage12_5_1 from './screens/Stage12_5_1';
 import Stage12Camera_2 from './screens/Stage12Camera_2';
 import Stage12_6 from './screens/Stage12_6';
 import Stage13_1 from './screens/Stage13_1';
 import Stage13_2 from './screens/Stage13_2';
+import Stage13_3 from './screens/Stage13_3';
+import Stage13_4 from './screens/Stage13_4';
+import Stage13_5 from './screens/Stage13_5';
+import Stage13_6 from './screens/Stage13_6';
+import Stage13_7 from './screens/Stage13_7';
+import Stage13_8 from './screens/Stage13_8';
+import Stage13_9 from './screens/Stage13_9';
+import Stage13_Sound from './screens/Stage13_Sound';
+import StageFinal from './screens/StageFinal';
 
 export type RootStackParamList = {
   LogIn: undefined;
@@ -86,6 +103,11 @@ export type RootStackParamList = {
   Stage2: undefined;
   Stage2_1: undefined;
   Stage2_2: undefined;
+  Stage2_3: undefined;
+  Stage2_4: undefined;
+  Stage2_5: undefined;
+  Stage2Camera: undefined;
+  Stage2Camera_2: undefined;
   Stage3: undefined;
   Stage3_1: undefined;
   Stage3_2: undefined;
@@ -145,10 +167,20 @@ export type RootStackParamList = {
   Stage12_3: undefined;
   Stage12_4: undefined;
   Stage12_5: undefined;
+  Stage12_5_1: undefined;
   Stage12Camera_2: undefined;
   Stage12_6: undefined;
   Stage13_1: undefined;
   Stage13_2: undefined;
+  Stage13_3: undefined;
+  Stage13_4: undefined;
+  Stage13_5: undefined;
+  Stage13_6: undefined;
+  Stage13_7: undefined;
+  Stage13_8: undefined;
+  Stage13_9: undefined;
+  Stage13_Sound: undefined;
+  StageFinal: undefined;
 };
 
 const Stack = createStackNavigator<RootStackParamList>();
@@ -209,6 +241,36 @@ const App = () => {
           options={{headerShown: false}}
         />
         <Stack.Screen
+          name="Stage2_2"
+          component={Stage2_2}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Stage2Camera"
+          component={Stage2Camera}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Stage2_3"
+          component={Stage2_3}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Stage2_4"
+          component={Stage2_4}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Stage2_5"
+          component={Stage2_5}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Stage2Camera_2"
+          component={Stage2Camera_2}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
           name="Stage3"
           component={Stage3}
           options={{headerShown: false}}
@@ -217,6 +279,11 @@ const App = () => {
           name="Stage3_1"
           component={Stage3_1}
           options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="Stage3_2"
+          component={Stage3_2}
+          options={{ headerShown: false }}
         />
         <Stack.Screen
           name="Stage3Camera"
@@ -499,6 +566,11 @@ const App = () => {
           options={{headerShown: false}}
         />
         <Stack.Screen
+          name="Stage12_5_1"
+          component={Stage12_5_1}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
           name="Stage12Camera_2"
           component={Stage12Camera_2}
           options={{headerShown: false}}
@@ -517,6 +589,51 @@ const App = () => {
           name="Stage13_2"
           component={Stage13_2}
           options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="Stage13_3"
+          component={Stage13_3}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Stage13_4"
+          component={Stage13_4}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Stage13_5"
+          component={Stage13_5}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Stage13_6"
+          component={Stage13_6}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Stage13_7"
+          component={Stage13_7}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Stage13_8"
+          component={Stage13_8}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Stage13_9"
+          component={Stage13_9}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Stage13_Sound"
+          component={Stage13_Sound}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="StageFinal"
+          component={StageFinal}
+          options={{ headerShown: false }}
         />
       </Stack.Navigator>
     </NavigationContainer>

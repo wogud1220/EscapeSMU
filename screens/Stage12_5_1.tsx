@@ -20,11 +20,11 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from '../App';
 
-type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage12_2'>;
+type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage12_5_1'>;
 
 const { width, height } = Dimensions.get('window');
 
-const Stage12_2 = () => {
+const Stage12_5_1 = () => {
   const navigation = useNavigation<NavigationProp>();
   const [answer, setAnswer] = useState('');
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -34,11 +34,11 @@ const Stage12_2 = () => {
   };
 
   const handleNextStage = () => {
-    if (answer.trim() === '민정') {
+    if (answer.trim() === '시련') {
       Alert.alert('정답입니다!', '다음 스테이지로 이동합니다.', [
         {
           text: '확인',
-          onPress: () => navigation.navigate('Stage12_3'),
+          onPress: () => navigation.navigate('Stage12_6'),
         },
       ]);
       setIsModalVisible(false);
@@ -91,16 +91,16 @@ const Stage12_2 = () => {
         {/* 박스 및 텍스트 */}
         <View style={styles.box}>
           <Image 
-            source={require('../assets/gyedang2.png')}
+            source={require('../assets/gyedangposter.jpg')}
             style={styles.wayImage}
             resizeMode="contain"
           />
           <Text style={styles.text}>
-            '계당관'이라는 이름은 {'\n'}어디서 따왔을까?
+            연극의 제목을 찾아보자!
           </Text>
           <Text style={styles.subText}>
-            '계당'은 상명대학교 설립자인 {'\n'}'배상명'의 호에서 따왔어.{'\n'}
-            그렇다면 '배상명'의 또다른 호는 무엇일까? 한글로 입력해줘!
+            계당관에서 체육관으로 올라가는 계단에는 진행되었던 다양한 연극 포스터들이 있어!{'\n'}{'\n'}
+            이 연극은 2022년 7월 2일부터 3일까지 진행되었다는데..
           </Text>
         </View>
 
@@ -175,7 +175,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(255, 255, 255, 0.7)',
     marginTop: height * 0.15,
     width: width * 0.8,
-    height: height * 0.6,
+    height: height * 0.7,
     padding: height * 0.03,
     borderRadius: width * 0.04,
     alignItems: 'center',
@@ -273,10 +273,11 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   wayImage: {
-    width: width * 0.6,
-    height: height * 0.2,
+    marginTop: height * -0.05,
+    width: width * 0.7,
+    height: height * 0.4,
     marginBottom: height * 0.02,
   },
 });
 
-export default Stage12_2;
+export default Stage12_5_1;

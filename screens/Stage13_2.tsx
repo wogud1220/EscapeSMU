@@ -1,4 +1,4 @@
-//계당관 쉐어라운지 마무리
+//프라임홀 가게 시키기
 
 import React from 'react';
 import { View, Text, ImageBackground, StyleSheet, Dimensions, Image, TouchableOpacity } from 'react-native';
@@ -18,7 +18,7 @@ const Stage13_2 = () => {
   };
 
   const handleNextStage = () => {
-    navigation.navigate('Stage12_5');
+    navigation.navigate('Stage13_3');
   };
 
   return (
@@ -53,13 +53,11 @@ const Stage13_2 = () => {
         {/* ✅ 가운데 투명한 흰색 박스 */}
         <View style={styles.box}>
           <Text style={styles.text}>
-          클리커로 자리 한 번 맡아보게 시키기{"\n"}
-          플레이스토어에서{"\n"}
-          상명대학교 천안캠퍼스 학술정보관{"\n"}
-          어플 다운로드, clicker를 이용해{"\n"}
-          1층 일반열람실 자리 예약해보기
+          1층으로 가보자!
           </Text>
           <Text style={styles.subText}>
+          1층에는 자유롭게 공부할 수 있는 공간인 프라임홀, 열람실, KB 홀이 있어!{"\n"}{"\n"}
+          복사실, 도서관이 있는 층은 2층이니{"\n"} 헷갈리지 말자!
           </Text>
 
         </View>

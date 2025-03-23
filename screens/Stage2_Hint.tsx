@@ -1,4 +1,4 @@
-//식물과학관 가는 화면
+//청록관/상록관 퍼즐
 
 import React from 'react';
 import { View, Text, ImageBackground, StyleSheet, Dimensions, Image, TouchableOpacity } from 'react-native';
@@ -6,11 +6,11 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from '../App';
 
-type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage3'>;
+type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage2_1'>;
 
 const { width, height } = Dimensions.get('window');
 
-const Stage3 = () => {
+const Stage2_1 = () => {
   const navigation = useNavigation<NavigationProp>();
 
   const handleMapPress = () => {
@@ -18,7 +18,7 @@ const Stage3 = () => {
   };
 
   const handleNextStage = () => {
-    navigation.navigate('Stage3_1'); // ✅ Stage3_1로
+    navigation.navigate('Stage2_Hint'); // ✅ Stage2_2으로 이동하도록 수정
   };
 
   return (
@@ -52,15 +52,9 @@ const Stage3 = () => {
 
         {/* ✅ 가운데 투명한 흰색 박스 */}
         <View style={styles.box}>
-          {/* ✅ 하얀색 박스 위에 waytostage2.png 추가 */}
-          <Image 
-            source={require('../assets/waytostage3.png')} 
-            style={styles.wayImage} 
-            resizeMode="contain"
-          />
-          <Text style={styles.text}>다음으로 방문할 장소는 식물과학관이야!</Text>
+          <Text style={styles.text}>이 그림은 어디 있는 그림일까?</Text>
           <Text style={styles.subText}>
-            안으로 한 번 들어가보자!
+            상록관 카페 뒤쪽으로 가서 좌회전하면 담장에 그림들이 보이네! 이제 풀 수 있을 것 같아!
           </Text>
         </View>
 
@@ -70,7 +64,7 @@ const Stage3 = () => {
           onPress={handleNextStage}
           activeOpacity={0.7}
         >
-          <Text style={styles.buttonText}>다음 ➡️</Text>
+          <Text style={styles.buttonText}>문제로 돌아가기</Text>
         </TouchableOpacity>
       </ImageBackground>
     </View>
@@ -165,4 +159,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Stage3;
+export default Stage2_1;

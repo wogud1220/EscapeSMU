@@ -1,5 +1,3 @@
-//사슴찍기 클리어 화면
-
 import React from 'react';
 import { View, Text, ImageBackground, StyleSheet, Dimensions, Image, TouchableOpacity } from 'react-native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -18,7 +16,7 @@ const Stage3_1 = () => {
   };
 
   const handleNextStage = () => {
-    navigation.navigate('Stage4'); // ✅ Stage4로
+    navigation.navigate('Stage3Camera');
   };
 
   return (
@@ -54,14 +52,14 @@ const Stage3_1 = () => {
         <View style={styles.box}>
           {/* ✅ 하얀색 박스 위에 waytostage2.png 추가 */}
           <Image 
-            source={require('../assets/soomoong.png')} 
+            source={require('../assets/deer.png')} 
             style={styles.wayImage} 
             resizeMode="contain"
           />
-          <Text style={styles.text}>정말 잘 찾는데??</Text>
+          <Text style={styles.text}>다양한 식물들 사이에 우리 학교의 마스코트인 사슴이 숨어있다는데?</Text>
           <Text style={styles.subText}>
-            위 사진이 바로 우리 학교의 마스코트인 수뭉이야!
-          </Text>
+            이 친구를 찾아서 카메라로 찍어보자!
+            </Text>
         </View>
 
         {/* ✅ 다음 스테이지로 이동 버튼 */}
@@ -70,7 +68,7 @@ const Stage3_1 = () => {
           onPress={handleNextStage}
           activeOpacity={0.7}
         >
-          <Text style={styles.buttonText}>다음 ➡️</Text>
+          <Text style={styles.buttonText}>카메라 📸</Text>
         </TouchableOpacity>
       </ImageBackground>
     </View>

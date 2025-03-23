@@ -1,4 +1,4 @@
-//식물과학관 가는 화면
+//프라임홀 클리커 문제
 
 import React from 'react';
 import { View, Text, ImageBackground, StyleSheet, Dimensions, Image, TouchableOpacity } from 'react-native';
@@ -6,11 +6,11 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from '../App';
 
-type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage3'>;
+type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage13_5'>;
 
 const { width, height } = Dimensions.get('window');
 
-const Stage3 = () => {
+const Stage13_5 = () => {
   const navigation = useNavigation<NavigationProp>();
 
   const handleMapPress = () => {
@@ -18,7 +18,7 @@ const Stage3 = () => {
   };
 
   const handleNextStage = () => {
-    navigation.navigate('Stage3_1'); // ✅ Stage3_1로
+    navigation.navigate('Stage13_6');
   };
 
   return (
@@ -52,16 +52,14 @@ const Stage3 = () => {
 
         {/* ✅ 가운데 투명한 흰색 박스 */}
         <View style={styles.box}>
-          {/* ✅ 하얀색 박스 위에 waytostage2.png 추가 */}
-          <Image 
-            source={require('../assets/waytostage3.png')} 
-            style={styles.wayImage} 
-            resizeMode="contain"
-          />
-          <Text style={styles.text}>다음으로 방문할 장소는 식물과학관이야!</Text>
-          <Text style={styles.subText}>
-            안으로 한 번 들어가보자!
+          <Text style={styles.text}>
+          좋아! 앞으로 시험기간에 {'\n'}열람실을 이용하기 전에
           </Text>
+          <Text style={styles.subText}>
+          '클리커'를 이용해서 남는 자리가 있는지{'\n'} 확인해보고 갈 수도 있겠어!{'\n'}{'\n'}
+          이제 위로 올라가보자!
+          </Text>
+
         </View>
 
         {/* ✅ 다음 스테이지로 이동 버튼 */}
@@ -98,7 +96,7 @@ const styles = StyleSheet.create({
   box: {
     backgroundColor: 'rgba(255, 255, 255, 0.7)',
     width: width * 0.8,
-    height: height * 0.7, // ✅ 높이 조정 (이미지 공간 포함)
+    height: height * 0.4, // ✅ 높이 조정 (이미지 공간 포함)
     padding: height * 0.03,
     borderRadius: width * 0.04,
     alignItems: 'center',
@@ -110,11 +108,13 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   text: {
+    marginTop: height * 0.05,
     color: '#333',
-    fontSize: width * 0.06,
+    fontSize: width * 0.055,
     fontWeight: 'bold',
     marginBottom: height * 0.01,
     textAlign: 'center',
+    lineHeight: height * 0.035, // ✅ 줄 간격
   },
   subText: {
     color: '#555',
@@ -159,10 +159,10 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   wayImage: {
-    width: width * 0.6, // ✅ waytostage2.png 크기 조정
+    width: width * 0.6,
     height: height * 0.5,
-    marginBottom: height * 0.005, // ✅ 이미지와 텍스트 간격
+    marginBottom: height * 0.005,
   },
 });
 
-export default Stage3;
+export default Stage13_5;

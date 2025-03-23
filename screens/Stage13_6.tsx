@@ -1,4 +1,4 @@
-//학생회관 편의시설 퀴즈!
+//도서관 시설 퀴즈!
 
 import React, { useState, useEffect } from 'react';
 import { View, Text, ImageBackground, StyleSheet, Dimensions, Image, TouchableOpacity, Alert } from 'react-native';
@@ -6,18 +6,19 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from '../App';
 
-type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage10_4'>;
+type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage13_6'>;
 
 const { width, height } = Dimensions.get('window');
 
 const options = [
-  { label: '기념품점', value: 1 },
-  { label: '안경점', value: 2 },
-  { label: '미용실', value: 3 },
+  { label: 'KB STAR SQUARE', value: 1 },
+  { label: '프레젠테이션룸', value: 2 },
+  { label: '그룹스터디룸', value: 3 },
   { label: '우체국', value: 4 },
+  { label: '예비군대대', value: 5 },
 ];
 
-const Stage10_4 = () => {
+const Stage13_6 = () => {
   const navigation = useNavigation<NavigationProp>();
   const [disabled, setDisabled] = useState(false); // ✅ 버튼 활성화 상태
   const [countdown, setCountdown] = useState<number | null>(null); // ✅ 남은 시간 상태
@@ -47,9 +48,9 @@ const Stage10_4 = () => {
   const handleOptionPress = (value: number) => {
     if (disabled) return;
 
-    if (value === 4) {
+    if (value === 5) {
       Alert.alert('정답입니다!', '다음 스테이지로 이동합니다.', [
-        { text: '확인', onPress: () => navigation.navigate('Stage10_5') },
+        { text: '확인', onPress: () => navigation.navigate('Stage13_7') },
       ]);
     } else {
       Alert.alert('오답입니다.', '5분 뒤에 다시 시도해 보세요!');
@@ -94,12 +95,12 @@ const Stage10_4 = () => {
         {/* 흰색 박스 */}
         <View style={styles.box}>
           <Text style={styles.text}>
-            학생회관에는 식당 뿐만 아니라, 다양한 편의시설도 존재하고 있어. 그렇다면 다음 보기 중 학생회관에 존재하지 <Text style={styles.highlight}>않는</Text> 시설을 골라봐!
+            학술정보관에 존재하지 <Text style={styles.highlight}>않는</Text> 시설을 골라봐!
           </Text>
 
           {/* 서브텍스트 추가 */}
           <Text style={styles.subText}>
-            서점은 2025년 1학기에 없어졌어... {"\n"}{"\n"}틀릴 시에는 다시 입력하기까지 <Text style={styles.highlight}>5분</Text>을 기다려야해... 신중하자!
+            {"\n"}{"\n"}틀릴 시에는 다시 입력하기까지{'\n'} <Text style={styles.highlight}>5분</Text>을 기다려야해... 신중하자!
           </Text>
 
           {/* ✅ 타이머 표시 */}
@@ -153,7 +154,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(255, 255, 255, 0.85)',
     marginTop: height * 0.12,
     width: width * 0.85,
-    height: height * 0.7,
+    height: height * 0.6,
     padding: height * 0.03,
     borderRadius: width * 0.04,
     alignItems: 'center',
@@ -171,6 +172,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   subText: {
+    marginTop: height * -0.04,
     color: '#555',
     fontSize: width * 0.04,
     marginBottom: height * 0.02,
@@ -228,4 +230,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Stage10_4;
+export default Stage13_6;

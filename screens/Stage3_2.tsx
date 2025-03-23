@@ -1,4 +1,4 @@
-//식물과학관 가는 화면
+//사슴찍기 클리어 화면
 
 import React from 'react';
 import { View, Text, ImageBackground, StyleSheet, Dimensions, Image, TouchableOpacity } from 'react-native';
@@ -6,11 +6,11 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from '../App';
 
-type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage3'>;
+type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage3_2'>;
 
 const { width, height } = Dimensions.get('window');
 
-const Stage3 = () => {
+const Stage3_2 = () => {
   const navigation = useNavigation<NavigationProp>();
 
   const handleMapPress = () => {
@@ -18,7 +18,7 @@ const Stage3 = () => {
   };
 
   const handleNextStage = () => {
-    navigation.navigate('Stage3_1'); // ✅ Stage3_1로
+    navigation.navigate('Stage4'); // ✅ Stage4로
   };
 
   return (
@@ -54,13 +54,13 @@ const Stage3 = () => {
         <View style={styles.box}>
           {/* ✅ 하얀색 박스 위에 waytostage2.png 추가 */}
           <Image 
-            source={require('../assets/waytostage3.png')} 
+            source={require('../assets/soomoong.png')} 
             style={styles.wayImage} 
             resizeMode="contain"
           />
-          <Text style={styles.text}>다음으로 방문할 장소는 식물과학관이야!</Text>
+          <Text style={styles.text}>정말 잘 찾는데??</Text>
           <Text style={styles.subText}>
-            안으로 한 번 들어가보자!
+            위 사진이 바로 우리 학교의 마스코트인 수뭉이야!
           </Text>
         </View>
 
@@ -165,4 +165,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Stage3;
+export default Stage3_2;

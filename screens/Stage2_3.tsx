@@ -1,4 +1,4 @@
-//식물과학관 가는 화면
+//청록관으로 이동하는 화면
 
 import React from 'react';
 import { View, Text, ImageBackground, StyleSheet, Dimensions, Image, TouchableOpacity } from 'react-native';
@@ -6,11 +6,11 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from '../App';
 
-type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage3'>;
+type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage2_3'>;
 
 const { width, height } = Dimensions.get('window');
 
-const Stage3 = () => {
+const Stage2_3 = () => {
   const navigation = useNavigation<NavigationProp>();
 
   const handleMapPress = () => {
@@ -18,7 +18,7 @@ const Stage3 = () => {
   };
 
   const handleNextStage = () => {
-    navigation.navigate('Stage3_1'); // ✅ Stage3_1로
+    navigation.navigate('Stage2Camera_2'); // ✅ Stage2_3으로 이동하도록 수정
   };
 
   return (
@@ -54,13 +54,13 @@ const Stage3 = () => {
         <View style={styles.box}>
           {/* ✅ 하얀색 박스 위에 waytostage2.png 추가 */}
           <Image 
-            source={require('../assets/waytostage3.png')} 
+            source={require('../assets/sangrokcafe.png')} 
             style={styles.wayImage} 
             resizeMode="contain"
           />
-          <Text style={styles.text}>다음으로 방문할 장소는 식물과학관이야!</Text>
+          <Text style={styles.text}>잘 찾았구나!</Text>
           <Text style={styles.subText}>
-            안으로 한 번 들어가보자!
+            상록관 1층에는 학생들이 자유롭게 {'\n'}쉴 수 있는 휴게실도 있어!{'\n'}다음 이미지를 참고해서 카메라로 대보자!
           </Text>
         </View>
 
@@ -70,7 +70,7 @@ const Stage3 = () => {
           onPress={handleNextStage}
           activeOpacity={0.7}
         >
-          <Text style={styles.buttonText}>다음 ➡️</Text>
+          <Text style={styles.buttonText}>카메라 📸</Text>
         </TouchableOpacity>
       </ImageBackground>
     </View>
@@ -115,6 +115,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: height * 0.01,
     textAlign: 'center',
+    marginTop: height * -0.1,
   },
   subText: {
     color: '#555',
@@ -159,10 +160,11 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   wayImage: {
+    marginTop: height * -0.1,
     width: width * 0.6, // ✅ waytostage2.png 크기 조정
     height: height * 0.5,
     marginBottom: height * 0.005, // ✅ 이미지와 텍스트 간격
   },
 });
 
-export default Stage3;
+export default Stage2_3;

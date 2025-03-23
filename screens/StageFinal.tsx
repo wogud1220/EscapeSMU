@@ -1,4 +1,4 @@
-//식물과학관 가는 화면
+//모든 스테이지 클리어 후 화면
 
 import React from 'react';
 import { View, Text, ImageBackground, StyleSheet, Dimensions, Image, TouchableOpacity } from 'react-native';
@@ -6,11 +6,11 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from '../App';
 
-type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage3'>;
+type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'StageFinal'>;
 
 const { width, height } = Dimensions.get('window');
 
-const Stage3 = () => {
+const StageFinal = () => {
   const navigation = useNavigation<NavigationProp>();
 
   const handleMapPress = () => {
@@ -18,7 +18,7 @@ const Stage3 = () => {
   };
 
   const handleNextStage = () => {
-    navigation.navigate('Stage3_1'); // ✅ Stage3_1로
+    navigation.navigate('Stage13_1'); // ✅ Stage6_1으로 이동하도록 수정
   };
 
   return (
@@ -52,16 +52,13 @@ const Stage3 = () => {
 
         {/* ✅ 가운데 투명한 흰색 박스 */}
         <View style={styles.box}>
-          {/* ✅ 하얀색 박스 위에 waytostage2.png 추가 */}
-          <Image 
-            source={require('../assets/waytostage3.png')} 
-            style={styles.wayImage} 
-            resizeMode="contain"
-          />
-          <Text style={styles.text}>다음으로 방문할 장소는 식물과학관이야!</Text>
-          <Text style={styles.subText}>
-            안으로 한 번 들어가보자!
+          <Text style={styles.text}>모든 스테이지가 다 끝이났어.
           </Text>
+          <Text style={styles.subText}>
+          캠퍼스와는 좀 친해진 것 같아?{'\n'}
+          google.form 머시기
+          </Text>
+
         </View>
 
         {/* ✅ 다음 스테이지로 이동 버튼 */}
@@ -70,7 +67,7 @@ const Stage3 = () => {
           onPress={handleNextStage}
           activeOpacity={0.7}
         >
-          <Text style={styles.buttonText}>다음 ➡️</Text>
+          <Text style={styles.buttonText}>랭킹 👑</Text>
         </TouchableOpacity>
       </ImageBackground>
     </View>
@@ -98,7 +95,7 @@ const styles = StyleSheet.create({
   box: {
     backgroundColor: 'rgba(255, 255, 255, 0.7)',
     width: width * 0.8,
-    height: height * 0.7, // ✅ 높이 조정 (이미지 공간 포함)
+    height: height * 0.4, // ✅ 높이 조정 (이미지 공간 포함)
     padding: height * 0.03,
     borderRadius: width * 0.04,
     alignItems: 'center',
@@ -111,10 +108,11 @@ const styles = StyleSheet.create({
   },
   text: {
     color: '#333',
-    fontSize: width * 0.06,
+    fontSize: width * 0.055,
     fontWeight: 'bold',
     marginBottom: height * 0.01,
     textAlign: 'center',
+    lineHeight: height * 0.035, // ✅ 줄 간격
   },
   subText: {
     color: '#555',
@@ -165,4 +163,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Stage3;
+export default StageFinal;

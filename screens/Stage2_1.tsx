@@ -18,7 +18,7 @@ const Stage2_1 = () => {
   };
 
   const handleNextStage = () => {
-    navigation.navigate('Stage3'); // ✅ Stage2_2으로 이동하도록 수정
+    navigation.navigate('Stage2_2'); // ✅ Stage2_2으로 이동하도록 수정
   };
 
   return (

@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Camera, CameraDevice } from 'react-native-vision-camera';
 
-const Stage3Camera = ({ navigation }: { navigation: any }) => {
+const Stage2Camera_2 = ({ navigation }: { navigation: any }) => {
   const [device, setDevice] = useState<CameraDevice | undefined>();
   const camera = useRef<Camera>(null);
 
@@ -53,7 +53,7 @@ const Stage3Camera = ({ navigation }: { navigation: any }) => {
   };
 
   const goToNextStage = () => {
-    navigation.navigate('Stage3_2'); // ✅ Stage3_2로 이동
+    navigation.navigate('Stage2_4'); // ✅ Stage1_2로 이동
   };
 
   if (!device) {
@@ -80,6 +80,11 @@ const Stage3Camera = ({ navigation }: { navigation: any }) => {
       {/* ✅ 다음 버튼 */}
       <TouchableOpacity onPress={goToNextStage} style={styles.nextButton}>
         <Text style={styles.buttonText}>다음 ➡️</Text>
+      </TouchableOpacity>
+
+      {/* ✅ 임시 Stage1_2 이동 버튼 */}
+      <TouchableOpacity onPress={goToNextStage} style={styles.tempButton}>
+        <Text style={styles.buttonText}>Stage1_2로 이동</Text>
       </TouchableOpacity>
     </View>
   );
@@ -127,4 +132,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Stage3Camera;
+export default Stage2Camera_2;

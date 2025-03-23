@@ -1,5 +1,4 @@
-//계당관 호 맞추기
-//모달 적용해봄
+//열람실1 좌석 개수, 모달 사용
 
 import React, { useState } from 'react';
 import {
@@ -20,11 +19,11 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from '../App';
 
-type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage12_2'>;
+type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage13_4'>;
 
 const { width, height } = Dimensions.get('window');
 
-const Stage12_2 = () => {
+const Stage13_4 = () => {
   const navigation = useNavigation<NavigationProp>();
   const [answer, setAnswer] = useState('');
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -34,11 +33,11 @@ const Stage12_2 = () => {
   };
 
   const handleNextStage = () => {
-    if (answer.trim() === '민정') {
+    if (answer.trim() === '192') {
       Alert.alert('정답입니다!', '다음 스테이지로 이동합니다.', [
         {
           text: '확인',
-          onPress: () => navigation.navigate('Stage12_3'),
+          onPress: () => navigation.navigate('Stage13_5'),
         },
       ]);
       setIsModalVisible(false);
@@ -90,17 +89,11 @@ const Stage12_2 = () => {
 
         {/* 박스 및 텍스트 */}
         <View style={styles.box}>
-          <Image 
-            source={require('../assets/gyedang2.png')}
-            style={styles.wayImage}
-            resizeMode="contain"
-          />
           <Text style={styles.text}>
-            '계당관'이라는 이름은 {'\n'}어디서 따왔을까?
+            '클리커'를 사용해서 열람실을 확인해봤니?
           </Text>
           <Text style={styles.subText}>
-            '계당'은 상명대학교 설립자인 {'\n'}'배상명'의 호에서 따왔어.{'\n'}
-            그렇다면 '배상명'의 또다른 호는 무엇일까? 한글로 입력해줘!
+            그렇다면, 1층 일반열람실1의 좌석 개수는 총 몇개일까?
           </Text>
         </View>
 
@@ -173,9 +166,9 @@ const styles = StyleSheet.create({
   },
   box: {
     backgroundColor: 'rgba(255, 255, 255, 0.7)',
-    marginTop: height * 0.15,
+    marginTop: height * 0.3,
     width: width * 0.8,
-    height: height * 0.6,
+    height: height * 0.4,
     padding: height * 0.03,
     borderRadius: width * 0.04,
     alignItems: 'center',
@@ -279,4 +272,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Stage12_2;
+export default Stage13_4;
