@@ -1,5 +1,4 @@
-
-import React, { useRef, useEffect, useState } from 'react';
+import React, {useRef, useEffect, useState} from 'react';
 import {
   View,
   StyleSheet,
@@ -10,10 +9,9 @@ import {
   PermissionsAndroid,
 } from 'react-native';
 import WebView from 'react-native-webview';
-import { request, PERMISSIONS, RESULTS } from 'react-native-permissions';
-import { useNavigation } from '@react-navigation/native';
+import {request, PERMISSIONS, RESULTS} from 'react-native-permissions';
+import {useNavigation} from '@react-navigation/native';
 import Geolocation from '@react-native-community/geolocation';
-
 const KAKAO_MAP_HTML = `
 <!DOCTYPE html>
 <html lang="ko">
@@ -81,7 +79,11 @@ const KAKAO_MAP_HTML = `
 const Map = () => {
   const webViewRef = useRef<WebView>(null);
   const navigation = useNavigation();
-  const [location, setLocation] = useState<{ lat: number; lng: number } | null>(null);
+  const [location, setLocation] = useState<{
+    lat: number;
+    lng: number;
+    alt?: number;
+  } | null>(null);
   const [webViewLoaded, setWebViewLoaded] = useState(false);
   const [shouldUpdateMap, setShouldUpdateMap] = useState(false);
 
@@ -100,6 +102,36 @@ const Map = () => {
   }, [shouldUpdateMap, location, webViewLoaded]);
 
   // ✅ iOS & Android 통합 위치 권한 요청
+  // const requestLocationPermission = async () => {
+  //   try {
+  //     let permission =
+  //       Platform.OS === 'ios'
+  //         ? PERMISSIONS.IOS.LOCATION_WHEN_IN_USE
+  //         : PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION;
+
+  //     if (Platform.OS === 'android') {
+  //       const hasPermission = await PermissionsAndroid.check(permission);
+  //       if (hasPermission) {
+  //         console.log('✅ 위치 권한 이미 허용됨');
+  //         return true;
+  //       }
+  //     }
+
+  //     const result = await request(permission);
+  //     if (result === RESULTS.GRANTED) {
+  //       console.log('✅ 위치 권한 허용됨');
+  //       return true;
+  //     } else {
+  //       console.log('⚠️ 위치 권한 필요');
+  //       Alert.alert('위치 권한 필요', '위치를 가져오려면 권한을 허용해주세요.');
+  //       return false;
+  //     }
+  //   } catch (err) {
+  //     console.warn('🚨 위치 권한 요청 중 오류 발생:', err);
+  //     return false;
+  //   }
+  // };
+
   const requestLocationPermission = async () => {
     try {
       if (Platform.OS === 'ios') {
@@ -147,6 +179,39 @@ const Map = () => {
       return false;
     }
   };
+  // 고도 넣기 전 동작
+  // const getCurrentLocation = async () => {
+  //   console.log('📡 현재 위치 가져오는 중...');
+  //   const hasPermission = await requestLocationPermission();
+  //   if (!hasPermission) return;
+
+  //   Geolocation.getCurrentPosition(
+  //     position => {
+  //       if (!position?.coords) {
+  //         console.log('🚨 위치 정보를 찾을 수 없음');
+  //         Alert.alert('위치 오류', '위치를 가져올 수 없습니다.');
+  //         return;
+  //       }
+
+  //       const {latitude, longitude, accuracy} = position.coords;
+  //       console.log(
+  //         `📡 위치 정보: 위도 ${latitude}, 경도 ${longitude}, 정확도 ${accuracy}m`,
+  //       );
+
+  //       setLocation({lat: latitude, lng: longitude});
+  //       setShouldUpdateMap(true);
+  //     },
+  //     error => {
+  //       console.log('🚨 위치 가져오기 실패:', error);
+  //       Alert.alert('위치 오류', '위치를 가져올 수 없습니다.');
+  //     },
+  //     {
+  //       enableHighAccuracy: true,
+  //       timeout: 15000,
+  //       maximumAge: 10000,
+  //     },
+  //   );
+  // };
 
   const getCurrentLocation = async () => {
     console.log('📡 현재 위치 가져오는 중...');
@@ -161,10 +226,16 @@ const Map = () => {
           return;
         }
 
-        const { latitude, longitude, accuracy } = position.coords;
-        console.log(`📡 위치 정보: 위도 ${latitude}, 경도 ${longitude}, 정확도 ${accuracy}m`);
+        const {latitude, longitude, altitude, accuracy} = position.coords;
+        console.log(
+          `📡 위치 정보: 위도 ${latitude}, 경도 ${longitude}, 고도 ${altitude}m, 정확도 ${accuracy}m`,
+        );
 
-        setLocation({ lat: latitude, lng: longitude });
+        setLocation({
+          lat: latitude,
+          lng: longitude,
+          alt: altitude !== null ? altitude : undefined, // null이면 undefined로 처리
+        });
         setShouldUpdateMap(true);
       },
       error => {
@@ -172,10 +243,10 @@ const Map = () => {
         Alert.alert('위치 오류', '위치를 가져올 수 없습니다.');
       },
       {
-        enableHighAccuracy: true,
-        timeout: 15000,
-        maximumAge: 10000,
-      }
+        enableHighAccuracy: true, // 정확도 높은 GPS 정보 사용
+        timeout: 15000, // 15초 타임아웃
+        maximumAge: 10000, // 10초 내의 캐시된 위치 허용
+      },
     );
   };
 
@@ -202,7 +273,7 @@ const Map = () => {
     <View style={styles.container}>
       <WebView
         ref={webViewRef}
-        source={{ html: KAKAO_MAP_HTML }}
+        source={{html: KAKAO_MAP_HTML}}
         style={styles.webview}
         originWhitelist={['*']}
         javaScriptEnabled={true}
@@ -217,7 +288,9 @@ const Map = () => {
       {/* 위치 정보 출력 */}
       <Text style={styles.locationText}>
         {location?.lat && location?.lng
-          ? `📍 현재 위치: 위도 ${location.lat}, 경도 ${location.lng}`
+          ? `📍 현재 위치: 위도 ${location.lat}, 경도 ${location.lng}, 고도 ${
+              location.alt ? location.alt.toFixed(2) : 'N/A'
+            }m`
           : '⏳ 위치 정보를 가져오는 중...'}
       </Text>
     </View>
@@ -225,13 +298,13 @@ const Map = () => {
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1 },
-  webview: { flex: 1 },
+  container: {flex: 1},
+  webview: {flex: 1},
   button: {
     position: 'absolute',
     bottom: 150,
     left: '50%',
-    transform: [{ translateX: -75 }],
+    transform: [{translateX: -75}],
     backgroundColor: '#007AFF',
     paddingVertical: 12,
     paddingHorizontal: 24,
@@ -255,3 +328,5 @@ const styles = StyleSheet.create({
 });
 
 export default Map;
+
+////////////////////////////////////////////////////////

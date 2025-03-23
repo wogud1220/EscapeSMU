@@ -27,12 +27,27 @@
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>
-		<false/>
+		<true/> <!--Http 요청 수락 fetch 요청이 차단되지 않음.-->
 		<key>NSAllowsLocalNetworking</key>
 		<true/>
 	</dict>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+
+	<key>NSCameraUsageDescription</key>	<!--카메라 권한 추가-->
+  	<string>NsCamera 사용하여 사진 촬영</string>
+
+	<key>NSLocationWhenInUseUsageDescription</key>	<!--현재 위치 권한-->
+	<string>현재 위치 정보 확인</string>
+
+	<key>NSLocationWhenInUseUsageDescription</key>	<!--백그라운드 위치 권한-->
+	<string>백그라운드에서도 추적 권한</string>
+
+	<key>NSLocationTemporaryUsageDescriptionDictionary</key>	<!--precision 위치 권한-->
+	<dict>
+  		<key>LocationAccuracy</key>
+  		<string>정확한 위치 추적을 위해 고정밀 위치 권한</string>
+	</dict>
+
+
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIRequiredDeviceCapabilities</key>
