@@ -18,7 +18,7 @@ const Stage7_2 = () => {
   };
 
   const handleNextStage = () => {
-    navigation.navigate('Stage6_2'); // ✅ Stage7_2 가즈아
+    navigation.navigate('Stage7_3'); // ✅ Stage7_2 가즈아
   };
 
   return (
@@ -58,15 +58,13 @@ const Stage7_2 = () => {
           resizeMode="contain"
           />
           <Text style={styles.text}>
-            송백관에도 학생들이 쉴 수 있는 공간이 있어!
+            송백관에도 학생들이 {'\n'}공부할 수 있는 공간이 있어!
           </Text>
           <Text style={styles.subText}>
-            엇, 잠시만! 그런데 저기 보이는 거울 옆에 {'\n'}
-            사진이 붙어 있는 것 같아. 한 번 가보자!!
+            이 곳을 한 번 찾아가볼까?{'\n'}
           </Text>
             </View>
 
-        {/* ✅ 다음 스테이지로 이동 버튼 */}
         <TouchableOpacity 
           style={styles.nextButton}
           onPress={handleNextStage}

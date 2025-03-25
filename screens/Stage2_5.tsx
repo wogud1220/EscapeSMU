@@ -74,18 +74,12 @@ const checkCompletion = () => {
     setPuzzleImages(shuffleArray([...correctPuzzleImages]));
   }, []);
 
-
-
   const handleMapPress = () => {
     navigation.navigate('Map');
   };
 
   const handleHint = () => {
-    Alert.alert(
-      '힌트',
-      '상록관 카페 뒤쪽으로 가서 왼쪽을 바라보면, 담장에 그림이 있을거야!',
-      [{ text: '확인' }]
-    );
+    navigation.navigate('Stage2_Hint');
   };
 
   const handleImagePress = (index: number) => {

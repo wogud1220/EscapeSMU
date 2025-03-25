@@ -6,11 +6,11 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from '../App';
 
-type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage2_1'>;
+type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage2_Hint'>;
 
 const { width, height } = Dimensions.get('window');
 
-const Stage2_1 = () => {
+const Stage2_Hint = () => {
   const navigation = useNavigation<NavigationProp>();
 
   const handleMapPress = () => {
@@ -18,7 +18,7 @@ const Stage2_1 = () => {
   };
 
   const handleNextStage = () => {
-    navigation.navigate('Stage2_Hint'); // ✅ Stage2_2으로 이동하도록 수정
+    navigation.navigate('Stage2_5'); // ✅ Stage2_2으로 이동하도록 수정
   };
 
   return (
@@ -53,8 +53,13 @@ const Stage2_1 = () => {
         {/* ✅ 가운데 투명한 흰색 박스 */}
         <View style={styles.box}>
           <Text style={styles.text}>이 그림은 어디 있는 그림일까?</Text>
+          <Image
+            source={require('../assets/waytopuzzle.png')}
+            style={styles.wayImage}
+            resizeMode="contain"
+          />
           <Text style={styles.subText}>
-            상록관 카페 뒤쪽으로 가서 좌회전하면 담장에 그림들이 보이네! 이제 풀 수 있을 것 같아!
+            상록관 카페 뒤쪽으로 가서 좌회전하면 담장에 그림이 보이는 것 같아!
           </Text>
         </View>
 
@@ -159,4 +164,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Stage2_1;
+export default Stage2_Hint;
