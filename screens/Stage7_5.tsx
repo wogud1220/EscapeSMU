@@ -18,7 +18,7 @@ const Stage7_5 = () => {
   };
 
   const handleNextStage = () => {
-    navigation.navigate('Stage8_1');
+    navigation.navigate('Stage7_6');
   };
 
   return (
