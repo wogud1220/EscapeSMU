@@ -10,7 +10,7 @@ type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage13_7'>
 
 const { width, height } = Dimensions.get('window');
 
-const Stage13_2 = () => {
+const Stage13_7 = () => {
   const navigation = useNavigation<NavigationProp>();
 
   const handleMapPress = () => {
@@ -53,10 +53,9 @@ const Stage13_2 = () => {
         {/* ✅ 가운데 투명한 흰색 박스 */}
         <View style={styles.box}>
           <Text style={styles.text}>
-          2층의 정보검색실로 이동해볼까?
+          앞에 있는 PC들 중 빈 자리에 앉아 전원을 켜봐!
           </Text>
           <Text style={styles.subText}>
-          정보검색실은 도서관의 자료를 검색하고{'\n'} 찾을 수 있는 공간이야!{'\n'}{'\n'}
           PC를 켜서 인터넷을 통해{'\n'} 학술정보관 페이지로 들어가보자!
           </Text>
 
@@ -165,4 +164,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Stage13_2;
+export default Stage13_7;

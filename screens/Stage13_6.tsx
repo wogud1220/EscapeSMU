@@ -11,11 +11,11 @@ type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage13_6'>
 const { width, height } = Dimensions.get('window');
 
 const options = [
-  { label: 'KB STAR SQUARE', value: 1 },
-  { label: '프레젠테이션룸', value: 2 },
-  { label: '그룹스터디룸', value: 3 },
-  { label: '우체국', value: 4 },
-  { label: '예비군대대', value: 5 },
+  { label: '인터네셔널 라운지', value: 1 },
+  { label: '창업보육센터', value: 2 },
+  { label: '산학협력단', value: 3 },
+  { label: '정보검색실', value: 4 },
+  { label: '학보사', value: 5 },
 ];
 
 const Stage13_6 = () => {
@@ -48,9 +48,9 @@ const Stage13_6 = () => {
   const handleOptionPress = (value: number) => {
     if (disabled) return;
 
-    if (value === 5) {
+    if (value === 4) {
       Alert.alert('정답입니다!', '다음 스테이지로 이동합니다.', [
-        { text: '확인', onPress: () => navigation.navigate('Stage13_7') },
+        { text: '확인', onPress: () => navigation.navigate('Stage13_6_1') },
       ]);
     } else {
       Alert.alert('오답입니다.', '5분 뒤에 다시 시도해 보세요!');
@@ -95,7 +95,7 @@ const Stage13_6 = () => {
         {/* 흰색 박스 */}
         <View style={styles.box}>
           <Text style={styles.text}>
-            학술정보관에 존재하지 <Text style={styles.highlight}>않는</Text> 시설을 골라봐!
+            이제 어디로 가야하냐고? 학술정보관에 존재하는 시설을 골라봐!
           </Text>
 
           {/* 서브텍스트 추가 */}
