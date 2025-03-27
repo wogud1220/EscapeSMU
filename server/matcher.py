@@ -19,8 +19,7 @@ def load_image(image_path):
     else:
         print(f"✅ 이미지 로드 성공: {image_path}")
     # ✅ 🔽 이미지 크기 줄이기 (크게 유지)
-    # image = cv2.resize(image, (3264, 2448))  # 약 8MP (4:3 비율)
-    image = cv2.resize(image, (4032, 3024))  # 약 12MP (4:3 비율, 아이폰 기본)
+    image = cv2.resize(image, (3264, 2448))  # 약 8MP (4:3 비율)
     return image
 
 def compare_images(user_image_path):
