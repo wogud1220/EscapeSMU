@@ -18,7 +18,9 @@ def load_image(image_path):
         print(f"🚨 OpenCV가 이미지를 불러올 수 없음: {image_path}")
     else:
         print(f"✅ 이미지 로드 성공: {image_path}")
-
+        # ✅ 🔽 이미지 크기 줄이기
+    image = cv2.resize(image, (640, 480))
+    
     return image
 
 def compare_images(user_image_path):
