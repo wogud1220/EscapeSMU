@@ -1,7 +1,7 @@
 from fastapi import FastAPI, File, UploadFile
 import shutil
 import os
-
+from fastapi.responses import JSONResponse
 app = FastAPI()
 
 UPLOAD_FOLDER = "uploads"
@@ -21,4 +21,4 @@ async def compare_images(file: UploadFile = File(...)):
     from matcher import compare_images
     result = compare_images(file_location)
 
-    return result
+    return JSONResponse(content=result)
