@@ -19,7 +19,7 @@ def load_image(image_path):
     else:
         print(f"✅ 이미지 로드 성공: {image_path}")
     # ✅ 🔽 이미지 크기 줄이기 (크게 유지)
-    image = cv2.resize(image, (1920, 1440))
+    image = cv2.resize(image, (2560, 1920))  # QHD 이상급
 
     return image
 

@@ -78,7 +78,7 @@ const Stage1Camera = ({navigation}: {navigation: any}) => {
           Alert.alert('❌ 실패', '다시 시도해주세요.');
         }
       } catch (error) {
-        console.error('🚨 서버 오류:', error);
+        console.error('서버 오류:', error);
         Alert.alert('⚠️ 오류', '사진을 전송할 수 없습니다.');
       }
     }
