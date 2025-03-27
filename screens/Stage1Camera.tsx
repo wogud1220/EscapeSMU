@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import {Camera, CameraDevice} from 'react-native-vision-camera';
 
-const SERVER_URL = 'http://192.168.0.8:8000/compare'; // ✅ 서버 URL
+const SERVER_URL = 'https://escapesmu.onrender.com/compare'; // ✅ 서버 URL
 
 const Stage1Camera = ({navigation}: {navigation: any}) => {
   const [permission, setPermission] = useState<boolean | null>(null);
