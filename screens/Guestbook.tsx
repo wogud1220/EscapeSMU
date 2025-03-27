@@ -1,179 +1,511 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, TouchableOpacity, FlatList, StyleSheet, Alert } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useNavigation } from '@react-navigation/native';
+// import React, {useEffect, useState} from 'react';
+// import {
+//   View,
+//   Text,
+//   TextInput,
+//   Button,
+//   FlatList,
+//   StyleSheet,
+//   Alert,
+//   TouchableOpacity,
+//   KeyboardAvoidingView,
+//   Platform,
+// } from 'react-native';
+// import {
+//   collection,
+//   addDoc,
+//   serverTimestamp,
+//   onSnapshot,
+//   query,
+//   orderBy,
+//   deleteDoc,
+//   doc,
+// } from 'firebase/firestore';
+// import {onAuthStateChanged} from 'firebase/auth';
+// import {auth, db} from './firebase.config';
+// import {formatDistanceToNow} from 'date-fns';
+// import {ko} from 'date-fns/locale';
+// import {useRoute} from '@react-navigation/native';
+
+// interface GuestMessage {
+//   id: string;
+//   message: string;
+//   department: string;
+//   uid: string;
+//   timestamp: any;
+//   emailPrefix?: string;
+// }
+
+// const Guestbook = () => {
+//   const route = useRoute();
+//   const selectedDepartment =
+//     (route.params as {department?: string})?.department || '';
+
+//   const [message, setMessage] = useState('');
+//   const [messages, setMessages] = useState<GuestMessage[]>([]);
+//   const [uid, setUid] = useState<string>('');
+//   const [emailPrefix, setEmailPrefix] = useState<string>('');
+
+//   useEffect(() => {
+//     const unsubscribeAuth = onAuthStateChanged(auth, user => {
+//       if (user) {
+//         setUid(user.uid);
+//         const prefix = user.email?.split('@')[0].slice(0, 4) || 'user';
+//         setEmailPrefix(prefix);
+//       }
+//     });
+
+//     const q = query(collection(db, 'guestbook'), orderBy('timestamp', 'desc'));
+//     const unsubscribeFirestore = onSnapshot(q, snapshot => {
+//       const fetchedMessages: GuestMessage[] = snapshot.docs.map(doc => {
+//         const data = doc.data();
+//         const emailPrefixField = data.email
+//           ? data.email.split('@')[0].slice(0, 4)
+//           : 'user';
+//         return {
+//           id: doc.id,
+//           message: data.message,
+//           department: data.department,
+//           uid: data.uid,
+//           timestamp: data.timestamp,
+//           emailPrefix: emailPrefixField,
+//         };
+//       });
+//       setMessages(fetchedMessages);
+//     });
+
+//     return () => {
+//       unsubscribeAuth();
+//       unsubscribeFirestore();
+//     };
+//   }, []);
+
+//   const handleSubmit = async () => {
+//     if (!message.trim()) {
+//       Alert.alert('입력 오류', '메시지를 입력해주세요.');
+//       return;
+//     }
+
+//     try {
+//       const user = auth.currentUser;
+//       const email = user?.email || '';
+//       await addDoc(collection(db, 'guestbook'), {
+//         message,
+//         department: selectedDepartment,
+//         uid,
+//         email,
+//         timestamp: serverTimestamp(),
+//       });
+//       setMessage('');
+//     } catch (error) {
+//       console.error('🚨 메시지 저장 오류:', error);
+//       Alert.alert('오류', '메시지를 저장하는 중 오류가 발생했습니다.');
+//     }
+//   };
+
+//   const handleDelete = async (id: string) => {
+//     try {
+//       await deleteDoc(doc(db, 'guestbook', id));
+//     } catch (error) {
+//       console.error('❌ 삭제 오류:', error);
+//       Alert.alert('삭제 실패', '메시지 삭제 중 오류가 발생했습니다.');
+//     }
+//   };
+
+//   const renderItem = ({item}: {item: GuestMessage}) => {
+//     const timeAgo = item.timestamp?.toDate
+//       ? formatDistanceToNow(item.timestamp.toDate(), {
+//           addSuffix: true,
+//           locale: ko,
+//         })
+//       : '시간 정보 없음';
+
+//     return (
+//       <View style={styles.messageBox}>
+//         <Text style={styles.message}>{item.message}</Text>
+//         <Text style={styles.author}>작성자: {item.emailPrefix}</Text>
+//         <Text style={styles.time}>{timeAgo}</Text>
+//         <Text>부서: {item.department}</Text>
+//         {item.uid === uid && (
+//           <TouchableOpacity
+//             onPress={() => handleDelete(item.id)}
+//             style={styles.deleteButton}>
+//             <Text style={styles.deleteButtonText}>삭제</Text>
+//           </TouchableOpacity>
+//         )}
+//       </View>
+//     );
+//   };
+
+//   return (
+//     <KeyboardAvoidingView
+//       style={styles.container}
+//       behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
+//       <FlatList
+//         ListHeaderComponent={
+//           <>
+//             <Text style={styles.title}>📖 방명록</Text>
+//             {selectedDepartment !== '' && (
+//               <Text style={styles.departmentLabel}>
+//                 📌 {selectedDepartment}
+//               </Text>
+//             )}
+//             <View style={styles.cardBox}>
+//               <TextInput
+//                 value={message}
+//                 onChangeText={setMessage}
+//                 placeholder="메시지를 입력하세요"
+//                 style={styles.input}
+//               />
+//               <Button title="방명록 남기기" onPress={handleSubmit} />
+//             </View>
+//           </>
+//         }
+//         data={messages}
+//         keyExtractor={item => item.id}
+//         renderItem={renderItem}
+//         contentContainerStyle={{
+//           paddingBottom: 100,
+//           paddingTop: 100,
+//           paddingHorizontal: 20,
+//         }}
+//         ListEmptyComponent={
+//           <Text style={styles.emptyText}>아직 메시지가 없습니다.</Text>
+//         }
+//       />
+//     </KeyboardAvoidingView>
+//   );
+// };
+
+// const styles = StyleSheet.create({
+//   message: {
+//     fontWeight: 'bold',
+//     marginBottom: 10,
+//   },
+//   container: {
+//     flex: 1,
+//     backgroundColor: '#fff',
+//   },
+//   title: {
+//     fontSize: 24,
+//     marginBottom: 12,
+//   },
+//   departmentLabel: {
+//     fontSize: 16,
+//     color: '#444',
+//     marginBottom: 8,
+//     textAlign: 'center',
+//     fontWeight: '600',
+//   },
+//   cardBox: {
+//     backgroundColor: '#f9f9f9',
+//     padding: 16,
+//     borderRadius: 12,
+//     marginBottom: 20,
+//     shadowColor: '#000',
+//     shadowOpacity: 0.1,
+//     shadowRadius: 8,
+//     elevation: 3,
+//   },
+//   input: {
+//     borderWidth: 1,
+//     borderColor: '#ccc',
+//     padding: 10,
+//     marginBottom: 10,
+//     borderRadius: 5,
+//     backgroundColor: '#fff',
+//   },
+//   messageBox: {
+//     marginBottom: 12,
+//     padding: 10,
+//     borderWidth: 1,
+//     borderColor: '#eee',
+//     borderRadius: 5,
+//     position: 'relative',
+//   },
+//   author: {
+//     marginTop: 4,
+//   },
+//   time: {
+//     fontSize: 12,
+//     color: '#666',
+//     marginBottom: 4,
+//   },
+//   deleteButton: {
+//     position: 'absolute',
+//     bottom: 10,
+//     right: 10,
+//     backgroundColor: '#ff4d4d',
+//     paddingHorizontal: 10,
+//     paddingVertical: 4,
+//     borderRadius: 4,
+//   },
+//   deleteButtonText: {
+//     color: '#fff',
+//     fontWeight: 'bold',
+//   },
+//   emptyText: {
+//     marginTop: 20,
+//     fontSize: 16,
+//     color: '#999',
+//     textAlign: 'center',
+//   },
+// });
+
+// export default Guestbook;
+
+import React, {useEffect, useState} from 'react';
+import {
+  View,
+  Text,
+  TextInput,
+  Button,
+  FlatList,
+  StyleSheet,
+  Alert,
+  TouchableOpacity,
+  KeyboardAvoidingView,
+  Platform,
+} from 'react-native';
+import {
+  collection,
+  addDoc,
+  serverTimestamp,
+  onSnapshot,
+  query,
+  orderBy,
+  deleteDoc,
+  doc,
+} from 'firebase/firestore';
+import {onAuthStateChanged} from 'firebase/auth';
+import {auth, db} from './firebase.config';
+import {formatDistanceToNow} from 'date-fns';
+import {ko} from 'date-fns/locale';
+import {useRoute} from '@react-navigation/native';
+
+interface GuestMessage {
+  id: string;
+  message: string;
+  department: string;
+  uid: string;
+  timestamp: any;
+  emailPrefix?: string;
+}
 
 const Guestbook = () => {
-  const navigation = useNavigation(); // ✅ 뒤로가기 네비게이션
-  const [name, setName] = useState('');
+  const route = useRoute();
+  const selectedDepartment =
+    (route.params as {department?: string})?.department || '';
+
   const [message, setMessage] = useState('');
-  const [guestbookEntries, setGuestbookEntries] = useState([]);
+  const [messages, setMessages] = useState<GuestMessage[]>([]);
+  const [uid, setUid] = useState<string>('');
+  const [emailPrefix, setEmailPrefix] = useState<string>('');
 
   useEffect(() => {
-    loadEntries();
+    const unsubscribeAuth = onAuthStateChanged(auth, user => {
+      if (user) {
+        setUid(user.uid);
+        const prefix = user.email?.split('@')[0].slice(0, 4) || 'user';
+        setEmailPrefix(prefix);
+      }
+    });
+
+    const q = query(collection(db, 'guestbook'), orderBy('timestamp', 'desc'));
+    const unsubscribeFirestore = onSnapshot(q, snapshot => {
+      const fetchedMessages: GuestMessage[] = snapshot.docs.map(doc => {
+        const data = doc.data();
+        const emailPrefixField = data.email
+          ? data.email.split('@')[0].slice(0, 4)
+          : 'user';
+        return {
+          id: doc.id,
+          message: data.message,
+          department: data.department,
+          uid: data.uid,
+          timestamp: data.timestamp,
+          emailPrefix: emailPrefixField,
+        };
+      });
+      setMessages(fetchedMessages);
+    });
+
+    return () => {
+      unsubscribeAuth();
+      unsubscribeFirestore();
+    };
   }, []);
 
-  // ✅ 방명록 데이터 불러오기
-  const loadEntries = async () => {
-    try {
-      const savedEntries = await AsyncStorage.getItem('guestbook');
-      if (savedEntries) {
-        setGuestbookEntries(JSON.parse(savedEntries));
-      }
-    } catch (error) {
-      console.error('방명록 불러오기 오류:', error);
-    }
-  };
-
-  // ✅ 방명록 작성
-  const addEntry = async () => {
-    if (!name || !message) {
-      Alert.alert('입력 오류', '이름과 메시지를 모두 입력해 주세요.');
+  const handleSubmit = async () => {
+    if (!message.trim()) {
+      Alert.alert('입력 오류', '메시지를 입력해주세요.');
       return;
     }
 
-    const newEntry = {
-      id: Date.now().toString(),
-      name,
-      message,
-      createdAt: new Date().toLocaleString(),
-    };
-
-    const updatedEntries = [newEntry, ...guestbookEntries];
-    setGuestbookEntries(updatedEntries);
-    await AsyncStorage.setItem('guestbook', JSON.stringify(updatedEntries));
-
-    setName('');
-    setMessage('');
+    try {
+      const user = auth.currentUser;
+      const email = user?.email || '';
+      await addDoc(collection(db, 'guestbook'), {
+        message,
+        department: selectedDepartment,
+        uid,
+        email,
+        timestamp: serverTimestamp(),
+      });
+      setMessage('');
+    } catch (error) {
+      console.error('🚨 메시지 저장 오류:', error);
+      Alert.alert('오류', '메시지를 저장하는 중 오류가 발생했습니다.');
+    }
   };
 
-  // ✅ 방명록 삭제
-  const deleteEntry = async (id) => {
-    const updatedEntries = guestbookEntries.filter((entry) => entry.id !== id);
-    setGuestbookEntries(updatedEntries);
-    await AsyncStorage.setItem('guestbook', JSON.stringify(updatedEntries));
+  const handleDelete = async (id: string) => {
+    try {
+      await deleteDoc(doc(db, 'guestbook', id));
+    } catch (error) {
+      console.error('❌ 삭제 오류:', error);
+      Alert.alert('삭제 실패', '메시지 삭제 중 오류가 발생했습니다.');
+    }
   };
 
-  // ✅ 뒤로가기
-  const handleGoBack = () => {
-    navigation.goBack(); // 뒤로가기 처리
+  const renderItem = ({item}: {item: GuestMessage}) => {
+    const timeAgo = item.timestamp?.toDate
+      ? formatDistanceToNow(item.timestamp.toDate(), {
+          addSuffix: true,
+          locale: ko,
+        })
+      : '시간 정보 없음';
+
+    return (
+      <View style={styles.messageBox}>
+        <Text style={styles.message}>{item.message}</Text>
+        <Text style={styles.author}>작성자: {item.emailPrefix}</Text>
+        <Text>부서: {item.department}</Text>
+        <Text style={styles.time}>{timeAgo}</Text>
+        {item.uid === uid && (
+          <TouchableOpacity
+            onPress={() => handleDelete(item.id)}
+            style={styles.deleteButton}>
+            <Text style={styles.deleteButtonText}>삭제</Text>
+          </TouchableOpacity>
+        )}
+      </View>
+    );
   };
 
   return (
-    <View style={styles.container}>
-      {/* ✅ 입력 필드 */}
-      <TextInput
-        style={styles.input}
-        placeholder="이름"
-        value={name}
-        onChangeText={setName}
-      />
-      <TextInput
-        style={[styles.input, styles.messageInput]}
-        placeholder="메시지"
-        value={message}
-        onChangeText={setMessage}
-        multiline
-      />
-
-      {/* ✅ 버튼 수평 배치 */}
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.goBackButton} onPress={handleGoBack}>
-          <Text style={styles.goBackButtonText}>뒤로가기</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.submitButton} onPress={addEntry}>
-          <Text style={styles.submitButtonText}>방명록 작성</Text>
-        </TouchableOpacity>
-      </View>
-
-      {/* ✅ 방명록 리스트 */}
+    <KeyboardAvoidingView
+      style={styles.container}
+      behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
       <FlatList
-        data={guestbookEntries}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => (
-          <View style={styles.entry}>
-            <Text style={styles.entryName}>{item.name}</Text>
-            <Text style={styles.entryMessage}>{item.message}</Text>
-            <Text style={styles.entryDate}>{item.createdAt}</Text>
-            <TouchableOpacity onPress={() => deleteEntry(item.id)}>
-              <Text style={styles.deleteButton}>삭제</Text>
-            </TouchableOpacity>
-          </View>
-        )}
+        ListHeaderComponent={
+          <>
+            <Text style={styles.title}>📖 방명록</Text>
+            {selectedDepartment !== '' && (
+              <Text style={styles.departmentLabel}>
+                📌 {selectedDepartment}
+              </Text>
+            )}
+            <View style={styles.cardBox}>
+              <TextInput
+                value={message}
+                onChangeText={setMessage}
+                placeholder="메시지를 입력하세요"
+                placeholderTextColor="#000"
+                style={styles.input}
+              />
+              <Button title="방명록 남기기" onPress={handleSubmit} />
+            </View>
+          </>
+        }
+        data={messages}
+        keyExtractor={item => item.id}
+        renderItem={renderItem}
+        contentContainerStyle={{
+          paddingBottom: 100,
+          paddingTop: 100,
+          paddingHorizontal: 20,
+        }}
+        ListEmptyComponent={
+          <Text style={styles.emptyText}>아직 메시지가 없습니다.</Text>
+        }
       />
-    </View>
+    </KeyboardAvoidingView>
   );
 };
 
 const styles = StyleSheet.create({
+  message: {
+    fontWeight: 'bold',
+    marginBottom: 10,
+  },
   container: {
     flex: 1,
-    padding: 20,
-    backgroundColor: '#F5E6C4',
+    backgroundColor: '#fff',
+  },
+  title: {
+    fontSize: 24,
+    marginBottom: 12,
+  },
+  departmentLabel: {
+    fontSize: 16,
+    color: '#444',
+    marginBottom: 8,
+    textAlign: 'center',
+    fontWeight: '600',
+  },
+  cardBox: {
+    backgroundColor: '#f9f9f9',
+    padding: 16,
+    borderRadius: 12,
+    marginBottom: 20,
+    shadowColor: '#000',
+    shadowOpacity: 0.1,
+    shadowRadius: 8,
+    elevation: 3,
   },
   input: {
     borderWidth: 1,
-    borderColor: '#aaa',
+    borderColor: '#ccc',
     padding: 10,
     marginBottom: 10,
     borderRadius: 5,
-    backgroundColor: '#FFF',
+    backgroundColor: '#fff',
   },
-  messageInput: {
-    height: 100,
-  },
-  buttonContainer: {
-    flexDirection: 'row', // ✅ 수평 정렬
-    justifyContent: 'space-between', // ✅ 버튼 간격 조정
-    alignItems: 'center',
-    marginBottom: 15,
-  },
-  goBackButton: {
-    backgroundColor: '#FF6347', // ✅ 빨간색 버튼
-    paddingVertical: 12,
-    paddingHorizontal: 25,
+  messageBox: {
+    marginBottom: 12,
+    padding: 10,
+    borderWidth: 1,
+    borderColor: '#eee',
     borderRadius: 5,
-    alignItems: 'center',
-    width: '45%', // ✅ 버튼 크기 고정
+    position: 'relative',
   },
-  goBackButtonText: {
-    color: '#FFFFFF',
-    fontSize: 16,
-    fontWeight: 'bold',
+  author: {
+    marginTop: 4,
   },
-  submitButton: {
-    backgroundColor: '#1E90FF', // ✅ 파란색 버튼
-    paddingVertical: 12,
-    paddingHorizontal: 25,
-    borderRadius: 5,
-    alignItems: 'center',
-    width: '45%', // ✅ 버튼 크기 고정
-  },
-  submitButtonText: {
-    color: '#FFFFFF',
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
-  entry: {
-    borderBottomWidth: 1,
-    borderBottomColor: '#ddd',
-    paddingVertical: 10,
-  },
-  entryName: {
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
-  entryMessage: {
-    fontSize: 14,
-  },
-  entryDate: {
+  time: {
     fontSize: 12,
-    color: '#999',
+    color: '#666',
+    marginBottom: 4,
   },
   deleteButton: {
-    color: 'red',
-    marginTop: 5,
+    position: 'absolute',
+    bottom: 10,
+    right: 10,
+    backgroundColor: '#ff4d4d',
+    paddingHorizontal: 10,
+    paddingVertical: 4,
+    borderRadius: 4,
+  },
+  deleteButtonText: {
+    color: '#fff',
+    fontWeight: 'bold',
+  },
+  emptyText: {
+    marginTop: 20,
+    fontSize: 16,
+    color: '#999',
+    textAlign: 'center',
   },
 });
 

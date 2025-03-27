@@ -4,7 +4,7 @@ import os
 
 # 📌 기준 이미지 (템플릿) 경로 설정
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-TEMPLATE_PATH = os.path.join(BASE_DIR, "templates", "template.jpg")
+TEMPLATE_PATH = os.path.join(BASE_DIR, "templates", "template.jpeg")
 UPLOADS_FOLDER = os.path.join(BASE_DIR, "uploads")
 
 def load_image(image_path):
@@ -56,7 +56,7 @@ def compare_images(user_image_path):
     print(f"🎯 평균 매칭 점수: {avg_match_score:.2f}")
 
     # ✅ 매칭 성공 기준 (더 엄격한 기준 적용)
-    if len(good_matches) > 300 and avg_match_score < 120:
+    if len(good_matches) > 220 and avg_match_score < 110:
         return {"result": "Pass", "message": "이미지가 일치함"}
     else:
         return {"result": "Fail", "message": "이미지가 충분히 유사하지 않음"}

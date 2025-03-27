@@ -10,21 +10,6 @@ const LogIn = () => {
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
 
-  //   const handleLogin = async () => {
-  //     try {
-  //       await signInWithEmailAndPassword(auth, email, password);
-  //       console.log('✅ 로그인 성공!');
-  //       navigation.navigate('Main'); // 로그인 성공 시 Mai로 이동
-  //     } catch (error) {
-  //       console.error('🚨 로그인 오류:', error);
-  //       if (error instanceof Error) {
-  //         setErrorMessage(error.message);
-  //       } else {
-  //         setErrorMessage('알 수 없는 오류가 발생했습니다.');
-  //       }
-  //     }
-  //   };
-
   const handleLogin = async () => {
     try {
       const userCredential = await signInWithEmailAndPassword(
