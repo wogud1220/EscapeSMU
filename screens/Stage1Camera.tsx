@@ -48,7 +48,7 @@ const Stage1Camera = ({navigation}: {navigation: any}) => {
     if (camera.current) {
       try {
         console.log('📸 촬영 시작...');
-        const photo = await camera.current.takePhoto({quality: 50});
+        const photo = await camera.current.takePhoto({quality: 90});
         console.log('📸 촬영 완료:', photo.path);
 
         // ✅ 서버로 전송할 FormData 생성
