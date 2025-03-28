@@ -190,16 +190,13 @@ const Stage1Camera = ({navigation}: {navigation: any}) => {
   useEffect(() => {
     const checkPermission = async () => {
       const cameraPermission = await Camera.getCameraPermissionStatus();
-      const isGranted = cameraPermission === 'granted';
-      setPermission(isGranted);
+      setPermission(cameraPermission === 'granted');
     };
 
     const loadDevices = async () => {
-      const availableDevices = await Camera.getAvailableCameraDevices();
-      const selectedCamera = availableDevices.find(
-        dev => dev.position === 'back',
-      );
-      setDevice(selectedCamera);
+      const devices = await Camera.getAvailableCameraDevices();
+      const selected = devices.find(dev => dev.position === 'back');
+      setDevice(selected);
     };
 
     checkPermission();
@@ -218,20 +215,14 @@ const Stage1Camera = ({navigation}: {navigation: any}) => {
         name: 'captured.jpg',
       });
 
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 5000);
       const startTime = Date.now();
-
       const response = await fetch(SERVER_URL, {
         method: 'POST',
         body: formData,
         headers: {
           'Content-Type': 'multipart/form-data',
         },
-        signal: controller.signal,
       });
-
-      clearTimeout(timeoutId);
       const elapsed = Date.now() - startTime;
       console.log(`⏱️ 서버 응답 시간: ${elapsed}ms`);
 
@@ -268,10 +259,6 @@ const Stage1Camera = ({navigation}: {navigation: any}) => {
     );
   }
 
-  const goToNextStage = () => {
-    navigation.navigate('Stage1_2');
-  };
-
   if (!device) {
     return (
       <Text>⚠️ 카메라 장치를 찾을 수 없습니다. 실제 기기에서 실행하세요.</Text>
@@ -287,16 +274,17 @@ const Stage1Camera = ({navigation}: {navigation: any}) => {
         isActive={true}
         photo={true}
       />
-
       <TouchableOpacity onPress={takePicture} style={styles.captureButton}>
         <Text style={styles.buttonText}>📸</Text>
       </TouchableOpacity>
-
-      <TouchableOpacity onPress={goToNextStage} style={styles.nextButton}>
+      <TouchableOpacity
+        onPress={() => navigation.navigate('Stage1_2')}
+        style={styles.nextButton}>
         <Text style={styles.buttonText}>다음 ➡️</Text>
       </TouchableOpacity>
-
-      <TouchableOpacity onPress={goToNextStage} style={styles.tempButton}>
+      <TouchableOpacity
+        onPress={() => navigation.navigate('Stage1_2')}
+        style={styles.tempButton}>
         <Text style={styles.buttonText}>Stage1_2로 이동</Text>
       </TouchableOpacity>
     </View>
