@@ -180,7 +180,8 @@ import React, {useEffect, useRef, useState} from 'react';
 import {View, Text, TouchableOpacity, StyleSheet, Alert} from 'react-native';
 import {Camera, CameraDevice} from 'react-native-vision-camera';
 
-const SERVER_URL = 'https://escapesmu.onrender.com/compare';
+// const SERVER_URL = 'https://escapesmu.onrender.com/compare';
+const SERVER_URL = 'http://34.64.239.59:8000/compare'; // ✅ 서버 URL, GCP 서버 주소로 변경
 
 const Stage1Camera = ({navigation}: {navigation: any}) => {
   const [permission, setPermission] = useState<boolean | null>(null);
