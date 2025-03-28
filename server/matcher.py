@@ -58,7 +58,7 @@ def compare_images(user_image_path):
     print(f"🎯 평균 매칭 점수: {avg_match_score:.2f}")
 
     # ✅ 매칭 성공 기준 (더 엄격한 기준 적용)
-    if len(good_matches) > 190 and avg_match_score < 150:
+    if len(good_matches) > 250 and avg_match_score < 170:
         return {"result": "Pass", "message": "이미지가 일치함"}
     else:
         return {"result": "Fail", "message": "이미지가 충분히 유사하지 않음"}
