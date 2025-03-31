@@ -5,6 +5,7 @@ import { View, Text, ImageBackground, StyleSheet, Dimensions, Image, TouchableOp
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from '../App';
+import { useRoute, RouteProp } from '@react-navigation/native';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage2_3'>;
 
@@ -12,13 +13,15 @@ const { width, height } = Dimensions.get('window');
 
 const Stage2_3 = () => {
   const navigation = useNavigation<NavigationProp>();
+  const route = useRoute<RouteProp<RootStackParamList, 'Stage2_3'>>();
+  const { department } = route.params;
 
   const handleMapPress = () => {
     navigation.navigate('Map');
   };
 
   const handleNextStage = () => {
-    navigation.navigate('Stage2Camera_2'); // ✅ Stage2_3으로 이동하도록 수정
+    navigation.navigate('Stage2Camera_2', {department});
   };
 
   return (

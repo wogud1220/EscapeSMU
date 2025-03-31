@@ -12,6 +12,7 @@ import {
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from '../App';
+import { useRoute, RouteProp } from '@react-navigation/native';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage7_3'>;
 
@@ -28,6 +29,9 @@ const options = [
 
 const Stage7_3 = () => {
   const navigation = useNavigation<NavigationProp>();
+  const route = useRoute<RouteProp<RootStackParamList, 'Stage7_3'>>();
+const { department } = route.params;
+
   const [disabled, setDisabled] = useState(false);
   const [countdown, setCountdown] = useState<number | null>(null);
 
@@ -57,7 +61,7 @@ const Stage7_3 = () => {
 
     if (value === 3) {
       Alert.alert('정답입니다!', '다음 스테이지로 이동합니다.', [
-        { text: '확인', onPress: () => navigation.navigate('Stage7_4') },
+        { text: '확인', onPress: () => navigation.navigate('Stage7_4', {department}) },
       ]);
     } else {
       Alert.alert('오답입니다.', '5분 뒤에 다시 시도해 보세요!');

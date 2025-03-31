@@ -15,6 +15,7 @@ import {
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from '../App';
+import { useRoute, RouteProp } from '@react-navigation/native';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage8_3'>;
 
@@ -22,6 +23,8 @@ const { width, height } = Dimensions.get('window');
 
 const Stage8_2 = () => {
   const navigation = useNavigation<NavigationProp>();
+  const route = useRoute<RouteProp<RootStackParamList, 'Stage8_2'>>();
+const { department } = route.params;
   const [answer, setAnswer] = useState('');
   const [isModalVisible, setIsModalVisible] = useState(false);
 
@@ -34,7 +37,7 @@ const Stage8_2 = () => {
       Alert.alert('정답입니다!', '다음 스테이지로 이동합니다.', [
         { 
           text: '확인', 
-          onPress: () => navigation.navigate('Stage8_3')
+          onPress: () => navigation.navigate('Stage8_3', { department })
         },
       ]);
       setIsModalVisible(false);

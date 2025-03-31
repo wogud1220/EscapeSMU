@@ -15,13 +15,16 @@ import {
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from '../App';
+import { useRoute, RouteProp } from '@react-navigation/native';
 
-type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage11_1'>;
+type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage10_7'>;
 
 const { width, height } = Dimensions.get('window');
 
 const Stage10_7 = () => {
   const navigation = useNavigation<NavigationProp>();
+  const route = useRoute<RouteProp<RootStackParamList, 'Stage10_7'>>();
+const { department } = route.params;
   const [answer, setAnswer] = useState('');
   const [isModalVisible, setIsModalVisible] = useState(false);
 
@@ -31,17 +34,23 @@ const Stage10_7 = () => {
 
   const handleNextStage = () => {
     if (answer.trim() === 'H503') {
+      let nextStage = 'Stage13_1';
+  
+      if (department.includes('융합기술대학') && department.includes('스포츠융합학부')) {
+        nextStage = 'Stage11_1';
+      } else if (department.includes('예술학부')) {
+        nextStage = 'Stage12_1';
+      }
+  
       Alert.alert('정답입니다!', '다음 스테이지로 이동합니다.', [
-        { 
-          text: '확인', 
-          onPress: () => navigation.navigate('Stage11_1')
-        },
+        { text: '확인', onPress: () => navigation.navigate(nextStage, { department }) },
       ]);
       setIsModalVisible(false);
     } else {
       Alert.alert('오답입니다.', '다시 시도해 보세요!');
     }
   };
+  
 
   const handleHomePress = () => {
     navigation.navigate('Main');

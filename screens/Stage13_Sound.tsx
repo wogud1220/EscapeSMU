@@ -17,6 +17,7 @@ import {
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from '../App';
+import { useRoute, RouteProp } from '@react-navigation/native';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage13_Sound'>;
 
@@ -36,6 +37,8 @@ const bookList = [
 
 const Stage13_Sound = () => {
   const navigation = useNavigation<NavigationProp>();
+  const route = useRoute<RouteProp<RootStackParamList, 'Stage13_Sound'>>();
+const { department } = route.params;
   const [randomBook, setRandomBook] = useState<string | null>(null);
   const [currentDecibel, setCurrentDecibel] = useState<number>(0); // ✅ 데시벨 상태 추가
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -73,7 +76,7 @@ const Stage13_Sound = () => {
   };
 
   const handleNextStage = () => {
-    navigation.navigate('StageFinal');
+    navigation.navigate('StageFinal', {department});
   };
 
   // ✅ 모달 열기

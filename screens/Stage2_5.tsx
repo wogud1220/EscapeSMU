@@ -3,6 +3,7 @@ import { View, Text, ImageBackground, StyleSheet, Dimensions, Image, TouchableOp
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from '../App';
+import { useRoute, RouteProp } from '@react-navigation/native';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage2_5'>;
 
@@ -50,6 +51,9 @@ const Stage2_5 = () => {
   const [puzzleImages, setPuzzleImages] = useState(() => shuffleArray([...correctPuzzleImages]));
   const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(null);
 
+  const route = useRoute<RouteProp<RootStackParamList, 'Stage2_5'>>();
+  const { department } = route.params;
+
 
 // ✅ 경로 문자열로 변환 후 비교하기 위해 미리 변환
 const correctPaths = correctPuzzleImages.map((img) =>
@@ -65,7 +69,7 @@ const checkCompletion = () => {
     Alert.alert(
       '성공 🎉',
       '퍼즐을 완성했구나! 다음 스테이지로 이동하자!',
-      [{ text: '확인', onPress: () => navigation.navigate('Stage3') }]
+      [{ text: '확인', onPress: () => navigation.navigate('Stage3', {department}) }]
     );
   }
 };

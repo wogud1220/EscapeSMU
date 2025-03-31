@@ -3,10 +3,16 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Camera, CameraDevice } from 'react-native-vision-camera';
+import { useRoute, RouteProp } from '@react-navigation/native';
+import { RootStackParamList } from '../App';
+
+type Stage4CameraRouteProp = RouteProp<RootStackParamList, 'Stage4Camera'>;
 
 const Stage4Camera = ({ navigation }: { navigation: any }) => {
   const [device, setDevice] = useState<CameraDevice | undefined>();
   const camera = useRef<Camera>(null);
+  const route = useRoute<RouteProp<RootStackParamList, 'Stage4Camera'>>();
+  const { department } = route.params;
 
   useEffect(() => {
     const checkPermission = async () => {
@@ -55,7 +61,7 @@ const Stage4Camera = ({ navigation }: { navigation: any }) => {
   };
 
   const goToNextStage = () => {
-    navigation.navigate('Stage4_3');
+    navigation.navigate('Stage4_3', {department});
   };
 
   if (!device) {

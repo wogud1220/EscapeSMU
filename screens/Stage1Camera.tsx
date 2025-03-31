@@ -8,6 +8,11 @@ import {
   Platform,
 } from 'react-native';
 import {Camera, CameraDevice} from 'react-native-vision-camera';
+import { useRoute, RouteProp } from '@react-navigation/native';
+
+type Stage1CameraRouteProp = RouteProp<RootStackParamList, 'Stage1Camera'>;
+
+
 
 const SERVER_URL = 'http://192.168.0.8:8000/compare'; // ✅ 서버 URL
 
@@ -15,6 +20,10 @@ const Stage1Camera = ({navigation}: {navigation: any}) => {
   const [permission, setPermission] = useState<boolean | null>(null);
   const [device, setDevice] = useState<CameraDevice | undefined>();
   const camera = useRef<Camera>(null);
+
+  const route = useRoute<Stage1CameraRouteProp>();
+  const { department } = route.params;
+
 
   useEffect(() => {
     const checkPermission = async () => {
@@ -73,7 +82,7 @@ const Stage1Camera = ({navigation}: {navigation: any}) => {
 
         if (data.result === 'Pass') {
           Alert.alert('✅ 성공!', '다음 단계로 이동합니다.');
-          navigation.navigate('Stage1_2'); // ✅ 다음 스테이지로 이동
+          navigation.navigate('Stage1_2', { department });
         } else {
           Alert.alert('❌ 실패', '다시 시도해주세요.');
         }
@@ -95,7 +104,7 @@ const Stage1Camera = ({navigation}: {navigation: any}) => {
     );
   }
   const goToNextStage = () => {
-    navigation.navigate('Stage1_2'); // ✅ Stage1_2로 이동
+    navigation.navigate('Stage1_2', { department });
   };
 
   if (!device) {

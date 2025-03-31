@@ -15,6 +15,7 @@ import {
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from '../App';
+import { useRoute, RouteProp } from '@react-navigation/native';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage5_5'>;
 
@@ -22,6 +23,8 @@ const { width, height } = Dimensions.get('window');
 
 const Stage5_5 = () => {
   const navigation = useNavigation<NavigationProp>();
+  const route = useRoute<RouteProp<RootStackParamList, 'Stage5_5'>>();
+  const { department } = route.params;
   const [answer, setAnswer] = useState('');
   const [isModalVisible, setIsModalVisible] = useState(false);
 
@@ -34,7 +37,7 @@ const Stage5_5 = () => {
       Alert.alert('정답입니다!', '다음 스테이지로 이동합니다.', [
         { 
           text: '확인', 
-          onPress: () => navigation.navigate('Stage5_6')
+          onPress: () => navigation.navigate('Stage5_6', { department })
         },
       ]);
       setIsModalVisible(false);
@@ -48,7 +51,7 @@ const Stage5_5 = () => {
   };
 
   const handleGoToGuestbook = () => {
-    navigation.navigate('Guestbook');
+    navigation.navigate('Guestbook', { department });
   };
 
   // ✅ 모달 열기

@@ -1,10 +1,14 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Camera, CameraDevice } from 'react-native-vision-camera';
+import { useRoute, RouteProp } from '@react-navigation/native';
+import { RootStackParamList } from '../App';
 
 const Stage10Camera = ({ navigation }: { navigation: any }) => {
   const [device, setDevice] = useState<CameraDevice | undefined>();
   const camera = useRef<Camera>(null);
+  const route = useRoute<RouteProp<RootStackParamList, 'Stage10Camera'>>();
+const { department } = route.params;
 
   useEffect(() => {
     const checkPermission = async () => {
@@ -53,7 +57,7 @@ const Stage10Camera = ({ navigation }: { navigation: any }) => {
   };
 
   const goToNextStage = () => {
-    navigation.navigate('Stage10_4'); // ✅ Stage1_2로 이동
+    navigation.navigate('Stage10_4', {department}); // ✅ Stage1_2로 이동
   };
 
   if (!device) {

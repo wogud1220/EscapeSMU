@@ -3,6 +3,7 @@ import { View, Text, ImageBackground, StyleSheet, Dimensions, Image, TouchableOp
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from '../App';
+import { useRoute, RouteProp } from '@react-navigation/native';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage13_8'>;
 
@@ -22,6 +23,8 @@ const bookList = [
 
 const Stage13_8 = () => {
   const navigation = useNavigation<NavigationProp>();
+  const route = useRoute<RouteProp<RootStackParamList, 'Stage13_8'>>();
+const { department } = route.params;
   const [randomBook, setRandomBook] = useState<string | null>(null);
   const fadeAnim = useState(new Animated.Value(0))[0];
 
@@ -43,7 +46,7 @@ const Stage13_8 = () => {
   };
 
   const handleNextStage = () => {
-    navigation.navigate('Stage13_9');
+    navigation.navigate('Stage13_9', {department});
   };
 
   return (

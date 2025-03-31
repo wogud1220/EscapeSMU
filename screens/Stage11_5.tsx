@@ -5,8 +5,9 @@ import { View, Text, ImageBackground, StyleSheet, Dimensions, Image, TouchableOp
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from '../App';
+import { useRoute, RouteProp } from '@react-navigation/native';
 
-type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage5_4'>;
+type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage11_5'>;
 
 const { width, height } = Dimensions.get('window');
 
@@ -20,6 +21,8 @@ const options = [
 
 const Stage11_5 = () => {
   const navigation = useNavigation<NavigationProp>();
+  const route = useRoute<RouteProp<RootStackParamList, 'Stage11_5'>>();
+const { department } = route.params;
   const [disabled, setDisabled] = useState(false); // ✅ 버튼 활성화 상태
   const [countdown, setCountdown] = useState<number | null>(null); // ✅ 남은 시간 상태
 
@@ -50,7 +53,7 @@ const Stage11_5 = () => {
 
     if (value === 5) {
       Alert.alert('정답입니다!', '다음 스테이지로 이동합니다.', [
-        { text: '확인', onPress: () => navigation.navigate('Stage11_6') },
+        { text: '확인', onPress: () => navigation.navigate('Stage11_6', {department}) },
       ]);
     } else {
       Alert.alert('오답입니다.', '5분 뒤에 다시 시도해 보세요!');
