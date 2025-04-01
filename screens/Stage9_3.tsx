@@ -56,14 +56,14 @@ const { department } = route.params;
         {/* ✅ 가운데 투명한 흰색 박스 */}
         <View style={styles.box}>
           <Image 
-            source={require('../assets/smugallery.png')} 
+            source={require('../assets/rabbit.png')} 
             style={styles.wayImage} 
             resizeMode="contain"
           />
-          <Text style={styles.text}>상명갤러리 찾았니?
+          <Text style={styles.text}>1층에서 디자인 놀이터를{'\n'}찾아보자!
           </Text>
           <Text style={styles.subText}>
-            위 이미지와 똑같이 사진을 찍어보자!
+            디자인 놀이터에서 놀고 있는{'\n'} 토끼를 찾아서 찍어보자!
           </Text>
         </View>
 

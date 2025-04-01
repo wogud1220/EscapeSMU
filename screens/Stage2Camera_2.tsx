@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Camera, CameraDevice } from 'react-native-vision-camera';
 import { useRoute, RouteProp } from '@react-navigation/native';
+import { RootStackParamList } from '../App';
 
 const Stage2Camera_2 = ({ navigation }: { navigation: any }) => {
   const [device, setDevice] = useState<CameraDevice | undefined>();
@@ -84,11 +85,6 @@ const Stage2Camera_2 = ({ navigation }: { navigation: any }) => {
       <TouchableOpacity onPress={goToNextStage} style={styles.nextButton}>
         <Text style={styles.buttonText}>다음 ➡️</Text>
       </TouchableOpacity>
-
-      {/* ✅ 임시 Stage1_2 이동 버튼 */}
-      <TouchableOpacity onPress={goToNextStage} style={styles.tempButton}>
-        <Text style={styles.buttonText}>Stage1_2로 이동</Text>
-      </TouchableOpacity>
     </View>
   );
 };
@@ -115,15 +111,6 @@ const styles = StyleSheet.create({
     bottom: 30,
     alignSelf: 'center',
     backgroundColor: '#1E90FF', // ✅ 파란색 버튼 스타일
-    paddingVertical: 15,
-    paddingHorizontal: 30,
-    borderRadius: 50,
-  },
-  tempButton: {
-    position: 'absolute',
-    bottom: 150, // ✅ 하단에서 약간 위로 배치
-    alignSelf: 'center',
-    backgroundColor: '#32CD32', // ✅ 연두색 스타일
     paddingVertical: 15,
     paddingHorizontal: 30,
     borderRadius: 50,

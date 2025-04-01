@@ -34,6 +34,10 @@ const { department } = route.params;
     navigation.navigate('Map');
   };
 
+  const handleBackStage = () => {
+    navigation.navigate('Stage7Camera', {department});
+  };
+
   const handleNextStage = () => {
     if (answer.trim() === '학생기숙사') {
       Alert.alert('정답입니다!', '다음 스테이지로 이동합니다.', [
@@ -151,6 +155,13 @@ const { department } = route.params;
           </TouchableWithoutFeedback>
         </Modal>
       </ImageBackground>
+        <TouchableOpacity 
+          style={styles.gogobackButton}
+          onPress={handleBackStage}
+          activeOpacity={0.7}
+        >
+          <Text style={styles.buttonText1}>카메라로 다시 살펴보기</Text>
+        </TouchableOpacity>
     </View>
   );
 };
@@ -278,6 +289,32 @@ const styles = StyleSheet.create({
     width: width * 0.7,
     height: height * 0.3,
     marginBottom: height * 0.02,
+  },
+  goBackButton: {
+    position: 'absolute',
+    top: height * 0.05,
+    left: width * 0.18, // 홈 버튼 옆에 배치
+    width: width * 0.1,
+    height: width * 0.1,
+  },
+  gogobackButton: {
+    position: 'absolute',
+    bottom: height * 0.05,
+    backgroundColor: 'rgba(0, 0, 255, 0.7)', // ✅ 파란색 버튼
+    paddingVertical: height * 0.01,
+    paddingHorizontal: width * 0.05,
+    borderRadius: width * 0.03,
+    alignItems: 'center',
+    alignSelf: 'center',
+  },
+  buttonText1: {
+    color: '#FFFFFF',
+    fontSize: width * 0.045,
+    fontWeight: 'bold',
+  },
+  goBackImage: {
+    width: '100%',
+    height: '100%',
   },
 });
 

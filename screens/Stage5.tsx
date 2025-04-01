@@ -7,7 +7,7 @@ import { useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from '../App';
 import { useRoute, RouteProp } from '@react-navigation/native';
 
-type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage4_3'>;
+type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage5'>;
 
 const { width, height } = Dimensions.get('window');
 

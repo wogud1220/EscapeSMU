@@ -1,4 +1,4 @@
-//한누리관 9층 가는 화면
+//디자인관 가는 화면
 
 import React from 'react';
 import { View, Text, ImageBackground, StyleSheet, Dimensions, Image, TouchableOpacity } from 'react-native';
@@ -7,21 +7,21 @@ import { useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from '../App';
 import { useRoute, RouteProp } from '@react-navigation/native';
 
-type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage5_1'>;
+type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage9_2_1'>;
 
 const { width, height } = Dimensions.get('window');
 
-const Stage5_1 = () => {
+const Stage9_2_1 = () => {
   const navigation = useNavigation<NavigationProp>();
-  const route = useRoute<RouteProp<RootStackParamList, 'Stage5_1'>>();
-  const { department } = route.params;
+  const route = useRoute<RouteProp<RootStackParamList, 'Stage9_2_1'>>();
+const { department } = route.params;
 
   const handleMapPress = () => {
     navigation.navigate('Map');
   };
 
   const handleNextStage = () => {
-    navigation.navigate('Stage5_1_1', {department});
+    navigation.navigate('Stage9_2_2', {department}); // ✅ Stage9_1 가즈아
   };
 
   return (
@@ -53,19 +53,22 @@ const Stage5_1 = () => {
           />
         </TouchableOpacity>
 
-        {/* ✅ 가운데 투명한 흰색 박스 */}
         <View style={styles.box}>
-          {/* ✅ 하얀색 박스 위에 bae.png 추가 */}
+          {/* ✅ 텍스트 위에 이미지 추가 */}
           <Image 
-            source={require('../assets/han1.png')} 
-            style={styles.wayImage} 
-            resizeMode="contain"
+          source={require('../assets/waytodesign.png')} 
+          style={styles.dokdoImage} 
+          resizeMode="contain"
           />
-          <Text style={styles.text}>위 사진이 어디일까?</Text>
-          <Text style={styles.subText}>
-            엘레베이터를 타고 9층으로 이동하면 볼 수 있다는데? 가볼까?
+          <Text style={styles.text}>
+            {'\n'}
+            드디어 여기까지 왔구나!{'\n'}
+            벌써 상명대학교 천안캠퍼스의 절반을 돌아봤어!{'\n'}
+            이제 디자인관으로 가보자!
           </Text>
-        </View>
+          <Text style={styles.subText}>
+          </Text>
+            </View>
 
         {/* ✅ 다음 스테이지로 이동 버튼 */}
         <TouchableOpacity 
@@ -114,16 +117,16 @@ const styles = StyleSheet.create({
   },
   text: {
     color: '#333',
-    fontSize: width * 0.06,
+    fontSize: width * 0.055,
     fontWeight: 'bold',
     marginBottom: height * 0.01,
     textAlign: 'center',
+    lineHeight: height * 0.035, // ✅ 줄 간격
   },
   subText: {
     color: '#555',
     fontSize: width * 0.045,
     textAlign: 'center',
-    marginTop: height * 0.02,
   },
   mapButton: {
     position: 'absolute',
@@ -162,10 +165,16 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   wayImage: {
-    width: width * 0.6, // ✅ bae.png 크기 조정
+    width: width * 0.6, // ✅ waytostage2.png 크기 조정
     height: height * 0.5,
     marginBottom: height * 0.005, // ✅ 이미지와 텍스트 간격
   },
+  dokdoImage: {
+    width: width * 0.7, // ✅ 이미지 크기 설정
+    height: height * 0.4, // ✅ 이미지 높이 설정
+    marginBottom: height * 0.02, // ✅ 이미지와 텍스트 사이 간격 조정
+  },
+  
 });
 
-export default Stage5_1;
+export default Stage9_2_1;

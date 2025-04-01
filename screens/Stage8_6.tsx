@@ -17,13 +17,13 @@ import { useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from '../App';
 import { useRoute, RouteProp } from '@react-navigation/native';
 
-type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage9_1'>;
+type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage8_6'>;
 
 const { width, height } = Dimensions.get('window');
 
 const Stage8_6 = () => {
   const navigation = useNavigation<NavigationProp>();
-  const route = useRoute<RouteProp<RootStackParamList, 'Stage9_1'>>();
+  const route = useRoute<RouteProp<RootStackParamList, 'Stage8_6'>>();
 const { department } = route.params;
   const [answer, setAnswer] = useState('');
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -34,14 +34,14 @@ const { department } = route.params;
 
   const handleNextStage = () => {
     if (answer.trim() === '1') {
-      let nextStage = 'Stage10_1'; // 기본값은 Stage10_1
+      let nextStage = 'Stage10_1';
   
       if (department.includes('디자인학부')) {
-        nextStage = 'Stage9_1'; // 디자인학부만 Stage9_1
+        nextStage = 'Stage9_1';
       }
   
       Alert.alert('정답입니다!', '다음 스테이지로 이동합니다.', [
-        { text: '확인', onPress: () => navigation.navigate(nextStage, { department }) },
+        { text: '확인', onPress: () => navigation.navigate(nextStage, {department}) },
       ]);
       setIsModalVisible(false);
     } else {
@@ -99,9 +99,8 @@ const { department } = route.params;
             컴퓨터를 사용해서 (www.www.com)에 접속해보자!
           </Text>
           <Text style={styles.subText}>
-            PC 사용하기 불가능한 상황이라면 핸드폰을 통해 접속해도 괜찮아!{'\n'}{'\n'}
-            사이트에 접속하니 문제들이 있잖아??{'\n'}
-            문제를 풀고 사이트에서 제공하는 단어를 입력해보자!
+            응??? 어딘가 많이 본 게임인데?{'\n'}{'\n'}
+            30점을 달성하고 단어를 얻어내자!
           </Text>
         </View>
 

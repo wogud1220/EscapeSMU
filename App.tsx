@@ -28,8 +28,10 @@ import Stage4_2 from './screens/Stage4_2';
 import Stage4Camera from './screens/Stage4Camera';
 import Stage4_3 from './screens/Stage4_3';
 import Stage4_4 from './screens/Stage4_4';
+import Stage5Camera from './screens/Stage5Camera';
 import Stage5 from './screens/Stage5';
 import Stage5_1 from './screens/Stage5_1';
+import Stage5_1_1 from './screens/Stage5_1_1';
 import Stage5_2 from './screens/Stage5_2';
 import Stage5_3 from './screens/Stage5_3';
 import Stage5_4 from './screens/Stage5_4';
@@ -57,6 +59,8 @@ import Stage8_6 from './screens/Stage8_6';
 import Stage9_1 from './screens/Stage9_1';
 import Stage9Camera from './screens/Stage9Camera';
 import Stage9_2 from './screens/Stage9_2';
+import Stage9_2_1 from './screens/Stage9_2_2';
+import Stage9_2_2 from './screens/Stage9_2_1';
 import Stage9_3 from './screens/Stage9_3';
 import Stage9Camera_2 from './screens/Stage9Camera_2';
 import Stage9_4 from './screens/Stage9_4';
@@ -128,9 +132,11 @@ export type RootStackParamList = {
   Stage4_4: { department: string };
   Stage5: { department: string };
   Stage5_1: { department: string };
+  Stage5_1_1: { department: string };
   Stage5_2: { department: string };
   Stage5_3: { department: string };
   Stage5_4: { department: string };
+  Stage5Camera: { department: string };
   Guestbook: { department: string };
   Stage5_5: { department: string };
   Stage5_6: { department: string };
@@ -155,6 +161,8 @@ export type RootStackParamList = {
   Stage9_1: { department: string };
   Stage9Camera: { department: string };
   Stage9_2: { department: string };
+  Stage9_2_1: { department: string };
+  Stage9_2_2: { department: string };
   Stage9_3: { department: string };
   Stage9Camera_2: { department: string };
   Stage9_4: { department: string };
@@ -340,6 +348,11 @@ const App = () => {
           options={{headerShown: false}}
         />
         <Stack.Screen
+          name="Stage5Camera"
+          component={Stage5Camera}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
           name="Stage5"
           component={Stage5}
           options={{headerShown: false}}
@@ -347,6 +360,11 @@ const App = () => {
         <Stack.Screen
           name="Stage5_1"
           component={Stage5_1}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="Stage5_1_1"
+          component={Stage5_1_1}
           options={{headerShown: false}}
         />
         <Stack.Screen
@@ -482,6 +500,16 @@ const App = () => {
         <Stack.Screen
           name="Stage9_2"
           component={Stage9_2}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="Stage9_2_1"
+          component={Stage9_2_1}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="Stage9_2_2"
+          component={Stage9_2_2}
           options={{headerShown: false}}
         />
         <Stack.Screen

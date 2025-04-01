@@ -1,10 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View, Dimensions, Image } from 'react-native';
 import { Camera, CameraDevice } from 'react-native-vision-camera';
 import { useRoute, RouteProp } from '@react-navigation/native';
 import { RootStackParamList } from '../App';
 
 type Stage2CameraRouteProp = RouteProp<RootStackParamList, 'Stage2Camera'>;
+
+const { width, height } = Dimensions.get('window');
 
 const Stage2Camera = ({ navigation }: { navigation: any }) => {
   const [device, setDevice] = useState<CameraDevice | undefined>();
@@ -77,6 +79,12 @@ const Stage2Camera = ({ navigation }: { navigation: any }) => {
         isActive={true}
         photo={true}
       />
+      
+      <Image
+      source={require('../assets/jeongmoon.png')}
+      style={styles.backImage}
+      resizeMode="contain"
+      />
 
       {/* ✅ 사진 촬영 버튼 */}
       <TouchableOpacity onPress={takePicture} style={styles.captureButton}>
@@ -87,24 +95,13 @@ const Stage2Camera = ({ navigation }: { navigation: any }) => {
       <TouchableOpacity onPress={goToNextStage} style={styles.nextButton}>
         <Text style={styles.buttonText}>다음 ➡️</Text>
       </TouchableOpacity>
-
-      {/* ✅ 임시 Stage1_2 이동 버튼 */}
-      <TouchableOpacity onPress={goToNextStage} style={styles.tempButton}>
-        <Text style={styles.buttonText}>다음 스테이지로 이동</Text>
-      </TouchableOpacity>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#000',
-  },
-  camera: {
-    width: '100%',
-    height: '100%',
-  },
+  container: {flex: 1, backgroundColor: '#000'},
+  camera: {width: '100%', height: '100%', zIndex: 0},
   captureButton: {
     position: 'absolute',
     bottom: 100,
@@ -112,6 +109,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     padding: 20,
     borderRadius: 50,
+  },
+  permissionText: {
+    color: 'black',
+    fontSize: 20,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginTop: 300,
   },
   nextButton: {
     position: 'absolute',
@@ -122,19 +126,19 @@ const styles = StyleSheet.create({
     paddingHorizontal: 30,
     borderRadius: 50,
   },
-  tempButton: {
-    position: 'absolute',
-    bottom: 150, // ✅ 하단에서 약간 위로 배치
-    alignSelf: 'center',
-    backgroundColor: '#32CD32', // ✅ 연두색 스타일
-    paddingVertical: 15,
-    paddingHorizontal: 30,
-    borderRadius: 50,
-  },
   buttonText: {
     fontSize: 18,
     color: '#fff',
     fontWeight: 'bold',
+  },
+  backImage: {
+    position: 'absolute',
+    alignSelf: 'center',
+    width: width * 0.8,
+    height: height * 0.8,
+    marginBottom: height * 0.005,
+    marginTop: height * 0.05,
+    zIndex: 1,
   },
 });
 

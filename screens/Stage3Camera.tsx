@@ -1,10 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View, Image, Dimensions } from 'react-native';
 import { Camera, CameraDevice } from 'react-native-vision-camera';
 import { useRoute, RouteProp } from '@react-navigation/native';
 import { RootStackParamList } from '../App';
 
 type Stage3CameraRouteProp = RouteProp<RootStackParamList, 'Stage3Camera'>;
+
+const { width, height } = Dimensions.get('window');
 
 const Stage3Camera = ({ navigation }: { navigation: any }) => {
   const [device, setDevice] = useState<CameraDevice | undefined>();
@@ -78,6 +80,12 @@ const Stage3Camera = ({ navigation }: { navigation: any }) => {
         photo={true}
       />
 
+            <Image
+            source={require('../assets/deer2.png')}
+            style={styles.backImage}
+            resizeMode="contain"
+            />
+
       {/* ✅ 사진 촬영 버튼 */}
       <TouchableOpacity onPress={takePicture} style={styles.captureButton}>
         <Text style={styles.buttonText}>📸</Text>
@@ -130,6 +138,14 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: '#fff',
     fontWeight: 'bold',
+  },
+  backImage: {
+    position: 'absolute',
+    alignSelf: 'center',
+    width: width * 0.8,
+    height: height * 0.8,
+    marginBottom: height * 0.005,
+    marginTop: height * 0.05,
   },
 });
 

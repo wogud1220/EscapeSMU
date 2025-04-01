@@ -1,15 +1,19 @@
+//한누리관 멀베리 로고 찍기
+
 import React, { useEffect, useRef, useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View, Image, Dimensions } from 'react-native';
 import { Camera, CameraDevice } from 'react-native-vision-camera';
 import { useRoute, RouteProp } from '@react-navigation/native';
 import { RootStackParamList } from '../App';
 
+type Stage5CameraRouteProp = RouteProp<RootStackParamList, 'Stage5Camera'>;
+
 const { width, height } = Dimensions.get('window');
 
-const Stage9Camera_2 = ({ navigation }: { navigation: any }) => {
+const Stage3Camera = ({ navigation }: { navigation: any }) => {
   const [device, setDevice] = useState<CameraDevice | undefined>();
   const camera = useRef<Camera>(null);
-  const route = useRoute<RouteProp<RootStackParamList, 'Stage9Camera_2'>>();
+  const route = useRoute<RouteProp<RootStackParamList, 'Stage5Camera'>>();
   const { department } = route.params;
 
   useEffect(() => {
@@ -59,7 +63,7 @@ const Stage9Camera_2 = ({ navigation }: { navigation: any }) => {
   };
 
   const goToNextStage = () => {
-    navigation.navigate('Stage9_4', {department}); // ✅ Stage1_2로 이동
+    navigation.navigate('Stage5_2', {department});
   };
 
   if (!device) {
@@ -78,11 +82,11 @@ const Stage9Camera_2 = ({ navigation }: { navigation: any }) => {
         photo={true}
       />
 
-                              <Image
-                              source={require('../assets/rabbit2.png')}
-                              style={styles.backImage}
-                              resizeMode="contain"
-                              />
+            <Image
+            source={require('../assets/mulberry.png')}
+            style={styles.backImage}
+            resizeMode="contain"
+            />
 
       {/* ✅ 사진 촬영 버튼 */}
       <TouchableOpacity onPress={takePicture} style={styles.captureButton}>
@@ -138,4 +142,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Stage9Camera_2;
+export default Stage3Camera;

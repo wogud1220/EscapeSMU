@@ -1,4 +1,4 @@
-//한누리관 9층 가는 화면
+//본관에서 한누리관 찾아가는 화면
 
 import React from 'react';
 import { View, Text, ImageBackground, StyleSheet, Dimensions, Image, TouchableOpacity } from 'react-native';
@@ -7,13 +7,13 @@ import { useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from '../App';
 import { useRoute, RouteProp } from '@react-navigation/native';
 
-type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage5_1'>;
+type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage5_1_1'>;
 
 const { width, height } = Dimensions.get('window');
 
-const Stage5_1 = () => {
+const Stage5_1_1 = () => {
   const navigation = useNavigation<NavigationProp>();
-  const route = useRoute<RouteProp<RootStackParamList, 'Stage5_1'>>();
+  const route = useRoute<RouteProp<RootStackParamList, 'Stage5_1_1'>>();
   const { department } = route.params;
 
   const handleMapPress = () => {
@@ -21,7 +21,7 @@ const Stage5_1 = () => {
   };
 
   const handleNextStage = () => {
-    navigation.navigate('Stage5_1_1', {department});
+    navigation.navigate('Stage5Camera', {department}); // ✅ Stage4_4로 이동
   };
 
   return (
@@ -57,13 +57,13 @@ const Stage5_1 = () => {
         <View style={styles.box}>
           {/* ✅ 하얀색 박스 위에 bae.png 추가 */}
           <Image 
-            source={require('../assets/han1.png')} 
+            source={require('../assets/mulberry2.png')} 
             style={styles.wayImage} 
             resizeMode="contain"
           />
-          <Text style={styles.text}>위 사진이 어디일까?</Text>
+          <Text style={styles.text}>위 로고가 보여??</Text>
           <Text style={styles.subText}>
-            엘레베이터를 타고 9층으로 이동하면 볼 수 있다는데? 가볼까?
+           사진을 참고해서 로고를 찾아보자!
           </Text>
         </View>
 
@@ -124,6 +124,7 @@ const styles = StyleSheet.create({
     fontSize: width * 0.045,
     textAlign: 'center',
     marginTop: height * 0.02,
+    marginBottom: height * 0.02,
   },
   mapButton: {
     position: 'absolute',
@@ -168,4 +169,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Stage5_1;
+export default Stage5_1_1;

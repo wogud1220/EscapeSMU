@@ -58,7 +58,7 @@ const { department } = route.params;
           <Text style={styles.text}>학생생활관 2층에는 컴퓨터실(정보프라자)가 있어.
           </Text>
           <Text style={styles.subText}>
-            이 곳에는 일정 금액을 내고 프린트를 이용하거나 컴퓨터를 사용할 수 있어!{'\n'}{'\n'}
+            이 곳에서는 컴퓨터를 사용할 수 있어!{'\n'}{'\n'}
             다음 장소로 가기 위한 힌트는 컴퓨터를 켜서 확인해보자!
           </Text>
 

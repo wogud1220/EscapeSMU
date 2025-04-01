@@ -21,7 +21,7 @@ const Stage2_2 = () => {
   };
 
   const handleNextStage = () => {
-    navigation.navigate('Stage2Camera', {department}); // ✅ Stage2_2으로 이동하도록 수정
+    navigation.navigate('Stage2Camera', {department});
   };
 
   return (

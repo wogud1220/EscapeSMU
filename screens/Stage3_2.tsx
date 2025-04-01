@@ -13,7 +13,7 @@ const { width, height } = Dimensions.get('window');
 
 const Stage3_2 = () => {
   const navigation = useNavigation<NavigationProp>();
-  const route = useRoute<RouteProp<RootStackParamList, 'Stage5_1'>>();
+  const route = useRoute<RouteProp<RootStackParamList, 'Stage3_2'>>();
   const { department } = route.params;
 
   const handleMapPress = () => {
