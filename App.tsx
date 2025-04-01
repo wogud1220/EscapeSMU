@@ -64,6 +64,8 @@ import Stage9_2_2 from './screens/Stage9_2_1';
 import Stage9_3 from './screens/Stage9_3';
 import Stage9Camera_2 from './screens/Stage9Camera_2';
 import Stage9_4 from './screens/Stage9_4';
+import Stage9Hint from './screens/Stage9Hint';
+import Stage9_5 from './screens/Stage9_5';
 import Stage10_1 from './screens/Stage10_1';
 import Stage10_2 from './screens/Stage10_2';
 import Stage10_3 from './screens/Stage10_3';
@@ -166,6 +168,8 @@ export type RootStackParamList = {
   Stage9_3: { department: string };
   Stage9Camera_2: { department: string };
   Stage9_4: { department: string };
+  Stage9Hint : { department: string };
+  Stage9_5: { department: string };
   Stage10_1: { department: string };
   Stage10_2: { department: string };
   Stage10_3: { department: string };
@@ -525,6 +529,16 @@ const App = () => {
         <Stack.Screen
           name="Stage9_4"
           component={Stage9_4}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="Stage9Hint"
+          component={Stage9Hint}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="Stage9_5"
+          component={Stage9_5}
           options={{headerShown: false}}
         />
         <Stack.Screen
