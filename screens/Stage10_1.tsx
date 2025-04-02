@@ -1,4 +1,4 @@
-//디자인관 가는 화면
+//학생회관 가는 화면
 
 import React from 'react';
 import { View, Text, ImageBackground, StyleSheet, Dimensions, Image, TouchableOpacity } from 'react-native';

@@ -57,10 +57,11 @@ const { department } = route.params;
           {/* ✅ 텍스트 위에 이미지 추가 */}
 
           <Text style={styles.text}>
-            좋아! 몸 잘 풀었지?
+            스쿼시장과 스크린골프장은
           </Text>
           <Text style={styles.subText}>
-          이제 스포츠센터 내부로 들어가볼까?
+          스포츠융합학부 학생들이 아니라도 상명대학교 학생이라면 학생증을 제시하면 무료로 이용할 수 있어!{'\n'}{'\n'}
+          여기 와서 친구들과 가끔 운동도 하고, 스크린골프도 쳐보자!{'\n'}
           </Text>
             </View>
 
@@ -98,7 +99,7 @@ const styles = StyleSheet.create({
   box: {
     backgroundColor: 'rgba(255, 255, 255, 0.7)',
     width: width * 0.8,
-    height: height * 0.2, // ✅ 높이 조정 (이미지 공간 포함)
+    height: height * 0.3, // ✅ 높이 조정 (이미지 공간 포함)
     padding: height * 0.03,
     borderRadius: width * 0.04,
     alignItems: 'center',
@@ -114,6 +115,7 @@ const styles = StyleSheet.create({
     fontSize: width * 0.055,
     fontWeight: 'bold',
     marginBottom: height * 0.01,
+    marginTop: height * 0.03,
     textAlign: 'center',
     lineHeight: height * 0.035, // ✅ 줄 간격
   },

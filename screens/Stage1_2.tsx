@@ -38,11 +38,14 @@ const Stage1_2 = () => {
 
   const handleNextStage = () => {
     if (answer.trim() === '1985') {
-      let nextStage = 'Stage5'; // 기본값
+      let nextStage = 'Stage5';
   
       if (department.includes('공과대학')) {
         nextStage = 'Stage3_1';
-      } else if (department.includes('융합기술대학')) {
+      } else if (
+        department.includes('융합기술대학') && 
+        !department.includes('스포츠융합학부')
+      ) {
         nextStage = 'Stage2';
       }
   
@@ -54,6 +57,7 @@ const Stage1_2 = () => {
       Alert.alert('오답입니다.', '다시 시도해 보세요!');
     }
   };
+  
   
 
   const handleHomePress = () => {

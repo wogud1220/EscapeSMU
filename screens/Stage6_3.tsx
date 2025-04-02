@@ -38,7 +38,7 @@ const Stage6_3 = () => {
   };
 
   const handleNextStage = () => {
-    if (answer.trim() === '1') {
+    if (answer.trim() === '팔도총도') {
       let nextStage = 'Stage8_1'; // 기본값
   
       if (department.includes('글로벌인문학부대학')) {
@@ -99,10 +99,10 @@ const Stage6_3 = () => {
         {/* ✅ 문제 박스 */}
         <View style={styles.box}>
           <Text style={styles.text}>
-            독도 조형물 앞에 10가지의 설명들이 적혀있어!
+            독도 조형물 앞에{'\n'}10가지 설명문이 있어!
           </Text>
           <Text style={styles.subText}>
-            오른쪽에서 3번째 머시기...
+            독도를 최초로 표시한 지도의 이름을 설명문에서 찾아서 적어줘!
           </Text>
         </View>
 
@@ -175,9 +175,9 @@ const styles = StyleSheet.create({
   },
   box: {
     backgroundColor: 'rgba(255, 255, 255, 0.7)',
-    marginTop: height * 0.15,
+    marginTop: height * 0.3,
     width: width * 0.8,
-    height: height * 0.6,
+    height: height * 0.3,
     padding: height * 0.03,
     borderRadius: width * 0.04,
     alignItems: 'center',

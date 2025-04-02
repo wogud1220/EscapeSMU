@@ -64,8 +64,7 @@ const { department } = route.params;
             독도 조형물이야!
             </Text>
             <Text style={styles.subText}>
-            실제 독도 모습을 축소한 조형물을 설치해 '독도사랑, 나라사랑' 정신을 되새기게 하기 위한 목적으로 설치되었어!{'\n'}{'\n'}
-            조형물 앞에 있는 안내판 앞에 서서 {'\n'} '독도는 우리땅'을 외쳐보자!
+            실제 독도 모습을 축소한 조형물을 설치해 '독도사랑, 나라사랑' 정신을 되새기게 하기 위한 목적으로 설치되었어!
             </Text>
             </View>
 
@@ -75,7 +74,7 @@ const { department } = route.params;
           onPress={handleNextStage}
           activeOpacity={0.7}
         >
-          <Text style={styles.buttonText}>마이크(아직 기능 안 넣음) ➡️</Text>
+          <Text style={styles.buttonText}>다음 ➡️</Text>
         </TouchableOpacity>
       </ImageBackground>
     </View>
