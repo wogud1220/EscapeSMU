@@ -103,7 +103,7 @@ const StageList = () => {
               key={idx}
               style={styles.menuItemButton}
               onPress={() =>
-                navigation.navigate('Guestbook', {
+                navigation.navigate('Stage1Camera', {
                   department: `${selectedCollege} - ${major}`,
                 })
               }>
