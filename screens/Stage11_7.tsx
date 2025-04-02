@@ -1,4 +1,4 @@
-//본관 퀴즈(카메라로 글씨 찾기 대신)
+//송백관 마무리 퀴즈
 
 import React, { useState } from 'react';
 import { 
@@ -19,13 +19,13 @@ import { useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from '../App';
 import { useRoute, RouteProp } from '@react-navigation/native';
 
-type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage4_2'>;
+type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage11_7'>;
 
 const { width, height } = Dimensions.get('window');
 
-const Stage4_2 = () => {
+const Stage11_7 = () => {
   const navigation = useNavigation<NavigationProp>();
-  const route = useRoute<RouteProp<RootStackParamList, 'Stage4_2'>>();
+  const route = useRoute<RouteProp<RootStackParamList, 'Stage11_7'>>();
 const { department } = route.params;
   const [answer, setAnswer] = useState('');
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -35,11 +35,11 @@ const { department } = route.params;
   };
 
   const handleNextStage = () => {
-    if (answer.trim() === '소프트웨어학과') {
+    if (answer.trim() === '2010년 2월 20일') {
       Alert.alert('정답입니다!', '다음 스테이지로 이동합니다.', [
         { 
           text: '확인', 
-          onPress: () => navigation.navigate('Stage4_3', {department})
+          onPress: () => navigation.navigate('Stage13_1', {department})
         },
       ]);
       setIsModalVisible(false);
@@ -92,18 +92,19 @@ const { department } = route.params;
 
         {/* ✅ 문제 박스 */}
         <View style={styles.box}>
-          <Text style={styles.text}>본관 3층에는 공과대학의 과들을 소개하는 글이 있어!
+          <Text style={styles.text}>계단에서 아래 사진을 찾아보자!
           </Text>
           
           {/* ✅ 이미지 추가 */}
           <Image 
-            source={require('../assets/bongwan1.png')} 
+            source={require('../assets/sportski.png')} 
             style={styles.wayImage}
             resizeMode="contain"
           />
 
           <Text style={styles.subText}>
-          빨간 네모로 쳐진 글은 어떤 과의 소개글인지 찾아보자!
+          해당 사진이 찍힌 날짜를 적어줘!{'\n'}
+          (정답 형식 : ????년 ??월 ??일)
           </Text>
         </View>
 
@@ -308,4 +309,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Stage4_2;
+export default Stage11_7;

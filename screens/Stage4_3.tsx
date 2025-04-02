@@ -61,9 +61,9 @@ const Stage4_3 = () => {
             style={styles.wayImage} 
             resizeMode="contain"
           />
-          <Text style={styles.text}>두 글자를 찾았어!</Text>
+          <Text style={styles.text}>본관 1층으로 가보자!</Text>
           <Text style={styles.subText}>
-            나머지 한 글자에 대한 힌트는 사진에 있는 동상이 알고 있다는데? 동상을 본관에서 찾아보자!
+            이 동상이 다음 장소로 가는 길잡이가 되어줄거야!
           </Text>
         </View>
 
