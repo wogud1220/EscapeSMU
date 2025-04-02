@@ -65,9 +65,10 @@ const Stage1 = () => {
             style={styles.wayImage} 
             resizeMode="contain"
           />
-          <Text style={styles.text}>드디어 상명대학교 정문에 도착을 했어!</Text>
+          <Text style={styles.text}>드디어 상명대학교에 도착을 했어!</Text>
           <Text style={styles.subText}>
-            정문을 통과해서 다음 스테이지에 가기 위해서는 카메라를 이용해 사진을 찍어야 한다는데..
+            정문을 통과해서 다음 스테이지에 가기 위해서는 카메라를 이용해 사진을{'\n'}찍어야 한다는데..{'\n'}
+            (경비실 앞 캠퍼스안내도 쪽에서 찍어보자!)
           </Text>
         </View>
 
@@ -122,12 +123,13 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: height * 0.01,
     textAlign: 'center',
+    marginTop: height * -0.02,
   },
   subText: {
     color: '#555',
     fontSize: width * 0.045,
     textAlign: 'center',
-    marginTop: height * 0.02,
+    marginTop: height * -0.005,
   },
   mapButton: {
     position: 'absolute',

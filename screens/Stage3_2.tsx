@@ -118,6 +118,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: height * 0.01,
     textAlign: 'center',
+    marginTop: height * -0.05,
   },
   subText: {
     color: '#555',

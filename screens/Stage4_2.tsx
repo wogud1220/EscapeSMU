@@ -57,11 +57,11 @@ const Stage4_2 = () => {
         <View style={styles.box}>
           {/* ✅ 하얀색 박스 위에 waytostage2.png 추가 */}
           <Image 
-            source={require('../assets/temp.png')} 
+            source={require('../assets/software.png')} 
             style={styles.wayImage} 
             resizeMode="contain"
           />
-          <Text style={styles.text}>3층 공과대학의{'\n'}과 소개글을 찾아보자!</Text>
+          <Text style={styles.text}>3층 공과대학의 소프트웨어학과 소개글을 찾아보자!</Text>
           <Text style={styles.subText}>
             카메라를 사용해보면 숨어있는 글씨를{'\n'} 찾을 수 있다는데?
           </Text>
@@ -164,7 +164,7 @@ const styles = StyleSheet.create({
   },
   wayImage: {
     marginTop: height * -0.1,
-    width: width * 0.6, // ✅ waytostage2.png 크기 조정
+    width: width * 0.7, // ✅ waytostage2.png 크기 조정
     height: height * 0.5,
     marginBottom: height * 0.005, // ✅ 이미지와 텍스트 간격
   },

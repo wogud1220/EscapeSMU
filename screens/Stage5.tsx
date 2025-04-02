@@ -164,7 +164,7 @@ const styles = StyleSheet.create({
   },
   wayImage: {
     width: width * 0.6, // ✅ bae.png 크기 조정
-    height: height * 0.5,
+    height: height * 0.45,
     marginBottom: height * 0.005, // ✅ 이미지와 텍스트 간격
   },
 });

@@ -81,7 +81,7 @@ const Stage2Camera = ({ navigation }: { navigation: any }) => {
       />
       
       <Image
-      source={require('../assets/jeongmoon.png')}
+      source={require('../assets/television2.png')}
       style={styles.backImage}
       resizeMode="contain"
       />

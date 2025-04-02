@@ -57,13 +57,13 @@ const Stage2_1 = () => {
         <View style={styles.box}>
           {/* ✅ 하얀색 박스 위에 waytostage2.png 추가 */}
           <Image 
-            source={require('../assets/cheong_temp.png')} 
+            source={require('../assets/cheong1.png')} 
             style={styles.wayImage} 
             resizeMode="contain"
           />
           <Text style={styles.text}>이제 청록관으로 가야할 차례야!</Text>
           <Text style={styles.subText}>
-            청록관으로 가려면 위에 있는 사진의 방향으로 가면 된다는데? 가보자!
+            청록관으로 가려면 사진에 보이는 입구로 {'\n'}가면 된다는데? 가보자!
           </Text>
         </View>
 
