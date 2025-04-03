@@ -117,7 +117,7 @@ const Stage1Camera = ({navigation}: {navigation: any}) => {
       </TouchableOpacity>
 
       <TouchableOpacity
-        onPress={() => navigation.navigate('Stage2_1')}
+        onPress={() => navigation.navigate('Stage13_1')}
         style={styles.greenButton}>
         <Text style={styles.greenButtonText}>➡️</Text>
       </TouchableOpacity>

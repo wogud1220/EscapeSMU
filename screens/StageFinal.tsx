@@ -1,14 +1,25 @@
 //모든 스테이지 클리어 후 화면
 
 import React from 'react';
-import { View, Text, ImageBackground, StyleSheet, Dimensions, Image, TouchableOpacity } from 'react-native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { useNavigation } from '@react-navigation/native';
-import { RootStackParamList } from '../App';
+import {
+  View,
+  Text,
+  ImageBackground,
+  StyleSheet,
+  Dimensions,
+  Image,
+  TouchableOpacity,
+} from 'react-native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {useNavigation} from '@react-navigation/native';
+import {RootStackParamList} from '../App';
 
-type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'StageFinal'>;
+type NavigationProp = NativeStackNavigationProp<
+  RootStackParamList,
+  'StageFinal'
+>;
 
-const { width, height } = Dimensions.get('window');
+const {width, height} = Dimensions.get('window');
 
 const StageFinal = () => {
   const navigation = useNavigation<NavigationProp>();
@@ -24,17 +35,16 @@ const StageFinal = () => {
   return (
     <View style={styles.container}>
       {/* ✅ main.png를 배경으로 설정 */}
-      <ImageBackground 
-        source={require('../assets/main.png')} 
+      <ImageBackground
+        source={require('../assets/main.png')}
         style={styles.image}
-        resizeMode="cover"
-      >
+        resizeMode="cover">
         {/* 🔥 투명 레이어 추가 */}
         <View style={styles.overlay} />
 
         {/* ✅ 🗺️ 오른쪽 상단의 map.png */}
         <TouchableOpacity onPress={handleMapPress} style={styles.mapButton}>
-          <Image 
+          <Image
             source={require('../assets/map.png')}
             style={styles.mapImage}
             resizeMode="contain"
@@ -42,8 +52,10 @@ const StageFinal = () => {
         </TouchableOpacity>
 
         {/* ✅ 홈으로 이동 버튼 */}
-        <TouchableOpacity onPress={() => navigation.navigate('Main')} style={styles.backButton}>
-          <Image 
+        <TouchableOpacity
+          onPress={() => navigation.navigate('Main')}
+          style={styles.backButton}>
+          <Image
             source={require('../assets/home.png')}
             style={styles.backImage}
             resizeMode="contain"
@@ -52,21 +64,18 @@ const StageFinal = () => {
 
         {/* ✅ 가운데 투명한 흰색 박스 */}
         <View style={styles.box}>
-          <Text style={styles.text}>모든 스테이지가 다 끝이났어.
-          </Text>
+          <Text style={styles.text}>모든 스테이지가 다 끝이났어.</Text>
           <Text style={styles.subText}>
-          캠퍼스와는 좀 친해진 것 같아?{'\n'}
-          google.form 머시기
+            캠퍼스와는 좀 친해진 것 같아?{'\n'}
+            google.form 머시기
           </Text>
-
         </View>
 
         {/* ✅ 다음 스테이지로 이동 버튼 */}
-        <TouchableOpacity 
+        <TouchableOpacity
           style={styles.nextButton}
           onPress={handleNextStage}
-          activeOpacity={0.7}
-        >
+          activeOpacity={0.7}>
           <Text style={styles.buttonText}>랭킹 👑</Text>
         </TouchableOpacity>
       </ImageBackground>
@@ -101,7 +110,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
+    shadowOffset: {width: 0, height: 4},
     shadowOpacity: 0.3,
     shadowRadius: 4,
     elevation: 5,
