@@ -2645,6 +2645,8 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
+  - react-native-image-resizer (1.4.5):
+    - React-Core
   - react-native-maps (1.20.1):
     - React-Core
   - react-native-safe-area-context (5.3.0):
@@ -3319,6 +3321,7 @@ DEPENDENCIES:
   - "react-native-geolocation (from `../node_modules/@react-native-community/geolocation`)"
   - react-native-geolocation-service (from `../node_modules/react-native-geolocation-service`)
   - react-native-image-picker (from `../node_modules/react-native-image-picker`)
+  - react-native-image-resizer (from `../node_modules/react-native-image-resizer`)
   - react-native-maps (from `../node_modules/react-native-maps`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - react-native-webview (from `../node_modules/react-native-webview`)
@@ -3468,6 +3471,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-geolocation-service"
   react-native-image-picker:
     :path: "../node_modules/react-native-image-picker"
+  react-native-image-resizer:
+    :path: "../node_modules/react-native-image-resizer"
   react-native-maps:
     :path: "../node_modules/react-native-maps"
   react-native-safe-area-context:
@@ -3614,6 +3619,7 @@ SPEC CHECKSUMS:
   react-native-geolocation: 57a4a35c149d8613f81b89ff155e6ae28e76aea0
   react-native-geolocation-service: 32b2c2a3b91e70ce2a8d0c684801aaeb0a07e0ec
   react-native-image-picker: 4c10603e9b253c7f48f296034c04a09fe9c8d427
+  react-native-image-resizer: 17b2d73c030975b6543395c7e7368bc8774c5efa
   react-native-maps: 9febd31278b35cd21e4fad2cf6fa708993be5dab
   react-native-safe-area-context: 33fadf89988c8813cfac57797a3bc53708863dd1
   react-native-webview: bbc90f70233e58004d8df887437477a2659ab32d
