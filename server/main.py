@@ -22,3 +22,5 @@ async def compare_images(file: UploadFile = File(...)):
     result = compare_images(file_location)
 
     return JSONResponse(content=result)
+
+

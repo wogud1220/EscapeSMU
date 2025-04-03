@@ -68,3 +68,4 @@ if __name__ == "__main__":
     user_image_path = os.path.join(UPLOADS_FOLDER, "captured.jpg")
     result = compare_images(user_image_path)
     print(result)
+
