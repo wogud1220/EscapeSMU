@@ -25,12 +25,10 @@
 
 
 
-
-
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, UploadFile, File
 from fastapi.responses import JSONResponse
 import os
-import base64
+import shutil
 import uuid
 
 app = FastAPI()
@@ -39,23 +37,17 @@ UPLOAD_FOLDER = "uploads"
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 @app.post("/compare")
-async def compare_base64(request: Request):
+async def compare_multipart(file: UploadFile = File(...)):
     try:
-        body = await request.json()
-        base64_data = body.get("file")
-
-        if not base64_data:
-            return JSONResponse(content={"result": "Fail", "message": "파일 데이터가 없습니다."}, status_code=400)
-
-        # 📁 파일 저장 경로 생성
-        filename = f"{uuid.uuid4().hex}.jpg"
+        # 저장 경로 생성
+        filename = f"{uuid.uuid4().hex}_{file.filename}"
         file_path = os.path.join(UPLOAD_FOLDER, filename)
 
-        # 🧾 디코딩 및 저장
-        with open(file_path, "wb") as f:
-            f.write(base64.b64decode(base64_data))
+        # 파일 저장
+        with open(file_path, "wb") as buffer:
+            shutil.copyfileobj(file.file, buffer)
 
-        print(f"✅ base64 이미지 저장 완료: {file_path}")
+        print(f"✅ 파일 저장 완료: {file_path}")
 
         # 비교 함수 호출
         from matcher import compare_images

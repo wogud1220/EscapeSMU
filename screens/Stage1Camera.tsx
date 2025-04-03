@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import {Camera, CameraDevice} from 'react-native-vision-camera';
 import RNFS from 'react-native-fs';
+import axios from 'axios';
 
 const SERVER_URL = 'http://34.47.88.216:8000/compare';
 
@@ -36,6 +37,54 @@ const Stage1Camera = ({navigation}: {navigation: any}) => {
     loadDevices();
   }, []);
 
+  // const takePicture = async () => {
+  //   if (!camera.current) return;
+
+  //   try {
+  //     const photo = await camera.current.takePhoto({quality: 90});
+
+  //     console.log('📸 photo:', photo);
+  //     console.log('📸 photo.path:', photo.path);
+
+  //     const base64Data = await RNFS.readFile(photo.path, 'base64');
+  //     console.log('🧾 Base64 읽기 완료');
+
+  //     setIsUploading(true);
+  //     const startTime = Date.now();
+
+  //     const response = await axios.post(
+  //       SERVER_URL,
+  //       {
+  //         file: base64Data,
+  //       },
+  //       {
+  //         headers: {
+  //           'Content-Type': 'application/json',
+  //         },
+  //       },
+  //     );
+
+  //     const elapsed = Date.now() - startTime;
+  //     console.log(`⏱️ 서버 응답 시간: ${elapsed}ms`);
+
+  //     setIsUploading(false);
+
+  //     const data = response.data;
+  //     console.log('📝 비교 결과:', data);
+
+  //     if (data.result === 'Pass') {
+  //       Alert.alert('✅ 성공!', '다음 단계로 이동합니다.');
+  //       navigation.navigate('Stage1_2');
+  //     } else {
+  //       Alert.alert('❌ 실패', '다시 시도해주세요.');
+  //     }
+  //   } catch (error) {
+  //     setIsUploading(false);
+  //     console.error('🚨 서버 오류:', error);
+  //     Alert.alert('❌ 실패', '서버 응답이 없습니다. 다시 시도해주세요.');
+  //   }
+  // };
+
   const takePicture = async () => {
     if (!camera.current) return;
 
@@ -45,32 +94,33 @@ const Stage1Camera = ({navigation}: {navigation: any}) => {
       console.log('📸 photo:', photo);
       console.log('📸 photo.path:', photo.path);
 
-      const base64Data = await RNFS.readFile(photo.path, 'base64');
-      console.log('🧾 Base64 읽기 완료');
+      const fileUri =
+        Platform.OS === 'ios' ? photo.path : `file://${photo.path}`;
+
+      const formData = new FormData();
+      formData.append('file', {
+        uri: fileUri,
+        name: 'captured.jpg',
+        type: 'image/jpeg',
+      });
+
+      console.log('📤 FormData 생성 완료');
 
       setIsUploading(true);
-
       const startTime = Date.now();
-      const response = await fetch(SERVER_URL, {
-        method: 'POST',
+
+      const response = await axios.post(SERVER_URL, formData, {
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'multipart/form-data',
         },
-        body: JSON.stringify({file: base64Data}),
       });
+
       const elapsed = Date.now() - startTime;
       console.log(`⏱️ 서버 응답 시간: ${elapsed}ms`);
 
       setIsUploading(false);
 
-      if (!response.ok) {
-        const errorText = await response.text();
-        console.error('❌ 서버 에러 응답:', errorText);
-        Alert.alert('❌ 실패', '응답 실패. 다시 시도해주세요.');
-        return;
-      }
-
-      const data = await response.json();
+      const data = response.data;
       console.log('📝 비교 결과:', data);
 
       if (data.result === 'Pass') {
@@ -85,8 +135,6 @@ const Stage1Camera = ({navigation}: {navigation: any}) => {
       Alert.alert('❌ 실패', '서버 응답이 없습니다. 다시 시도해주세요.');
     }
   };
-
-  
 
   if (permission === null) return <Text>🔄 권한 확인 중...</Text>;
 
