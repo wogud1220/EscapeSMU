@@ -1,29 +1,18 @@
 // import React, {useEffect, useRef, useState} from 'react';
-// import {
-//   View,
-//   Text,
-//   TouchableOpacity,
-//   StyleSheet,
-//   Alert,
-//   Modal,
-//   ActivityIndicator,
-//   Platform,
-// } from 'react-native';
+// import {View, Text, TouchableOpacity, StyleSheet, Alert} from 'react-native';
 // import {Camera, CameraDevice} from 'react-native-vision-camera';
-// import RNFS from 'react-native-fs';
-// import axios from 'axios';
 
-// const SERVER_URL = 'http://34.47.88.216:8000/compare';
+// // const SERVER_URL = 'https://escapesmu.onrender.com/compare';
+// const SERVER_URL = 'http://34.47.88.216:8000/compare'; // ✅ 서버 URL, GCP 서버 주소로 변경
 
 // const Stage1Camera = ({navigation}: {navigation: any}) => {
 //   const [permission, setPermission] = useState<boolean | null>(null);
 //   const [device, setDevice] = useState<CameraDevice | undefined>();
-//   const [isUploading, setIsUploading] = useState(false);
 //   const camera = useRef<Camera>(null);
 
 //   useEffect(() => {
 //     const checkPermission = async () => {
-//       const cameraPermission = await Camera.requestCameraPermission();
+//       const cameraPermission = await Camera.getCameraPermissionStatus();
 //       setPermission(cameraPermission === 'granted');
 //     };
 
@@ -42,39 +31,32 @@
 
 //     try {
 //       const photo = await camera.current.takePhoto({quality: 90});
-
-//       console.log('📸 photo:', photo);
-//       console.log('📸 photo.path:', photo.path);
-
-//       const fileUri =
-//         Platform.OS === 'ios' ? photo.path : `file://${photo.path}`;
-
 //       const formData = new FormData();
-//       const fileData = {
-//         uri: fileUri,
-//         name: 'captured.jpg',
+//       formData.append('file', {
+//         uri: `file://${photo.path}`,
 //         type: 'image/jpeg',
-//       };
-//       formData.append('file', fileData);
+//         name: 'captured.jpg',
+//       });
 
-//       console.log('📦 FormData 파일 객체:', fileData); // 여기에 로그
-//       console.log('📤 FormData 생성 완료');
-//       setIsUploading(true);
 //       const startTime = Date.now();
-
-//       // const response = await axios.post(SERVER_URL, formData, {
-//       //   headers: {
-//       //     'Content-Type': 'multipart/form-data',
-//       //   },
-//       // });
-//       const response = await axios.post(SERVER_URL, formData);
-
+//       const response = await fetch(SERVER_URL, {
+//         method: 'POST',
+//         body: formData,
+//         headers: {
+//           'Content-Type': 'multipart/form-data',
+//         },
+//       });
 //       const elapsed = Date.now() - startTime;
 //       console.log(`⏱️ 서버 응답 시간: ${elapsed}ms`);
 
-//       setIsUploading(false);
+//       if (!response.ok) {
+//         const errorText = await response.text();
+//         console.error('❌ 서버 에러 응답:', errorText);
+//         Alert.alert('❌ 실패', '응답 실패. 다시 시도해주세요.');
+//         return;
+//       }
 
-//       const data = response.data;
+//       const data = await response.json();
 //       console.log('📝 비교 결과:', data);
 
 //       if (data.result === 'Pass') {
@@ -84,7 +66,6 @@
 //         Alert.alert('❌ 실패', '다시 시도해주세요.');
 //       }
 //     } catch (error) {
-//       setIsUploading(false);
 //       console.error('🚨 서버 오류:', error);
 //       Alert.alert('❌ 실패', '서버 응답이 없습니다. 다시 시도해주세요.');
 //     }
@@ -116,23 +97,19 @@
 //         isActive={true}
 //         photo={true}
 //       />
-
 //       <TouchableOpacity onPress={takePicture} style={styles.captureButton}>
 //         <Text style={styles.buttonText}>📸</Text>
 //       </TouchableOpacity>
-
 //       <TouchableOpacity
-//         onPress={() => navigation.navigate('Stage13_1')}
-//         style={styles.greenButton}>
-//         <Text style={styles.greenButtonText}>➡️</Text>
+//         onPress={() => navigation.navigate('Stage1_2')}
+//         style={styles.nextButton}>
+//         <Text style={styles.buttonText}>다음 ➡️</Text>
 //       </TouchableOpacity>
-
-//       <Modal visible={isUploading} transparent>
-//         <View style={styles.loadingOverlay}>
-//           <ActivityIndicator size="large" color="#fff" />
-//           <Text style={styles.loadingText}>업로드 중...</Text>
-//         </View>
-//       </Modal>
+//       <TouchableOpacity
+//         onPress={() => navigation.navigate('Stage1_2')}
+//         style={styles.tempButton}>
+//         <Text style={styles.buttonText}>Stage1_2로 이동</Text>
+//       </TouchableOpacity>
 //     </View>
 //   );
 // };
@@ -143,28 +120,10 @@
 //   captureButton: {
 //     position: 'absolute',
 //     bottom: 100,
-//     left: '30%',
+//     alignSelf: 'center',
 //     backgroundColor: '#fff',
 //     padding: 20,
 //     borderRadius: 50,
-//   },
-//   greenButton: {
-//     position: 'absolute',
-//     bottom: 100,
-//     right: '30%',
-//     backgroundColor: 'green',
-//     padding: 20,
-//     borderRadius: 50,
-//   },
-//   buttonText: {
-//     fontSize: 18,
-//     color: '#000',
-//     fontWeight: 'bold',
-//   },
-//   greenButtonText: {
-//     fontSize: 18,
-//     color: '#fff',
-//     fontWeight: 'bold',
 //   },
 //   permissionText: {
 //     color: 'black',
@@ -173,16 +132,28 @@
 //     textAlign: 'center',
 //     marginTop: 300,
 //   },
-//   loadingOverlay: {
-//     flex: 1,
-//     justifyContent: 'center',
-//     alignItems: 'center',
-//     backgroundColor: 'rgba(0,0,0,0.6)',
+//   nextButton: {
+//     position: 'absolute',
+//     bottom: 30,
+//     alignSelf: 'center',
+//     backgroundColor: '#1E90FF',
+//     paddingVertical: 15,
+//     paddingHorizontal: 30,
+//     borderRadius: 50,
 //   },
-//   loadingText: {
-//     color: '#fff',
+//   tempButton: {
+//     position: 'absolute',
+//     bottom: 150,
+//     alignSelf: 'center',
+//     backgroundColor: '#32CD32',
+//     paddingVertical: 15,
+//     paddingHorizontal: 30,
+//     borderRadius: 50,
+//   },
+//   buttonText: {
 //     fontSize: 18,
-//     marginTop: 10,
+//     color: '#fff',
+//     fontWeight: 'bold',
 //   },
 // });
 
@@ -197,14 +168,10 @@ import {
   Alert,
   Modal,
   ActivityIndicator,
-  Platform,
 } from 'react-native';
 import {Camera, CameraDevice} from 'react-native-vision-camera';
-import RNFS from 'react-native-fs';
-import axios from 'axios';
-import ImageResizer from 'react-native-image-resizer';
 
-const SERVER_URL = 'https://your-ngrok-url.ngrok.io/compare';
+const SERVER_URL = 'http://34.47.88.216:8000/compare';
 
 const Stage1Camera = ({navigation}: {navigation: any}) => {
   const [permission, setPermission] = useState<boolean | null>(null);
@@ -214,7 +181,7 @@ const Stage1Camera = ({navigation}: {navigation: any}) => {
 
   useEffect(() => {
     const checkPermission = async () => {
-      const cameraPermission = await Camera.requestCameraPermission();
+      const cameraPermission = await Camera.getCameraPermissionStatus();
       setPermission(cameraPermission === 'granted');
     };
 
@@ -233,39 +200,37 @@ const Stage1Camera = ({navigation}: {navigation: any}) => {
 
     try {
       const photo = await camera.current.takePhoto({quality: 90});
-
-      console.log('📸 photo:', photo);
-      console.log('📸 photo.path:', photo.path);
-
-      // 이미지 리사이즈
-      const resized = await ImageResizer.createResizedImage(
-        photo.path,
-        800,
-        600,
-        'JPEG',
-        80,
-      );
-
-      console.log('📏 리사이즈된 파일 경로:', resized.uri);
-
-      const base64Data = await RNFS.readFile(resized.uri, 'base64');
-      console.log('🧾 Base64 읽기 완료');
+      const formData = new FormData();
+      formData.append('file', {
+        uri: `file://${photo.path}`,
+        type: 'image/jpeg',
+        name: 'captured.jpg',
+      });
 
       setIsUploading(true);
-      const startTime = Date.now();
 
-      const response = await axios.post(
-        SERVER_URL,
-        {file: base64Data},
-        {headers: {'Content-Type': 'application/json'}},
-      );
+      const startTime = Date.now();
+      const response = await fetch(SERVER_URL, {
+        method: 'POST',
+        body: formData,
+        // headers: {
+        //   'Content-Type': 'multipart/form-data',
+        // },
+      });
+
+      setIsUploading(false);
 
       const elapsed = Date.now() - startTime;
       console.log(`⏱️ 서버 응답 시간: ${elapsed}ms`);
 
-      setIsUploading(false);
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error('❌ 서버 에러 응답:', errorText);
+        Alert.alert('❌ 실패', '응답 실패. 다시 시도해주세요.');
+        return;
+      }
 
-      const data = response.data;
+      const data = await response.json();
       console.log('📝 비교 결과:', data);
 
       if (data.result === 'Pass') {
@@ -313,7 +278,7 @@ const Stage1Camera = ({navigation}: {navigation: any}) => {
       </TouchableOpacity>
 
       <TouchableOpacity
-        onPress={() => navigation.navigate('Stage13_1')}
+        onPress={() => navigation.navigate('Stage2_1')}
         style={styles.greenButton}>
         <Text style={styles.greenButtonText}>➡️</Text>
       </TouchableOpacity>

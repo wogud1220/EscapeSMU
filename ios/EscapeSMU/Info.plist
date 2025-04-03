@@ -28,6 +28,18 @@
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>
 		<true/> <!--Http 요청 수락 fetch 요청이 차단되지 않음.-->
+		
+		<key>NSExceptionDomains</key>
+  		<dict>
+    		<key>34.47.88.216</key>
+    		<dict>
+				<key>NSIncludesSubdomains</key>
+				<true/>
+				<key>NSTemporaryExceptionAllowsInsecureHTTPLoads</key>
+				<true/>
+			</dict>
+		</dict>
+
 		<key>NSAllowsLocalNetworking</key>
 		<true/>
 	</dict>
