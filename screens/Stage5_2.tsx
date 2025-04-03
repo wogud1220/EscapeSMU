@@ -205,6 +205,7 @@
 
 // export default Stage5_2;
 
+// Stage5_2Camera.tsx
 import React, {useEffect, useRef, useState} from 'react';
 import {
   View,
@@ -216,6 +217,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import {Camera, CameraDevice} from 'react-native-vision-camera';
+import {auth} from './firebase.config';
 
 const SERVER_URL = 'http://34.47.88.216:8000/compare';
 
@@ -245,17 +247,34 @@ const Stage5_2Camera = ({navigation}: {navigation: any}) => {
     if (!camera.current) return;
 
     try {
+      console.log('📸 takePicture 시작');
+
+      const user = auth.currentUser;
+      if (!user || !user.email) {
+        Alert.alert('오류', '로그인이 필요합니다.');
+        return;
+      }
+
+      const userId = user.email.split('@')[0];
+      const fileName = `${userId}_Mulberry.jpg`;
+
       const photo = await camera.current.takePhoto({quality: 90});
+      console.log('📷 사진 경로:', photo.path);
+
       const formData = new FormData();
       formData.append('file', {
         uri: `file://${photo.path}`,
         type: 'image/jpeg',
-        name: 'captured.jpg',
+        name: fileName,
       });
+
+      console.log('🧾 FormData 준비 완료:', fileName);
 
       setIsUploading(true);
 
       const startTime = Date.now();
+      console.log('🚀 서버에 요청 시작');
+
       const response = await fetch(SERVER_URL, {
         method: 'POST',
         body: formData,
@@ -283,12 +302,12 @@ const Stage5_2Camera = ({navigation}: {navigation: any}) => {
         Alert.alert('✅ 성공!', '다음 단계로 이동합니다.');
         navigation.navigate('Stage1_2');
       } else {
-        Alert.alert('❌ 실패', '다시 시도해주세요.');
+        Alert.alert('실패', '다시 시도해주세요.');
       }
     } catch (error) {
       setIsUploading(false);
-      console.error('🚨 서버 오류:', error);
-      Alert.alert('❌ 실패', '서버 응답이 없습니다. 다시 시도해주세요.');
+      console.error('❌ 서버 요청 중 오류 발생:', error);
+      Alert.alert('실패', '서버 응답이 없습니다. 다시 시도해주세요.');
     }
   };
 

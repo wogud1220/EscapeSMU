@@ -102,11 +102,17 @@ const StageList = () => {
             <TouchableOpacity
               key={idx}
               style={styles.menuItemButton}
-              onPress={() =>
-                navigation.navigate('Stage1Camera', {
-                  department: `${selectedCollege} - ${major}`,
-                })
-              }>
+              onPress={() => {
+                if (selectedCollege === '글로벌인문학부대학') {
+                  navigation.navigate('Stage13_1', {
+                    department: `${selectedCollege} - ${major}`,
+                  });
+                } else {
+                  navigation.navigate('Stage1Camera', {
+                    department: `${selectedCollege} - ${major}`,
+                  });
+                }
+              }}>
               <Text style={styles.menuItem}>{major}</Text>
             </TouchableOpacity>
           ))}
