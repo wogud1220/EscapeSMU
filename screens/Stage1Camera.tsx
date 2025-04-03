@@ -7,8 +7,10 @@ import {
   Alert,
   Modal,
   ActivityIndicator,
+  Platform,
 } from 'react-native';
 import {Camera, CameraDevice} from 'react-native-vision-camera';
+import RNFS from 'react-native-fs';
 
 const SERVER_URL = 'http://34.47.88.216:8000/compare';
 
@@ -39,28 +41,27 @@ const Stage1Camera = ({navigation}: {navigation: any}) => {
 
     try {
       const photo = await camera.current.takePhoto({quality: 90});
-      const formData = new FormData();
-      formData.append('file', {
-        uri: `file://${photo.path}`,
-        type: 'image/jpeg',
-        name: 'captured.jpg',
-      });
+
+      console.log('📸 photo:', photo);
+      console.log('📸 photo.path:', photo.path);
+
+      const base64Data = await RNFS.readFile(photo.path, 'base64');
+      console.log('🧾 Base64 읽기 완료');
 
       setIsUploading(true);
 
       const startTime = Date.now();
       const response = await fetch(SERVER_URL, {
         method: 'POST',
-        body: formData,
-        // headers: {
-        //   'Content-Type': 'multipart/form-data',
-        // },
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({file: base64Data}),
       });
-
-      setIsUploading(false);
-
       const elapsed = Date.now() - startTime;
       console.log(`⏱️ 서버 응답 시간: ${elapsed}ms`);
+
+      setIsUploading(false);
 
       if (!response.ok) {
         const errorText = await response.text();
@@ -84,6 +85,8 @@ const Stage1Camera = ({navigation}: {navigation: any}) => {
       Alert.alert('❌ 실패', '서버 응답이 없습니다. 다시 시도해주세요.');
     }
   };
+
+  
 
   if (permission === null) return <Text>🔄 권한 확인 중...</Text>;
 
