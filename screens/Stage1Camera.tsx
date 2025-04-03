@@ -52,9 +52,9 @@ const Stage1Camera = ({navigation}: {navigation: any}) => {
       const response = await fetch(SERVER_URL, {
         method: 'POST',
         body: formData,
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
+        // headers: {
+        //   'Content-Type': 'multipart/form-data',
+        // },
       });
 
       setIsUploading(false);
