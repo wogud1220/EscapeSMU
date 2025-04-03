@@ -28,17 +28,6 @@
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>
 		<true/> <!--Http 요청 수락 fetch 요청이 차단되지 않음.-->
-
-		<key>NSExceptionDomains</key>
-  		<dict>
-    		<key>34.47.88.216</key>
-    		<dict>
-				<key>NSIncludesSubdomains</key>
-				<true/>
-				<key>NSTemporaryExceptionAllowsInsecureHTTPLoads</key>
-				<true/>
-			</dict>
-		</dict>
 		<key>NSAllowsLocalNetworking</key>
 		<true/>
 	</dict>
@@ -51,7 +40,10 @@
 
 	<key>NSLocationWhenInUseUsageDescription</key>	<!--백그라운드 위치 권한-->
 	<string>백그라운드에서도 추적 권한</string>
-
+	<!--마이크 권한 추가-->
+	<key>NSMicrophoneUsageDescription</key>
+	<string>데시벨 측정을 위해 마이크 접근이 필요합니다.</string>
+	
 	<key>NSLocationTemporaryUsageDescriptionDictionary</key>	<!--precision 위치 권한-->
 	<dict>
   		<key>LocationAccuracy</key>

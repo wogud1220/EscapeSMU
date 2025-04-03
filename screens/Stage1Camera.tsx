@@ -20,7 +20,7 @@ const Stage1Camera = ({navigation}: {navigation: any}) => {
 
   useEffect(() => {
     const checkPermission = async () => {
-      const cameraPermission = await Camera.getCameraPermissionStatus();
+      const cameraPermission = await Camera.requestCameraPermission();
       setPermission(cameraPermission === 'granted');
     };
 
