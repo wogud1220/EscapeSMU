@@ -27,7 +27,7 @@ import {formatDistanceToNow} from 'date-fns';
 import {ko} from 'date-fns/locale';
 import {useRoute} from '@react-navigation/native';
 import {useDepartment} from './Member/DepartmentContext';
-
+import {useNavigation} from '@react-navigation/native';
 interface GuestMessage {
   id: string;
   message: string;
@@ -39,7 +39,7 @@ interface GuestMessage {
 
 const Guestbook = () => {
   const {college, department} = useDepartment();
-
+  const navigation = useNavigation();
   const route = useRoute();
   const selectedDepartment =
     (route.params as {department?: string})?.department || '';
@@ -179,6 +179,20 @@ const Guestbook = () => {
           <Text style={styles.emptyText}>아직 메시지가 없습니다.</Text>
         }
       />
+
+      {/* ✅ 다음 스테이지 이동 버튼 */}
+      <View style={{paddingHorizontal: 20, marginTop: 12}}>
+        <Button
+          title="다음 스테이지로 이동"
+          onPress={() => {
+            if (college === '글로벌인문학부대학') {
+              navigation.navigate('Stage7_1');
+            } else {
+              navigation.navigate('StageFinal');
+            }
+          }}
+        />
+      </View>
     </KeyboardAvoidingView>
   );
 };
