@@ -1,18 +1,27 @@
-//디자인관 가는 화면
+//학생회관
 
 import React from 'react';
-import { View, Text, ImageBackground, StyleSheet, Dimensions, Image, TouchableOpacity } from 'react-native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { useNavigation } from '@react-navigation/native';
-import { RootStackParamList } from '../App';
+import {
+  View,
+  Text,
+  ImageBackground,
+  StyleSheet,
+  Dimensions,
+  Image,
+  TouchableOpacity,
+} from 'react-native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {useNavigation} from '@react-navigation/native';
+import {RootStackParamList} from '../App';
+import {useDepartment} from './Member/DepartmentContext';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage9_1'>;
 
-const { width, height } = Dimensions.get('window');
+const {width, height} = Dimensions.get('window');
 
-const Stage9_1 = () => {
+const Stage10_1 = () => {
   const navigation = useNavigation<NavigationProp>();
-
+  const {college} = useDepartment();
   const handleMapPress = () => {
     navigation.navigate('Map');
   };
@@ -24,17 +33,16 @@ const Stage9_1 = () => {
   return (
     <View style={styles.container}>
       {/* ✅ main.png를 배경으로 설정 */}
-      <ImageBackground 
-        source={require('../assets/main.png')} 
+      <ImageBackground
+        source={require('../assets/main.png')}
         style={styles.image}
-        resizeMode="cover"
-      >
+        resizeMode="cover">
         {/* 🔥 투명 레이어 추가 */}
         <View style={styles.overlay} />
 
         {/* ✅ 🗺️ 오른쪽 상단의 map.png */}
         <TouchableOpacity onPress={handleMapPress} style={styles.mapButton}>
-          <Image 
+          <Image
             source={require('../assets/map.png')}
             style={styles.mapImage}
             resizeMode="contain"
@@ -42,8 +50,10 @@ const Stage9_1 = () => {
         </TouchableOpacity>
 
         {/* ✅ 홈으로 이동 버튼 */}
-        <TouchableOpacity onPress={() => navigation.navigate('Main')} style={styles.backButton}>
-          <Image 
+        <TouchableOpacity
+          onPress={() => navigation.navigate('Main')}
+          style={styles.backButton}>
+          <Image
             source={require('../assets/home.png')}
             style={styles.backImage}
             resizeMode="contain"
@@ -52,24 +62,20 @@ const Stage9_1 = () => {
 
         <View style={styles.box}>
           {/* ✅ 텍스트 위에 이미지 추가 */}
-          <Image 
-          source={require('../assets/center.png')} 
-          style={styles.dokdoImage} 
-          resizeMode="contain"
+          <Image
+            source={require('../assets/center.png')}
+            style={styles.dokdoImage}
+            resizeMode="contain"
           />
-          <Text style={styles.text}>
-            다음으로 방문할 곳은 학생회관이야!
-          </Text>
-          <Text style={styles.subText}>
-          </Text>
-            </View>
+          <Text style={styles.text}>다음으로 방문할 곳은 학생회관이야!</Text>
+          <Text style={styles.subText}></Text>
+        </View>
 
         {/* ✅ 다음 스테이지로 이동 버튼 */}
-        <TouchableOpacity 
+        <TouchableOpacity
           style={styles.nextButton}
           onPress={handleNextStage}
-          activeOpacity={0.7}
-        >
+          activeOpacity={0.7}>
           <Text style={styles.buttonText}>다음 ➡️</Text>
         </TouchableOpacity>
       </ImageBackground>
@@ -104,7 +110,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
+    shadowOffset: {width: 0, height: 4},
     shadowOpacity: 0.3,
     shadowRadius: 4,
     elevation: 5,
@@ -169,7 +175,6 @@ const styles = StyleSheet.create({
     height: height * 0.4, // ✅ 이미지 높이 설정
     marginBottom: height * 0.02, // ✅ 이미지와 텍스트 사이 간격 조정
   },
-  
 });
 
-export default Stage9_1;
+export default Stage10_1;

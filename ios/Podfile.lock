@@ -2715,6 +2715,8 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
+  - react-native-voice (3.2.4):
+    - React-Core
   - react-native-webview (13.13.4):
     - DoubleConversion
     - glog
@@ -3324,6 +3326,7 @@ DEPENDENCIES:
   - react-native-image-resizer (from `../node_modules/react-native-image-resizer`)
   - react-native-maps (from `../node_modules/react-native-maps`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
+  - "react-native-voice (from `../node_modules/@react-native-voice/voice`)"
   - react-native-webview (from `../node_modules/react-native-webview`)
   - React-NativeModulesApple (from `../node_modules/react-native/ReactCommon/react/nativemodule/core/platform/ios`)
   - React-perflogger (from `../node_modules/react-native/ReactCommon/reactperflogger`)
@@ -3477,6 +3480,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-maps"
   react-native-safe-area-context:
     :path: "../node_modules/react-native-safe-area-context"
+  react-native-voice:
+    :path: "../node_modules/@react-native-voice/voice"
   react-native-webview:
     :path: "../node_modules/react-native-webview"
   React-NativeModulesApple:
@@ -3622,6 +3627,7 @@ SPEC CHECKSUMS:
   react-native-image-resizer: 17b2d73c030975b6543395c7e7368bc8774c5efa
   react-native-maps: 9febd31278b35cd21e4fad2cf6fa708993be5dab
   react-native-safe-area-context: 33fadf89988c8813cfac57797a3bc53708863dd1
+  react-native-voice: 908a0eba96c8c3d643e4f98b7232c6557d0a6f9c
   react-native-webview: bbc90f70233e58004d8df887437477a2659ab32d
   React-NativeModulesApple: ec44c21ae0bbb5f9a2df72db00294e33a00e07f0
   React-perflogger: 9e8d3c0dc0194eb932162812a168aa5dc662f418

@@ -20,14 +20,14 @@ const {width, height} = Dimensions.get('window');
 
 const Stage5_7 = () => {
   const navigation = useNavigation<NavigationProp>();
-  const { college } = useDepartment(); // 🔹 추가
+  const {college} = useDepartment(); // 🔹 추가
   const handleMapPress = () => {
     navigation.navigate('Map');
   };
 
   const handleNextStage = () => {
     if (college === '글로벌인문학부대학') {
-      navigation.navigate('Stage6_1'); // ✅ 글로벌인문학부대학이면 Stage6_1
+      navigation.navigate('Stage7_1'); // ✅ 글로벌인문학부대학이면 Stage7_1(송백관)
     } else {
       navigation.navigate('Stage5_1'); // ✅ 그 외는 기존대로 Stage5_1
     }

@@ -1,19 +1,29 @@
 //PC에서 문제 풀고 단어 입력하기
 
-import React, { useState } from 'react';
-import { View, Text, ImageBackground, StyleSheet, Dimensions, Image, TouchableOpacity, TextInput, Alert } from 'react-native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { useNavigation } from '@react-navigation/native';
-import { RootStackParamList } from '../App';
-
+import React, {useState} from 'react';
+import {
+  View,
+  Text,
+  ImageBackground,
+  StyleSheet,
+  Dimensions,
+  Image,
+  TouchableOpacity,
+  TextInput,
+  Alert,
+} from 'react-native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {useNavigation} from '@react-navigation/native';
+import {RootStackParamList} from '../App';
+import {useDepartment} from './Member/DepartmentContext';
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage8_6'>;
 
-const { width, height } = Dimensions.get('window');
+const {width, height} = Dimensions.get('window');
 
 const Stage8_6 = () => {
   const navigation = useNavigation<NavigationProp>();
   const [answer, setAnswer] = useState(''); // ✅ 정답 상태값 설정
-
+  const {college} = useDepartment();
   const handleMapPress = () => {
     navigation.navigate('Map');
   };
@@ -22,9 +32,12 @@ const Stage8_6 = () => {
     // ✅ 정답 체크 로직
     if (answer.trim() === '1') {
       Alert.alert('정답입니다!', '다음 스테이지로 이동합니다.', [
-        { 
-          text: '확인', 
-          onPress: () => navigation.navigate('Stage9_1') // ✅ 다음 스테이지로 이동
+        {
+          text: '확인',
+          onPress: () =>
+            navigation.navigate(
+              college === '글로벌인문학부대학' ? 'Stage10_1' : 'Stage9_1',
+            ),
         },
       ]);
     } else {
@@ -39,17 +52,16 @@ const Stage8_6 = () => {
   return (
     <View style={styles.container}>
       {/* ✅ 배경 이미지 설정 */}
-      <ImageBackground 
-        source={require('../assets/main.png')} 
+      <ImageBackground
+        source={require('../assets/main.png')}
         style={styles.image}
-        resizeMode="cover"
-      >
+        resizeMode="cover">
         {/* ✅ 투명 레이어 추가 */}
         <View style={styles.overlay} />
 
         {/* ✅ 오른쪽 상단의 지도 버튼 */}
         <TouchableOpacity onPress={handleMapPress} style={styles.mapButton}>
-          <Image 
+          <Image
             source={require('../assets/map.png')}
             style={styles.mapImage}
             resizeMode="contain"
@@ -58,7 +70,7 @@ const Stage8_6 = () => {
 
         {/* ✅ 홈으로 이동 버튼 */}
         <TouchableOpacity onPress={handleHomePress} style={styles.backButton}>
-          <Image 
+          <Image
             source={require('../assets/home.png')}
             style={styles.backImage}
             resizeMode="contain"
@@ -67,9 +79,12 @@ const Stage8_6 = () => {
 
         {/* ✅ 가운데 흰색 박스 */}
         <View style={styles.box}>
-          <Text style={styles.text}>컴퓨터를 사용해서 (www.www.com)에 접속해보자!</Text>
+          <Text style={styles.text}>
+            컴퓨터를 사용해서 (www.www.com)에 접속해보자!
+          </Text>
           <Text style={styles.subText}>
-            PC 사용하기 불가능한 상황이라면 핸드폰을 통해 접속해도 괜찮아!{'\n'}{'\n'}
+            PC 사용하기 불가능한 상황이라면 핸드폰을 통해 접속해도 괜찮아!{'\n'}
+            {'\n'}
             사이트에 접속하니 문제들이 있잖아??{'\n'}
             문제를 풀고 사이트에서 제공하는 단어를 입력해보자!{'\n'}
           </Text>
@@ -86,11 +101,10 @@ const Stage8_6 = () => {
             keyboardType="default" // ✅ 문자 입력 가능하도록 설정
             autoCapitalize="none" // ✅ 대소문자 구분 없음
           />
-          <TouchableOpacity 
+          <TouchableOpacity
             style={styles.submitButton}
             onPress={handleNextStage}
-            activeOpacity={0.7}
-          >
+            activeOpacity={0.7}>
             <Text style={styles.buttonText}>제출하기</Text>
           </TouchableOpacity>
         </View>
@@ -127,7 +141,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
+    shadowOffset: {width: 0, height: 4},
     shadowOpacity: 0.3,
     shadowRadius: 4,
     elevation: 5,
