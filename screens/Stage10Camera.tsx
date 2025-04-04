@@ -1,69 +1,254 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { Camera, CameraDevice } from 'react-native-vision-camera';
+// import React, { useEffect, useRef, useState } from 'react';
+// import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+// import { Camera, CameraDevice } from 'react-native-vision-camera';
 
-const Stage10Camera = ({ navigation }: { navigation: any }) => {
+// const Stage10Camera = ({ navigation }: { navigation: any }) => {
+//   const [device, setDevice] = useState<CameraDevice | undefined>();
+//   const camera = useRef<Camera>(null);
+
+//   useEffect(() => {
+//     const checkPermission = async () => {
+//       const cameraPermission = await Camera.getCameraPermissionStatus();
+//       console.log(`현재 권한 상태: ${cameraPermission}`);
+
+//       if (cameraPermission === 'not-determined') {
+//         await Camera.requestCameraPermission();
+//       }
+//     };
+
+//     const loadDevices = async () => {
+//       const availableDevices = await Camera.getAvailableCameraDevices();
+//       console.log('사용 가능한 장치 목록:', availableDevices);
+
+//       availableDevices.forEach((dev, index) => {
+//         console.log(
+//           `장치 ${index}: position = ${dev.position}, sensorOrientation = ${dev.sensorOrientation}`
+//         );
+//       });
+
+//       const backCamera = availableDevices.find(
+//         (dev) =>
+//           dev.position === 'back' ||
+//           dev.sensorOrientation === 'landscape-left' ||
+//           dev.sensorOrientation === 90
+//       );
+
+//       console.log('선택된 백 카메라 상태:', backCamera);
+
+//       if (backCamera) {
+//         setTimeout(() => setDevice(backCamera), 100);
+//       }
+//     };
+
+//     checkPermission();
+//     loadDevices();
+//   }, []);
+
+//   const takePicture = async () => {
+//     if (camera.current) {
+//       const photo = await camera.current.takePhoto();
+//       console.log(`사진 저장 경로: ${photo.path}`);
+//       navigation.goBack(); // Stage1으로 복귀
+//     }
+//   };
+
+//   const goToNextStage = () => {
+//     navigation.navigate('Stage10_4'); // ✅ Stage1_2로 이동
+//   };
+
+//   if (!device) {
+//     // ✅ 장치가 없으면 아무것도 렌더링하지 않음
+//     return <View style={styles.container} />;
+//   }
+
+//   return (
+//     <View style={styles.container}>
+//       {/* ✅ 카메라 컴포넌트 */}
+//       <Camera
+//         ref={camera}
+//         style={styles.camera}
+//         device={device}
+//         isActive={true}
+//         photo={true}
+//       />
+
+//       {/* ✅ 사진 촬영 버튼 */}
+//       <TouchableOpacity onPress={takePicture} style={styles.captureButton}>
+//         <Text style={styles.buttonText}>📸</Text>
+//       </TouchableOpacity>
+
+//       {/* ✅ 다음 버튼 */}
+//       <TouchableOpacity onPress={goToNextStage} style={styles.nextButton}>
+//         <Text style={styles.buttonText}>다음 ➡️</Text>
+//       </TouchableOpacity>
+//     </View>
+//   );
+// };
+
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     backgroundColor: '#000',
+//   },
+//   camera: {
+//     width: '100%',
+//     height: '100%',
+//   },
+//   captureButton: {
+//     position: 'absolute',
+//     bottom: 100,
+//     alignSelf: 'center',
+//     backgroundColor: '#fff',
+//     padding: 20,
+//     borderRadius: 50,
+//   },
+//   nextButton: {
+//     position: 'absolute',
+//     bottom: 30,
+//     alignSelf: 'center',
+//     backgroundColor: '#1E90FF', // ✅ 파란색 버튼 스타일
+//     paddingVertical: 15,
+//     paddingHorizontal: 30,
+//     borderRadius: 50,
+//   },
+//   tempButton: {
+//     position: 'absolute',
+//     bottom: 150, // ✅ 하단에서 약간 위로 배치
+//     alignSelf: 'center',
+//     backgroundColor: '#32CD32', // ✅ 연두색 스타일
+//     paddingVertical: 15,
+//     paddingHorizontal: 30,
+//     borderRadius: 50,
+//   },
+//   buttonText: {
+//     fontSize: 18,
+//     color: '#fff',
+//     fontWeight: 'bold',
+//   },
+// });
+
+// export default Stage10Camera;
+
+import React, {useEffect, useRef, useState} from 'react';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  Alert,
+  Modal,
+  ActivityIndicator,
+  Platform,
+} from 'react-native';
+import {Camera, CameraDevice} from 'react-native-vision-camera';
+import {onAuthStateChanged} from 'firebase/auth';
+import {auth} from './firebase.config';
+import axios from 'axios';
+
+const SERVER_URL = 'http://34.47.88.216:8000/compare';
+
+const Stage10Camera = ({navigation}: {navigation: any}) => {
+  const [permission, setPermission] = useState<boolean | null>(null);
   const [device, setDevice] = useState<CameraDevice | undefined>();
+  const [isUploading, setIsUploading] = useState(false);
+  const [userId, setUserId] = useState<string>('');
   const camera = useRef<Camera>(null);
 
   useEffect(() => {
     const checkPermission = async () => {
-      const cameraPermission = await Camera.getCameraPermissionStatus();
-      console.log(`현재 권한 상태: ${cameraPermission}`);
-
-      if (cameraPermission === 'not-determined') {
-        await Camera.requestCameraPermission();
-      }
+      const cameraPermission = await Camera.requestCameraPermission();
+      setPermission(cameraPermission === 'granted');
     };
 
     const loadDevices = async () => {
-      const availableDevices = await Camera.getAvailableCameraDevices();
-      console.log('사용 가능한 장치 목록:', availableDevices);
+      const devices = await Camera.getAvailableCameraDevices();
+      const selected = devices.find(dev => dev.position === 'back');
+      setDevice(selected);
+    };
 
-      availableDevices.forEach((dev, index) => {
-        console.log(
-          `장치 ${index}: position = ${dev.position}, sensorOrientation = ${dev.sensorOrientation}`
-        );
+    const fetchUser = () => {
+      const unsubscribe = onAuthStateChanged(auth, user => {
+        if (user) {
+          setUserId(user.uid);
+        }
       });
-
-      const backCamera = availableDevices.find(
-        (dev) =>
-          dev.position === 'back' ||
-          dev.sensorOrientation === 'landscape-left' ||
-          dev.sensorOrientation === 90
-      );
-
-      console.log('선택된 백 카메라 상태:', backCamera);
-
-      if (backCamera) {
-        setTimeout(() => setDevice(backCamera), 100);
-      }
+      return unsubscribe;
     };
 
     checkPermission();
     loadDevices();
+    const unsubscribeAuth = fetchUser();
+
+    return () => unsubscribeAuth();
   }, []);
 
   const takePicture = async () => {
-    if (camera.current) {
-      const photo = await camera.current.takePhoto();
-      console.log(`사진 저장 경로: ${photo.path}`);
-      navigation.goBack(); // Stage1으로 복귀
+    if (!camera.current || !userId) return;
+
+    try {
+      const photo = await camera.current.takePhoto({quality: 90});
+      const fileUri =
+        Platform.OS === 'ios' ? photo.path : `file://${photo.path}`;
+      console.log('📸 파일 URI:', fileUri);
+
+      const formData = new FormData();
+      const fileData = {
+        uri: fileUri,
+        name: 'captured.jpg',
+        type: 'image/jpeg',
+      };
+      formData.append('file', fileData);
+      formData.append('user_id', userId);
+      formData.append('stage', 'stage10');
+
+      console.log('📦 FormData 구성 완료:', fileData);
+
+      setIsUploading(true);
+      const startTime = Date.now();
+
+      const response = await axios.post(SERVER_URL, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+        timeout: 10000,
+      });
+
+      const elapsed = Date.now() - startTime;
+      console.log(`⏱️ 서버 응답 시간: ${elapsed}ms`);
+      setIsUploading(false);
+
+      const data = response.data;
+      console.log('📝 비교 결과:', data);
+
+      if (data.result === 'Pass') {
+        Alert.alert('✅ 성공!', '다음 단계로 이동합니다.');
+        navigation.navigate('Stage1_2');
+      } else {
+        Alert.alert('❌ 실패', '다시 시도해주세요.');
+      }
+    } catch (error: any) {
+      setIsUploading(false);
+      console.error('🚨 서버 오류:', error);
+      Alert.alert('❌ 실패', '서버 연결에 실패했습니다.');
     }
   };
 
-  const goToNextStage = () => {
-    navigation.navigate('Stage10_4'); // ✅ Stage1_2로 이동
-  };
-
+  if (permission === null) return <Text>🔄 권한 확인 중...</Text>;
+  if (!permission) {
+    return (
+      <Text style={styles.permissionText}>
+        ⚠️ 카메라 권한이 필요합니다. iOS: 설정 → EscampeSMU → 카메라 ON!
+      </Text>
+    );
+  }
   if (!device) {
-    // ✅ 장치가 없으면 아무것도 렌더링하지 않음
-    return <View style={styles.container} />;
+    return (
+      <Text>⚠️ 카메라 장치를 찾을 수 없습니다. 실제 기기에서 실행하세요.</Text>
+    );
   }
 
   return (
     <View style={styles.container}>
-      {/* ✅ 카메라 컴포넌트 */}
       <Camera
         ref={camera}
         style={styles.camera}
@@ -72,58 +257,72 @@ const Stage10Camera = ({ navigation }: { navigation: any }) => {
         photo={true}
       />
 
-      {/* ✅ 사진 촬영 버튼 */}
       <TouchableOpacity onPress={takePicture} style={styles.captureButton}>
         <Text style={styles.buttonText}>📸</Text>
       </TouchableOpacity>
 
-      {/* ✅ 다음 버튼 */}
-      <TouchableOpacity onPress={goToNextStage} style={styles.nextButton}>
-        <Text style={styles.buttonText}>다음 ➡️</Text>
+      <TouchableOpacity
+        onPress={() => navigation.navigate('Stage10_4')}
+        style={styles.greenButton}>
+        <Text style={styles.greenButtonText}>➡️</Text>
       </TouchableOpacity>
+
+      <Modal visible={isUploading} transparent>
+        <View style={styles.loadingOverlay}>
+          <ActivityIndicator size="large" color="#fff" />
+          <Text style={styles.loadingText}>업로드 중...</Text>
+        </View>
+      </Modal>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#000',
-  },
-  camera: {
-    width: '100%',
-    height: '100%',
-  },
+  container: {flex: 1, backgroundColor: '#000'},
+  camera: {width: '100%', height: '100%'},
   captureButton: {
     position: 'absolute',
     bottom: 100,
-    alignSelf: 'center',
+    left: '30%',
     backgroundColor: '#fff',
     padding: 20,
     borderRadius: 50,
   },
-  nextButton: {
+  greenButton: {
     position: 'absolute',
-    bottom: 30,
-    alignSelf: 'center',
-    backgroundColor: '#1E90FF', // ✅ 파란색 버튼 스타일
-    paddingVertical: 15,
-    paddingHorizontal: 30,
-    borderRadius: 50,
-  },
-  tempButton: {
-    position: 'absolute',
-    bottom: 150, // ✅ 하단에서 약간 위로 배치
-    alignSelf: 'center',
-    backgroundColor: '#32CD32', // ✅ 연두색 스타일
-    paddingVertical: 15,
-    paddingHorizontal: 30,
+    bottom: 100,
+    right: '30%',
+    backgroundColor: 'green',
+    padding: 20,
     borderRadius: 50,
   },
   buttonText: {
     fontSize: 18,
+    color: '#000',
+    fontWeight: 'bold',
+  },
+  greenButtonText: {
+    fontSize: 18,
     color: '#fff',
     fontWeight: 'bold',
+  },
+  permissionText: {
+    color: 'black',
+    fontSize: 20,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginTop: 300,
+  },
+  loadingOverlay: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0,0,0,0.6)',
+  },
+  loadingText: {
+    color: '#fff',
+    fontSize: 18,
+    marginTop: 10,
   },
 });
 

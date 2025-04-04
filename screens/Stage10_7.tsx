@@ -1,19 +1,32 @@
 //학생회관 5층 동아리 관련 문제
 
-import React, { useState } from 'react';
-import { View, Text, ImageBackground, StyleSheet, Dimensions, Image, TouchableOpacity, TextInput, Alert } from 'react-native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { useNavigation } from '@react-navigation/native';
-import { RootStackParamList } from '../App';
+import React, {useState} from 'react';
+import {
+  View,
+  Text,
+  ImageBackground,
+  StyleSheet,
+  Dimensions,
+  Image,
+  TouchableOpacity,
+  TextInput,
+  Alert,
+} from 'react-native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {useNavigation} from '@react-navigation/native';
+import {RootStackParamList} from '../App';
+import {useDepartment} from './Member/DepartmentContext';
+type NavigationProp = NativeStackNavigationProp<
+  RootStackParamList,
+  'Stage10_7'
+>;
 
-type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage10_7'>;
-
-const { width, height } = Dimensions.get('window');
+const {width, height} = Dimensions.get('window');
 
 const Stage10_7 = () => {
   const navigation = useNavigation<NavigationProp>();
   const [answer, setAnswer] = useState(''); // ✅ 정답 상태값 설정
-
+  const {college} = useDepartment();
   const handleMapPress = () => {
     navigation.navigate('Map');
   };
@@ -22,9 +35,12 @@ const Stage10_7 = () => {
     // ✅ 정답 체크 로직
     if (answer.trim() === '1') {
       Alert.alert('정답입니다!', '다음 스테이지로 이동합니다.', [
-        { 
-          text: '확인', 
-          onPress: () => navigation.navigate('Stage11_1') // ✅ 다음 스테이지로 이동
+        {
+          text: '확인',
+          onPress: () =>
+            navigation.navigate(
+              college === '글로벌인문학부대학' ? 'StageFinal' : 'Stage11_1',
+            ),
         },
       ]);
     } else {
@@ -39,17 +55,16 @@ const Stage10_7 = () => {
   return (
     <View style={styles.container}>
       {/* ✅ 배경 이미지 설정 */}
-      <ImageBackground 
-        source={require('../assets/main.png')} 
+      <ImageBackground
+        source={require('../assets/main.png')}
         style={styles.image}
-        resizeMode="cover"
-      >
+        resizeMode="cover">
         {/* ✅ 투명 레이어 추가 */}
         <View style={styles.overlay} />
 
         {/* ✅ 오른쪽 상단의 지도 버튼 */}
         <TouchableOpacity onPress={handleMapPress} style={styles.mapButton}>
-          <Image 
+          <Image
             source={require('../assets/map.png')}
             style={styles.mapImage}
             resizeMode="contain"
@@ -58,7 +73,7 @@ const Stage10_7 = () => {
 
         {/* ✅ 홈으로 이동 버튼 */}
         <TouchableOpacity onPress={handleHomePress} style={styles.backButton}>
-          <Image 
+          <Image
             source={require('../assets/home.png')}
             style={styles.backImage}
             resizeMode="contain"
@@ -66,24 +81,22 @@ const Stage10_7 = () => {
         </TouchableOpacity>
 
         <View style={styles.box}>
-  <Text style={styles.text}>
-    학생회관 5층에는 동아리들이 사용할 수 있는 동방이 있어!
-  </Text>
-  <Text style={styles.subText}>
-    여러 중앙 동아리 중, {' '}
-    <View style={styles.inlineContainer}>
-      <Image 
-        source={require('../assets/codecure.png')} 
-        style={styles.inlineImage}
-        resizeMode="contain"
-      />
-      <Text style={styles.highlight}>CodeCure</Text>
-    </View>
-    {' '}가 사용하는 동방의 호수는 몇 호일까?
-  </Text>
-</View>
-
-
+          <Text style={styles.text}>
+            학생회관 5층에는 동아리들이 사용할 수 있는 동방이 있어!
+          </Text>
+          <Text style={styles.subText}>
+            여러 중앙 동아리 중,{' '}
+            <View style={styles.inlineContainer}>
+              <Image
+                source={require('../assets/codecure.png')}
+                style={styles.inlineImage}
+                resizeMode="contain"
+              />
+              <Text style={styles.highlight}>CodeCure</Text>
+            </View>{' '}
+            가 사용하는 동방의 호수는 몇 호일까?
+          </Text>
+        </View>
 
         {/* ✅ 입력 필드 + 제출 버튼 */}
         <View style={styles.inputContainer}>
@@ -96,11 +109,10 @@ const Stage10_7 = () => {
             keyboardType="default" // ✅ 문자 입력 가능하도록 설정
             autoCapitalize="none" // ✅ 대소문자 구분 없음
           />
-          <TouchableOpacity 
+          <TouchableOpacity
             style={styles.submitButton}
             onPress={handleNextStage}
-            activeOpacity={0.7}
-          >
+            activeOpacity={0.7}>
             <Text style={styles.buttonText}>제출하기</Text>
           </TouchableOpacity>
         </View>
@@ -137,7 +149,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
+    shadowOffset: {width: 0, height: 4},
     shadowOpacity: 0.3,
     shadowRadius: 4,
     elevation: 5,
@@ -214,7 +226,7 @@ const styles = StyleSheet.create({
   },
   inlineImage: {
     width: width * 0.08, // 이미지 크기 조정
-    height: width * 0.08, 
+    height: width * 0.08,
     marginRight: width * 0.01, // 글씨와의 간격 조정
   },
   highlight: {
@@ -223,8 +235,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 4,
     borderRadius: 4,
   },
-  
-  
 });
 
 export default Stage10_7;
