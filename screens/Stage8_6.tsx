@@ -33,7 +33,7 @@ const { department } = route.params;
   };
 
   const handleNextStage = () => {
-    if (answer.trim() === '1') {
+    if (answer.trim() === '수뭉이와함께라면') {
       let nextStage = 'Stage10_1';
   
       if (department.includes('디자인학부')) {
@@ -96,11 +96,11 @@ const { department } = route.params;
         {/* ✅ 문제 박스 */}
         <View style={styles.box}>
           <Text style={styles.text}>
-            컴퓨터를 사용해서 (www.www.com)에 접속해보자!
+            컴퓨터를 사용해서 (smuescape.netlify.app)에 접속해보자!
           </Text>
           <Text style={styles.subText}>
             응??? 어딘가 많이 본 게임인데?{'\n'}{'\n'}
-            30점을 달성하고 단어를 얻어내자!
+            30점을 달성하고 알림창을 보자!
           </Text>
         </View>
 
