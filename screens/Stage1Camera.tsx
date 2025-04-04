@@ -383,7 +383,7 @@ import {
 } from 'react-native';
 import {Camera, CameraDevice} from 'react-native-vision-camera';
 import {onAuthStateChanged} from 'firebase/auth';
-import {auth} from '../firebase.config';
+import {auth} from './firebase.config';
 import axios from 'axios';
 
 const SERVER_URL = 'http://34.47.88.216:8000/compare';

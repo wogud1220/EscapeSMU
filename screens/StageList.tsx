@@ -9,6 +9,7 @@ import {
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {useNavigation} from '@react-navigation/native';
 import {RootStackParamList} from '../App';
+import {useDepartment} from './Member/DepartmentContext';
 
 const {width, height} = Dimensions.get('window');
 
@@ -71,7 +72,7 @@ const StageList = () => {
       '사진영상',
     ],
   };
-
+  const {setCollege, setDepartment} = useDepartment(); // Ensure it is a callable function
   return (
     <View style={styles.container}>
       <TouchableOpacity
@@ -103,10 +104,10 @@ const StageList = () => {
               key={idx}
               style={styles.menuItemButton}
               onPress={() => {
+                setCollege(selectedCollege); // ✅ 학부 저장
+                setDepartment(major);
                 if (selectedCollege === '글로벌인문학부대학') {
-                  navigation.navigate('Stage13_1', {
-                    department: `${selectedCollege} - ${major}`,
-                  });
+                  navigation.navigate('Stage13_1');
                 } else {
                   navigation.navigate('Stage1Camera', {
                     department: `${selectedCollege} - ${major}`,
