@@ -1,88 +1,81 @@
-//본관 사진찍기 화면(임시구성)
+//본관 사진
 
-import React, { useEffect, useRef, useState } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { Camera, CameraDevice } from 'react-native-vision-camera';
+import React from 'react';
+import { View, Text, ImageBackground, StyleSheet, Dimensions, Image, TouchableOpacity } from 'react-native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { useNavigation } from '@react-navigation/native';
+import { RootStackParamList } from '../App';
+import { useRoute, RouteProp } from '@react-navigation/native';
 
-const Stage4_2 = ({ navigation }: { navigation: any }) => {
-  const [device, setDevice] = useState<CameraDevice | undefined>();
-  const camera = useRef<Camera>(null);
+type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage4_2'>;
 
-  useEffect(() => {
-    const checkPermission = async () => {
-      const cameraPermission = await Camera.getCameraPermissionStatus();
-      console.log(`현재 권한 상태: ${cameraPermission}`);
+const { width, height } = Dimensions.get('window');
 
-      if (cameraPermission === 'not-determined') {
-        await Camera.requestCameraPermission();
-      }
-    };
+const Stage4_2 = () => {
+  const navigation = useNavigation<NavigationProp>();
+  const route = useRoute<RouteProp<RootStackParamList, 'Stage4_2'>>();
+  const { department } = route.params;
 
-    const loadDevices = async () => {
-      const availableDevices = await Camera.getAvailableCameraDevices();
-      console.log('사용 가능한 장치 목록:', availableDevices);
-
-      availableDevices.forEach((dev, index) => {
-        console.log(
-          `장치 ${index}: position = ${dev.position}, sensorOrientation = ${dev.sensorOrientation}`
-        );
-      });
-
-      const backCamera = availableDevices.find(
-        (dev) =>
-          dev.position === 'back' ||
-          dev.sensorOrientation === 'landscape-left' ||
-          dev.sensorOrientation === 90
-      );
-
-      console.log('선택된 백 카메라 상태:', backCamera);
-
-      if (backCamera) {
-        setTimeout(() => setDevice(backCamera), 100);
-      }
-    };
-
-    checkPermission();
-    loadDevices();
-  }, []);
-
-  const takePicture = async () => {
-    if (camera.current) {
-      const photo = await camera.current.takePhoto();
-      console.log(`사진 저장 경로: ${photo.path}`);
-      navigation.goBack(); // Stage1으로 복귀
-    }
+  const handleMapPress = () => {
+    navigation.navigate('Map');
   };
 
-  const goToNextStage = () => {
-    navigation.navigate('Stage4_3');
+  const handleNextStage = () => {
+    navigation.navigate('Stage4Camera', {department});
   };
-
-  if (!device) {
-    // ✅ 장치가 없으면 아무것도 렌더링하지 않음
-    return <View style={styles.container} />;
-  }
 
   return (
     <View style={styles.container}>
-      {/* ✅ 카메라 컴포넌트 */}
-      <Camera
-        ref={camera}
-        style={styles.camera}
-        device={device}
-        isActive={true}
-        photo={true}
-      />
+      {/* ✅ main.png를 배경으로 설정 */}
+      <ImageBackground 
+        source={require('../assets/main.png')} 
+        style={styles.image}
+        resizeMode="cover"
+      >
+        {/* 🔥 투명 레이어 추가 */}
+        <View style={styles.overlay} />
 
-      {/* ✅ 사진 촬영 버튼 */}
-      <TouchableOpacity onPress={takePicture} style={styles.captureButton}>
-        <Text style={styles.buttonText}>📸</Text>
-      </TouchableOpacity>
+        {/* ✅ 🗺️ 오른쪽 상단의 map.png */}
+        <TouchableOpacity onPress={handleMapPress} style={styles.mapButton}>
+          <Image 
+            source={require('../assets/map.png')}
+            style={styles.mapImage}
+            resizeMode="contain"
+          />
+        </TouchableOpacity>
 
-      {/* ✅ 다음 버튼 */}
-      <TouchableOpacity onPress={goToNextStage} style={styles.nextButton}>
-        <Text style={styles.buttonText}>다음 ➡️</Text>
-      </TouchableOpacity>
+        {/* ✅ 홈으로 이동 버튼 */}
+        <TouchableOpacity onPress={() => navigation.navigate('Main')} style={styles.backButton}>
+          <Image 
+            source={require('../assets/home.png')}
+            style={styles.backImage}
+            resizeMode="contain"
+          />
+        </TouchableOpacity>
+
+        {/* ✅ 가운데 투명한 흰색 박스 */}
+        <View style={styles.box}>
+          {/* ✅ 하얀색 박스 위에 waytostage2.png 추가 */}
+          <Image 
+            source={require('../assets/software.png')} 
+            style={styles.wayImage} 
+            resizeMode="contain"
+          />
+          <Text style={styles.text}>3층 공과대학의 소프트웨어학과 소개글을 찾아보자!</Text>
+          <Text style={styles.subText}>
+            카메라를 사용해보면 숨어있는 글씨를{'\n'} 찾을 수 있다는데?
+          </Text>
+        </View>
+
+        {/* ✅ 다음 스테이지로 이동 버튼 */}
+        <TouchableOpacity 
+          style={styles.nextButton}
+          onPress={handleNextStage}
+          activeOpacity={0.7}
+        >
+          <Text style={styles.buttonText}>카메라 📸</Text>
+        </TouchableOpacity>
+      </ImageBackground>
     </View>
   );
 };
@@ -90,42 +83,90 @@ const Stage4_2 = ({ navigation }: { navigation: any }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#000',
+    backgroundColor: '#F5E6C4',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-  camera: {
+  image: {
+    flex: 1,
+    width: '100%',
+    height: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  overlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'rgba(0, 0, 0, 0.6)',
+  },
+  box: {
+    backgroundColor: 'rgba(255, 255, 255, 0.7)',
+    width: width * 0.8,
+    height: height * 0.7, // ✅ 높이 조정 (이미지 공간 포함)
+    padding: height * 0.03,
+    borderRadius: width * 0.04,
+    alignItems: 'center',
+    justifyContent: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  text: {
+    color: '#333',
+    fontSize: width * 0.06,
+    fontWeight: 'bold',
+    marginBottom: height * 0.01,
+    textAlign: 'center',
+    marginTop: height * -0.05,
+  },
+  subText: {
+    color: '#555',
+    fontSize: width * 0.045,
+    textAlign: 'center',
+    marginTop: height * 0.02,
+  },
+  mapButton: {
+    position: 'absolute',
+    top: height * 0.05,
+    right: width * 0.05,
+    width: width * 0.12,
+    height: width * 0.12,
+  },
+  mapImage: {
     width: '100%',
     height: '100%',
   },
-  captureButton: {
-    position: 'absolute',
-    bottom: 100,
-    alignSelf: 'center',
-    backgroundColor: '#fff',
-    padding: 20,
-    borderRadius: 50,
-  },
   nextButton: {
     position: 'absolute',
-    bottom: 30,
-    alignSelf: 'center',
-    backgroundColor: '#1E90FF', // ✅ 파란색 버튼 스타일
-    paddingVertical: 15,
-    paddingHorizontal: 30,
-    borderRadius: 50,
-  },
-  tempButton: {
-    position: 'absolute',
-    bottom: 150, // ✅ 하단에서 약간 위로 배치
-    alignSelf: 'center',
-    backgroundColor: '#32CD32', // ✅ 연두색 스타일
-    paddingVertical: 15,
-    paddingHorizontal: 30,
-    borderRadius: 50,
+    bottom: height * 0.05,
+    backgroundColor: 'rgba(0, 0, 255, 0.7)', // ✅ 파란색 버튼
+    paddingVertical: height * 0.02,
+    paddingHorizontal: width * 0.2,
+    borderRadius: width * 0.03,
+    alignItems: 'center',
   },
   buttonText: {
-    fontSize: 18,
-    color: '#fff',
+    color: '#FFFFFF',
+    fontSize: width * 0.045,
     fontWeight: 'bold',
+  },
+  backButton: {
+    position: 'absolute',
+    top: height * 0.05,
+    left: width * 0.05,
+    width: width * 0.1,
+    height: width * 0.1,
+  },
+  backImage: {
+    width: '100%',
+    height: '100%',
+  },
+  wayImage: {
+    marginTop: height * -0.1,
+    width: width * 0.7, // ✅ waytostage2.png 크기 조정
+    height: height * 0.5,
+    marginBottom: height * 0.005, // ✅ 이미지와 텍스트 간격
   },
 });
 

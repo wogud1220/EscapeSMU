@@ -1,25 +1,21 @@
 //청록관 가는 화면
 
 import React from 'react';
-import {
-  View,
-  Text,
-  ImageBackground,
-  StyleSheet,
-  Dimensions,
-  Image,
-  TouchableOpacity,
-} from 'react-native';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {useNavigation} from '@react-navigation/native';
-import {RootStackParamList} from '../App';
-import {useDepartment} from './Member/DepartmentContext'; //
+import { View, Text, ImageBackground, StyleSheet, Dimensions, Image, TouchableOpacity } from 'react-native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { useNavigation } from '@react-navigation/native';
+import { RootStackParamList } from '../App';
+import { useRoute, RouteProp } from '@react-navigation/native';
+import {useDepartment} from './Member/DepartmentContext';
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage6_1'>;
 
 const {width, height} = Dimensions.get('window');
 
 const Stage5_7 = () => {
   const navigation = useNavigation<NavigationProp>();
+  const route = useRoute<RouteProp<RootStackParamList, 'Stage5_7'>>();
+  const { department } = route.params;
+
   const {college} = useDepartment(); // 🔹 추가
   const handleMapPress = () => {
     navigation.navigate('Map');

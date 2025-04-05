@@ -13,6 +13,7 @@ import {useDepartment} from './Member/DepartmentContext';
 
 const {width, height} = Dimensions.get('window');
 
+
 type NavigationProp = NativeStackNavigationProp<
   RootStackParamList,
   'StageList'

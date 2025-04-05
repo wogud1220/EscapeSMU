@@ -5,19 +5,23 @@ import { View, Text, ImageBackground, StyleSheet, Dimensions, Image, TouchableOp
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from '../App';
-type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage4_3'>;
+import { useRoute, RouteProp } from '@react-navigation/native';
+
+type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage5'>;
 
 const { width, height } = Dimensions.get('window');
 
 const Stage5 = () => {
   const navigation = useNavigation<NavigationProp>();
+  const route = useRoute<RouteProp<RootStackParamList, 'Stage5'>>();
+  const { department } = route.params;
 
   const handleMapPress = () => {
     navigation.navigate('Map');
   };
 
   const handleNextStage = () => {
-    navigation.navigate('Stage5_1'); // ✅ Stage4_4로 이동
+    navigation.navigate('Stage5_1', {department}); // ✅ Stage4_4로 이동
   };
 
   return (
@@ -160,7 +164,7 @@ const styles = StyleSheet.create({
   },
   wayImage: {
     width: width * 0.6, // ✅ bae.png 크기 조정
-    height: height * 0.5,
+    height: height * 0.45,
     marginBottom: height * 0.005, // ✅ 이미지와 텍스트 간격
   },
 });

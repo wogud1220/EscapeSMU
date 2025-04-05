@@ -5,6 +5,7 @@ import { View, Text, ImageBackground, StyleSheet, Dimensions, Image, TouchableOp
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from '../App';
+import { useRoute, RouteProp } from '@react-navigation/native';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage13_5'>;
 
@@ -12,13 +13,15 @@ const { width, height } = Dimensions.get('window');
 
 const Stage13_5 = () => {
   const navigation = useNavigation<NavigationProp>();
+  const route = useRoute<RouteProp<RootStackParamList, 'Stage13_5'>>();
+const { department } = route.params;
 
   const handleMapPress = () => {
     navigation.navigate('Map');
   };
 
   const handleNextStage = () => {
-    navigation.navigate('Stage13_6');
+    navigation.navigate('Stage13_6', {department});
   };
 
   return (
@@ -57,7 +60,7 @@ const Stage13_5 = () => {
           </Text>
           <Text style={styles.subText}>
           '클리커'를 이용해서 남는 자리가 있는지{'\n'} 확인해보고 갈 수도 있겠어!{'\n'}{'\n'}
-          이제 위로 올라가보자!
+          이제 도서관이 있는 2층으로 올라가보자!
           </Text>
 
         </View>

@@ -5,6 +5,7 @@ import { View, Text, ImageBackground, StyleSheet, Dimensions, Image, TouchableOp
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from '../App';
+import { useRoute, RouteProp } from '@react-navigation/native';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage2_2'>;
 
@@ -12,13 +13,15 @@ const { width, height } = Dimensions.get('window');
 
 const Stage2_2 = () => {
   const navigation = useNavigation<NavigationProp>();
+  const route = useRoute<RouteProp<RootStackParamList, 'Stage2_2'>>();
+  const { department } = route.params;
 
   const handleMapPress = () => {
     navigation.navigate('Map');
   };
 
   const handleNextStage = () => {
-    navigation.navigate('Stage2Camera'); // ✅ Stage2_2으로 이동하도록 수정
+    navigation.navigate('Stage2Camera', {department});
   };
 
   return (
@@ -60,8 +63,8 @@ const Stage2_2 = () => {
           />
           <Text style={styles.text}>이 곳이 청록관이구나! {'\n'}그 옆 건물은 상록관이야!</Text>
           <Text style={styles.subText}>
-            청록관에는 스튜디오, 소극장, 강의실, 교수연구실 등이 위치한 건물이야!
-            이 곳 2층 어딘가에는 다음과 같은 Galary라고 빨간색 글씨가 써져 있는 텔레비전이 있다는데 찾아서 카메라를 갖다대보자!
+            청록관/상록관은 융합기술대에서{'\n'}주로 사용하는 건물이야!{'\n'}{'\n'}
+            이 곳 2층 어딘가에{'\n'}Galary라고 빨간색 글씨가 써져 있는 텔레비전이 있다는데 찾아서{'\n'}카메라를 갖다대보자!
           </Text>
         </View>
 

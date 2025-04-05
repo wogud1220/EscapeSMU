@@ -20,6 +20,7 @@ import {useNavigation} from '@react-navigation/native';
 import {RootStackParamList} from '../App';
 import Sound from 'react-native-sound-level';
 import {request, PERMISSIONS, RESULTS} from 'react-native-permissions';
+import { useRoute, RouteProp } from '@react-navigation/native';
 
 const {width, height} = Dimensions.get('window');
 
@@ -377,6 +378,8 @@ type NavigationProp = NativeStackNavigationProp<
 
 const Stage13_Sound = () => {
   const navigation = useNavigation<NavigationProp>();
+  const route = useRoute<RouteProp<RootStackParamList, 'Stage13_Sound'>>();
+const { department } = route.params;
   const [randomBook, setRandomBook] = useState<string | null>(null);
   const [currentDecibel, setCurrentDecibel] = useState<number>(0);
   const [isModalVisible, setIsModalVisible] = useState(false);

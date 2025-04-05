@@ -5,6 +5,7 @@ import { View, Text, ImageBackground, StyleSheet, Dimensions, Image, TouchableOp
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from '../App';
+import { useRoute, RouteProp } from '@react-navigation/native';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage9_3'>;
 
@@ -12,13 +13,15 @@ const { width, height } = Dimensions.get('window');
 
 const Stage9_3 = () => {
   const navigation = useNavigation<NavigationProp>();
+  const route = useRoute<RouteProp<RootStackParamList, 'Stage9_3'>>();
+const { department } = route.params;
 
   const handleMapPress = () => {
     navigation.navigate('Map');
   };
 
   const handleNextStage = () => {
-    navigation.navigate('Stage9Camera_2');
+    navigation.navigate('Stage9Camera_2', {department});
   };
 
   return (
@@ -53,14 +56,14 @@ const Stage9_3 = () => {
         {/* ✅ 가운데 투명한 흰색 박스 */}
         <View style={styles.box}>
           <Image 
-            source={require('../assets/smugallery.png')} 
+            source={require('../assets/rabbit.png')} 
             style={styles.wayImage} 
             resizeMode="contain"
           />
-          <Text style={styles.text}>상명갤러리 찾았니?
+          <Text style={styles.text}>1층에서 디자인 놀이터를{'\n'}찾아보자!
           </Text>
           <Text style={styles.subText}>
-            위 이미지와 똑같이 사진을 찍어보자!
+            디자인 놀이터에서 놀고 있는{'\n'} 토끼를 찾아서 찍어보자!
           </Text>
         </View>
 

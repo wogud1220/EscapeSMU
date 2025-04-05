@@ -5,20 +5,27 @@ import { View, Text, ImageBackground, StyleSheet, Dimensions, Image, TouchableOp
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from '../App';
+import { useRoute } from '@react-navigation/native';
+import { RouteProp } from '@react-navigation/native';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage1'>;
+type Stage1RouteProp = RouteProp<RootStackParamList, 'Stage1'>;
 
 const { width, height } = Dimensions.get('window');
 
 const Stage1 = () => {
   const navigation = useNavigation<NavigationProp>();
+  const route = useRoute<RouteProp<RootStackParamList, 'Stage1'>>();
+  const { department } = route.params;
+  
+  
 
   const handleMapPress = () => {
     navigation.navigate('Map');
   };
 
   const handleNextStage = () => {
-    navigation.navigate('Stage1Camera');
+    navigation.navigate('Stage1Camera', { department });
   };
 
   return (
@@ -58,9 +65,10 @@ const Stage1 = () => {
             style={styles.wayImage} 
             resizeMode="contain"
           />
-          <Text style={styles.text}>드디어 상명대학교 정문에 도착을 했어!</Text>
+          <Text style={styles.text}>드디어 상명대학교에 도착을 했어!</Text>
           <Text style={styles.subText}>
-            정문을 통과해서 다음 스테이지에 가기 위해서는 카메라를 이용해 사진을 찍어야 한다는데..
+            정문을 통과해서 다음 스테이지에 가기 위해서는 카메라를 이용해 사진을{'\n'}찍어야 한다는데..{'\n'}
+            (경비실 앞 캠퍼스안내도 쪽에서 찍어보자!)
           </Text>
         </View>
 
@@ -115,12 +123,13 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: height * 0.01,
     textAlign: 'center',
+    marginTop: height * -0.02,
   },
   subText: {
     color: '#555',
     fontSize: width * 0.045,
     textAlign: 'center',
-    marginTop: height * 0.02,
+    marginTop: height * -0.005,
   },
   mapButton: {
     position: 'absolute',

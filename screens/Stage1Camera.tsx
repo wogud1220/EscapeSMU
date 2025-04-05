@@ -374,9 +374,11 @@ import React, {useEffect, useRef, useState} from 'react';
 import {
   View,
   Text,
+  Image,
   TouchableOpacity,
   StyleSheet,
   Alert,
+  Dimensions,
   Modal,
   ActivityIndicator,
   Platform,
@@ -385,6 +387,12 @@ import {Camera, CameraDevice} from 'react-native-vision-camera';
 import {onAuthStateChanged} from 'firebase/auth';
 import {auth} from './firebase.config';
 import axios from 'axios';
+import {useRoute, RouteProp} from '@react-navigation/native';
+import {RootStackParamList} from '../App';
+
+const {width, height} = Dimensions.get('window');
+
+type Stage1CameraRouteProp = RouteProp<RootStackParamList, 'Stage1Camera'>;
 
 const SERVER_URL = 'http://34.47.88.216:8000/compare';
 
@@ -394,6 +402,9 @@ const Stage1Camera = ({navigation}: {navigation: any}) => {
   const [isUploading, setIsUploading] = useState(false);
   const [userId, setUserId] = useState<string>('');
   const camera = useRef<Camera>(null);
+
+  const route = useRoute<Stage1CameraRouteProp>();
+  const {department} = route.params;
 
   useEffect(() => {
     const checkPermission = async () => {
@@ -482,6 +493,10 @@ const Stage1Camera = ({navigation}: {navigation: any}) => {
       </Text>
     );
   }
+  const goToNextStage = () => {
+    navigation.navigate('Stage1_2'); // ✅ Stage1_2로 이동
+  };
+
   if (!device) {
     return (
       <Text>⚠️ 카메라 장치를 찾을 수 없습니다. 실제 기기에서 실행하세요.</Text>
@@ -498,6 +513,12 @@ const Stage1Camera = ({navigation}: {navigation: any}) => {
         photo={true}
       />
 
+      <Image
+        source={require('../assets/jeongmoon.png')}
+        style={styles.backImage}
+        resizeMode="contain"
+      />
+
       <TouchableOpacity onPress={takePicture} style={styles.captureButton}>
         <Text style={styles.buttonText}>📸</Text>
       </TouchableOpacity>
@@ -508,12 +529,10 @@ const Stage1Camera = ({navigation}: {navigation: any}) => {
         <Text style={styles.greenButtonText}>➡️</Text>
       </TouchableOpacity>
 
-      <Modal visible={isUploading} transparent>
-        <View style={styles.loadingOverlay}>
-          <ActivityIndicator size="large" color="#fff" />
-          <Text style={styles.loadingText}>업로드 중...</Text>
-        </View>
-      </Modal>
+      {/* ✅ 임시 Stage1_2 이동 버튼 */}
+      <TouchableOpacity onPress={goToNextStage} style={styles.tempButton}>
+        <Text style={styles.buttonText}>Stage1_2로 이동</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -554,16 +573,31 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginTop: 300,
   },
-  loadingOverlay: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(0,0,0,0.6)',
+  nextButton: {
+    position: 'absolute',
+    bottom: 30,
+    alignSelf: 'center',
+    backgroundColor: '#1E90FF', // ✅ 파란색 버튼 스타일
+    paddingVertical: 15,
+    paddingHorizontal: 30,
+    borderRadius: 50,
   },
-  loadingText: {
-    color: '#fff',
-    fontSize: 18,
-    marginTop: 10,
+  tempButton: {
+    position: 'absolute',
+    bottom: 150, // ✅ 하단에서 약간 위로 배치
+    alignSelf: 'center',
+    backgroundColor: '#32CD32', // ✅ 연두색 스타일
+    paddingVertical: 15,
+    paddingHorizontal: 30,
+    borderRadius: 50,
+  },
+  backImage: {
+    position: 'absolute',
+    alignSelf: 'center',
+    width: width * 0.8,
+    height: height * 0.8,
+    marginBottom: height * 0.005,
+    marginTop: height * 0.05,
   },
 });
 

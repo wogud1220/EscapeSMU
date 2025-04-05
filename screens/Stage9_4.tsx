@@ -1,38 +1,107 @@
-//디자인대 마무리
-
-import React from 'react';
-import { View, Text, ImageBackground, StyleSheet, Dimensions, Image, TouchableOpacity } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, ImageBackground, StyleSheet, Dimensions, Image, TouchableOpacity, Alert } from 'react-native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from '../App';
+import { useRoute, RouteProp } from '@react-navigation/native';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage9_4'>;
 
 const { width, height } = Dimensions.get('window');
 
+const correctPuzzleImages = [
+  require('../assets/d_puzzle/d_1_1.png'),
+  require('../assets/d_puzzle/d_1_2.png'),
+  require('../assets/d_puzzle/d_1_3.png'),
+  require('../assets/d_puzzle/d_2_1.png'),
+  require('../assets/d_puzzle/d_2_2.png'),
+  require('../assets/d_puzzle/d_2_3.png'),
+  require('../assets/d_puzzle/d_3_1.png'),
+  require('../assets/d_puzzle/d_3_2.png'),
+  require('../assets/d_puzzle/d_3_3.png'),
+  require('../assets/d_puzzle/d_4_1.png'),
+  require('../assets/d_puzzle/d_4_2.png'),
+  require('../assets/d_puzzle/d_4_3.png'),
+];
+
+
+const shuffleArray = (array: any[]) => {
+  const newArray = [...array];
+  for (let i = newArray.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+  }
+  return newArray;
+};
+
 const Stage9_4 = () => {
   const navigation = useNavigation<NavigationProp>();
+  const [puzzleImages, setPuzzleImages] = useState(() => shuffleArray([...correctPuzzleImages]));
+  const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(null);
+
+  const route = useRoute<RouteProp<RootStackParamList, 'Stage2_5'>>();
+  const { department } = route.params;
+
+
+// ✅ 경로 문자열로 변환 후 비교하기 위해 미리 변환
+const correctPaths = correctPuzzleImages.map((img) =>
+  Image.resolveAssetSource(img).uri
+);
+
+const checkCompletion = () => {
+  const currentPaths = puzzleImages.map((img) =>
+    Image.resolveAssetSource(img).uri
+  );
+
+  if (currentPaths.every((path, index) => path === correctPaths[index])) {
+    Alert.alert(
+      '성공 🎉',
+      '퍼즐을 완성했구나! 다음 스테이지로 이동하자!',
+      [{ text: '확인', onPress: () => navigation.navigate('Stage9_5', {department}) }]
+    );
+  }
+};
+  
+  useEffect(() => {
+    setPuzzleImages(shuffleArray([...correctPuzzleImages]));
+  }, []);
 
   const handleMapPress = () => {
     navigation.navigate('Map');
   };
 
-  const handleNextStage = () => {
-    navigation.navigate('Stage10_1'); // ✅ Stage6_1으로 이동하도록 수정
+  const handleHint = () => {
+    navigation.navigate('Stage9Hint', { department });
+  };
+
+  const handleImagePress = (index: number) => {
+    if (selectedImageIndex === null) {
+      setSelectedImageIndex(index);
+    } else {
+      swapImages(selectedImageIndex, index);
+      setSelectedImageIndex(null);
+    }
+  };
+
+  const swapImages = (index1: number, index2: number) => {
+    const newPuzzleImages = [...puzzleImages];
+    [newPuzzleImages[index1], newPuzzleImages[index2]] = [newPuzzleImages[index2], newPuzzleImages[index1]];
+    setPuzzleImages(newPuzzleImages);
+
+    setTimeout(() => {
+      checkCompletion();
+    }, 200);
   };
 
   return (
     <View style={styles.container}>
-      {/* ✅ main.png를 배경으로 설정 */}
       <ImageBackground 
         source={require('../assets/main.png')} 
         style={styles.image}
         resizeMode="cover"
       >
-        {/* 🔥 투명 레이어 추가 */}
         <View style={styles.overlay} />
 
-        {/* ✅ 🗺️ 오른쪽 상단의 map.png */}
         <TouchableOpacity onPress={handleMapPress} style={styles.mapButton}>
           <Image 
             source={require('../assets/map.png')}
@@ -41,7 +110,6 @@ const Stage9_4 = () => {
           />
         </TouchableOpacity>
 
-        {/* ✅ 홈으로 이동 버튼 */}
         <TouchableOpacity onPress={() => navigation.navigate('Main')} style={styles.backButton}>
           <Image 
             source={require('../assets/home.png')}
@@ -50,118 +118,158 @@ const Stage9_4 = () => {
           />
         </TouchableOpacity>
 
-        {/* ✅ 가운데 투명한 흰색 박스 */}
         <View style={styles.box}>
-          <Text style={styles.text}>상명갤러리에서는{'\n'}
-            디자인 학부에 소속 과에서{'\n'}
-            다양한 전시들을 주기적으로 진행하고 있으니까 여유있을 때{'\n'} 종종 놀러와보자!
-          </Text>
-          <Text style={styles.subText}>
-          </Text>
+          <Text style={styles.text}>토끼가 퍼즐을 풀어달래!!</Text>
+          <Text style={styles.subText}>이 퍼즐을 맞춰보자!</Text>
 
+          <View style={styles.grid}>
+            {puzzleImages.map((image, index) => (
+              <TouchableOpacity 
+                key={index} 
+                onPress={() => handleImagePress(index)}
+                style={[
+                  styles.gridItem, 
+                  selectedImageIndex === index && styles.selectedGridItem
+                ]}
+              >
+                <Image source={image} style={styles.gridImage} resizeMode="cover" />
+              </TouchableOpacity>
+            ))}
+          </View>
+          <Text style={styles.subText}>
+            두 이미지를 클릭해서 서로의 위치를 교환할 수 있어!{'\n'}
+            <Text style={styles.highlightText}>
+              완성한 것 같으면 아무 이미지나 더블클릭해보자!
+              </Text>
+              </Text>
         </View>
 
-        {/* ✅ 다음 스테이지로 이동 버튼 */}
         <TouchableOpacity 
-          style={styles.nextButton}
-          onPress={handleNextStage}
+          style={styles.hintButton}
+          onPress={handleHint}
           activeOpacity={0.7}
         >
-          <Text style={styles.buttonText}>다음 ➡️</Text>
+          <Text style={styles.hintButtonText}>힌트 보기 💡</Text>
         </TouchableOpacity>
       </ImageBackground>
     </View>
   );
 };
 
+const gridCols = 3;
+const gridRows = 4;
+const gridItemSize = width * 0.85 / gridCols;
+
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#F5E6C4',
-    alignItems: 'center',
-    justifyContent: 'center',
   },
   image: {
     flex: 1,
     width: '100%',
     height: '100%',
-    justifyContent: 'center',
-    alignItems: 'center',
   },
   overlay: {
     ...StyleSheet.absoluteFillObject,
     backgroundColor: 'rgba(0, 0, 0, 0.6)',
   },
   box: {
-    backgroundColor: 'rgba(255, 255, 255, 0.7)',
-    width: width * 0.8,
-    height: height * 0.4, // ✅ 높이 조정 (이미지 공간 포함)
-    padding: height * 0.03,
+    marginTop: height * 0.125,
+    marginLeft: width * 0.025,
+    marginRight: width * 0.025,
+    backgroundColor: 'rgba(255, 255, 255, 0.9)',
+    width: width * 0.95,
+    height: height * 0.85,
     borderRadius: width * 0.04,
     alignItems: 'center',
     justifyContent: 'center',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.3,
-    shadowRadius: 4,
     elevation: 5,
   },
   text: {
-    marginTop: height * 0.05,
     color: '#333',
-    fontSize: width * 0.055,
+    fontSize: width * 0.05,
     fontWeight: 'bold',
     marginBottom: height * 0.01,
     textAlign: 'center',
-    lineHeight: height * 0.035, // ✅ 줄 간격
   },
   subText: {
     color: '#555',
-    fontSize: width * 0.045,
+    fontSize: width * 0.04,
     textAlign: 'center',
-    marginTop: height * 0.02,
+    marginBottom: height * 0.02,
   },
+  grid: {
+    width: width * 0.9,
+    height: gridItemSize * gridRows,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },  
+  gridItem: {
+    width: gridItemSize,
+    height: gridItemSize,
+    margin: 0.1,
+    backgroundColor: '#ddd',
+    borderWidth: 1,
+    borderColor: '#aaa',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  selectedGridItem: {
+    borderColor: '#FF6347',
+    borderWidth: 2,
+  },
+  gridImage: {
+    width: '100%',
+    height: '100%',
+  },
+  hintButton: {
+    position: 'absolute',
+    bottom: height * 0.04,
+    backgroundColor: '#FF6347',
+    paddingVertical: height * 0.015,
+    paddingHorizontal: width * 0.2,
+    borderRadius: width * 0.03,
+    marginLeft: width * 0.2,
+    alignItems: 'center',
+  },
+  hintButtonText: {
+    color: '#FFFFFF',
+    fontSize: width * 0.045,
+    fontWeight: 'bold',
+  },
+
   mapButton: {
     position: 'absolute',
     top: height * 0.05,
     right: width * 0.05,
-    width: width * 0.12,
-    height: width * 0.12,
+    width: 40,
+    height: 40,
   },
   mapImage: {
     width: '100%',
     height: '100%',
   },
-  nextButton: {
-    position: 'absolute',
-    bottom: height * 0.05,
-    backgroundColor: 'rgba(0, 0, 255, 0.7)', // ✅ 파란색 버튼
-    paddingVertical: height * 0.02,
-    paddingHorizontal: width * 0.2,
-    borderRadius: width * 0.03,
-    alignItems: 'center',
-  },
-  buttonText: {
-    color: '#FFFFFF',
-    fontSize: width * 0.045,
-    fontWeight: 'bold',
-  },
   backButton: {
     position: 'absolute',
     top: height * 0.05,
     left: width * 0.05,
-    width: width * 0.1,
-    height: width * 0.1,
+    width: 40,
+    height: 40,
   },
   backImage: {
     width: '100%',
     height: '100%',
   },
-  wayImage: {
-    width: width * 0.6, // ✅ waytostage2.png 크기 조정
-    height: height * 0.5,
-    marginBottom: height * 0.005, // ✅ 이미지와 텍스트 간격
+  highlightText: {
+    color: 'red',
+    fontWeight: 'bold',
   },
+  
 });
+
 
 export default Stage9_4;

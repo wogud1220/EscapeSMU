@@ -1,10 +1,16 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View, Image, Dimensions } from 'react-native';
 import { Camera, CameraDevice } from 'react-native-vision-camera';
+import { useRoute, RouteProp } from '@react-navigation/native';
+import { RootStackParamList } from '../App';
+
+const { width, height } = Dimensions.get('window');
 
 const Stage9Camera_2 = ({ navigation }: { navigation: any }) => {
   const [device, setDevice] = useState<CameraDevice | undefined>();
   const camera = useRef<Camera>(null);
+  const route = useRoute<RouteProp<RootStackParamList, 'Stage9Camera_2'>>();
+  const { department } = route.params;
 
   useEffect(() => {
     const checkPermission = async () => {
@@ -53,7 +59,7 @@ const Stage9Camera_2 = ({ navigation }: { navigation: any }) => {
   };
 
   const goToNextStage = () => {
-    navigation.navigate('Stage9_4'); // ✅ Stage1_2로 이동
+    navigation.navigate('Stage9_4', {department}); // ✅ Stage1_2로 이동
   };
 
   if (!device) {
@@ -71,6 +77,12 @@ const Stage9Camera_2 = ({ navigation }: { navigation: any }) => {
         isActive={true}
         photo={true}
       />
+
+                              <Image
+                              source={require('../assets/rabbit2.png')}
+                              style={styles.backImage}
+                              resizeMode="contain"
+                              />
 
       {/* ✅ 사진 촬영 버튼 */}
       <TouchableOpacity onPress={takePicture} style={styles.captureButton}>
@@ -111,19 +123,18 @@ const styles = StyleSheet.create({
     paddingHorizontal: 30,
     borderRadius: 50,
   },
-  tempButton: {
-    position: 'absolute',
-    bottom: 150, // ✅ 하단에서 약간 위로 배치
-    alignSelf: 'center',
-    backgroundColor: '#32CD32', // ✅ 연두색 스타일
-    paddingVertical: 15,
-    paddingHorizontal: 30,
-    borderRadius: 50,
-  },
   buttonText: {
     fontSize: 18,
     color: '#fff',
     fontWeight: 'bold',
+  },
+  backImage: {
+    position: 'absolute',
+    alignSelf: 'center',
+    width: width * 0.8,
+    height: height * 0.8,
+    marginBottom: height * 0.005,
+    marginTop: height * 0.05,
   },
 });
 

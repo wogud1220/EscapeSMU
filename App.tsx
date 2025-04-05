@@ -17,6 +17,7 @@ import Stage2_4 from './screens/Stage2_4';
 import Stage2_5 from './screens/Stage2_5';
 import Stage2Camera from './screens/Stage2Camera';
 import Stage2Camera_2 from './screens/Stage2Camera_2';
+import Stage2_Hint from './screens/Stage2_Hint';
 import Stage3 from './screens/Stage3';
 import Stage3_1 from './screens/Stage3_1';
 import Stage3_2 from './screens/Stage3_2';
@@ -24,10 +25,13 @@ import Stage3Camera from './screens/Stage3Camera';
 import Stage4 from './screens/Stage4';
 import Stage4_1 from './screens/Stage4_1';
 import Stage4_2 from './screens/Stage4_2';
+import Stage4Camera from './screens/Stage4Camera';
 import Stage4_3 from './screens/Stage4_3';
 import Stage4_4 from './screens/Stage4_4';
+import Stage5Camera from './screens/Stage5Camera';
 import Stage5 from './screens/Stage5';
 import Stage5_1 from './screens/Stage5_1';
+import Stage5_1_1 from './screens/Stage5_1_1';
 import Stage5_2 from './screens/Stage5_2';
 import Stage5_3 from './screens/Stage5_3';
 import Stage5_4 from './screens/Stage5_4';
@@ -42,6 +46,10 @@ import Stage7_1 from './screens/Stage7_1';
 import Stage7_2 from './screens/Stage7_2';
 import Stage7_3 from './screens/Stage7_3';
 import Stage7_4 from './screens/Stage7_4';
+import Stage7_5 from './screens/Stage7_5';
+import Stage7_6 from './screens/Stage7_6';
+import Stage7Camera from './screens/Stage7Camera';
+import Stage7_7 from './screens/Stage7_7';
 import Stage8_1 from './screens/Stage8_1';
 import Stage8_2 from './screens/Stage8_2';
 import Stage8_3 from './screens/Stage8_3';
@@ -51,9 +59,13 @@ import Stage8_6 from './screens/Stage8_6';
 import Stage9_1 from './screens/Stage9_1';
 import Stage9Camera from './screens/Stage9Camera';
 import Stage9_2 from './screens/Stage9_2';
+import Stage9_2_1 from './screens/Stage9_2_2';
+import Stage9_2_2 from './screens/Stage9_2_1';
 import Stage9_3 from './screens/Stage9_3';
 import Stage9Camera_2 from './screens/Stage9Camera_2';
 import Stage9_4 from './screens/Stage9_4';
+import Stage9Hint from './screens/Stage9Hint';
+import Stage9_5 from './screens/Stage9_5';
 import Stage10_1 from './screens/Stage10_1';
 import Stage10_2 from './screens/Stage10_2';
 import Stage10_3 from './screens/Stage10_3';
@@ -85,6 +97,7 @@ import Stage13_3 from './screens/Stage13_3';
 import Stage13_4 from './screens/Stage13_4';
 import Stage13_5 from './screens/Stage13_5';
 import Stage13_6 from './screens/Stage13_6';
+import Stage13_6_1 from './screens/Stage13_6_1';
 import Stage13_7 from './screens/Stage13_7';
 import Stage13_8 from './screens/Stage13_8';
 import Stage13_9 from './screens/Stage13_9';
@@ -93,553 +106,564 @@ import StageFinal from './screens/StageFinal';
 import {DepartmentProvider} from './screens/Member/DepartmentContext';
 
 export type RootStackParamList = {
-  LogIn: undefined;
-  SignIn: undefined;
+  LogIn: { department: string };
+  SignIn: { department: string };
   Main: undefined;
-  StageList: undefined;
-  Stage1: undefined;
-  Stage1Camera: undefined;
+  StageList: { department: string };
+  Stage1: { department: string };
+  Stage1Camera: { department: string };
   Map: undefined;
-  Stage1_2: undefined;
-  Stage2: undefined;
-  Stage2_1: undefined;
-  Stage2_2: undefined;
-  Stage2_3: undefined;
-  Stage2_4: undefined;
-  Stage2_5: undefined;
-  Stage2Camera: undefined;
-  Stage2Camera_2: undefined;
-  Stage3: undefined;
-  Stage3_1: undefined;
-  Stage3_2: undefined;
-  Stage3Camera: undefined;
-  Stage4: undefined;
-  Stage4_1: undefined;
-  Stage4_2: undefined;
-  Stage4_3: undefined;
-  Stage4_4: undefined;
-  Stage5: undefined;
-  Stage5_1: undefined;
-  Stage5_2: undefined;
-  Stage5_3: undefined;
-  Stage5_4: undefined;
-  Guestbook: undefined;
-  Stage5_5: undefined;
-  Stage5_6: undefined;
-  Stage5_7: undefined;
-  Stage6_1: undefined;
-  Stage6_2: undefined;
-  Stage6_3: undefined;
-  Stage7_1: undefined;
-  Stage7_2: undefined;
-  Stage7_3: undefined;
-  Stage7_4: undefined;
-  Stage8_1: undefined;
-  Stage8_2: undefined;
-  Stage8_3: undefined;
-  Stage8_4: undefined;
-  Stage8_5: undefined;
-  Stage8_6: undefined;
-  Stage9_1: undefined;
-  Stage9Camera: undefined;
-  Stage9_2: undefined;
-  Stage9_3: undefined;
-  Stage9Camera_2: undefined;
-  Stage9_4: undefined;
-  Stage10_1: undefined;
-  Stage10_2: undefined;
-  Stage10_3: undefined;
-  Stage10Camera: undefined;
-  Stage10_4: undefined;
-  Stage10_5: undefined;
-  Stage10_6: undefined;
-  Stage10_7: undefined;
-  Stage11_1: undefined;
-  Stage11_2: undefined;
-  Stage11_3: undefined;
-  Stage11Run: undefined;
-  Stage11_4: undefined;
-  Stage11_5: undefined;
-  Stage11_6: undefined;
-  Stage11Camera: undefined;
-  Stage12_1: undefined;
-  Stage12_2: undefined;
-  Stage12Camera: undefined;
-  Stage12_3: undefined;
-  Stage12_4: undefined;
-  Stage12_5: undefined;
-  Stage12_5_1: undefined;
-  Stage12Camera_2: undefined;
-  Stage12_6: undefined;
-  Stage13_1: undefined;
-  Stage13_2: undefined;
-  Stage13_3: undefined;
-  Stage13_4: undefined;
-  Stage13_5: undefined;
-  Stage13_6: undefined;
-  Stage13_7: undefined;
-  Stage13_8: undefined;
-  Stage13_9: undefined;
-  Stage13_Sound: undefined;
-  StageFinal: undefined;
+  Stage1_2: { department: string };
+  Stage2: { department: string };
+  Stage2_1: { department: string };
+  Stage2_2: { department: string };
+  Stage2_3: { department: string };
+  Stage2_4: { department: string };
+  Stage2_5: { department: string };
+  Stage2Camera: { department: string };
+  Stage2Camera_2: { department: string };
+  Stage2_Hint: { department: string };
+  Stage3: { department: string };
+  Stage3_1: { department: string };
+  Stage3_2: { department: string };
+  Stage3Camera: { department: string };
+  Stage4: { department: string };
+  Stage4_1: { department: string };
+  Stage4_2: { department: string };
+  Stage4Camera: { department: string };
+  Stage4_3: { department: string };
+  Stage4_4: { department: string };
+  Stage5: { department: string };
+  Stage5_1: { department: string };
+  Stage5_1_1: { department: string };
+  Stage5_2: { department: string };
+  Stage5_3: { department: string };
+  Stage5_4: { department: string };
+  Stage5Camera: { department: string };
+  Guestbook: { department: string };
+  Stage5_5: { department: string };
+  Stage5_6: { department: string };
+  Stage5_7: { department: string };
+  Stage6_1: { department: string };
+  Stage6_2: { department: string };
+  Stage6_3: { department: string };
+  Stage7_1: { department: string };
+  Stage7_2: { department: string };
+  Stage7_3: { department: string };
+  Stage7_4: { department: string };
+  Stage7_5: { department: string };
+  Stage7_6: { department: string };
+  Stage7Camera: { department: string };
+  Stage7_7: { department: string };
+  Stage8_1: { department: string };
+  Stage8_2: { department: string };
+  Stage8_3: { department: string };
+  Stage8_4: { department: string };
+  Stage8_5: { department: string };
+  Stage8_6: { department: string };
+  Stage9_1: { department: string };
+  Stage9Camera: { department: string };
+  Stage9_2: { department: string };
+  Stage9_2_1: { department: string };
+  Stage9_2_2: { department: string };
+  Stage9_3: { department: string };
+  Stage9Camera_2: { department: string };
+  Stage9_4: { department: string };
+  Stage9Hint : { department: string };
+  Stage9_5: { department: string };
+  Stage10_1: { department: string };
+  Stage10_2: { department: string };
+  Stage10_3: { department: string };
+  Stage10Camera: { department: string };
+  Stage10_4: { department: string };
+  Stage10_5: { department: string };
+  Stage10_6: { department: string };
+  Stage10_7: { department: string };
+  Stage11_1: { department: string };
+  Stage11_2: { department: string };
+  Stage11_3: { department: string };
+  Stage11Run: { department: string };
+  Stage11_4: { department: string };
+  Stage11_5: { department: string };
+  Stage11_6: { department: string };
+  Stage11Camera: { department: string };
+  Stage12_1: { department: string };
+  Stage12_2: { department: string };
+  Stage12Camera: { department: string };
+  Stage12_3: { department: string };
+  Stage12_4: { department: string };
+  Stage12_5: { department: string };
+  Stage12_5_1: { department: string };
+  Stage12Camera_2: { department: string };
+  Stage12_6: { department: string };
+  Stage13_1: { department: string };
+  Stage13_2: { department: string };
+  Stage13_3: { department: string };
+  Stage13_4: { department: string };
+  Stage13_5: { department: string };
+  Stage13_6: { department: string };
+  Stage13_6_1: { department: string };
+  Stage13_7: { department: string };
+  Stage13_8: { department: string };
+  Stage13_9: { department: string };
+  Stage13_Sound: { department: string };
+  StageFinal: { department: string };
 };
 
 const Stack = createStackNavigator<RootStackParamList>();
 
 const App = () => {
   return (
-    <DepartmentProvider>
-      <NavigationContainer>
-        <Stack.Navigator initialRouteName="Stage12_2">
-          <Stack.Screen
-            name="Main"
-            component={Main}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="LogIn"
-            component={LogIn}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="SignIn"
-            component={SignIn}
-            options={{headerShown: false}}
-          />
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Stage12_2">
+        <Stack.Screen
+          name="Main"
+          component={Main}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="LogIn"
+          component={LogIn}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="SignIn"
+          component={SignIn}
+          options={{headerShown: false}}
+        />
 
-          <Stack.Screen
-            name="StageList"
-            component={StageList}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="Stage1"
-            component={Stage1}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="Stage1Camera"
-            component={Stage1Camera}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="Map"
-            component={Map}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="Stage1_2"
-            component={Stage1_2}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="Stage2"
-            component={Stage2}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="Stage2_1"
-            component={Stage2_1}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="Stage2_2"
-            component={Stage2_2}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="Stage2Camera"
-            component={Stage2Camera}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="Stage2_3"
-            component={Stage2_3}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="Stage2_4"
-            component={Stage2_4}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="Stage2_5"
-            component={Stage2_5}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="Stage2Camera_2"
-            component={Stage2Camera_2}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="Stage3"
-            component={Stage3}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="Stage3_1"
-            component={Stage3_1}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="Stage3_2"
-            component={Stage3_2}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="Stage3Camera"
-            component={Stage3Camera}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="Stage4"
-            component={Stage4}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="Stage4_1"
-            component={Stage4_1}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="Stage4_2"
-            component={Stage4_2}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="Stage4_3"
-            component={Stage4_3}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="Stage4_4"
-            component={Stage4_4}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="Stage5"
-            component={Stage5}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="Stage5_1"
-            component={Stage5_1}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="Stage5_2"
-            component={Stage5_2}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="Stage5_3"
-            component={Stage5_3}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="Stage5_4"
-            component={Stage5_4}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="Guestbook"
-            component={Guestbook}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="Stage5_5"
-            component={Stage5_5}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="Stage5_6"
-            component={Stage5_6}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="Stage5_7"
-            component={Stage5_7}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="Stage6_1"
-            component={Stage6_1}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="Stage6_2"
-            component={Stage6_2}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="Stage6_3"
-            component={Stage6_3}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="Stage7_1"
-            component={Stage7_1}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="Stage7_2"
-            component={Stage7_2}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="Stage7_3"
-            component={Stage7_3}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="Stage7_4"
-            component={Stage7_4}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="Stage8_1"
-            component={Stage8_1}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="Stage8_2"
-            component={Stage8_2}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="Stage8_3"
-            component={Stage8_3}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="Stage8_4"
-            component={Stage8_4}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="Stage8_5"
-            component={Stage8_5}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="Stage8_6"
-            component={Stage8_6}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="Stage9_1"
-            component={Stage9_1}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="Stage9Camera"
-            component={Stage9Camera}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="Stage9_2"
-            component={Stage9_2}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="Stage9_3"
-            component={Stage9_3}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="Stage9Camera_2"
-            component={Stage9Camera_2}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="Stage9_4"
-            component={Stage9_4}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="Stage10_1"
-            component={Stage10_1}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="Stage10_2"
-            component={Stage10_2}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="Stage10_3"
-            component={Stage10_3}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="Stage10Camera"
-            component={Stage10Camera}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="Stage10_4"
-            component={Stage10_4}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="Stage10_5"
-            component={Stage10_5}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="Stage10_6"
-            component={Stage10_6}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="Stage10_7"
-            component={Stage10_7}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="Stage11_1"
-            component={Stage11_1}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="Stage11_2"
-            component={Stage11_2}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="Stage11_3"
-            component={Stage11_3}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="Stage11Run"
-            component={Stage11Run}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="Stage11_4"
-            component={Stage11_4}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="Stage11_5"
-            component={Stage11_5}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="Stage11_6"
-            component={Stage11_6}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="Stage11Camera"
-            component={Stage11Camera}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="Stage12_1"
-            component={Stage12_1}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="Stage12_2"
-            component={Stage12_2}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="Stage12Camera"
-            component={Stage12Camera}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="Stage12_3"
-            component={Stage12_3}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="Stage12_4"
-            component={Stage12_4}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="Stage12_5"
-            component={Stage12_5}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="Stage12_5_1"
-            component={Stage12_5_1}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="Stage12Camera_2"
-            component={Stage12Camera_2}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="Stage12_6"
-            component={Stage12_6}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="Stage13_1"
-            component={Stage13_1}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="Stage13_2"
-            component={Stage13_2}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="Stage13_3"
-            component={Stage13_3}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="Stage13_4"
-            component={Stage13_4}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="Stage13_5"
-            component={Stage13_5}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="Stage13_6"
-            component={Stage13_6}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="Stage13_7"
-            component={Stage13_7}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="Stage13_8"
-            component={Stage13_8}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="Stage13_9"
-            component={Stage13_9}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="Stage13_Sound"
-            component={Stage13_Sound}
-            options={{headerShown: false}}
-          />
-          <Stack.Screen
-            name="StageFinal"
-            component={StageFinal}
-            options={{headerShown: false}}
-          />
-        </Stack.Navigator>
-      </NavigationContainer>
-    </DepartmentProvider>
+        <Stack.Screen
+          name="StageList"
+          component={StageList}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="Stage1"
+          component={Stage1}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="Stage1Camera"
+          component={Stage1Camera}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="Map"
+          component={Map}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="Stage1_2"
+          component={Stage1_2}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="Stage2"
+          component={Stage2}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="Stage2_1"
+          component={Stage2_1}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="Stage2_2"
+          component={Stage2_2}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Stage2Camera"
+          component={Stage2Camera}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Stage2_3"
+          component={Stage2_3}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Stage2_4"
+          component={Stage2_4}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Stage2_5"
+          component={Stage2_5}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Stage2Camera_2"
+          component={Stage2Camera_2}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Stage3"
+          component={Stage3}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="Stage3_1"
+          component={Stage3_1}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="Stage3_2"
+          component={Stage3_2}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Stage3Camera"
+          component={Stage3Camera}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="Stage4"
+          component={Stage4}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="Stage4_1"
+          component={Stage4_1}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="Stage4_2"
+          component={Stage4_2}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="Stage4_3"
+          component={Stage4_3}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="Stage4_4"
+          component={Stage4_4}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="Stage5"
+          component={Stage5}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="Stage5_1"
+          component={Stage5_1}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="Stage5_2"
+          component={Stage5_2}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="Stage5_3"
+          component={Stage5_3}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="Stage5_4"
+          component={Stage5_4}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="Guestbook"
+          component={Guestbook}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="Stage5_5"
+          component={Stage5_5}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="Stage5_6"
+          component={Stage5_6}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="Stage5_7"
+          component={Stage5_7}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="Stage6_1"
+          component={Stage6_1}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="Stage6_2"
+          component={Stage6_2}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="Stage6_3"
+          component={Stage6_3}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="Stage7_1"
+          component={Stage7_1}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="Stage7_2"
+          component={Stage7_2}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="Stage7_3"
+          component={Stage7_3}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="Stage7_4"
+          component={Stage7_4}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="Stage8_1"
+          component={Stage8_1}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="Stage8_2"
+          component={Stage8_2}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="Stage8_3"
+          component={Stage8_3}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="Stage8_4"
+          component={Stage8_4}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="Stage8_5"
+          component={Stage8_5}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="Stage8_6"
+          component={Stage8_6}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="Stage9_1"
+          component={Stage9_1}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="Stage9Camera"
+          component={Stage9Camera}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="Stage9_2"
+          component={Stage9_2}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="Stage9_3"
+          component={Stage9_3}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="Stage9Camera_2"
+          component={Stage9Camera_2}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="Stage9_4"
+          component={Stage9_4}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="Stage10_1"
+          component={Stage10_1}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="Stage10_2"
+          component={Stage10_2}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="Stage10_3"
+          component={Stage10_3}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="Stage10Camera"
+          component={Stage10Camera}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="Stage10_4"
+          component={Stage10_4}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="Stage10_5"
+          component={Stage10_5}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="Stage10_6"
+          component={Stage10_6}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="Stage10_7"
+          component={Stage10_7}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="Stage11_1"
+          component={Stage11_1}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="Stage11_2"
+          component={Stage11_2}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="Stage11_3"
+          component={Stage11_3}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="Stage11Run"
+          component={Stage11Run}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="Stage11_4"
+          component={Stage11_4}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="Stage11_5"
+          component={Stage11_5}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="Stage11_6"
+          component={Stage11_6}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="Stage11Camera"
+          component={Stage11Camera}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="Stage12_1"
+          component={Stage12_1}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="Stage12_2"
+          component={Stage12_2}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="Stage12Camera"
+          component={Stage12Camera}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="Stage12_3"
+          component={Stage12_3}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="Stage12_4"
+          component={Stage12_4}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="Stage12_5"
+          component={Stage12_5}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="Stage12_5_1"
+          component={Stage12_5_1}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Stage12Camera_2"
+          component={Stage12Camera_2}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="Stage12_6"
+          component={Stage12_6}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="Stage13_1"
+          component={Stage13_1}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="Stage13_2"
+          component={Stage13_2}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="Stage13_3"
+          component={Stage13_3}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Stage13_4"
+          component={Stage13_4}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Stage13_5"
+          component={Stage13_5}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Stage13_6"
+          component={Stage13_6}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Stage13_7"
+          component={Stage13_7}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Stage13_8"
+          component={Stage13_8}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Stage13_9"
+          component={Stage13_9}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Stage13_Sound"
+          component={Stage13_Sound}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="StageFinal"
+          component={StageFinal}
+          options={{ headerShown: false }}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 };
 

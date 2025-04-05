@@ -1,18 +1,11 @@
 //학생회관
 
 import React from 'react';
-import {
-  View,
-  Text,
-  ImageBackground,
-  StyleSheet,
-  Dimensions,
-  Image,
-  TouchableOpacity,
-} from 'react-native';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {useNavigation} from '@react-navigation/native';
-import {RootStackParamList} from '../App';
+import { View, Text, ImageBackground, StyleSheet, Dimensions, Image, TouchableOpacity } from 'react-native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { useNavigation } from '@react-navigation/native';
+import { RootStackParamList } from '../App';
+import { useRoute, RouteProp } from '@react-navigation/native';
 import {useDepartment} from './Member/DepartmentContext';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage9_1'>;
@@ -22,12 +15,15 @@ const {width, height} = Dimensions.get('window');
 const Stage10_1 = () => {
   const navigation = useNavigation<NavigationProp>();
   const {college} = useDepartment();
+  const route = useRoute<RouteProp<RootStackParamList, 'Stage10_1'>>();
+const { department } = route.params;
+
   const handleMapPress = () => {
     navigation.navigate('Map');
   };
 
   const handleNextStage = () => {
-    navigation.navigate('Stage10_2'); // ✅ Stage9_1 가즈아
+    navigation.navigate('Stage10_2', {department});
   };
 
   return (

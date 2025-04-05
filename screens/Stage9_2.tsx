@@ -5,6 +5,7 @@ import { View, Text, ImageBackground, StyleSheet, Dimensions, Image, TouchableOp
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from '../App';
+import { useRoute, RouteProp } from '@react-navigation/native';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage9_2'>;
 
@@ -12,13 +13,15 @@ const { width, height } = Dimensions.get('window');
 
 const Stage9_2 = () => {
   const navigation = useNavigation<NavigationProp>();
+  const route = useRoute<RouteProp<RootStackParamList, 'Stage9_2'>>();
+const { department } = route.params;
 
   const handleMapPress = () => {
     navigation.navigate('Map');
   };
 
   const handleNextStage = () => {
-    navigation.navigate('Stage9Camera');
+    navigation.navigate('Stage9Camera', {department});
   };
 
   return (
@@ -54,14 +57,15 @@ const Stage9_2 = () => {
         <View style={styles.box}>
           {/* ✅ 하얀색 박스 위에 waytostage2.png 추가 */}
           <Image 
-            source={require('../assets/temp.png')} 
+            source={require('../assets/designmoong.png')} 
             style={styles.wayImage} 
             resizeMode="contain"
           />
-          <Text style={styles.text}>디자인 놀이터, 고고장, 스토밍, 모임터
+          <Text style={styles.text}>
+            D106 주변에 사진에서 볼 수 있는 인형이 있다는데..?
           </Text>
           <Text style={styles.subText}>
-            다음으로는 2층으로 향하여 '상명갤러리'로 가보자!
+            찾아서 찍어보자!
           </Text>
         </View>
 
@@ -160,8 +164,8 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   wayImage: {
-    width: width * 0.4, // ✅ waytostage2.png 크기 조정
-    height: height * 0.3,
+    width: width * 0.6, // ✅ waytostage2.png 크기 조정
+    height: height * 0.5,
     marginBottom: height * 0.005, // ✅ 이미지와 텍스트 간격
   },
 });
