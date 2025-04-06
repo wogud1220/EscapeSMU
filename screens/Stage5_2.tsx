@@ -24,7 +24,7 @@ const {width, height} = Dimensions.get('window');
 const Stage5_2 = () => {
   const navigation = useNavigation<NavigationProp>();
   const route = useRoute<RouteProp<RootStackParamList, 'Stage5_2'>>();
-  const {department} = route.params;
+  // const {department} = route.params;
   const [answer, setAnswer] = useState('');
   const [isModalVisible, setIsModalVisible] = useState(false);
 
@@ -37,7 +37,7 @@ const Stage5_2 = () => {
       Alert.alert('정답입니다!', '다음 스테이지로 이동합니다.', [
         {
           text: '확인',
-          onPress: () => navigation.navigate('Stage5_3', {department}),
+          onPress: () => navigation.navigate('Stage5_3'),
         },
       ]);
       setIsModalVisible(false);

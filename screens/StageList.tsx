@@ -13,7 +13,6 @@ import {useDepartment} from './Member/DepartmentContext';
 
 const {width, height} = Dimensions.get('window');
 
-
 type NavigationProp = NativeStackNavigationProp<
   RootStackParamList,
   'StageList'
@@ -108,7 +107,7 @@ const StageList = () => {
                 setCollege(selectedCollege); // ✅ 학부 저장
                 setDepartment(major);
                 if (selectedCollege === '글로벌인문학부대학') {
-                  navigation.navigate('Stage13_1');
+                  navigation.navigate('Stage1');
                 } else {
                   navigation.navigate('Stage1Camera', {
                     department: `${selectedCollege} - ${major}`,

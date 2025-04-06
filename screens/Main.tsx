@@ -234,7 +234,7 @@ const Main = () => {
   };
 
   const handleNavigate = () => {
-    navigation.navigate('StageList');
+    navigation.navigate('Stage5Camera');
   };
 
   const handleLoginNavigate = () => {
