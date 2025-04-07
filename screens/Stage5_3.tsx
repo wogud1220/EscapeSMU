@@ -28,9 +28,13 @@ const options = [
 ];
 
 const Stage5_3 = () => {
+  useEffect(() => {
+    console.log('Stage5_3 log - Department:', department);
+    console.log('Stage5_3 log - College:', college);
+  }, []);
   const navigation = useNavigation<NavigationProp>();
   const route = useRoute<RouteProp<RootStackParamList, 'Stage5_3'>>();
-  // const { department } = route.params;
+  const {college, department} = route.params || {};
   const [disabled, setDisabled] = useState(false); // ✅ 버튼 활성화 상태
   const [countdown, setCountdown] = useState<number | null>(null); // ✅ 남은 시간 상태
 
@@ -61,7 +65,10 @@ const Stage5_3 = () => {
 
     if (value === 6) {
       Alert.alert('정답입니다!', '다음 스테이지로 이동합니다.', [
-        {text: '확인', onPress: () => navigation.navigate('Stage5_4')},
+        {
+          text: '확인',
+          onPress: () => navigation.navigate('Stage5_4', {college, department}),
+        },
       ]);
     } else {
       Alert.alert('오답입니다.', '5분 뒤에 다시 시도해 보세요!');

@@ -1,30 +1,35 @@
-import React, { useState } from 'react';
-import { 
-  View, 
-  Text, 
-  ImageBackground, 
-  StyleSheet, 
-  Dimensions, 
-  Image, 
-  TouchableOpacity, 
-  TextInput, 
-  Alert, 
-  Modal, 
-  TouchableWithoutFeedback 
+import React, {useState, useEffect} from 'react';
+import {
+  View,
+  Text,
+  ImageBackground,
+  StyleSheet,
+  Dimensions,
+  Image,
+  TouchableOpacity,
+  TextInput,
+  Alert,
+  Modal,
+  TouchableWithoutFeedback,
 } from 'react-native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { useNavigation } from '@react-navigation/native';
-import { RootStackParamList } from '../App';
-import { useRoute, RouteProp } from '@react-navigation/native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {useNavigation} from '@react-navigation/native';
+import {RootStackParamList} from '../App';
+import {useRoute, RouteProp} from '@react-navigation/native';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage5_6'>;
 
-const { width, height } = Dimensions.get('window');
+const {width, height} = Dimensions.get('window');
 
 const Stage5_6 = () => {
+  useEffect(() => {
+    console.log('Stage5_6 log - Department:', department);
+    console.log('Stage5_6 log - College:', college);
+  }, []);
+
   const navigation = useNavigation<NavigationProp>();
   const route = useRoute<RouteProp<RootStackParamList, 'Stage5_6'>>();
-  const { department } = route.params;
+  const {college, department} = route.params || {};
   const [answer, setAnswer] = useState('');
   const [isModalVisible, setIsModalVisible] = useState(false);
 
@@ -35,9 +40,9 @@ const Stage5_6 = () => {
   const handleNextStage = () => {
     if (answer.trim() === '시크릿오더') {
       Alert.alert('정답입니다!', '다음 스테이지로 이동합니다.', [
-        { 
-          text: '확인', 
-          onPress: () => navigation.navigate('Stage5_7', {department})
+        {
+          text: '확인',
+          onPress: () => navigation.navigate('Stage5_7', {college, department}),
         },
       ]);
       setIsModalVisible(false);
@@ -63,16 +68,15 @@ const Stage5_6 = () => {
   return (
     <View style={styles.container}>
       {/* ✅ 배경 이미지 설정 */}
-      <ImageBackground 
-        source={require('../assets/main.png')} 
+      <ImageBackground
+        source={require('../assets/main.png')}
         style={styles.image}
-        resizeMode="cover"
-      >
+        resizeMode="cover">
         <View style={styles.overlay} />
 
         {/* ✅ 지도 버튼 */}
         <TouchableOpacity onPress={handleMapPress} style={styles.mapButton}>
-          <Image 
+          <Image
             source={require('../assets/map.png')}
             style={styles.mapImage}
             resizeMode="contain"
@@ -81,7 +85,7 @@ const Stage5_6 = () => {
 
         {/* ✅ 홈 버튼 */}
         <TouchableOpacity onPress={handleHomePress} style={styles.backButton}>
-          <Image 
+          <Image
             source={require('../assets/home.png')}
             style={styles.backImage}
             resizeMode="contain"
@@ -90,21 +94,20 @@ const Stage5_6 = () => {
 
         {/* ✅ 문제 박스 */}
         <View style={styles.box}>
-          <Text style={styles.text}>
-            한누리관 1층으로 다시 돌아왔어!
-          </Text>
+          <Text style={styles.text}>한누리관 1층으로 다시 돌아왔어!</Text>
           <Text style={styles.subText}>
-            한누리관 1층 카페 ing에서는 직접 가서 주문해도 되겠지만,{'\n'}어플로도 비대면 주문이 가능한 거 알아?{'\n'}{'\n'}
-            그렇다면, 어플 이름이 뭘까?{'\n'}{'\n'}
+            한누리관 1층 카페 ing에서는 직접 가서 주문해도 되겠지만,{'\n'}
+            어플로도 비대면 주문이 가능한 거 알아?{'\n'}
+            {'\n'}
+            그렇다면, 어플 이름이 뭘까?{'\n'}
+            {'\n'}
             카페 앞 배너를 살펴보자!
           </Text>
         </View>
 
         {/* ✅ 입력 필드 → 터치 시 모달 열기 */}
         <TouchableOpacity onPress={openModal} style={styles.inputContainer}>
-          <Text style={styles.inputText}>
-            {answer || '정답 입력'}
-          </Text>
+          <Text style={styles.inputText}>{answer || '정답 입력'}</Text>
         </TouchableOpacity>
 
         {/* ✅ 모달 */}
@@ -112,8 +115,7 @@ const Stage5_6 = () => {
           animationType="fade"
           transparent={true}
           visible={isModalVisible}
-          onRequestClose={closeModal}
-        >
+          onRequestClose={closeModal}>
           <TouchableWithoutFeedback onPress={closeModal}>
             <View style={styles.modalBackground}>
               <TouchableWithoutFeedback>
@@ -133,10 +135,9 @@ const Stage5_6 = () => {
                   />
 
                   {/* ✅ 제출 버튼 */}
-                  <TouchableOpacity 
+                  <TouchableOpacity
                     style={styles.submitButton}
-                    onPress={handleNextStage}
-                  >
+                    onPress={handleNextStage}>
                     <Text style={styles.buttonText}>제출하기</Text>
                   </TouchableOpacity>
                 </View>

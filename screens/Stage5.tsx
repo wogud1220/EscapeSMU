@@ -1,43 +1,54 @@
 //본관에서 한누리관 찾아가는 화면
 
-import React from 'react';
-import { View, Text, ImageBackground, StyleSheet, Dimensions, Image, TouchableOpacity } from 'react-native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { useNavigation } from '@react-navigation/native';
-import { RootStackParamList } from '../App';
-import { useRoute, RouteProp } from '@react-navigation/native';
+import React, {useEffect} from 'react';
+import {
+  View,
+  Text,
+  ImageBackground,
+  StyleSheet,
+  Dimensions,
+  Image,
+  TouchableOpacity,
+} from 'react-native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {useNavigation} from '@react-navigation/native';
+import {RootStackParamList} from '../App';
+import {useRoute, RouteProp} from '@react-navigation/native';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage5'>;
 
-const { width, height } = Dimensions.get('window');
+const {width, height} = Dimensions.get('window');
 
 const Stage5 = () => {
+  useEffect(() => {
+    console.log('Stage5 log - Department:', department);
+    console.log('Stage5 log - College:', college);
+  }, []);
   const navigation = useNavigation<NavigationProp>();
   const route = useRoute<RouteProp<RootStackParamList, 'Stage5'>>();
-  const { department } = route.params;
+  const {college, department} = route.params || {};
 
   const handleMapPress = () => {
     navigation.navigate('Map');
   };
 
   const handleNextStage = () => {
-    navigation.navigate('Stage5_1', {department}); // ✅ Stage4_4로 이동
+    navigation.navigate('Stage5_1', {college, department}); // ✅ Stage4_4로 이동
   };
 
   return (
     <View style={styles.container}>
       {/* ✅ main.png를 배경으로 설정 */}
-      <ImageBackground 
-        source={require('../assets/main.png')} 
+      <ImageBackground
+        source={require('../assets/main.png')}
         style={styles.image}
-        resizeMode="cover"
-      >
+        resizeMode="cover">
         {/* 🔥 투명 레이어 추가 */}
         <View style={styles.overlay} />
 
         {/* ✅ 🗺️ 오른쪽 상단의 map.png */}
         <TouchableOpacity onPress={handleMapPress} style={styles.mapButton}>
-          <Image 
+          <Image
             source={require('../assets/map.png')}
             style={styles.mapImage}
             resizeMode="contain"
@@ -45,8 +56,10 @@ const Stage5 = () => {
         </TouchableOpacity>
 
         {/* ✅ 홈으로 이동 버튼 */}
-        <TouchableOpacity onPress={() => navigation.navigate('Main')} style={styles.backButton}>
-          <Image 
+        <TouchableOpacity
+          onPress={() => navigation.navigate('Main')}
+          style={styles.backButton}>
+          <Image
             source={require('../assets/home.png')}
             style={styles.backImage}
             resizeMode="contain"
@@ -56,23 +69,24 @@ const Stage5 = () => {
         {/* ✅ 가운데 투명한 흰색 박스 */}
         <View style={styles.box}>
           {/* ✅ 하얀색 박스 위에 bae.png 추가 */}
-          <Image 
-            source={require('../assets/waytohan.png')} 
-            style={styles.wayImage} 
+          <Image
+            source={require('../assets/waytohan.png')}
+            style={styles.wayImage}
             resizeMode="contain"
           />
           <Text style={styles.text}>다음 장소로 가보자!</Text>
           <Text style={styles.subText}>
-            한누리관은 종합강의동이자 동시에 공과대학 일부학과의 강의실 역할을 하고 있는 곳이야! 사진을 참고해서 가볼까! 오른쪽 위 지도를 참고해도 좋아!
+            한누리관은 종합강의동이자 동시에 공과대학 일부학과의 강의실 역할을
+            하고 있는 곳이야! 사진을 참고해서 가볼까! 오른쪽 위 지도를 참고해도
+            좋아!
           </Text>
         </View>
 
         {/* ✅ 다음 스테이지로 이동 버튼 */}
-        <TouchableOpacity 
+        <TouchableOpacity
           style={styles.nextButton}
           onPress={handleNextStage}
-          activeOpacity={0.7}
-        >
+          activeOpacity={0.7}>
           <Text style={styles.buttonText}>다음 ➡️</Text>
         </TouchableOpacity>
       </ImageBackground>
@@ -107,7 +121,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
+    shadowOffset: {width: 0, height: 4},
     shadowOpacity: 0.3,
     shadowRadius: 4,
     elevation: 5,

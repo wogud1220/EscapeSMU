@@ -1,43 +1,58 @@
 //프라임홀 가게 시키기
 
-import React from 'react';
-import { View, Text, ImageBackground, StyleSheet, Dimensions, Image, TouchableOpacity } from 'react-native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { useNavigation } from '@react-navigation/native';
-import { RootStackParamList } from '../App';
-import { useRoute, RouteProp } from '@react-navigation/native';
+import React, {useEffect} from 'react';
+import {
+  View,
+  Text,
+  ImageBackground,
+  StyleSheet,
+  Dimensions,
+  Image,
+  TouchableOpacity,
+} from 'react-native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {useNavigation} from '@react-navigation/native';
+import {RootStackParamList} from '../App';
+import {useRoute, RouteProp} from '@react-navigation/native';
 
-type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage12_5'>;
+type NavigationProp = NativeStackNavigationProp<
+  RootStackParamList,
+  'Stage12_5'
+>;
 
-const { width, height } = Dimensions.get('window');
+const {width, height} = Dimensions.get('window');
 
 const Stage13_3 = () => {
+  //Log
+  useEffect(() => {
+    console.log('Stage1_2 Department:', department);
+    console.log('Stage1_2 College:', college);
+  }, []);
   const navigation = useNavigation<NavigationProp>();
   const route = useRoute<RouteProp<RootStackParamList, 'Stage13_3'>>();
-const { department } = route.params;
+  const {college = '', department = ''} = route.params || {}; // ✅ 안전한 fallback 추가
 
   const handleMapPress = () => {
     navigation.navigate('Map');
   };
 
   const handleNextStage = () => {
-    navigation.navigate('Stage13_4', {department});
+    navigation.navigate('Stage13_4', {college, department});
   };
 
   return (
     <View style={styles.container}>
       {/* ✅ main.png를 배경으로 설정 */}
-      <ImageBackground 
-        source={require('../assets/main.png')} 
+      <ImageBackground
+        source={require('../assets/main.png')}
         style={styles.image}
-        resizeMode="cover"
-      >
+        resizeMode="cover">
         {/* 🔥 투명 레이어 추가 */}
         <View style={styles.overlay} />
 
         {/* ✅ 🗺️ 오른쪽 상단의 map.png */}
         <TouchableOpacity onPress={handleMapPress} style={styles.mapButton}>
-          <Image 
+          <Image
             source={require('../assets/map.png')}
             style={styles.mapImage}
             resizeMode="contain"
@@ -45,8 +60,10 @@ const { department } = route.params;
         </TouchableOpacity>
 
         {/* ✅ 홈으로 이동 버튼 */}
-        <TouchableOpacity onPress={() => navigation.navigate('Main')} style={styles.backButton}>
-          <Image 
+        <TouchableOpacity
+          onPress={() => navigation.navigate('Main')}
+          style={styles.backButton}>
+          <Image
             source={require('../assets/home.png')}
             style={styles.backImage}
             resizeMode="contain"
@@ -56,21 +73,20 @@ const { department } = route.params;
         {/* ✅ 가운데 투명한 흰색 박스 */}
         <View style={styles.box}>
           <Text style={styles.text}>
-          프라임홀은 누구나 자유롭게 {"\n"}사용할 수 있는 공간이야.
+            프라임홀은 누구나 자유롭게 {'\n'}사용할 수 있는 공간이야.
           </Text>
           <Text style={styles.subText}>
-          열람실은 프라임홀에 있는 키오스크를 통해 예약을 하거나{"\n"}{"\n"}
-          '클리커'라는 앱을 다운로드 받아서{"\n"} 예약을 할 수 있어!
+            열람실은 프라임홀에 있는 키오스크를 통해 예약을 하거나{'\n'}
+            {'\n'}
+            '클리커'라는 앱을 다운로드 받아서{'\n'} 예약을 할 수 있어!
           </Text>
-
         </View>
 
         {/* ✅ 다음 스테이지로 이동 버튼 */}
-        <TouchableOpacity 
+        <TouchableOpacity
           style={styles.nextButton}
           onPress={handleNextStage}
-          activeOpacity={0.7}
-        >
+          activeOpacity={0.7}>
           <Text style={styles.buttonText}>다음 ➡️</Text>
         </TouchableOpacity>
       </ImageBackground>
@@ -105,7 +121,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
+    shadowOffset: {width: 0, height: 4},
     shadowOpacity: 0.3,
     shadowRadius: 4,
     elevation: 5,

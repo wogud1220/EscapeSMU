@@ -1,31 +1,42 @@
 //청록관 가는 화면
 
-import React from 'react';
-import { View, Text, ImageBackground, StyleSheet, Dimensions, Image, TouchableOpacity } from 'react-native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { useNavigation } from '@react-navigation/native';
-import { RootStackParamList } from '../App';
-import { useRoute, RouteProp } from '@react-navigation/native';
+import React, {useEffect} from 'react';
+import {
+  View,
+  Text,
+  ImageBackground,
+  StyleSheet,
+  Dimensions,
+  Image,
+  TouchableOpacity,
+} from 'react-native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {useNavigation} from '@react-navigation/native';
+import {RootStackParamList} from '../App';
+import {useRoute, RouteProp} from '@react-navigation/native';
 import {useDepartment} from './Member/DepartmentContext';
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage6_1'>;
 
 const {width, height} = Dimensions.get('window');
 
 const Stage5_7 = () => {
+  useEffect(() => {
+    console.log('Stage5_7 log - Department:', department);
+    console.log('Stage5_7 log - College:', college);
+  }, []);
   const navigation = useNavigation<NavigationProp>();
   const route = useRoute<RouteProp<RootStackParamList, 'Stage5_7'>>();
-  const { department } = route.params;
+  const {college, department} = route.params || {};
 
-  const {college} = useDepartment(); // 🔹 추가
   const handleMapPress = () => {
     navigation.navigate('Map');
   };
 
   const handleNextStage = () => {
     if (college === '글로벌인문학부대학') {
-      navigation.navigate('Stage7_1'); // ✅ 글로벌인문학부대학이면 Stage7_1(송백관)
+      navigation.navigate('Stage7_1', {college, department}); // ✅ 글로벌인문학부대학이면 Stage7_1(송백관)
     } else {
-      navigation.navigate('Stage5_1'); // ✅ 그 외는 기존대로 Stage5_1
+      navigation.navigate('Stage5_1', {college, department}); // ✅ 그 외는 기존대로 Stage5_1
     }
   };
   return (

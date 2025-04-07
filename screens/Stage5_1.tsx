@@ -1,6 +1,6 @@
 //한누리관 9층 가는 화면
 
-import React from 'react';
+import React, {useEffect} from 'react';
 import {
   View,
   Text,
@@ -20,16 +20,20 @@ type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage5_1'>;
 const {width, height} = Dimensions.get('window');
 
 const Stage5_1 = () => {
+  useEffect(() => {
+    console.log('Stage5_1 log - Department:', department);
+    console.log('Stage5_1 log - College:', college);
+  }, []);
   const navigation = useNavigation<NavigationProp>();
   const route = useRoute<RouteProp<RootStackParamList, 'Stage5_1'>>();
-  const {department} = route.params;
+  const {college, department} = route.params || {};
 
   const handleMapPress = () => {
     navigation.navigate('Map');
   };
 
   const handleNextStage = () => {
-    navigation.navigate('Stage5_1_1');
+    navigation.navigate('Stage5_1_1', {college, department});
   };
   return (
     <View style={styles.container}>

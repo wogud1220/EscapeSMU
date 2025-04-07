@@ -22,14 +22,14 @@ const {width, height} = Dimensions.get('window');
 const Stage1 = () => {
   const navigation = useNavigation<NavigationProp>();
   const route = useRoute<Stage1RouteProp>();
-  const {department = ''} = route.params || {}; // ✅ 안전한 fallback 처리
+  const {college = '', department = ''} = route.params || {};
 
   const handleMapPress = () => {
     navigation.navigate('Map');
   };
 
   const handleNextStage = () => {
-    navigation.navigate('Stage1Camera', {department});
+    navigation.navigate('Stage1Camera', {college, department});
   };
 
   return (

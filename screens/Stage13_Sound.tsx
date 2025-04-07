@@ -42,9 +42,13 @@ type NavigationProp = NativeStackNavigationProp<
 >;
 
 const Stage13_Sound = () => {
+  useEffect(() => {
+    console.log('Stage13_Sound log - Department:', department);
+    console.log('Stage13_Sound log - College:', college);
+  }, []);
   const navigation = useNavigation<NavigationProp>();
   const route = useRoute<RouteProp<RootStackParamList, 'Stage13_Sound'>>();
-  const {department} = route.params;
+  const {college, department} = route.params || {};
   const [randomBook, setRandomBook] = useState<string | null>(null);
   const [currentDecibel, setCurrentDecibel] = useState<number>(0);
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -127,9 +131,9 @@ const Stage13_Sound = () => {
 
   const handleNextStage = () => {
     if (userDepartment === '글로벌인문학부') {
-      navigation.navigate('Stage5'); // Move to Stage5 if department is '글로벌인문학부'
+      navigation.navigate('Stage5', {college, department});
     } else {
-      navigation.navigate('StageFinal'); // Otherwise move to StageFinal
+      navigation.navigate('StageFinal', {college, department}); // Otherwise move to StageFinal
     }
   };
 

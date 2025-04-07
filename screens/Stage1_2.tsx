@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {use, useState, useEffect} from 'react';
 import {
   View,
   Text,
@@ -26,7 +26,7 @@ const {width, height} = Dimensions.get('window');
 const Stage1_2 = () => {
   const navigation = useNavigation<NavigationProp>();
   const route = useRoute<Stage1_2RouteProp>();
-  const {department = ''} = route.params || {}; // ✅ 안전한 fallback 추가
+  const {college = '', department = ''} = route.params || {}; // ✅ 안전한 fallback 추가
   const [answer, setAnswer] = useState('');
   const [isModalVisible, setIsModalVisible] = useState(false);
 
@@ -34,26 +34,30 @@ const Stage1_2 = () => {
     navigation.navigate('Map');
   };
 
+  useEffect(() => {
+    console.log('Stage1_2 Department:', department);
+    console.log('Stage1_2 College:', college);
+  }, []);
+
   const handleNextStage = () => {
     if (answer.trim() === '1985') {
-      let nextStage = 'Stage5';
-      if (department.includes('공과대학')) {
-        nextStage = 'Stage3_1';
-      } else if (department.includes('융합기술대학')) {
-        nextStage = 'Stage2';
-      }
-      Alert.alert('정답입니다!', '다음 스테이지로 이동합니다.', [
-        {
-          text: '확인',
-          onPress: () => navigation.navigate(nextStage, {department}),
-        },
-      ]);
       setIsModalVisible(false);
+
+      if (college.includes('공과대학')) {
+        navigation.navigate('Stage3_1', {college, department});
+      } else if (college.includes('융합기술대학')) {
+        navigation.navigate('Stage2', {college, department});
+      } else if (college.includes('글로벌인문학부대학')) {
+        navigation.navigate('Stage13_1', {college, department});
+      } else {
+        navigation.navigate('Stage2', {college, department}); // 기본 fallback
+      }
+
+      Alert.alert('정답입니다!', '다음 스테이지로 이동합니다.');
     } else {
       Alert.alert('오답입니다.', '다시 시도해 보세요!');
     }
   };
-
   const handleHomePress = () => {
     navigation.navigate('Main');
   };

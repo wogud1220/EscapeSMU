@@ -1,30 +1,35 @@
-import React, { useState } from 'react';
-import { 
-  View, 
-  Text, 
-  ImageBackground, 
-  StyleSheet, 
-  Dimensions, 
-  Image, 
-  TouchableOpacity, 
-  TextInput, 
-  Alert, 
-  Modal, 
-  TouchableWithoutFeedback 
+import React, {useState, useEffect} from 'react';
+import {
+  View,
+  Text,
+  ImageBackground,
+  StyleSheet,
+  Dimensions,
+  Image,
+  TouchableOpacity,
+  TextInput,
+  Alert,
+  Modal,
+  TouchableWithoutFeedback,
 } from 'react-native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { useNavigation } from '@react-navigation/native';
-import { RootStackParamList } from '../App';
-import { useRoute, RouteProp } from '@react-navigation/native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {useNavigation} from '@react-navigation/native';
+import {RootStackParamList} from '../App';
+import {useRoute, RouteProp} from '@react-navigation/native';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage5_5'>;
 
-const { width, height } = Dimensions.get('window');
+const {width, height} = Dimensions.get('window');
 
 const Stage5_5 = () => {
+  useEffect(() => {
+    console.log('Stage5_5 log - Department:', department);
+    console.log('Stage5_5 log - College:', college);
+  }, []);
+
   const navigation = useNavigation<NavigationProp>();
   const route = useRoute<RouteProp<RootStackParamList, 'Stage5_5'>>();
-  const { department } = route.params;
+  const {college, department} = route.params || {};
   const [answer, setAnswer] = useState('');
   const [isModalVisible, setIsModalVisible] = useState(false);
 
@@ -35,9 +40,9 @@ const Stage5_5 = () => {
   const handleNextStage = () => {
     if (answer.trim() === '한누리관1층') {
       Alert.alert('정답입니다!', '다음 스테이지로 이동합니다.', [
-        { 
-          text: '확인', 
-          onPress: () => navigation.navigate('Stage5_6', { department })
+        {
+          text: '확인',
+          onPress: () => navigation.navigate('Stage5_6', {college, department}),
         },
       ]);
       setIsModalVisible(false);
@@ -51,7 +56,7 @@ const Stage5_5 = () => {
   };
 
   const handleGoToGuestbook = () => {
-    navigation.navigate('Guestbook', { department });
+    navigation.navigate('Guestbook', {college, department});
   };
 
   // ✅ 모달 열기
@@ -66,16 +71,15 @@ const Stage5_5 = () => {
 
   return (
     <View style={styles.container}>
-      <ImageBackground 
-        source={require('../assets/main.png')} 
+      <ImageBackground
+        source={require('../assets/main.png')}
         style={styles.image}
-        resizeMode="cover"
-      >
+        resizeMode="cover">
         <View style={styles.overlay} />
 
         {/* ✅ 지도 버튼 */}
         <TouchableOpacity onPress={handleMapPress} style={styles.mapButton}>
-          <Image 
+          <Image
             source={require('../assets/map.png')}
             style={styles.mapImage}
             resizeMode="contain"
@@ -84,7 +88,7 @@ const Stage5_5 = () => {
 
         {/* ✅ 홈 버튼 */}
         <TouchableOpacity onPress={handleHomePress} style={styles.backButton}>
-          <Image 
+          <Image
             source={require('../assets/home.png')}
             style={styles.backImage}
             resizeMode="contain"
@@ -97,22 +101,20 @@ const Stage5_5 = () => {
             혹시 방명록에 수뭉이가 {'\n'} 남긴 글을 봤어??
           </Text>
           <Text style={styles.subText}>
-            그렇다면, 수뭉이가 어디로 가라고 했는지 말해볼래? {'\n'}(띄어쓰기 없이 입력해줘!)
+            그렇다면, 수뭉이가 어디로 가라고 했는지 말해볼래? {'\n'}(띄어쓰기
+            없이 입력해줘!)
           </Text>
-          <TouchableOpacity 
-          style={styles.guestbookButton}
-          onPress={handleGoToGuestbook}
-          activeOpacity={0.7}
-          >
+          <TouchableOpacity
+            style={styles.guestbookButton}
+            onPress={handleGoToGuestbook}
+            activeOpacity={0.7}>
             <Text style={styles.guestbookButtonText}>방명록 확인하기</Text>
-            </TouchableOpacity>
+          </TouchableOpacity>
         </View>
 
         {/* ✅ 입력 필드 → 터치 시 모달 열기 */}
         <TouchableOpacity onPress={openModal} style={styles.inputContainer}>
-          <Text style={styles.inputText}>
-            {answer || '정답 입력'}
-          </Text>
+          <Text style={styles.inputText}>{answer || '정답 입력'}</Text>
         </TouchableOpacity>
 
         {/* ✅ 모달 */}
@@ -120,8 +122,7 @@ const Stage5_5 = () => {
           animationType="fade"
           transparent={true}
           visible={isModalVisible}
-          onRequestClose={closeModal}
-        >
+          onRequestClose={closeModal}>
           <TouchableWithoutFeedback onPress={closeModal}>
             <View style={styles.modalBackground}>
               <TouchableWithoutFeedback>
@@ -141,10 +142,9 @@ const Stage5_5 = () => {
                   />
 
                   {/* ✅ 제출 버튼 */}
-                  <TouchableOpacity 
+                  <TouchableOpacity
                     style={styles.submitButton}
-                    onPress={handleNextStage}
-                  >
+                    onPress={handleNextStage}>
                     <Text style={styles.buttonText}>제출하기</Text>
                   </TouchableOpacity>
                 </View>

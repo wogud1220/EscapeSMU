@@ -1,6 +1,6 @@
 //한누리관 마무리
 
-import React from 'react';
+import React, {useEffect} from 'react';
 import {
   View,
   Text,
@@ -20,20 +20,25 @@ type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage5_4'>;
 const {width, height} = Dimensions.get('window');
 
 const Stage5_4 = () => {
+  useEffect(() => {
+    console.log('Stage5_4 log - Department:', department);
+    console.log('Stage5_4 log - College:', college);
+  }, []);
+
   const navigation = useNavigation<NavigationProp>();
   const route = useRoute<RouteProp<RootStackParamList, 'Stage5_4'>>();
-  // const { department } = route.params;
+  const {college, department} = route.params || {};
 
   const handleMapPress = () => {
     navigation.navigate('Map');
   };
 
   const handleNextStage = () => {
-    navigation.navigate('Stage5_5');
+    navigation.navigate('Stage5_5', {college, department});
   };
 
   const handleGoToGuestbook = () => {
-    navigation.navigate('Guestbook'); // ✅ 방명록 작성 페이지로 이동
+    navigation.navigate('Guestbook', {college, department}); // ✅ 방명록 작성 페이지로 이동
   };
 
   return (

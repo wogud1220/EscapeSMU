@@ -1,36 +1,51 @@
-import React, { useState, useEffect } from 'react';
-import { 
-  View, 
-  Text, 
-  ImageBackground, 
-  StyleSheet, 
-  Dimensions, 
-  Image, 
-  TouchableOpacity, 
-  Alert 
+import React, {useState, useEffect} from 'react';
+import {
+  View,
+  Text,
+  ImageBackground,
+  StyleSheet,
+  Dimensions,
+  Image,
+  TouchableOpacity,
+  Alert,
 } from 'react-native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { useNavigation } from '@react-navigation/native';
-import { RootStackParamList } from '../App';
-import { useRoute, RouteProp } from '@react-navigation/native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {useNavigation} from '@react-navigation/native';
+import {RootStackParamList} from '../App';
+import {useRoute, RouteProp} from '@react-navigation/native';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage7_3'>;
 
-const { width, height } = Dimensions.get('window');
+const {width, height} = Dimensions.get('window');
 
 // ✅ 객관식 옵션 설정
 const options = [
-  { label: '① 기본으로 자유롭게 이용 가능하며, 우선 사용이 필요할 시 예약도 가능하다', value: 1 },
-  { label: '② 스터디룸 이용 가능 시간은 평일 19시 50분까지이다.', value: 2 },
-  { label: '③ 총 5개의 방을 예약할 수 있으며, 수용 인원 최대 인원은 8명이다.', value: 3 },
-  { label: '④ 우선 사용이 필요할 시, 최소 하루 전에 예약을 해야 하며 당일 예약이 불가능하다.', value: 4 },
-  { label: '⑤ 취식이 금지되고 있다.', value: 5 },
+  {
+    label:
+      '① 기본으로 자유롭게 이용 가능하며, 우선 사용이 필요할 시 예약도 가능하다',
+    value: 1,
+  },
+  {label: '② 스터디룸 이용 가능 시간은 평일 19시 50분까지이다.', value: 2},
+  {
+    label: '③ 총 5개의 방을 예약할 수 있으며, 수용 인원 최대 인원은 8명이다.',
+    value: 3,
+  },
+  {
+    label:
+      '④ 우선 사용이 필요할 시, 최소 하루 전에 예약을 해야 하며 당일 예약이 불가능하다.',
+    value: 4,
+  },
+  {label: '⑤ 취식이 금지되고 있다.', value: 5},
 ];
 
 const Stage7_3 = () => {
+  useEffect(() => {
+    console.log('Stage7_3 log - Department:', department);
+    console.log('Stage7_3 log - College:', college);
+  }, []);
   const navigation = useNavigation<NavigationProp>();
   const route = useRoute<RouteProp<RootStackParamList, 'Stage7_3'>>();
-const { department } = route.params;
+  const {college, department} = route.params || {};
 
   const [disabled, setDisabled] = useState(false);
   const [countdown, setCountdown] = useState<number | null>(null);
@@ -40,7 +55,7 @@ const { department } = route.params;
     let timer: NodeJS.Timeout;
     if (countdown !== null) {
       timer = setInterval(() => {
-        setCountdown((prev) => (prev !== null ? prev - 1 : null));
+        setCountdown(prev => (prev !== null ? prev - 1 : null));
       }, 1000);
 
       if (countdown === 0) {
@@ -61,7 +76,10 @@ const { department } = route.params;
 
     if (value === 3) {
       Alert.alert('정답입니다!', '다음 스테이지로 이동합니다.', [
-        { text: '확인', onPress: () => navigation.navigate('Stage7_4', {department}) },
+        {
+          text: '확인',
+          onPress: () => navigation.navigate('Stage7_4', {department}),
+        },
       ]);
     } else {
       Alert.alert('오답입니다.', '5분 뒤에 다시 시도해 보세요!');
@@ -76,16 +94,15 @@ const { department } = route.params;
 
   return (
     <View style={styles.container}>
-      <ImageBackground 
-        source={require('../assets/main.png')} 
+      <ImageBackground
+        source={require('../assets/main.png')}
         style={styles.image}
-        resizeMode="cover"
-      >
+        resizeMode="cover">
         <View style={styles.overlay} />
 
         {/* ✅ 지도 버튼 */}
         <TouchableOpacity onPress={handleMapPress} style={styles.mapButton}>
-          <Image 
+          <Image
             source={require('../assets/map.png')}
             style={styles.mapImage}
             resizeMode="contain"
@@ -94,7 +111,7 @@ const { department } = route.params;
 
         {/* ✅ 홈 버튼 */}
         <TouchableOpacity onPress={handleHomePress} style={styles.backButton}>
-          <Image 
+          <Image
             source={require('../assets/home.png')}
             style={styles.backImage}
             resizeMode="contain"
@@ -104,32 +121,34 @@ const { department } = route.params;
         {/* ✅ 흰색 박스 */}
         <View style={styles.box}>
           <Text style={styles.text}>
-            다음중 라운지 스터디룸 이용 방법으로{'\n'}옳지 <Text style={styles.highlight}>않은</Text> 것은 무엇일까?
+            다음중 라운지 스터디룸 이용 방법으로{'\n'}옳지{' '}
+            <Text style={styles.highlight}>않은</Text> 것은 무엇일까?
           </Text>
           <Text style={styles.subText}>
             스터디룸 문에 붙어 있는 종이를 확인하자!{'\n'}
-            틀릴 시에는 다시 입력하기까지 <Text style={styles.highlight}>5분</Text>을 기다려야해... 신중하자!
+            틀릴 시에는 다시 입력하기까지{' '}
+            <Text style={styles.highlight}>5분</Text>을 기다려야해... 신중하자!
           </Text>
 
           {/* ✅ 타이머 표시 */}
           {countdown !== null && (
             <Text style={styles.timerText}>
-              {`다시 시도 가능까지: ${Math.floor(countdown / 60)}:${(countdown % 60).toString().padStart(2, '0')}`}
+              {`다시 시도 가능까지: ${Math.floor(countdown / 60)}:${(
+                countdown % 60
+              )
+                .toString()
+                .padStart(2, '0')}`}
             </Text>
           )}
 
           {/* ✅ 객관식 버튼 */}
           <View style={styles.buttonContainer}>
-            {options.map((option) => (
+            {options.map(option => (
               <TouchableOpacity
                 key={option.value}
-                style={[
-                  styles.optionButton,
-                  disabled && styles.disabledButton
-                ]}
+                style={[styles.optionButton, disabled && styles.disabledButton]}
                 onPress={() => handleOptionPress(option.value)}
-                disabled={disabled}
-              >
+                disabled={disabled}>
                 <Text style={styles.optionText}>{option.label}</Text>
               </TouchableOpacity>
             ))}

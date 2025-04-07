@@ -107,7 +107,10 @@ const StageList = () => {
                 setCollege(selectedCollege); // ✅ 학부 저장
                 setDepartment(major);
                 if (selectedCollege === '글로벌인문학부대학') {
-                  navigation.navigate('Stage1');
+                  navigation.navigate('Stage1', {
+                    college: selectedCollege,
+                    department: major,
+                  });
                 } else {
                   navigation.navigate('Stage1Camera', {
                     department: `${selectedCollege} - ${major}`,

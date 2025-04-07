@@ -1,6 +1,6 @@
 //학술정보관 정보검색실 퀴즈
 
-import React, { useState } from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   View,
   Text,
@@ -15,19 +15,27 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
 } from 'react-native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { useNavigation } from '@react-navigation/native';
-import { RootStackParamList } from '../App';
-import { useRoute, RouteProp } from '@react-navigation/native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {useNavigation} from '@react-navigation/native';
+import {RootStackParamList} from '../App';
+import {useRoute, RouteProp} from '@react-navigation/native';
 
-type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage13_6_1'>;
+type NavigationProp = NativeStackNavigationProp<
+  RootStackParamList,
+  'Stage13_6_1'
+>;
 
-const { width, height } = Dimensions.get('window');
+const {width, height} = Dimensions.get('window');
 
 const Stage13_6_1 = () => {
+  //Log
+  useEffect(() => {
+    console.log('Stage13_6_1 log - Department:', department);
+    console.log('Stage13_6_1 log - College:', college);
+  }, []);
   const navigation = useNavigation<NavigationProp>();
   const route = useRoute<RouteProp<RootStackParamList, 'Stage13_6_1'>>();
-const { department } = route.params;
+  const {college, department} = route.params || {};
   const [answer, setAnswer] = useState('');
   const [isModalVisible, setIsModalVisible] = useState(false);
 
@@ -40,7 +48,8 @@ const { department } = route.params;
       Alert.alert('정답입니다!', '다음 스테이지로 이동합니다.', [
         {
           text: '확인',
-          onPress: () => navigation.navigate('Stage13_7', {department}),
+          onPress: () =>
+            navigation.navigate('Stage13_7', {college, department}),
         },
       ]);
       setIsModalVisible(false);
@@ -68,8 +77,7 @@ const { department } = route.params;
       <ImageBackground
         source={require('../assets/main.png')}
         style={styles.image}
-        resizeMode="cover"
-      >
+        resizeMode="cover">
         <View style={styles.overlay} />
 
         {/* 지도 버튼 */}
@@ -92,25 +100,26 @@ const { department } = route.params;
 
         {/* 박스 및 텍스트 */}
         <View style={styles.box}>
-                    <Image 
-                      source={require('../assets/libraryguide.png')} 
-                      style={styles.wayImage} 
-                      resizeMode="contain"
-                    />
+          <Image
+            source={require('../assets/libraryguide.png')}
+            style={styles.wayImage}
+            resizeMode="contain"
+          />
           <Text style={styles.text}>
             맞아! 정보검색실은 도서관과 같은 층에 있어!
           </Text>
           <Text style={styles.subText}>
-            정보검색실을 찾아가보자! 입구에 들어가 오른쪽에서 'Library Guide를 찾아볼래?'{'\n'}{'\n'}
-            만약 찾았다면, 'Library Guide'의 맨 뒤에 있는 QR을 스캔해서 나오는{'\n'}앱의 이름을 입력해보자!
+            정보검색실을 찾아가보자! 입구에 들어가 오른쪽에서 'Library Guide를
+            찾아볼래?'{'\n'}
+            {'\n'}
+            만약 찾았다면, 'Library Guide'의 맨 뒤에 있는 QR을 스캔해서 나오는
+            {'\n'}앱의 이름을 입력해보자!
           </Text>
         </View>
 
         {/* 입력 필드 (모달로 오픈) */}
         <TouchableOpacity onPress={openModal} style={styles.inputContainer}>
-          <Text style={styles.inputText}>
-            {answer || '정답 입력'}
-          </Text>
+          <Text style={styles.inputText}>{answer || '정답 입력'}</Text>
         </TouchableOpacity>
       </ImageBackground>
 
@@ -119,8 +128,7 @@ const { department } = route.params;
         animationType="fade"
         transparent={true}
         visible={isModalVisible}
-        onRequestClose={closeModal}
-      >
+        onRequestClose={closeModal}>
         <TouchableWithoutFeedback onPress={closeModal}>
           <View style={styles.modalBackground}>
             <TouchableWithoutFeedback onPress={() => {}}>
@@ -138,12 +146,11 @@ const { department } = route.params;
                   autoCapitalize="none"
                   autoFocus={true}
                 />
-                
+
                 {/* ✅ 제출 버튼 */}
                 <TouchableOpacity
                   style={styles.submitButton}
-                  onPress={handleNextStage}
-                >
+                  onPress={handleNextStage}>
                   <Text style={styles.buttonText}>제출하기</Text>
                 </TouchableOpacity>
               </View>

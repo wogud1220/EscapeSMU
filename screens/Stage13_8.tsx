@@ -1,13 +1,25 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, ImageBackground, StyleSheet, Dimensions, Image, TouchableOpacity, Animated } from 'react-native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { useNavigation } from '@react-navigation/native';
-import { RootStackParamList } from '../App';
-import { useRoute, RouteProp } from '@react-navigation/native';
+import React, {useEffect, useState} from 'react';
+import {
+  View,
+  Text,
+  ImageBackground,
+  StyleSheet,
+  Dimensions,
+  Image,
+  TouchableOpacity,
+  Animated,
+} from 'react-native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {useNavigation} from '@react-navigation/native';
+import {RootStackParamList} from '../App';
+import {useRoute, RouteProp} from '@react-navigation/native';
 
-type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage13_8'>;
+type NavigationProp = NativeStackNavigationProp<
+  RootStackParamList,
+  'Stage13_8'
+>;
 
-const { width, height } = Dimensions.get('window');
+const {width, height} = Dimensions.get('window');
 
 const bookList = [
   '이방인',
@@ -22,9 +34,15 @@ const bookList = [
 ];
 
 const Stage13_8 = () => {
+  //Log
+  useEffect(() => {
+    console.log('Stage13_8 log - Department:', department);
+    console.log('Stage13_8 log - College:', college);
+  }, []);
+
   const navigation = useNavigation<NavigationProp>();
   const route = useRoute<RouteProp<RootStackParamList, 'Stage13_8'>>();
-const { department } = route.params;
+  const {college, department} = route.params || {};
   const [randomBook, setRandomBook] = useState<string | null>(null);
   const fadeAnim = useState(new Animated.Value(0))[0];
 
@@ -46,23 +64,22 @@ const { department } = route.params;
   };
 
   const handleNextStage = () => {
-    navigation.navigate('Stage13_9', {department});
+    navigation.navigate('Stage13_9', {college, department});
   };
 
   return (
     <View style={styles.container}>
       {/* ✅ 배경 설정 */}
-      <ImageBackground 
-        source={require('../assets/main.png')} 
+      <ImageBackground
+        source={require('../assets/main.png')}
         style={styles.image}
-        resizeMode="cover"
-      >
+        resizeMode="cover">
         {/* ✅ 투명 레이어 */}
         <View style={styles.overlay} />
 
         {/* ✅ 지도 버튼 */}
         <TouchableOpacity onPress={handleMapPress} style={styles.mapButton}>
-          <Image 
+          <Image
             source={require('../assets/map.png')}
             style={styles.mapImage}
             resizeMode="contain"
@@ -70,8 +87,10 @@ const { department } = route.params;
         </TouchableOpacity>
 
         {/* ✅ 홈 버튼 */}
-        <TouchableOpacity onPress={() => navigation.navigate('Main')} style={styles.backButton}>
-          <Image 
+        <TouchableOpacity
+          onPress={() => navigation.navigate('Main')}
+          style={styles.backButton}>
+          <Image
             source={require('../assets/home.png')}
             style={styles.backImage}
             resizeMode="contain"
@@ -80,28 +99,26 @@ const { department } = route.params;
 
         {/* ✅ 가운데 박스 */}
         <View style={styles.box}>
-          <Text style={styles.text}>
-            이제 도서를 검색해볼거야!
-          </Text>
+          <Text style={styles.text}>이제 도서를 검색해볼거야!</Text>
 
           {/* ✅ 무작위 책 제목 애니메이션 적용 */}
           {randomBook && (
-            <Animated.Text style={[styles.bookTitle, { opacity: fadeAnim }]}>
+            <Animated.Text style={[styles.bookTitle, {opacity: fadeAnim}]}>
               {randomBook}
             </Animated.Text>
           )}
 
           <Text style={styles.subText}>
-            위의 책 제목을 학술정보관 페이지의 자료검색을 통해 청구기호를 찾아서 입력해줘!
+            위의 책 제목을 학술정보관 페이지의 자료검색을 통해 청구기호를 찾아서
+            입력해줘!
           </Text>
         </View>
 
         {/* ✅ 다음 스테이지 버튼 */}
-        <TouchableOpacity 
+        <TouchableOpacity
           style={styles.nextButton}
           onPress={handleNextStage}
-          activeOpacity={0.7}
-        >
+          activeOpacity={0.7}>
           <Text style={styles.buttonText}>다음 ➡️</Text>
         </TouchableOpacity>
       </ImageBackground>
@@ -136,7 +153,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
+    shadowOffset: {width: 0, height: 4},
     shadowOpacity: 0.3,
     shadowRadius: 4,
     elevation: 5,
@@ -155,7 +172,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginVertical: height * 0.01,
     textShadowColor: 'rgba(0, 0, 0, 0.3)', // ✅ 텍스트에 그림자 효과 추가
-    textShadowOffset: { width: 2, height: 2 },
+    textShadowOffset: {width: 2, height: 2},
     textShadowRadius: 4,
   },
   subText: {

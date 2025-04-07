@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   View,
   Text,
@@ -22,9 +22,13 @@ type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage5_2'>;
 const {width, height} = Dimensions.get('window');
 
 const Stage5_2 = () => {
+  useEffect(() => {
+    console.log('Stage5_2 log - Department:', department);
+    console.log('Stage5_2 log - College:', college);
+  }, []);
   const navigation = useNavigation<NavigationProp>();
   const route = useRoute<RouteProp<RootStackParamList, 'Stage5_2'>>();
-  // const {department} = route.params;
+  const {college, department} = route.params || {};
   const [answer, setAnswer] = useState('');
   const [isModalVisible, setIsModalVisible] = useState(false);
 
@@ -37,7 +41,7 @@ const Stage5_2 = () => {
       Alert.alert('정답입니다!', '다음 스테이지로 이동합니다.', [
         {
           text: '확인',
-          onPress: () => navigation.navigate('Stage5_3'),
+          onPress: () => navigation.navigate('Stage5_3', {college, department}),
         },
       ]);
       setIsModalVisible(false);
