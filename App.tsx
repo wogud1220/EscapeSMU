@@ -216,7 +216,7 @@ const App = () => {
   return (
     <DepartmentProvider>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Stage12_2">
+        <Stack.Navigator initialRouteName="Main">
           <Stack.Screen
             name="Main"
             component={Main}
@@ -296,6 +296,11 @@ const App = () => {
           <Stack.Screen
             name="Stage2Camera_2"
             component={Stage2Camera_2}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="Stage2_Hint"
+            component={Stage2_Hint}
             options={{headerShown: false}}
           />
           <Stack.Screen
