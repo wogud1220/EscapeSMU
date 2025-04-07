@@ -1,27 +1,39 @@
 //학생회관 편의시설 퀴즈!
 
-import React, { useState, useEffect } from 'react';
-import { View, Text, ImageBackground, StyleSheet, Dimensions, Image, TouchableOpacity, Alert } from 'react-native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { useNavigation } from '@react-navigation/native';
-import { RootStackParamList } from '../App';
-import { useRoute, RouteProp } from '@react-navigation/native';
+import React, {useState, useEffect} from 'react';
+import {
+  View,
+  Text,
+  ImageBackground,
+  StyleSheet,
+  Dimensions,
+  Image,
+  TouchableOpacity,
+  Alert,
+} from 'react-native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {useNavigation} from '@react-navigation/native';
+import {RootStackParamList} from '../App';
+import {useRoute, RouteProp} from '@react-navigation/native';
 
-type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage10_4'>;
+type NavigationProp = NativeStackNavigationProp<
+  RootStackParamList,
+  'Stage10_4'
+>;
 
-const { width, height } = Dimensions.get('window');
+const {width, height} = Dimensions.get('window');
 
 const options = [
-  { label: '기념품점', value: 1 },
-  { label: '안경점', value: 2 },
-  { label: '미용실', value: 3 },
-  { label: '우체국', value: 4 },
+  {label: '기념품점', value: 1},
+  {label: '안경점', value: 2},
+  {label: '미용실', value: 3},
+  {label: '우체국', value: 4},
 ];
 
 const Stage10_4 = () => {
   const navigation = useNavigation<NavigationProp>();
   const route = useRoute<RouteProp<RootStackParamList, 'Stage10_4'>>();
-const { department } = route.params;
+  const {college, department} = route.params || {};
   const [disabled, setDisabled] = useState(false); // ✅ 버튼 활성화 상태
   const [countdown, setCountdown] = useState<number | null>(null); // ✅ 남은 시간 상태
 
@@ -30,7 +42,7 @@ const { department } = route.params;
     if (countdown !== null) {
       // ✅ 매 초마다 countdown 감소
       timer = setInterval(() => {
-        setCountdown((prev) => (prev !== null ? prev - 1 : null));
+        setCountdown(prev => (prev !== null ? prev - 1 : null));
       }, 1000);
 
       if (countdown === 0) {
@@ -52,11 +64,15 @@ const { department } = route.params;
 
     if (value === 4) {
       Alert.alert('정답입니다!', '다음 스테이지로 이동합니다.', [
-        { text: '확인', onPress: () => navigation.navigate('Stage10_5', {department}) },
+        {
+          text: '확인',
+          onPress: () =>
+            navigation.navigate('Stage10_5', {college, department}),
+        },
       ]);
     } else {
       Alert.alert('오답입니다.', '5분 뒤에 다시 시도해 보세요!');
-      
+
       // ✅ 5분(300초) 동안 버튼 비활성화 + 타이머 시작
       setDisabled(true);
       setCountdown(300); // 180초 (3분)
@@ -69,16 +85,15 @@ const { department } = route.params;
 
   return (
     <View style={styles.container}>
-      <ImageBackground 
-        source={require('../assets/main.png')} 
+      <ImageBackground
+        source={require('../assets/main.png')}
         style={styles.image}
-        resizeMode="cover"
-      >
+        resizeMode="cover">
         <View style={styles.overlay} />
 
         {/* 지도 버튼 */}
         <TouchableOpacity onPress={handleMapPress} style={styles.mapButton}>
-          <Image 
+          <Image
             source={require('../assets/map.png')}
             style={styles.mapImage}
             resizeMode="contain"
@@ -87,7 +102,7 @@ const { department } = route.params;
 
         {/* 홈 버튼 */}
         <TouchableOpacity onPress={handleHomePress} style={styles.backButton}>
-          <Image 
+          <Image
             source={require('../assets/home.png')}
             style={styles.backImage}
             resizeMode="contain"
@@ -97,33 +112,40 @@ const { department } = route.params;
         {/* 흰색 박스 */}
         <View style={styles.box}>
           <Text style={styles.text}>
-            학생회관에는 식당 뿐만 아니라, 다양한 편의시설도 존재하고 있어. 그렇다면 다음 보기 중 학생회관에 존재하지 <Text style={styles.highlight}>않는</Text> 시설을 골라봐!
+            학생회관에는 식당 뿐만 아니라, 다양한 편의시설도 존재하고 있어.
+            그렇다면 다음 보기 중 학생회관에 존재하지{' '}
+            <Text style={styles.highlight}>않는</Text> 시설을 골라봐!
           </Text>
 
           {/* 서브텍스트 추가 */}
           <Text style={styles.subText}>
-            서점은 2025년 1학기에 없어졌어... {"\n"}{"\n"}틀릴 시에는 다시 입력하기까지 <Text style={styles.highlight}>5분</Text>을 기다려야해... 신중하자!
+            서점은 2025년 1학기에 없어졌어... {'\n'}
+            {'\n'}틀릴 시에는 다시 입력하기까지{' '}
+            <Text style={styles.highlight}>5분</Text>을 기다려야해... 신중하자!
           </Text>
 
           {/* ✅ 타이머 표시 */}
           {countdown !== null && (
             <Text style={styles.timerText}>
-              {`다시 시도 가능까지: ${Math.floor(countdown / 60)}:${(countdown % 60).toString().padStart(2, '0')}`}
+              {`다시 시도 가능까지: ${Math.floor(countdown / 60)}:${(
+                countdown % 60
+              )
+                .toString()
+                .padStart(2, '0')}`}
             </Text>
           )}
 
           {/* 버튼 생성 */}
           <View style={styles.buttonContainer}>
-            {options.map((option) => (
+            {options.map(option => (
               <TouchableOpacity
                 key={option.value}
                 style={[
                   styles.optionButton,
-                  disabled && styles.disabledButton // ✅ 비활성화 시 스타일 적용
+                  disabled && styles.disabledButton, // ✅ 비활성화 시 스타일 적용
                 ]}
                 onPress={() => handleOptionPress(option.value)}
-                disabled={disabled}
-              >
+                disabled={disabled}>
                 <Text style={styles.optionText}>{option.label}</Text>
               </TouchableOpacity>
             ))}

@@ -1,30 +1,35 @@
-import React, { useState } from 'react';
-import { 
-  View, 
-  Text, 
-  ImageBackground, 
-  StyleSheet, 
-  Dimensions, 
-  Image, 
-  TouchableOpacity, 
-  TextInput, 
-  Alert, 
-  Modal, 
-  TouchableWithoutFeedback 
+import React, {useState, useEffect} from 'react';
+import {
+  View,
+  Text,
+  ImageBackground,
+  StyleSheet,
+  Dimensions,
+  Image,
+  TouchableOpacity,
+  TextInput,
+  Alert,
+  Modal,
+  TouchableWithoutFeedback,
 } from 'react-native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { useNavigation } from '@react-navigation/native';
-import { RootStackParamList } from '../App';
-import { useRoute, RouteProp } from '@react-navigation/native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {useNavigation} from '@react-navigation/native';
+import {RootStackParamList} from '../App';
+import {useRoute, RouteProp} from '@react-navigation/native';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage8_3'>;
 
-const { width, height } = Dimensions.get('window');
+const {width, height} = Dimensions.get('window');
 
 const Stage8_2 = () => {
+  useEffect(() => {
+    console.log('Stage8_2 log - Department:', department);
+    console.log('Stage8_2 log - College:', college);
+  }, []);
+
   const navigation = useNavigation<NavigationProp>();
   const route = useRoute<RouteProp<RootStackParamList, 'Stage8_2'>>();
-const { department } = route.params;
+  const {college, department} = route.params || {};
   const [answer, setAnswer] = useState('');
   const [isModalVisible, setIsModalVisible] = useState(false);
 
@@ -35,9 +40,9 @@ const { department } = route.params;
   const handleNextStage = () => {
     if (answer.trim() === '1234qwer') {
       Alert.alert('정답입니다!', '다음 스테이지로 이동합니다.', [
-        { 
-          text: '확인', 
-          onPress: () => navigation.navigate('Stage8_3', { department })
+        {
+          text: '확인',
+          onPress: () => navigation.navigate('Stage8_3', {college, department}),
         },
       ]);
       setIsModalVisible(false);
@@ -63,24 +68,23 @@ const { department } = route.params;
   // ✅ 힌트 팝업
   const handleHint = () => {
     Alert.alert(
-      '힌트', 
+      '힌트',
       '오름라운지 내의 기둥에 어떤 종이가 붙어 있는 것 같은데...?',
-      [{ text: '확인' }]
+      [{text: '확인'}],
     );
   };
 
   return (
     <View style={styles.container}>
-      <ImageBackground 
-        source={require('../assets/main.png')} 
+      <ImageBackground
+        source={require('../assets/main.png')}
         style={styles.image}
-        resizeMode="cover"
-      >
+        resizeMode="cover">
         <View style={styles.overlay} />
 
         {/* ✅ 지도 버튼 */}
         <TouchableOpacity onPress={handleMapPress} style={styles.mapButton}>
-          <Image 
+          <Image
             source={require('../assets/map.png')}
             style={styles.mapImage}
             resizeMode="contain"
@@ -89,7 +93,7 @@ const { department } = route.params;
 
         {/* ✅ 홈 버튼 */}
         <TouchableOpacity onPress={handleHomePress} style={styles.backButton}>
-          <Image 
+          <Image
             source={require('../assets/home.png')}
             style={styles.backImage}
             resizeMode="contain"
@@ -98,7 +102,9 @@ const { department } = route.params;
 
         {/* ✅ 문제 박스 */}
         <View style={styles.box}>
-          <Text style={styles.text}>학생생활관 1층에는{'\n'}'오름라운지'가 존재해!</Text>
+          <Text style={styles.text}>
+            학생생활관 1층에는{'\n'}'오름라운지'가 존재해!
+          </Text>
           <Text style={styles.subText}>
             오름라운지는 기숙사생이 아니더라도{'\n'}이용 가능한 공간이야.
             {'\n'}
@@ -107,30 +113,25 @@ const { department } = route.params;
             {'\n'}
             그렇다면, SM1F-1_wifi의 비밀번호를 입력해보자!
           </Text>
-          <TouchableOpacity 
-          style={styles.hintButton}
-          onPress={handleHint}
-          activeOpacity={0.7}
-        >
-          <Text style={styles.hintButtonText}>힌트 보기 💡</Text>
-        </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.hintButton}
+            onPress={handleHint}
+            activeOpacity={0.7}>
+            <Text style={styles.hintButtonText}>힌트 보기 💡</Text>
+          </TouchableOpacity>
         </View>
 
         {/* ✅ 입력 필드 → 터치 시 모달 열기 */}
         <TouchableOpacity onPress={openModal} style={styles.inputContainer}>
-          <Text style={styles.inputText}>
-            {answer || '정답 입력'}
-          </Text>
+          <Text style={styles.inputText}>{answer || '정답 입력'}</Text>
         </TouchableOpacity>
-
 
         {/* ✅ 모달 */}
         <Modal
           animationType="fade"
           transparent={true}
           visible={isModalVisible}
-          onRequestClose={closeModal}
-        >
+          onRequestClose={closeModal}>
           <TouchableWithoutFeedback onPress={closeModal}>
             <View style={styles.modalBackground}>
               <TouchableWithoutFeedback>
@@ -150,14 +151,12 @@ const { department } = route.params;
                   />
 
                   {/* ✅ 제출 버튼 */}
-                  <TouchableOpacity 
+                  <TouchableOpacity
                     style={styles.submitButton}
-                    onPress={handleNextStage}
-                  >
+                    onPress={handleNextStage}>
                     <Text style={styles.buttonText}>제출하기</Text>
                   </TouchableOpacity>
                 </View>
-
               </TouchableWithoutFeedback>
             </View>
           </TouchableWithoutFeedback>

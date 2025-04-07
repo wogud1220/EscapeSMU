@@ -1,21 +1,21 @@
-import React, { useState } from 'react';
-import { 
-  View, 
-  Text, 
-  ImageBackground, 
-  StyleSheet, 
-  Dimensions, 
-  Image, 
-  TouchableOpacity, 
-  TextInput, 
-  Alert, 
-  Modal, 
-  TouchableWithoutFeedback 
+import React, {useState, useEffect} from 'react';
+import {
+  View,
+  Text,
+  ImageBackground,
+  StyleSheet,
+  Dimensions,
+  Image,
+  TouchableOpacity,
+  TextInput,
+  Alert,
+  Modal,
+  TouchableWithoutFeedback,
 } from 'react-native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { useNavigation } from '@react-navigation/native';
-import { RootStackParamList } from '../App';
-import { useRoute, RouteProp } from '@react-navigation/native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {useNavigation} from '@react-navigation/native';
+import {RootStackParamList} from '../App';
+import {useRoute, RouteProp} from '@react-navigation/native';
 import {useDepartment} from './Member/DepartmentContext';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage8_6'>;
@@ -23,41 +23,36 @@ type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage8_6'>;
 const {width, height} = Dimensions.get('window');
 
 const Stage8_6 = () => {
+  useEffect(() => {
+    console.log('Stage8_6 log - Department:', department);
+    console.log('Stage8_6 log - College:', college);
+  }, []);
   const navigation = useNavigation<NavigationProp>();
   const route = useRoute<RouteProp<RootStackParamList, 'Stage8_6'>>();
-const { department } = route.params;
+  const {college, department} = route.params || {};
   const [answer, setAnswer] = useState('');
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const {college} = useDepartment();
 
   const handleMapPress = () => {
     navigation.navigate('Map');
   };
-
   const handleNextStage = () => {
     if (answer.trim() === '1') {
-      let nextStage = 'Stage10_1';
-  
-      if (department.includes('디자인학부')) {
-        nextStage = 'Stage9_1';
-      }
-  
+      const nextStage =
+        college === '글로벌인문학부대학' ? 'Stage10_1' : 'Stage9_1';
+
       Alert.alert('정답입니다!', '다음 스테이지로 이동합니다.', [
         {
           text: '확인',
-          onPress: () =>
-            navigation.navigate(
-              college === '글로벌인문학부대학' ? 'Stage10_1' : 'Stage9_1',
-            ),
+          onPress: () => navigation.navigate(nextStage, {college, department}),
         },
       ]);
+
       setIsModalVisible(false);
     } else {
       Alert.alert('오답입니다.', '다시 시도해 보세요!');
     }
   };
-  
-  
 
   const handleHomePress = () => {
     navigation.navigate('Main');
@@ -106,16 +101,15 @@ const { department } = route.params;
             컴퓨터를 사용해서 (www.www.com)에 접속해보자!
           </Text>
           <Text style={styles.subText}>
-            응??? 어딘가 많이 본 게임인데?{'\n'}{'\n'}
+            응??? 어딘가 많이 본 게임인데?{'\n'}
+            {'\n'}
             30점을 달성하고 단어를 얻어내자!
           </Text>
         </View>
 
         {/* ✅ 입력 필드 → 터치 시 모달 열기 */}
         <TouchableOpacity onPress={openModal} style={styles.inputContainer}>
-          <Text style={styles.inputText}>
-            {answer || '정답 입력'}
-          </Text>
+          <Text style={styles.inputText}>{answer || '정답 입력'}</Text>
         </TouchableOpacity>
 
         {/* ✅ 모달 */}
@@ -123,8 +117,7 @@ const { department } = route.params;
           animationType="fade"
           transparent={true}
           visible={isModalVisible}
-          onRequestClose={closeModal}
-        >
+          onRequestClose={closeModal}>
           <TouchableWithoutFeedback onPress={closeModal}>
             <View style={styles.modalBackground}>
               <TouchableWithoutFeedback>
@@ -144,10 +137,9 @@ const { department } = route.params;
                   />
 
                   {/* ✅ 제출 버튼 */}
-                  <TouchableOpacity 
+                  <TouchableOpacity
                     style={styles.submitButton}
-                    onPress={handleNextStage}
-                  >
+                    onPress={handleNextStage}>
                     <Text style={styles.buttonText}>제출하기</Text>
                   </TouchableOpacity>
                 </View>

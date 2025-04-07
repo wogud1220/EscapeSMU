@@ -434,6 +434,26 @@ const App = () => {
             options={{headerShown: false}}
           />
           <Stack.Screen
+            name="Stage7_5"
+            component={Stage7_5}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="Stage7_6"
+            component={Stage7_6}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="Stage7_7"
+            component={Stage7_7}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="Stage7Camera"
+            component={Stage7Camera}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
             name="Stage8_1"
             component={Stage8_1}
             options={{headerShown: false}}

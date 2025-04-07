@@ -78,7 +78,7 @@ const Stage7_3 = () => {
       Alert.alert('정답입니다!', '다음 스테이지로 이동합니다.', [
         {
           text: '확인',
-          onPress: () => navigation.navigate('Stage7_4', {department}),
+          onPress: () => navigation.navigate('Stage7_4', {college, department}),
         },
       ]);
     } else {

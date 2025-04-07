@@ -1,43 +1,55 @@
 //학생생활관 부가 설명 화면
 
-import React from 'react';
-import { View, Text, ImageBackground, StyleSheet, Dimensions, Image, TouchableOpacity } from 'react-native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { useNavigation } from '@react-navigation/native';
-import { RootStackParamList } from '../App';
-import { useRoute, RouteProp } from '@react-navigation/native';
+import React, {useEffect} from 'react';
+import {
+  View,
+  Text,
+  ImageBackground,
+  StyleSheet,
+  Dimensions,
+  Image,
+  TouchableOpacity,
+} from 'react-native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {useNavigation} from '@react-navigation/native';
+import {RootStackParamList} from '../App';
+import {useRoute, RouteProp} from '@react-navigation/native';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage8_3'>;
 
-const { width, height } = Dimensions.get('window');
+const {width, height} = Dimensions.get('window');
 
 const Stage8_3 = () => {
+  useEffect(() => {
+    console.log('Stage1Camera log - Department:', department);
+    console.log('Stage1Camera log - College:', college);
+  }, []);
+
   const navigation = useNavigation<NavigationProp>();
   const route = useRoute<RouteProp<RootStackParamList, 'Stage8_3'>>();
-const { department } = route.params;
+  const {college, department} = route.params || {};
 
   const handleMapPress = () => {
     navigation.navigate('Map');
   };
 
   const handleNextStage = () => {
-    navigation.navigate('Stage8_4', {department}); // ✅ Stage6_1으로 이동하도록 수정
+    navigation.navigate('Stage8_4', {college, department}); // ✅ Stage6_1으로 이동하도록 수정
   };
 
   return (
     <View style={styles.container}>
       {/* ✅ main.png를 배경으로 설정 */}
-      <ImageBackground 
-        source={require('../assets/main.png')} 
+      <ImageBackground
+        source={require('../assets/main.png')}
         style={styles.image}
-        resizeMode="cover"
-      >
+        resizeMode="cover">
         {/* 🔥 투명 레이어 추가 */}
         <View style={styles.overlay} />
 
         {/* ✅ 🗺️ 오른쪽 상단의 map.png */}
         <TouchableOpacity onPress={handleMapPress} style={styles.mapButton}>
-          <Image 
+          <Image
             source={require('../assets/map.png')}
             style={styles.mapImage}
             resizeMode="contain"
@@ -45,8 +57,10 @@ const { department } = route.params;
         </TouchableOpacity>
 
         {/* ✅ 홈으로 이동 버튼 */}
-        <TouchableOpacity onPress={() => navigation.navigate('Main')} style={styles.backButton}>
-          <Image 
+        <TouchableOpacity
+          onPress={() => navigation.navigate('Main')}
+          style={styles.backButton}>
+          <Image
             source={require('../assets/home.png')}
             style={styles.backImage}
             resizeMode="contain"
@@ -55,23 +69,21 @@ const { department } = route.params;
 
         {/* ✅ 가운데 투명한 흰색 박스 */}
         <View style={styles.box}>
-          <Text style={styles.text}>비밀번호를 잘 찾았구나!{'\n'}
-          </Text>
+          <Text style={styles.text}>비밀번호를 잘 찾았구나!{'\n'}</Text>
           <Text style={styles.subText}>
-            공부할 곳이나 휴식할 곳이 마땅치 않으면 오름라운지를 이용하는 것도 나쁘지 않겠지?{'\n'}
+            공부할 곳이나 휴식할 곳이 마땅치 않으면 오름라운지를 이용하는 것도
+            나쁘지 않겠지?{'\n'}
             아직 오름라운지 안이라면, 고개를 올려봐!{'\n'}
             2층에는 카페도 있어!{'\n'}
             입구 옆에 있는 계단을 사용하면 기숙사생이 아니어도 2층을 갈 수 있어!
           </Text>
-
         </View>
 
         {/* ✅ 다음 스테이지로 이동 버튼 */}
-        <TouchableOpacity 
+        <TouchableOpacity
           style={styles.nextButton}
           onPress={handleNextStage}
-          activeOpacity={0.7}
-        >
+          activeOpacity={0.7}>
           <Text style={styles.buttonText}>다음 ➡️</Text>
         </TouchableOpacity>
       </ImageBackground>
@@ -106,7 +118,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
+    shadowOffset: {width: 0, height: 4},
     shadowOpacity: 0.3,
     shadowRadius: 4,
     elevation: 5,

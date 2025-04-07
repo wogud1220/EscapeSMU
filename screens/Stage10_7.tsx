@@ -1,52 +1,54 @@
-import React, { useState } from 'react';
-import { 
-  View, 
-  Text, 
-  ImageBackground, 
-  StyleSheet, 
-  Dimensions, 
-  Image, 
-  TouchableOpacity, 
-  TextInput, 
-  Alert, 
-  Modal, 
-  TouchableWithoutFeedback 
+import React, {useState} from 'react';
+import {
+  View,
+  Text,
+  ImageBackground,
+  StyleSheet,
+  Dimensions,
+  Image,
+  TouchableOpacity,
+  TextInput,
+  Alert,
+  Modal,
+  TouchableWithoutFeedback,
 } from 'react-native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { useNavigation } from '@react-navigation/native';
-import { RootStackParamList } from '../App';
-import { useRoute, RouteProp } from '@react-navigation/native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {useNavigation} from '@react-navigation/native';
+import {RootStackParamList} from '../App';
+import {useRoute, RouteProp} from '@react-navigation/native';
 import {useDepartment} from './Member/DepartmentContext';
-type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage10_7'>;
+type NavigationProp = NativeStackNavigationProp<
+  RootStackParamList,
+  'Stage10_7'
+>;
 
 const {width, height} = Dimensions.get('window');
 
 const Stage10_7 = () => {
   const navigation = useNavigation<NavigationProp>();
   const route = useRoute<RouteProp<RootStackParamList, 'Stage10_7'>>();
-const { department } = route.params;
+  const {college, department} = route.params || {};
   const [answer, setAnswer] = useState('');
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const {college} = useDepartment();
-  const handleMapPress = () => {
-    navigation.navigate('Map');
-  };
   const handleNextStage = () => {
     if (answer.trim() === 'H503') {
-      let nextStage = 'Stage13_1';
-  
-      if (department.includes('융합기술대학') && department.includes('스포츠융합학부')) {
+      let nextStage: keyof RootStackParamList = 'Stage13_1';
+
+      if (
+        department.includes('융합기술대학') &&
+        department.includes('스포츠융합학부')
+      ) {
         nextStage = 'Stage11_1';
       } else if (department.includes('예술학부')) {
         nextStage = 'Stage12_1';
       } else if (college === '글로벌인문학부대학') {
         nextStage = 'StageFinal';
       }
-  
+
       Alert.alert('정답입니다!', '다음 스테이지로 이동합니다.', [
         {
           text: '확인',
-          onPress: () => navigation.navigate(nextStage),
+          onPress: () => navigation.navigate(nextStage, {college, department}),
         },
       ]);
       setIsModalVisible(false);
@@ -54,12 +56,13 @@ const { department } = route.params;
       Alert.alert('오답입니다.', '다시 시도해 보세요!');
     }
   };
-  
 
   const handleHomePress = () => {
     navigation.navigate('Main');
   };
-
+  const handleMapPress = () => {
+    navigation.navigate('Map');
+  };
   // ✅ 모달 열기
   const openModal = () => {
     setIsModalVisible(true);
@@ -76,8 +79,7 @@ const { department } = route.params;
       <ImageBackground
         source={require('../assets/main.png')}
         style={styles.image}
-        resizeMode="cover"
-      >
+        resizeMode="cover">
         {/* ✅ 투명 레이어 추가 */}
         <View style={styles.overlay} />
 
@@ -105,24 +107,22 @@ const { department } = route.params;
             학생회관 5층에는 동아리들이 사용할 수 있는 동방이 있어!
           </Text>
           <Text style={styles.subText}>
-            여러 중앙 동아리 중, {' '}
+            여러 중앙 동아리 중,{' '}
             <View style={styles.inlineContainer}>
-              <Image 
-                source={require('../assets/codecure.png')} 
+              <Image
+                source={require('../assets/codecure.png')}
                 style={styles.inlineImage}
                 resizeMode="contain"
               />
               <Text style={styles.highlight}>CodeCure</Text>
-            </View>
-            {' '}가 사용하는 동방의 호수는 몇 호일까?
+            </View>{' '}
+            가 사용하는 동방의 호수는 몇 호일까?
           </Text>
         </View>
 
         {/* ✅ 입력 필드 → 터치 시 모달 열기 */}
         <TouchableOpacity onPress={openModal} style={styles.inputContainer}>
-          <Text style={styles.inputText}>
-            {answer || '정답 입력'}
-          </Text>
+          <Text style={styles.inputText}>{answer || '정답 입력'}</Text>
         </TouchableOpacity>
 
         {/* ✅ 모달 */}
@@ -130,8 +130,7 @@ const { department } = route.params;
           animationType="fade"
           transparent={true}
           visible={isModalVisible}
-          onRequestClose={closeModal}
-        >
+          onRequestClose={closeModal}>
           <TouchableWithoutFeedback onPress={closeModal}>
             <View style={styles.modalBackground}>
               <TouchableWithoutFeedback>
@@ -151,10 +150,9 @@ const { department } = route.params;
                   />
 
                   {/* ✅ 제출 버튼 */}
-                  <TouchableOpacity 
+                  <TouchableOpacity
                     style={styles.submitButton}
-                    onPress={handleNextStage}
-                  >
+                    onPress={handleNextStage}>
                     <Text style={styles.buttonText}>제출하기</Text>
                   </TouchableOpacity>
                 </View>
@@ -168,7 +166,7 @@ const { department } = route.params;
 };
 
 const styles = StyleSheet.create({
-    container: {
+  container: {
     flex: 1,
   },
   centerContainer: {
@@ -195,7 +193,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
+    shadowOffset: {width: 0, height: 4},
     shadowOpacity: 0.3,
     shadowRadius: 4,
     elevation: 5,
