@@ -1,4 +1,4 @@
-//학생회관
+//학생회관 가는 화면
 
 import React from 'react';
 import {

@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
   box: {
     backgroundColor: 'rgba(255, 255, 255, 0.7)',
     width: width * 0.8,
-    height: height * 0.7, // ✅ 높이 조정 (이미지 공간 포함)
+    height: height * 0.5,
     padding: height * 0.03,
     borderRadius: width * 0.04,
     alignItems: 'center',
@@ -127,6 +127,7 @@ const styles = StyleSheet.create({
     fontSize: width * 0.06,
     fontWeight: 'bold',
     marginBottom: height * 0.01,
+    marginTop: height * -0.1,
     textAlign: 'center',
   },
   subText: {
@@ -172,9 +173,10 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   wayImage: {
-    width: width * 0.4, // ✅ waytostage2.png 크기 조정
-    height: height * 0.3,
+    width: width * 0.7, // ✅ waytostage2.png 크기 조정
+    height: height * 0.5,
     marginBottom: height * 0.005, // ✅ 이미지와 텍스트 간격
+    marginTop: height * -0.1,
   },
 });
 

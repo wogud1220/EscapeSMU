@@ -1,10 +1,19 @@
 // //독도 가는 화면
 import React, {useEffect, useState} from 'react';
-import { View, Text, ImageBackground, StyleSheet, Dimensions, Image, TouchableOpacity, Alert } from 'react-native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { useNavigation } from '@react-navigation/native';
-import { RootStackParamList } from '../App';
-import { useRoute, RouteProp } from '@react-navigation/native';
+import {
+  View,
+  Text,
+  ImageBackground,
+  StyleSheet,
+  Dimensions,
+  Image,
+  TouchableOpacity,
+  Alert,
+} from 'react-native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {useNavigation} from '@react-navigation/native';
+import {RootStackParamList} from '../App';
+import {useRoute, RouteProp} from '@react-navigation/native';
 import Voice from '@react-native-voice/voice';
 const {width, height} = Dimensions.get('window');
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage6_2'>;
@@ -14,56 +23,56 @@ const Stage6_2 = () => {
   const [isListening, setIsListening] = useState(false);
   const [recognizedText, setRecognizedText] = useState('');
   const route = useRoute<RouteProp<RootStackParamList, 'Stage6_2'>>();
-const { department } = route.params;
+  const {department} = route.params;
 
-const startListening = async () => {
-  try {
-    setRecognizedText('');
-    setIsListening(true);
-    await Voice.start('ko-KR');
-  } catch (e) {
-    console.error('🎤 start error:', e);
-    setIsListening(false);
-  }
-};
-
-const stopListening = async () => {
-  try {
-    await Voice.stop();
-    setIsListening(false);
-    if (recognizedText.includes('독도는 우리 땅')) {
-      Alert.alert('성공', '정답입니다! 다음 스테이지로 이동합니다.', [
-        {text: '확인', onPress: () => navigation.navigate('Stage6_3')},
-      ]);
-    } else {
-      Alert.alert('실패', '정답이 아닙니다. 다시 시도해보세요.');
+  const startListening = async () => {
+    try {
+      setRecognizedText('');
+      setIsListening(true);
+      await Voice.start('ko-KR');
+    } catch (e) {
+      console.error('🎤 start error:', e);
+      setIsListening(false);
     }
-  } catch (e) {
-    console.error('🛑 stop error:', e);
-  }
-};
-
-const toggleListening = () => {
-  if (isListening) {
-    stopListening();
-  } else {
-    startListening();
-  }
-};
-
-useEffect(() => {
-  Voice.onSpeechResults = e => {
-    const text = e.value?.[0] || '';
-    setRecognizedText(text);
   };
 
-  Voice.onSpeechError = e => {
-    console.error('Speech Error:', e);
+  const stopListening = async () => {
+    try {
+      await Voice.stop();
+      setIsListening(false);
+      if (recognizedText.includes('독도는 우리 땅')) {
+        Alert.alert('성공', '정답입니다! 다음 스테이지로 이동합니다.', [
+          {text: '확인', onPress: () => navigation.navigate('Stage6_3')},
+        ]);
+      } else {
+        Alert.alert('실패', '정답이 아닙니다. 다시 시도해보세요.');
+      }
+    } catch (e) {
+      console.error('🛑 stop error:', e);
+    }
   };
-  return () => {
-    Voice.destroy().then(Voice.removeAllListeners);
+
+  const toggleListening = () => {
+    if (isListening) {
+      stopListening();
+    } else {
+      startListening();
+    }
   };
-}, []);
+
+  useEffect(() => {
+    Voice.onSpeechResults = e => {
+      const text = e.value?.[0] || '';
+      setRecognizedText(text);
+    };
+
+    Voice.onSpeechError = e => {
+      console.error('Speech Error:', e);
+    };
+    return () => {
+      Voice.destroy().then(Voice.removeAllListeners);
+    };
+  }, []);
 
   const handleMapPress = () => {
     navigation.navigate('Map');
@@ -108,8 +117,7 @@ useEffect(() => {
           <Text style={styles.text}>독도 조형물이야!</Text>
           <Text style={styles.subText}>
             실제 독도 모습을 축소한 조형물을 설치해 '독도사랑, 나라사랑' 정신을
-            되새기게 하기 위한 목적으로 설치되었어! 조형물 앞에 있는 안내판 앞에
-            서서 {'\n'} '독도는 우리땅'을 외쳐보자!
+            되새기게 하기 위한 목적으로 설치되었어!
           </Text>
           <TouchableOpacity
             style={styles.nextButton}

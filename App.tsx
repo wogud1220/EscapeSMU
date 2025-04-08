@@ -81,6 +81,7 @@ import Stage11Run from './screens/Stage11Run';
 import Stage11_4 from './screens/Stage11_4';
 import Stage11_5 from './screens/Stage11_5';
 import Stage11_6 from './screens/Stage11_6';
+import Stage11_7 from './screens/Stage11_7';
 import Stage11Camera from './screens/Stage11Camera';
 import Stage12_1 from './screens/Stage12_1';
 import Stage12_2 from './screens/Stage12_2';
@@ -185,6 +186,7 @@ export type RootStackParamList = {
   Stage11_4: {college: string; department: string};
   Stage11_5: {college: string; department: string};
   Stage11_6: {college: string; department: string};
+  Stage11_7: { college: string; department: string };
   Stage11Camera: {college: string; department: string};
   Stage11Run: {college: string; department: string};
   Stage12_1: {college: string; department: string};

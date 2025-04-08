@@ -70,9 +70,9 @@ const Stage2 = () => {
             style={styles.wayImage}
             resizeMode="contain"
           />
-          <Text style={styles.text}>이제 청록관으로 가야할 차례야!</Text>
+          <Text style={styles.text}>정문 문제를 풀었구나!</Text>
           <Text style={styles.subText}>
-            청록관으로 가려면 위에 있는 사진의 방향으로 가면 된다는데? 가보자!
+            이제 캠퍼스 안으로 들어가보자!
           </Text>
         </View>
 
@@ -126,6 +126,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: height * 0.01,
     textAlign: 'center',
+    marginTop: height * -0.04,
   },
   subText: {
     color: '#555',

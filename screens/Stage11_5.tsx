@@ -98,12 +98,12 @@ const { department } = route.params;
         {/* 흰색 박스 */}
         <View style={styles.box}>
           <Text style={styles.text}>
-            학생회관에는 식당 뿐만 아니라, 다양한 편의시설도 존재하고 있어. 그렇다면 다음 보기 중 학생회관에 존재하지 <Text style={styles.highlight}>않는</Text> 시설을 골라봐!
+            어느 정도 스포츠센터를 돌아봤니? 그러면 스포츠센터에 존재하지 <Text style={styles.highlight}>않는</Text> 시설을 골라봐!
           </Text>
 
           {/* 서브텍스트 추가 */}
           <Text style={styles.subText}>
-            서점은 2025년 1학기에 없어졌어... {"\n"}{"\n"}틀릴 시에는 다시 입력하기까지 <Text style={styles.highlight}>5분</Text>을 기다려야해... 신중하자!
+            틀릴 시에는 다시 입력하기까지 <Text style={styles.highlight}>5분</Text>을 기다려야해... 신중하자!
           </Text>
 
           {/* ✅ 타이머 표시 */}

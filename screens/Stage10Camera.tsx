@@ -338,6 +338,12 @@ const Stage1Camera = ({navigation}: {navigation: any}) => {
       />
 
       <Image
+        source={require('../assets/foodcourt1.png')}
+        style={styles.backImage}
+        resizeMode="contain"
+      />
+
+      <Image
         source={require('../assets/foodcourt.png')}
         style={styles.backImage}
         resizeMode="contain"

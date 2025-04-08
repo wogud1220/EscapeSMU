@@ -58,6 +58,8 @@ const Stage1_2 = () => {
       Alert.alert('오답입니다.', '다시 시도해 보세요!');
     }
   };
+  
+
   const handleHomePress = () => {
     navigation.navigate('Main');
   };

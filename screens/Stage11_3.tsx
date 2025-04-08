@@ -1,247 +1,137 @@
-// //달리기 고
+//상명스포츠센터 시설 퀴즈!
 
-// import React from 'react';
-// import { View, Text, ImageBackground, StyleSheet, Dimensions, Image, TouchableOpacity } from 'react-native';
-// import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-// import { useNavigation } from '@react-navigation/native';
-// import { RootStackParamList } from '../App';
-// import { useRoute, RouteProp } from '@react-navigation/native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, ImageBackground, StyleSheet, Dimensions, Image, TouchableOpacity, Alert } from 'react-native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { useNavigation } from '@react-navigation/native';
+import { RootStackParamList } from '../App';
+import { useRoute, RouteProp } from '@react-navigation/native';
 
 // type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage11_3'>;
 
-// const { width, height } = Dimensions.get('window');
+const { width, height } = Dimensions.get('window');
 
-// const Stage11_3 = () => {
-//   const navigation = useNavigation<NavigationProp>();
-//   const route = useRoute<RouteProp<RootStackParamList, 'Stage11_3'>>();
-// const { department } = route.params;
-
-//   const handleMapPress = () => {
-//     navigation.navigate('Map');
-//   };
-
-//   const handleNextStage = () => {
-//     navigation.navigate('Stage11Run', {department});
-//   };
-
-//   return (
-//     <View style={styles.container}>
-//       {/* ✅ main.png를 배경으로 설정 */}
-//       <ImageBackground
-//         source={require('../assets/main.png')}
-//         style={styles.image}
-//         resizeMode="cover"
-//       >
-//         {/* 🔥 투명 레이어 추가 */}
-//         <View style={styles.overlay} />
-
-//         {/* ✅ 🗺️ 오른쪽 상단의 map.png */}
-//         <TouchableOpacity onPress={handleMapPress} style={styles.mapButton}>
-//           <Image
-//             source={require('../assets/map.png')}
-//             style={styles.mapImage}
-//             resizeMode="contain"
-//           />
-//         </TouchableOpacity>
-
-//         {/* ✅ 홈으로 이동 버튼 */}
-//         <TouchableOpacity onPress={() => navigation.navigate('Main')} style={styles.backButton}>
-//           <Image
-//             source={require('../assets/home.png')}
-//             style={styles.backImage}
-//             resizeMode="contain"
-//           />
-//         </TouchableOpacity>
-
-//         {/* ✅ 가운데 투명한 흰색 박스 */}
-//         <View style={styles.box}>
-//           <Text style={styles.text}>
-//             달리기!
-//           </Text>
-//           <Text style={styles.subText}>
-//           운동장과 같이 달리기 안전한 곳에서{'\n'}
-//             아래 달리기! 버튼을 눌러서 나오는 속도계를{'\n'} 기준으로
-//             15km/h를 넘겨보자!{'\n'}
-//             가벼운 달리기 속도니까 충분히 할 수 있을거야!{'\n'}
-//           </Text>
-
-//         </View>
-
-//         {/* ✅ 다음 스테이지로 이동 버튼 */}
-//         <TouchableOpacity
-//           style={styles.nextButton}
-//           onPress={handleNextStage}
-//           activeOpacity={0.7}
-//         >
-//           <Text style={styles.buttonText}>달리기 🏃</Text>
-//         </TouchableOpacity>
-//       </ImageBackground>
-//     </View>
-//   );
-// };
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     backgroundColor: '#F5E6C4',
-//     alignItems: 'center',
-//     justifyContent: 'center',
-//   },
-//   image: {
-//     flex: 1,
-//     width: '100%',
-//     height: '100%',
-//     justifyContent: 'center',
-//     alignItems: 'center',
-//   },
-//   overlay: {
-//     ...StyleSheet.absoluteFillObject,
-//     backgroundColor: 'rgba(0, 0, 0, 0.6)',
-//   },
-//   box: {
-//     backgroundColor: 'rgba(255, 255, 255, 0.7)',
-//     width: width * 0.8,
-//     height: height * 0.4, // ✅ 높이 조정 (이미지 공간 포함)
-//     padding: height * 0.03,
-//     borderRadius: width * 0.04,
-//     alignItems: 'center',
-//     justifyContent: 'center',
-//     shadowColor: '#000',
-//     shadowOffset: { width: 0, height: 4 },
-//     shadowOpacity: 0.3,
-//     shadowRadius: 4,
-//     elevation: 5,
-//   },
-//   text: {
-//     marginTop: height * 0.05,
-//     color: '#333',
-//     fontSize: width * 0.055,
-//     fontWeight: 'bold',
-//     marginBottom: height * 0.01,
-//     textAlign: 'center',
-//     lineHeight: height * 0.035, // ✅ 줄 간격
-//   },
-//   subText: {
-//     color: '#555',
-//     fontSize: width * 0.045,
-//     textAlign: 'center',
-//     marginTop: height * 0.02,
-//   },
-//   mapButton: {
-//     position: 'absolute',
-//     top: height * 0.05,
-//     right: width * 0.05,
-//     width: width * 0.12,
-//     height: width * 0.12,
-//   },
-//   mapImage: {
-//     width: '100%',
-//     height: '100%',
-//   },
-//   nextButton: {
-//     position: 'absolute',
-//     bottom: height * 0.05,
-//     backgroundColor: 'rgba(0, 0, 255, 0.7)', // ✅ 파란색 버튼
-//     paddingVertical: height * 0.02,
-//     paddingHorizontal: width * 0.2,
-//     borderRadius: width * 0.03,
-//     alignItems: 'center',
-//   },
-//   buttonText: {
-//     color: '#FFFFFF',
-//     fontSize: width * 0.045,
-//     fontWeight: 'bold',
-//   },
-//   backButton: {
-//     position: 'absolute',
-//     top: height * 0.05,
-//     left: width * 0.05,
-//     width: width * 0.1,
-//     height: width * 0.1,
-//   },
-//   backImage: {
-//     width: '100%',
-//     height: '100%',
-//   },
-//   wayImage: {
-//     width: width * 0.6, // ✅ waytostage2.png 크기 조정
-//     height: height * 0.5,
-//     marginBottom: height * 0.005, // ✅ 이미지와 텍스트 간격
-//   },
-// });
-
-// export default Stage11_3;
-
-import React, {useEffect, useState} from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  Dimensions,
-  Alert,
-} from 'react-native';
-import Geolocation from '@react-native-community/geolocation';
-import {useNavigation, useRoute, RouteProp} from '@react-navigation/native';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {RootStackParamList} from '../App';
-
-const {width, height} = Dimensions.get('window');
-
-// 타입 지정
-type NavigationProp = NativeStackNavigationProp<
-  RootStackParamList,
-  'Stage11Run'
->;
-type RouteProps = RouteProp<RootStackParamList, 'Stage11Run'>;
+const options = [
+  { label: '2~5명 이하의 팀만 입장 가능하다.', value: 1 },
+  { label: '골프클럽과 신발, 장갑은 개인 것을 사용해야 한다.', value: 2 },
+  { label: '운동복과 실내전용 골프화를 착용해야 한다.', value: 3 },
+  { label: '1팀이 이용할 수 있는 시간은 50분이다.', value: 4 },
+  { label: '전화 예약은 받지 않으며 반드시 내장하여 예약해야 한다.', value: 5 },
+];
 
 const Stage11_3 = () => {
   const navigation = useNavigation<NavigationProp>();
-  const route = useRoute<RouteProps>();
-  const {college, department} = route.params || {};
-
-  const [speed, setSpeed] = useState(0);
-  const [passed, setPassed] = useState(false);
+  const route = useRoute<RouteProp<RootStackParamList, 'Stage11_4'>>();
+const { department } = route.params;
+  const [disabled, setDisabled] = useState(false); // ✅ 버튼 활성화 상태
+  const [countdown, setCountdown] = useState<number | null>(null); // ✅ 남은 시간 상태
 
   useEffect(() => {
-    const watchId = Geolocation.watchPosition(
-      pos => {
-        const speedMs = pos.coords.speed || 0;
-        const speedKmh = speedMs * 3.6;
-        setSpeed(speedKmh);
+    let timer: NodeJS.Timeout;
+    if (countdown !== null) {
+      // ✅ 매 초마다 countdown 감소
+      timer = setInterval(() => {
+        setCountdown((prev) => (prev !== null ? prev - 1 : null));
+      }, 1000);
 
-        if (speedKmh >= 15 && !passed) {
-          setPassed(true);
-          Alert.alert(
-            '🎉 성공!',
-            '15km/h를 넘었습니다. 다음 스테이지로 이동합니다.',
-            [
-              {
-                text: '확인',
-                onPress: () =>
-                  navigation.navigate('Stage11_4', {college, department}),
-              },
-            ],
-          );
-        }
-      },
-      err => console.log('🚨 위치 오류:', err),
-      {
-        enableHighAccuracy: true,
-        distanceFilter: 0,
-        interval: 1000,
-        fastestInterval: 500,
-      },
-    );
+      if (countdown === 0) {
+        clearInterval(timer);
+        setDisabled(false);
+        setCountdown(null); // ✅ 타이머 초기화
+      }
+    }
 
-    return () => Geolocation.clearWatch(watchId);
-  }, [passed]);
+    return () => clearInterval(timer); // ✅ 컴포넌트 언마운트 시 클리어
+  }, [countdown]);
+
+  const handleMapPress = () => {
+    navigation.navigate('Map');
+  };
+
+  const handleOptionPress = (value: number) => {
+    if (disabled) return;
+
+    if (value === 4) {
+      Alert.alert('정답입니다!', '다음 스테이지로 이동합니다.', [
+        { text: '확인', onPress: () => navigation.navigate('Stage11_4', {department}) },
+      ]);
+    } else {
+      Alert.alert('오답입니다.', '5분 뒤에 다시 시도해 보세요!');
+      
+      // ✅ 5분(300초) 동안 버튼 비활성화 + 타이머 시작
+      setDisabled(true);
+      setCountdown(300); // 180초 (3분)
+    }
+  };
+
+  const handleHomePress = () => {
+    navigation.navigate('Main');
+  };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>🏃 달리기 측정</Text>
-      <Text style={styles.speedText}>{speed.toFixed(1)} km/h</Text>
-      <Text style={styles.tipText}>15km/h를 넘으면 자동으로 통과됩니다!</Text>
+      <ImageBackground 
+        source={require('../assets/main.png')} 
+        style={styles.image}
+        resizeMode="cover"
+      >
+        <View style={styles.overlay} />
+
+        {/* 지도 버튼 */}
+        <TouchableOpacity onPress={handleMapPress} style={styles.mapButton}>
+          <Image 
+            source={require('../assets/map.png')}
+            style={styles.mapImage}
+            resizeMode="contain"
+          />
+        </TouchableOpacity>
+
+        {/* 홈 버튼 */}
+        <TouchableOpacity onPress={handleHomePress} style={styles.backButton}>
+          <Image 
+            source={require('../assets/home.png')}
+            style={styles.backImage}
+            resizeMode="contain"
+          />
+        </TouchableOpacity>
+
+        {/* 흰색 박스 */}
+        <View style={styles.box}>
+          <Text style={styles.text}>
+            1층에는 스쿼시장과 스크린골프장이 있어!{'\n'}
+             스크린골프장을 사용하는데 {'\n'}<Text style={styles.highlight}>잘못된 </Text>이용 수칙을 골라봐!
+          </Text>
+
+          {/* 서브텍스트 추가 */}
+          <Text style={styles.subText}>
+            틀릴 시에는 다시 입력하기까지 <Text style={styles.highlight}>5분</Text>을 기다려야해... 신중하자!
+          </Text>
+
+          {/* ✅ 타이머 표시 */}
+          {countdown !== null && (
+            <Text style={styles.timerText}>
+              {`다시 시도 가능까지: ${Math.floor(countdown / 60)}:${(countdown % 60).toString().padStart(2, '0')}`}
+            </Text>
+          )}
+
+          {/* 버튼 생성 */}
+          <View style={styles.buttonContainer}>
+            {options.map((option) => (
+              <TouchableOpacity
+                key={option.value}
+                style={[
+                  styles.optionButton,
+                  disabled && styles.disabledButton // ✅ 비활성화 시 스타일 적용
+                ]}
+                onPress={() => handleOptionPress(option.value)}
+                disabled={disabled}
+              >
+                <Text style={styles.optionText}>{option.label}</Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+        </View>
+      </ImageBackground>
     </View>
   );
 };
@@ -253,21 +143,94 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  title: {
-    fontSize: width * 0.08,
-    color: '#fff',
-    marginBottom: height * 0.02,
+  image: {
+    flex: 1,
+    width: '100%',
+    height: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
-  speedText: {
-    fontSize: width * 0.2,
-    color: '#00FF00',
+  overlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'rgba(0, 0, 0, 0.6)',
+  },
+  box: {
+    backgroundColor: 'rgba(255, 255, 255, 0.85)',
+    marginTop: height * 0.12,
+    width: width * 0.85,
+    height: height * 0.7,
+    padding: height * 0.03,
+    borderRadius: width * 0.04,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  text: {
+    color: '#333',
+    fontSize: width * 0.05,
+    fontWeight: 'bold',
+    marginBottom: height * 0.01,
+    textAlign: 'center',
+  },
+  highlight: {
+    color: 'red',
     fontWeight: 'bold',
   },
-  tipText: {
-    marginTop: 20,
-    fontSize: 18,
-    color: '#ccc',
+  subText: {
+    color: '#555',
+    fontSize: width * 0.04,
+    marginBottom: height * 0.02,
     textAlign: 'center',
+    lineHeight: width * 0.05,
+  },
+  timerText: {
+    color: '#ff4500',
+    fontSize: width * 0.045,
+    fontWeight: 'bold',
+    marginBottom: height * 0.02,
+  },
+  buttonContainer: {
+    width: '100%',
+    marginTop: height * 0.01,
+    alignItems: 'center',
+  },
+  optionButton: {
+    backgroundColor: 'rgba(0, 0, 255, 0.7)',
+    width: width * 0.6,
+    paddingVertical: height * 0.015,
+    borderRadius: width * 0.03,
+    marginVertical: height * 0.008,
+    alignItems: 'center',
+  },
+  optionText: {
+    color: '#FFF',
+    fontSize: width * 0.045,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  disabledButton: {
+    backgroundColor: 'gray',
+  },
+  mapButton: {
+    position: 'absolute',
+    top: height * 0.05,
+    right: width * 0.05,
+    width: width * 0.1, // ✅ 크기 고정 설정
+    height: width * 0.1, // ✅ 크기 고정 설정
+  },
+  mapImage: {
+    width: '100%',
+    height: '100%',
+  },
+  backButton: {
+    position: 'absolute',
+    top: height * 0.05,
+    left: width * 0.05,
+    width: width * 0.1, // ✅ 크기 고정 설정
+    height: width * 0.1, // ✅ 크기 고정 설정
+  },
+  backImage: {
+    width: '100%',
+    height: '100%',
   },
 });
 

@@ -21,7 +21,7 @@ const { department } = route.params;
   };
 
   const handleNextStage = () => {
-    navigation.navigate('Stage11Camera', {department});
+    navigation.navigate('Stage11_7', {department});
   };
 
   return (
@@ -56,16 +56,15 @@ const { department } = route.params;
         {/* ✅ 가운데 투명한 흰색 박스 */}
         <View style={styles.box}>
           <Image 
-            source={require('../assets/sportspic.png')} 
+            source={require('../assets/sportstair.png')} 
             style={styles.wayImage} 
             resizeMode="contain"
           />
           <Text style={styles.text}>
-            스포츠센터에 대해 {'\n'}아직 잘 모르겠다면
+            위층으로 올라가는 계단으로 가보자!
           </Text>
           <Text style={styles.subText}>
-            건물 내부에 위치해있는 내부도를 살펴보자!{'\n'}
-            빨간색 네모가 쳐진 부분을 사진으로 찍어서 제출해보자!
+            계단에 그림들이 붙어 있어!
           </Text>
         </View>
 
@@ -75,7 +74,7 @@ const { department } = route.params;
           onPress={handleNextStage}
           activeOpacity={0.7}
         >
-          <Text style={styles.buttonText}>카메라 📸</Text>
+          <Text style={styles.buttonText}>다음 ➡️</Text>
         </TouchableOpacity>
       </ImageBackground>
     </View>
@@ -119,6 +118,7 @@ const styles = StyleSheet.create({
     fontSize: width * 0.06,
     fontWeight: 'bold',
     marginBottom: height * 0.01,
+    marginTop: height * 0.05,
     textAlign: 'center',
   },
   subText: {
@@ -164,8 +164,8 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   wayImage: {
-    width: width * 0.6, // ✅ waytostage2.png 크기 조정
-    height: height * 0.3,
+    width: width * 0.65, // ✅ waytostage2.png 크기 조정
+    height: height * 0.45,
     marginBottom: height * 0.005, // ✅ 이미지와 텍스트 간격
   },
 });
