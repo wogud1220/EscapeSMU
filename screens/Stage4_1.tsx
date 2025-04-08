@@ -1,31 +1,31 @@
-import React, { useState } from 'react';
-import { 
-  View, 
-  Text, 
-  ImageBackground, 
-  StyleSheet, 
-  Dimensions, 
-  Image, 
-  TouchableOpacity, 
-  TextInput, 
-  Alert, 
-  Modal, 
-  TouchableWithoutFeedback, 
-  Keyboard 
+import React, {useState} from 'react';
+import {
+  View,
+  Text,
+  ImageBackground,
+  StyleSheet,
+  Dimensions,
+  Image,
+  TouchableOpacity,
+  TextInput,
+  Alert,
+  Modal,
+  TouchableWithoutFeedback,
+  Keyboard,
 } from 'react-native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { useNavigation } from '@react-navigation/native';
-import { RootStackParamList } from '../App';
-import { useRoute, RouteProp } from '@react-navigation/native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {useNavigation} from '@react-navigation/native';
+import {RootStackParamList} from '../App';
+import {useRoute, RouteProp} from '@react-navigation/native';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage4_1'>;
 
-const { width, height } = Dimensions.get('window');
+const {width, height} = Dimensions.get('window');
 
 const Stage4_1 = () => {
   const navigation = useNavigation<NavigationProp>();
   const route = useRoute<RouteProp<RootStackParamList, 'Stage4_1'>>();
-  const { department } = route.params;
+  const {college = '', department = ''} = route.params || {};
   const [answer, setAnswer] = useState('');
   const [isModalVisible, setIsModalVisible] = useState(false);
 
@@ -36,9 +36,9 @@ const Stage4_1 = () => {
   const handleNextStage = () => {
     if (answer.trim() === '100') {
       Alert.alert('정답입니다!', '다음 스테이지로 이동합니다.', [
-        { 
-          text: '확인', 
-          onPress: () => navigation.navigate('Stage4_2', {department}) 
+        {
+          text: '확인',
+          onPress: () => navigation.navigate('Stage4_2', {college, department}),
         },
       ]);
       setIsModalVisible(false);
@@ -64,16 +64,15 @@ const Stage4_1 = () => {
   return (
     <View style={styles.container}>
       {/* ✅ 배경 이미지 설정 */}
-      <ImageBackground 
-        source={require('../assets/main.png')} 
+      <ImageBackground
+        source={require('../assets/main.png')}
         style={styles.image}
-        resizeMode="cover"
-      >
+        resizeMode="cover">
         <View style={styles.overlay} />
 
         {/* ✅ 지도 버튼 */}
         <TouchableOpacity onPress={handleMapPress} style={styles.mapButton}>
-          <Image 
+          <Image
             source={require('../assets/map.png')}
             style={styles.mapImage}
             resizeMode="contain"
@@ -82,7 +81,7 @@ const Stage4_1 = () => {
 
         {/* ✅ 홈 버튼 */}
         <TouchableOpacity onPress={handleHomePress} style={styles.backButton}>
-          <Image 
+          <Image
             source={require('../assets/home.png')}
             style={styles.backImage}
             resizeMode="contain"
@@ -92,27 +91,27 @@ const Stage4_1 = () => {
         {/* ✅ 문제 박스 */}
         <View style={styles.box}>
           <Text style={styles.text}>
-            본관은 대학본부 역할과 함께 공과대학의 강의/실습실의{'\n'}역할을 겸하고 있어!
+            본관은 대학본부 역할과 함께 공과대학의 강의/실습실의{'\n'}역할을
+            겸하고 있어!
           </Text>
-          
+
           {/* ✅ 텍스트와 텍스트 사이에 이미지 추가 */}
-          <Image 
-            source={require('../assets/bongwan4th.png')} 
+          <Image
+            source={require('../assets/bongwan4th.png')}
             style={styles.wayImage}
             resizeMode="contain"
           />
 
           <Text style={styles.subText}>
-            본관 4층에는 학생들이 자유롭게 사용할 수 있는 물품 보관함이 있어! {'\n'}
+            본관 4층에는 학생들이 자유롭게 사용할 수 있는 물품 보관함이 있어!{' '}
+            {'\n'}
             그렇다면, 이 물품 보관함은 몇 번까지 존재할까?
           </Text>
         </View>
 
         {/* ✅ 입력 필드 → 터치 시 모달 열기 */}
         <TouchableOpacity onPress={openModal} style={styles.inputContainer}>
-          <Text style={styles.inputText}>
-            {answer || '정답 입력'}
-          </Text>
+          <Text style={styles.inputText}>{answer || '정답 입력'}</Text>
         </TouchableOpacity>
 
         {/* ✅ 모달 */}
@@ -120,8 +119,7 @@ const Stage4_1 = () => {
           animationType="fade"
           transparent={true}
           visible={isModalVisible}
-          onRequestClose={closeModal}
-        >
+          onRequestClose={closeModal}>
           <TouchableWithoutFeedback onPress={closeModal}>
             <View style={styles.modalBackground}>
               <TouchableWithoutFeedback>
@@ -141,10 +139,9 @@ const Stage4_1 = () => {
                   />
 
                   {/* ✅ 제출 버튼 */}
-                  <TouchableOpacity 
+                  <TouchableOpacity
                     style={styles.submitButton}
-                    onPress={handleNextStage}
-                  >
+                    onPress={handleNextStage}>
                     <Text style={styles.buttonText}>제출하기</Text>
                   </TouchableOpacity>
                 </View>

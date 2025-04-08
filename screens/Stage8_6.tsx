@@ -38,8 +38,11 @@ const Stage8_6 = () => {
   };
   const handleNextStage = () => {
     if (answer.trim() === '1') {
+      //인문대, 공대라면 기숙사 -> 학생회관
       const nextStage =
-        college === '글로벌인문학부대학' ? 'Stage10_1' : 'Stage9_1';
+        college === '글로벌인문학부대학' || college === '공과대학'
+          ? 'Stage10_1'
+          : 'Stage9_1';
 
       Alert.alert('정답입니다!', '다음 스테이지로 이동합니다.', [
         {

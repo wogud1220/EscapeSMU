@@ -44,7 +44,7 @@ const Stage1_2 = () => {
       setIsModalVisible(false);
 
       if (college.includes('공과대학')) {
-        navigation.navigate('Stage3_1', {college, department});
+        navigation.navigate('Stage13_1', {college, department});
       } else if (college.includes('융합기술대학')) {
         navigation.navigate('Stage2', {college, department});
       } else if (college.includes('글로벌인문학부대학')) {

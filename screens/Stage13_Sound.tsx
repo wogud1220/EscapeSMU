@@ -53,7 +53,7 @@ const Stage13_Sound = () => {
   const [currentDecibel, setCurrentDecibel] = useState<number>(0);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [answer, setAnswer] = useState('');
-  const [userDepartment, setUserDepartment] = useState('글로벌인문학부'); // Add department state
+  const [userDepartment, setUserDepartment] = useState(college || '');
   const fadeAnim = useState(new Animated.Value(0))[0];
 
   // 최신 데시벨 값을 저장할 useRef
@@ -132,6 +132,8 @@ const Stage13_Sound = () => {
   const handleNextStage = () => {
     if (userDepartment === '글로벌인문학부') {
       navigation.navigate('Stage5', {college, department});
+    } else if (userDepartment === '공과대학') {
+      navigation.navigate('Stage4', {college, department});
     } else {
       navigation.navigate('StageFinal', {college, department}); // Otherwise move to StageFinal
     }

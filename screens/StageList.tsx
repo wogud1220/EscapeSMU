@@ -106,16 +106,10 @@ const StageList = () => {
               onPress={() => {
                 setCollege(selectedCollege); // ✅ 학부 저장
                 setDepartment(major);
-                if (selectedCollege === '글로벌인문학부대학') {
-                  navigation.navigate('Stage1', {
-                    college: selectedCollege,
-                    department: major,
-                  });
-                } else {
-                  navigation.navigate('Stage1Camera', {
-                    department: `${selectedCollege} - ${major}`,
-                  });
-                }
+                navigation.navigate('Stage1', {
+                  college: selectedCollege,
+                  department: major,
+                });
               }}>
               <Text style={styles.menuItem}>{major}</Text>
             </TouchableOpacity>

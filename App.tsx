@@ -349,6 +349,11 @@ const App = () => {
             options={{headerShown: false}}
           />
           <Stack.Screen
+            name="Stage4Camera"
+            component={Stage4Camera}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
             name="Stage5"
             component={Stage5}
             options={{headerShown: false}}
