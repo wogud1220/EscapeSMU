@@ -5,6 +5,7 @@ import LogIn from './screens/Member/LogIn';
 import SignIn from './screens/Member/SignIn';
 import Main from './screens/Main';
 import StageList from './screens/StageList';
+import WarningPage from './screens/WarningPage';
 import Stage1 from './screens/Stage1';
 import Stage1Camera from './screens/Stage1Camera';
 import Map from './screens/Map';
@@ -111,6 +112,7 @@ export type RootStackParamList = {
   SignIn: {college: string; department: string};
   Main: undefined;
   StageList: {college: string; department: string};
+  WarningPage: undefined;
   Stage1: {college: string; department: string};
   Stage1Camera: {college: string; department: string};
   Map: undefined;
@@ -238,6 +240,11 @@ const App = () => {
           <Stack.Screen
             name="StageList"
             component={StageList}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="WarningPage"
+            component={WarningPage}
             options={{headerShown: false}}
           />
           <Stack.Screen
@@ -511,6 +518,21 @@ const App = () => {
             options={{headerShown: false}}
           />
           <Stack.Screen
+            name="Stage9_2_1"
+            component={Stage9_2_1}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="Stage9_2_2"
+            component={Stage9_2_2}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="Stage9Hint"
+            component={Stage9Hint}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
             name="Stage9_3"
             component={Stage9_3}
             options={{headerShown: false}}
@@ -523,6 +545,11 @@ const App = () => {
           <Stack.Screen
             name="Stage9_4"
             component={Stage9_4}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="Stage9_5"
+            component={Stage9_5}
             options={{headerShown: false}}
           />
           <Stack.Screen
@@ -598,6 +625,11 @@ const App = () => {
           <Stack.Screen
             name="Stage11_6"
             component={Stage11_6}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="Stage11_7"
+            component={Stage11_7}
             options={{headerShown: false}}
           />
           <Stack.Screen
