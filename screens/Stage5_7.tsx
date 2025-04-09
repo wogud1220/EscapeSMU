@@ -35,11 +35,8 @@ const Stage5_7 = () => {
   const handleNextStage = () => {
     if (college === '글로벌인문학부대학') {
       navigation.navigate('Stage7_1', {college, department}); // ✅ 글로벌인문학부대학이면 Stage7_1(송백관)
-    } else if (college === '공과대학') {
-      //공과대학이라면 한누리관 -> 기숙사
-      navigation.navigate('Stage8_1', {college, department}); // ✅
     } else {
-      navigation.navigate('Stage5_1', {college, department}); // ✅ 그 외는 기존대로 Stage5_1
+      navigation.navigate('Stage8_1', {college, department}); // ✅ 그 외는 기숙사인 8_1
     }
   };
   return (

@@ -198,6 +198,7 @@ import React, {useState} from 'react';
 import {
   View,
   Text,
+  Image,
   StyleSheet,
   TouchableOpacity,
   Dimensions,
@@ -282,6 +283,15 @@ const StageList = () => {
 
   return (
     <View style={styles.container}>
+<TouchableOpacity onPress={() => navigation.navigate('Main')} style={styles.homeButton}>
+  <Image 
+    source={require('../assets/home.png')} 
+    style={styles.homeImage} 
+    resizeMode="contain" 
+  />
+</TouchableOpacity>
+
+
       <TouchableOpacity
         style={styles.sideButton}
         onPress={() => {
@@ -373,6 +383,19 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#333',
   },
+  homeButton: {
+    position: 'absolute',
+    top: height * 0.05,
+    left: width * 0.05,
+    width: width * 0.1,
+    height: width * 0.1,
+    zIndex: 10,
+  },
+  homeImage: {
+    width: '100%',
+    height: '100%',
+  },
+  
 });
 
 export default StageList;
