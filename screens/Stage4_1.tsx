@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   View,
   Text,
@@ -18,6 +18,8 @@ import {useNavigation} from '@react-navigation/native';
 import {RootStackParamList} from '../App';
 import {useRoute, RouteProp} from '@react-navigation/native';
 
+import {updateStageData} from '../utils/updateStageData';
+
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage4_1'>;
 
 const {width, height} = Dimensions.get('window');
@@ -28,6 +30,7 @@ const Stage4_1 = () => {
   const {college = '', department = ''} = route.params || {};
   const [answer, setAnswer] = useState('');
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [userId, setUserId] = useState('');
 
   const handleMapPress = () => {
     navigation.navigate('Map');

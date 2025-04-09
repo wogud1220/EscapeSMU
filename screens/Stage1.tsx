@@ -14,6 +14,7 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {useNavigation, useRoute, RouteProp} from '@react-navigation/native';
 import {RootStackParamList} from '../App';
 
+
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage1'>;
 type Stage1RouteProp = RouteProp<RootStackParamList, 'Stage1'>;
 
@@ -29,10 +30,12 @@ const Stage1 = () => {
   };
 
   const handleNextStage = () => {
+    
     navigation.navigate('Stage1Camera', {college, department});
   };
 
   return (
+    
     <View style={styles.container}>
       <ImageBackground
         source={require('../assets/main.png')}

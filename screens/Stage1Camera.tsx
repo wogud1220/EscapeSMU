@@ -17,7 +17,7 @@ import {auth} from './firebase.config';
 import axios from 'axios';
 import {useRoute, RouteProp} from '@react-navigation/native';
 import {RootStackParamList} from '../App';
-
+import {updateStageData} from '../utils/updateStageData';
 const {width, height} = Dimensions.get('window');
 
 type Stage1CameraRouteProp = RouteProp<RootStackParamList, 'Stage1Camera'>;
@@ -126,7 +126,9 @@ const Stage1Camera = ({navigation}: {navigation: any}) => {
       </Text>
     );
   }
-  const goToNextStage = () => {
+  const goToNextStage = async () => {
+    // 진행 상태 업데이트 🔥
+    await updateStageData(userId, college, 'Stage1_2');
     navigation.navigate('Stage1_2', {college, department}); // ✅ Stage1_2로 이동
   };
 
