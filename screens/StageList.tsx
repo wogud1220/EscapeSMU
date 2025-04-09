@@ -106,7 +106,7 @@ const StageList = () => {
               onPress={() => {
                 setCollege(selectedCollege); // ✅ 학부 저장
                 setDepartment(major);
-                navigation.navigate('Stage1', {
+                navigation.navigate('Stage5_1_1', {
                   college: selectedCollege,
                   department: major,
                 });
