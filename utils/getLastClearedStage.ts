@@ -34,19 +34,36 @@ import {db} from '../screens/firebase.config';
  * @param college 학부 이름 (공과대학 등)
  * @returns 클리어된 마지막 스테이지 ID (예: 'Stage1_2'), 없으면 null
  */
+// export const getLastClearedStage = async (
+//   uid: string,
+//   college: string,
+// ): Promise<string | null> => {
+//   try {
+//     const userRef = doc(db, 'users', uid);
+//     const snapshot = await getDoc(userRef);
+//     if (!snapshot.exists()) return null;
+
+//     const cleared = snapshot.data()?.stageCleared?.[college];
+//     return cleared ?? null;
+//   } catch (error) {
+//     console.error('🔥 getLastClearedStage error:', error);
+//     return null;
+//   }
+// };
+
 export const getLastClearedStage = async (
   uid: string,
   college: string,
-): Promise<string | null> => {
+): Promise<string> => {
   try {
     const userRef = doc(db, 'users', uid);
     const snapshot = await getDoc(userRef);
-    if (!snapshot.exists()) return null;
+    if (!snapshot.exists()) return 'stage1_1';
 
     const cleared = snapshot.data()?.stageCleared?.[college];
-    return cleared ?? null;
+    return cleared ?? 'stage1_1'; // 기본값 보장
   } catch (error) {
     console.error('🔥 getLastClearedStage error:', error);
-    return null;
+    return 'stage1_1'; // 에러 발생 시에도 기본값
   }
 };
