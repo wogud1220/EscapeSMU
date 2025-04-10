@@ -15,6 +15,10 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {useNavigation} from '@react-navigation/native';
 import {RootStackParamList} from '../App';
 import {useRoute, RouteProp} from '@react-navigation/native';
+import {incrementStageAttempt} from '../utils/incrementStageAttempt';
+import {onAuthStateChanged} from 'firebase/auth';
+import {auth} from './firebase.config';
+import {updateStageData} from '../utils/updateStageData';
 
 type NavigationProp = NativeStackNavigationProp<
   RootStackParamList,
@@ -36,7 +40,15 @@ const Stage10_4 = () => {
   const {college, department} = route.params || {};
   const [disabled, setDisabled] = useState(false); // ✅ 버튼 활성화 상태
   const [countdown, setCountdown] = useState<number | null>(null); // ✅ 남은 시간 상태
-
+  const [userId, setUserId] = useState('');
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, user => {
+      if (user) {
+        setUserId(user.uid);
+      }
+    });
+    return unsubscribe;
+  }, []);
   useEffect(() => {
     let timer: NodeJS.Timeout;
     if (countdown !== null) {
@@ -59,10 +71,15 @@ const Stage10_4 = () => {
     navigation.navigate('Map');
   };
 
-  const handleOptionPress = (value: number) => {
+  const handleOptionPress = async (value: number) => {
     if (disabled) return;
 
     if (value === 4) {
+      try {
+        await updateStageData(userId, college, 'Stage10_5');
+      } catch (err) {
+        console.error('🔥 updateStageData error:', err);
+      }
       Alert.alert('정답입니다!', '다음 스테이지로 이동합니다.', [
         {
           text: '확인',
@@ -71,6 +88,7 @@ const Stage10_4 = () => {
         },
       ]);
     } else {
+      incrementStageAttempt(userId, college); // ✅ 오답 시 시도 횟수 증가
       Alert.alert('오답입니다.', '5분 뒤에 다시 시도해 보세요!');
 
       // ✅ 5분(300초) 동안 버튼 비활성화 + 타이머 시작

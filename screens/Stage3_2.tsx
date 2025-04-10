@@ -1,6 +1,6 @@
 //사슴찍기 클리어 화면
 
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -14,6 +14,10 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {useNavigation} from '@react-navigation/native';
 import {RootStackParamList} from '../App';
 import {useRoute, RouteProp} from '@react-navigation/native';
+import {updateStageData} from '../utils/updateStageData';
+import {onAuthStateChanged} from 'firebase/auth';
+import {auth} from './firebase.config';
+import {decrementStageAttempt} from '../utils/decrementStageAttempt';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage3_2'>;
 
@@ -23,13 +27,26 @@ const Stage3_2 = () => {
   const navigation = useNavigation<NavigationProp>();
   const route = useRoute<RouteProp<RootStackParamList, 'Stage3_2'>>();
   const {college, department} = route.params || {};
-
+  const [userId, setUserId] = useState('');
   const handleMapPress = () => {
     navigation.navigate('Map');
   };
+  useEffect(() => {
+    onAuthStateChanged(auth, user => {
+      if (user) {
+        setUserId(user.uid);
+      }
+    });
+  }, []);
+  const handleNextStage = async () => {
+    try {
+      await updateStageData(userId, college, 'Stage5');
+      decrementStageAttempt(userId, college);
+    } catch (err) {
+      console.error('🔥 updateStageData error:', err);
+    }
 
-  const handleNextStage = () => {
-    navigation.navigate('Stage4', {college, department}); // ✅ Stage4로
+    navigation.navigate('Stage5', {college, department}); // ✅ Stage4로
   };
 
   return (

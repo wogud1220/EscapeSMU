@@ -19,6 +19,10 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {useNavigation} from '@react-navigation/native';
 import {RootStackParamList} from '../App';
 import {useRoute, RouteProp} from '@react-navigation/native';
+import {updateStageData} from '../utils/updateStageData';
+import {onAuthStateChanged} from 'firebase/auth';
+import {auth} from './firebase.config';
+import {incrementStageAttempt} from '../utils/incrementStageAttempt';
 
 type NavigationProp = NativeStackNavigationProp<
   RootStackParamList,
@@ -38,13 +42,25 @@ const Stage13_4 = () => {
   const {college = '', department = ''} = route.params || {}; // ✅ 안전한 fallback 추가
   const [answer, setAnswer] = useState('');
   const [isModalVisible, setIsModalVisible] = useState(false);
-
+  const [userId, setUserId] = useState('');
   const handleMapPress = () => {
     navigation.navigate('Map');
   };
-
-  const handleNextStage = () => {
+  useEffect(() => {
+    onAuthStateChanged(auth, user => {
+      if (user) {
+        setUserId(user.uid);
+      }
+    });
+  }, []);
+  const handleNextStage = async () => {
     if (answer.trim() === '192') {
+      try {
+        await updateStageData(userId, college, 'Stage13_5');
+      } catch (err) {
+        console.error('🔥 updateStageData error:', err);
+      }
+
       Alert.alert('정답입니다!', '다음 스테이지로 이동합니다.', [
         {
           text: '확인',
@@ -54,6 +70,7 @@ const Stage13_4 = () => {
       ]);
       setIsModalVisible(false);
     } else {
+      incrementStageAttempt(userId, college);
       Alert.alert('오답입니다.', '다시 시도해 보세요!');
     }
   };

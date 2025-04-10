@@ -1,6 +1,6 @@
 //본관 퀴즈(카메라로 글씨 찾기 대신)
 
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -18,6 +18,10 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {useNavigation} from '@react-navigation/native';
 import {RootStackParamList} from '../App';
 import {useRoute, RouteProp} from '@react-navigation/native';
+import {updateStageData} from '../utils/updateStageData';
+import {onAuthStateChanged} from 'firebase/auth';
+import {auth} from './firebase.config';
+import {incrementStageAttempt} from '../utils/incrementStageAttempt';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage4_2'>;
 
@@ -29,13 +33,25 @@ const Stage4_2 = () => {
   const {college = '', department = ''} = route.params || {};
   const [answer, setAnswer] = useState('');
   const [isModalVisible, setIsModalVisible] = useState(false);
-
+  const [userId, setUserId] = useState('');
   const handleMapPress = () => {
     navigation.navigate('Map');
   };
 
-  const handleNextStage = () => {
+  useEffect(() => {
+    onAuthStateChanged(auth, user => {
+      if (user) {
+        setUserId(user.uid);
+      }
+    });
+  }, []);
+  const handleNextStage = async () => {
     if (answer.trim() === '소프트웨어학과') {
+      try {
+        await updateStageData(userId, college, 'Stage4_3');
+      } catch (err) {
+        console.error('🔥 updateStageData error:', err);
+      }
       Alert.alert('정답입니다!', '다음 스테이지로 이동합니다.', [
         {
           text: '확인',
@@ -44,6 +60,7 @@ const Stage4_2 = () => {
       ]);
       setIsModalVisible(false);
     } else {
+      incrementStageAttempt(userId, college);
       Alert.alert('오답입니다.', '다시 시도해 보세요!');
     }
   };
@@ -98,18 +115,16 @@ const Stage4_2 = () => {
             style={styles.wayImage}
             resizeMode="contain"
           />
-          <Text style={styles.text}>
-            다음은 본관 3층이야!
-          </Text>
+          <Text style={styles.text}>다음은 본관 3층이야!</Text>
           <Text style={styles.subText}>
-            본관 3층에 공과대학의 학과들을{'\n'}소개하는 글이 있어!{'\n'}{'\n'}
+            본관 3층에 공과대학의 학과들을{'\n'}소개하는 글이 있어!{'\n'}
+            {'\n'}
             빨간 네모로 쳐진 글은 어떤 과의{'\n'}소개글인지 찾아보자!
           </Text>
         </View>
         <TouchableOpacity onPress={openModal} style={styles.inputContainer}>
           <Text style={styles.inputText}>{answer || '정답 입력'}</Text>
         </TouchableOpacity>
-
 
         {/* ✅ 모달 */}
         <Modal

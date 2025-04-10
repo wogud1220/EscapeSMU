@@ -19,6 +19,9 @@ import {RootStackParamList} from '../App';
 import {useRoute, RouteProp} from '@react-navigation/native';
 
 import {updateStageData} from '../utils/updateStageData';
+import {onAuthStateChanged} from 'firebase/auth';
+import {auth} from './firebase.config';
+import {incrementStageAttempt} from '../utils/incrementStageAttempt';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage4_1'>;
 
@@ -32,12 +35,24 @@ const Stage4_1 = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [userId, setUserId] = useState('');
 
+  useEffect(() => {
+    onAuthStateChanged(auth, user => {
+      if (user) {
+        setUserId(user.uid);
+      }
+    });
+  }, []);
   const handleMapPress = () => {
     navigation.navigate('Map');
   };
 
-  const handleNextStage = () => {
+  const handleNextStage = async () => {
     if (answer.trim() === '100') {
+      try {
+        await updateStageData(userId, college, 'Stage4_2');
+      } catch (err) {
+        console.error('🔥 updateStageData error:', err);
+      }
       Alert.alert('정답입니다!', '다음 스테이지로 이동합니다.', [
         {
           text: '확인',
@@ -46,6 +61,7 @@ const Stage4_1 = () => {
       ]);
       setIsModalVisible(false);
     } else {
+      incrementStageAttempt(userId, college);
       Alert.alert('오답입니다.', '다시 시도해 보세요!');
     }
   };

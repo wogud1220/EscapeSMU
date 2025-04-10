@@ -1,6 +1,6 @@
 //본관 퀴즈(카메라로 글씨 찾기 대신)
 
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   View,
   Text,
@@ -18,8 +18,15 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {useNavigation} from '@react-navigation/native';
 import {RootStackParamList} from '../App';
 import {useRoute, RouteProp} from '@react-navigation/native';
+import {onAuthStateChanged} from 'firebase/auth';
+import {auth} from './firebase.config';
+import {updateStageData} from '../utils/updateStageData';
+import {incrementStageAttempt} from '../utils/incrementStageAttempt';
 
-type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage10_2'>;
+type NavigationProp = NativeStackNavigationProp<
+  RootStackParamList,
+  'Stage10_2'
+>;
 
 const {width, height} = Dimensions.get('window');
 
@@ -29,21 +36,37 @@ const Stage10_2 = () => {
   const {college = '', department = ''} = route.params || {};
   const [answer, setAnswer] = useState('');
   const [isModalVisible, setIsModalVisible] = useState(false);
-
+  const [userId, setUserId] = useState('');
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, user => {
+      if (user) {
+        setUserId(user.uid);
+      }
+    });
+    return unsubscribe;
+  }, []);
   const handleMapPress = () => {
     navigation.navigate('Map');
   };
 
-  const handleNextStage = () => {
+  const handleNextStage = async () => {
     if (answer.trim() === '천원의 아침밥' || answer.trim() === '천원의아침밥') {
+      try {
+        await updateStageData(userId, college, 'Stage10_4');
+      } catch (err) {
+        console.error('🔥 updateStageData error:', err);
+      }
+
       Alert.alert('정답입니다!', '다음 스테이지로 이동합니다.', [
         {
           text: '확인',
-          onPress: () => navigation.navigate('Stage10_4', {college, department}),
+          onPress: () =>
+            navigation.navigate('Stage10_4', {college, department}),
         },
       ]);
       setIsModalVisible(false);
     } else {
+      incrementStageAttempt(userId, college);
       Alert.alert('오답입니다.', '다시 시도해 보세요!');
     }
   };
@@ -98,17 +121,15 @@ const Stage10_2 = () => {
             style={styles.wayImage}
             resizeMode="contain"
           />
-          <Text style={styles.text}>
-            학생회관 1층 식당 쪽으로 들어가보자!
-          </Text>
+          <Text style={styles.text}>학생회관 1층 식당 쪽으로 들어가보자!</Text>
           <Text style={styles.subText}>
-            식당 내에서 아래와 같은 포스터를{'\n'}찾을 수 있을까?{'\n'}{'\n'}이 포스터가 어떤 캠페인을{'\n'}말하고 있는지 써볼래?
+            식당 내에서 아래와 같은 포스터를{'\n'}찾을 수 있을까?{'\n'}
+            {'\n'}이 포스터가 어떤 캠페인을{'\n'}말하고 있는지 써볼래?
           </Text>
         </View>
         <TouchableOpacity onPress={openModal} style={styles.inputContainer}>
           <Text style={styles.inputText}>{answer || '정답 입력'}</Text>
         </TouchableOpacity>
-
 
         {/* ✅ 모달 */}
         <Modal

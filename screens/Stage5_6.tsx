@@ -16,6 +16,10 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {useNavigation} from '@react-navigation/native';
 import {RootStackParamList} from '../App';
 import {useRoute, RouteProp} from '@react-navigation/native';
+import {onAuthStateChanged} from 'firebase/auth';
+import {auth} from './firebase.config';
+import {incrementStageAttempt} from '../utils/incrementStageAttempt';
+import {updateStageData} from '../utils/updateStageData';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage5_6'>;
 
@@ -23,10 +27,18 @@ const {width, height} = Dimensions.get('window');
 
 const Stage5_6 = () => {
   useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, user => {
+      if (user) {
+        setUserId(user.uid);
+      }
+    });
+    return unsubscribe;
+  }, []);
+  useEffect(() => {
     console.log('Stage5_6 log - Department:', department);
     console.log('Stage5_6 log - College:', college);
   }, []);
-
+  const [userId, setUserId] = useState('');
   const navigation = useNavigation<NavigationProp>();
   const route = useRoute<RouteProp<RootStackParamList, 'Stage5_6'>>();
   const {college, department} = route.params || {};
@@ -37,8 +49,13 @@ const Stage5_6 = () => {
     navigation.navigate('Map');
   };
 
-  const handleNextStage = () => {
+  const handleNextStage = async () => {
     if (answer.trim() === '시크릿오더') {
+      try {
+        await updateStageData(userId, college, 'Stage5_7');
+      } catch (err) {
+        console.error('🔥 updateStageData error:', err);
+      }
       Alert.alert('정답입니다!', '다음 스테이지로 이동합니다.', [
         {
           text: '확인',
@@ -47,6 +64,7 @@ const Stage5_6 = () => {
       ]);
       setIsModalVisible(false);
     } else {
+      incrementStageAttempt(userId, college);
       Alert.alert('오답입니다.', '다시 시도해 보세요!');
     }
   };

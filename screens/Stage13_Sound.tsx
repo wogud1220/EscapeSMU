@@ -21,6 +21,10 @@ import {RootStackParamList} from '../App';
 import Sound from 'react-native-sound-level';
 import {request, PERMISSIONS, RESULTS} from 'react-native-permissions';
 import {useRoute, RouteProp} from '@react-navigation/native';
+import {onAuthStateChanged} from 'firebase/auth';
+import {auth} from './firebase.config';
+import {updateStageData} from '../utils/updateStageData';
+import {incrementStageAttempt} from '../utils/incrementStageAttempt';
 
 const {width, height} = Dimensions.get('window');
 
@@ -55,12 +59,20 @@ const Stage13_Sound = () => {
   const [answer, setAnswer] = useState('');
   const [userDepartment, setUserDepartment] = useState(college || '');
   const fadeAnim = useState(new Animated.Value(0))[0];
+  const [userId, setUserId] = useState('');
 
   // 최신 데시벨 값을 저장할 useRef
   const latestDecibelRef = useRef(0);
 
   useEffect(() => {
     rerollBook();
+  }, []);
+  useEffect(() => {
+    onAuthStateChanged(auth, user => {
+      if (user) {
+        setUserId(user.uid);
+      }
+    });
   }, []);
 
   const rerollBook = () => {
@@ -139,13 +151,19 @@ const Stage13_Sound = () => {
     }
   };
 
-  const handleSubmitAnswer = () => {
+  const handleSubmitAnswer = async () => {
     if (answer.trim() === '1') {
+      try {
+        await updateStageData(userId, college, 'Stage4');
+      } catch (err) {
+        console.error('🔥 updateStageData error:', err);
+      }
       Alert.alert('정답입니다!', '다음 스테이지로 이동합니다.', [
         {text: '확인', onPress: handleNextStage},
       ]);
       setIsModalVisible(false);
     } else {
+      incrementStageAttempt(userId, college);
       Alert.alert('오답입니다.', '다시 시도해 보세요!');
     }
   };

@@ -16,12 +16,25 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {useNavigation} from '@react-navigation/native';
 import {RootStackParamList} from '../App';
 import {useRoute, RouteProp} from '@react-navigation/native';
+import {increment} from 'firebase/firestore';
+import {incrementStageAttempt} from '../utils/incrementStageAttempt';
+import {updateStageData} from '../utils/updateStageData';
+import {onAuthStateChanged} from 'firebase/auth';
+import {auth} from './firebase.config';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage5_2'>;
 
 const {width, height} = Dimensions.get('window');
 
 const Stage5_2 = () => {
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, user => {
+      if (user) {
+        setUserId(user.uid);
+      }
+    });
+    return unsubscribe;
+  }, []);
   useEffect(() => {
     console.log('Stage5_2 log - Department:', department);
     console.log('Stage5_2 log - College:', college);
@@ -31,13 +44,18 @@ const Stage5_2 = () => {
   const {college, department} = route.params || {};
   const [answer, setAnswer] = useState('');
   const [isModalVisible, setIsModalVisible] = useState(false);
-
+  const [userId, setUserId] = useState('');
   const handleMapPress = () => {
     navigation.navigate('Map');
   };
 
-  const handleNextStage = () => {
+  const handleNextStage = async () => {
     if (answer.trim().toLowerCase() === 'mulberry') {
+      try {
+        await updateStageData(userId, college, 'Stage5_3');
+      } catch (err) {
+        console.error('🔥 updateStageData error:', err);
+      }
       Alert.alert('정답입니다!', '다음 스테이지로 이동합니다.', [
         {
           text: '확인',
@@ -46,6 +64,8 @@ const Stage5_2 = () => {
       ]);
       setIsModalVisible(false);
     } else {
+      // ✅ 오답 처리
+      incrementStageAttempt(userId, college);
       Alert.alert('오답입니다.', '다시 시도해 보세요!');
     }
   };

@@ -17,12 +17,25 @@ import {useNavigation} from '@react-navigation/native';
 import {RootStackParamList} from '../App';
 import {useRoute, RouteProp} from '@react-navigation/native';
 import {useDepartment} from './Member/DepartmentContext';
+import {increment} from 'firebase/firestore';
+import {incrementStageAttempt} from '../utils/incrementStageAttempt';
+import {onAuthStateChanged} from 'firebase/auth';
+import {auth} from './firebase.config';
+import {updateStageData} from '../utils/updateStageData';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage8_6'>;
 
 const {width, height} = Dimensions.get('window');
 
 const Stage8_6 = () => {
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, user => {
+      if (user) {
+        setUserId(user.uid);
+      }
+    });
+    return unsubscribe;
+  }, []);
   useEffect(() => {
     console.log('Stage8_6 log - Department:', department);
     console.log('Stage8_6 log - College:', college);
@@ -32,18 +45,18 @@ const Stage8_6 = () => {
   const {college, department} = route.params || {};
   const [answer, setAnswer] = useState('');
   const [isModalVisible, setIsModalVisible] = useState(false);
-
+  const [userId, setUserId] = useState('');
   const handleMapPress = () => {
     navigation.navigate('Map');
   };
-  const handleNextStage = () => {
+  const handleNextStage = async () => {
     if (answer.trim() === '수뭉이와함께라면') {
       let nextStage = 'Stage10_1';
-  
+
       if (department.includes('디자인학부')) {
         nextStage = 'Stage9_1';
       }
-  
+      await updateStageData(userId, college, nextStage);
       Alert.alert('정답입니다!', '다음 스테이지로 이동합니다.', [
         {
           text: '확인',
@@ -53,6 +66,7 @@ const Stage8_6 = () => {
 
       setIsModalVisible(false);
     } else {
+      incrementStageAttempt(userId, college); // 시도 횟수 증가
       Alert.alert('오답입니다.', '다시 시도해 보세요!');
     }
   };
@@ -104,7 +118,8 @@ const Stage8_6 = () => {
             컴퓨터를 사용해서 (smuescape.netlify.app)에 접속해보자!
           </Text>
           <Text style={styles.subText}>
-            응??? 어딘가 많이 본 게임인데?{'\n'}{'\n'}
+            응??? 어딘가 많이 본 게임인데?{'\n'}
+            {'\n'}
             30점을 달성하고 알림창을 보자!
           </Text>
         </View>
