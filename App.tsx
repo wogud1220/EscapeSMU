@@ -511,6 +511,21 @@ const App = () => {
             options={{headerShown: false}}
           />
           <Stack.Screen
+            name="Stage9_2_1"
+            component={Stage9_2_1}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="Stage9_2_2"
+            component={Stage9_2_2}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="Stage9Hint"
+            component={Stage9Hint}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
             name="Stage9_3"
             component={Stage9_3}
             options={{headerShown: false}}
@@ -523,6 +538,11 @@ const App = () => {
           <Stack.Screen
             name="Stage9_4"
             component={Stage9_4}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="Stage9_5"
+            component={Stage9_5}
             options={{headerShown: false}}
           />
           <Stack.Screen
@@ -598,6 +618,11 @@ const App = () => {
           <Stack.Screen
             name="Stage11_6"
             component={Stage11_6}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="Stage11_7"
+            component={Stage11_7}
             options={{headerShown: false}}
           />
           <Stack.Screen
