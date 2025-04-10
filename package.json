@@ -23,6 +23,7 @@
     "axios": "^1.8.4",
     "date-fns": "^4.1.0",
     "expo-modules-core": "^2.2.3",
+    "firebase": "^11.6.0",
     "react": "19.0.0",
     "react-is": "^19.0.0",
     "react-native": "0.78.0",

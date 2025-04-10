@@ -330,7 +330,7 @@ const StageList = () => {
                       user.uid,
                       selectedCollege,
                     );
-                    const next = cleared ? formatStageKey(cleared) : 'Stage1';
+                    const next = cleared ? formatStageKey(cleared) : 'WarningPage';
 
                     navigation.navigate(next, {
                       college: selectedCollege,
