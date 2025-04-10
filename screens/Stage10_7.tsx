@@ -41,7 +41,7 @@ const Stage10_7 = () => {
         nextStage = 'Stage11_1';
       } else if (department.includes('예술학부')) {
         nextStage = 'Stage12_1';
-      } else if (college === '글로벌인문학부대학') {
+      } else if (college === '글로벌인문학부대학' || college === '공과대학') {
         nextStage = 'StageFinal';
       }
 
@@ -186,6 +186,7 @@ const styles = StyleSheet.create({
   box: {
     backgroundColor: 'rgba(255, 255, 255, 0.7)',
     marginTop: height * 0.3,
+    marginLeft: width * 0.1,
     width: width * 0.8,
     height: height * 0.4,
     padding: height * 0.03,

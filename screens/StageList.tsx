@@ -267,13 +267,22 @@ const departments: Record<string, string[]> = {
 // ✅ 스테이지 문자열을 컴포넌트 이름 형태로 변환 (예: stage1_2 -> Stage1_2)
 const formatStageKey = (id: string): keyof RootStackParamList => {
   const parts = id.split('_');
+
+  if (parts.length === 1) {
+    // 예: 'stage13' → 'Stage13_1'
+    const stageNum = parts[0].replace('stage', '');
+    return `${stageNum}_1` as keyof RootStackParamList;
+  }
+
   const formatted = parts
     .map((part, i) =>
-      i === 0 ? part.charAt(0).toUpperCase() + part.slice(1) : part,
+      i === 0 ? part.charAt(0).toUpperCase() + part.slice(1) : part
     )
     .join('_');
+
   return formatted as keyof RootStackParamList;
 };
+
 
 const StageList = () => {
   const navigation = useNavigation<NavigationProp>();
@@ -330,7 +339,7 @@ const StageList = () => {
                       user.uid,
                       selectedCollege,
                     );
-                    const next = cleared ? formatStageKey(cleared) : 'WarningPage';
+                    
 
                     navigation.navigate(next, {
                       college: selectedCollege,

@@ -15,12 +15,12 @@ import {useNavigation, useRoute, RouteProp} from '@react-navigation/native';
 import {RootStackParamList} from '../App';
 
 
-type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage1'>;
-type Stage1RouteProp = RouteProp<RootStackParamList, 'Stage1'>;
+type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage1_1'>;
+type Stage1RouteProp = RouteProp<RootStackParamList, 'Stage1_1'>;
 
 const {width, height} = Dimensions.get('window');
 
-const Stage1 = () => {
+const Stage1_1 = () => {
   const navigation = useNavigation<NavigationProp>();
   const route = useRoute<Stage1RouteProp>();
   const {college = '', department = ''} = route.params || {};
@@ -174,4 +174,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Stage1;
+export default Stage1_1;

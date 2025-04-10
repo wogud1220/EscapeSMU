@@ -318,7 +318,7 @@ const Stage1Camera = ({navigation}: {navigation: any}) => {
     );
   }
   const goToNextStage = () => {
-    navigation.navigate('Stage10_4', {college, department}); // ✅ Stage1_2로 이동
+    navigation.navigate('Stage10_6', {college, department});
   };
 
   if (!device) {
@@ -338,13 +338,7 @@ const Stage1Camera = ({navigation}: {navigation: any}) => {
       />
 
       <Image
-        source={require('../assets/foodcourt1.png')}
-        style={styles.backImage}
-        resizeMode="contain"
-      />
-
-      <Image
-        source={require('../assets/foodcourt.png')}
+        source={require('../assets/sharelounge1.png')}
         style={styles.backImage}
         resizeMode="contain"
       />
@@ -354,14 +348,14 @@ const Stage1Camera = ({navigation}: {navigation: any}) => {
       </TouchableOpacity>
 
       <TouchableOpacity
-        onPress={() => navigation.navigate('Stage2_1', {college, department})}
+        onPress={() => navigation.navigate('Stage10_6', {college, department})}
         style={styles.greenButton}>
         <Text style={styles.greenButtonText}>➡️</Text>
       </TouchableOpacity>
 
       {/* ✅ 임시 Stage1_2 이동 버튼 */}
       <TouchableOpacity onPress={goToNextStage} style={styles.tempButton}>
-        <Text style={styles.buttonText}>Stage1_2로 이동</Text>
+        <Text style={styles.buttonText}>Stage10_6로 이동</Text>
       </TouchableOpacity>
     </View>
   );

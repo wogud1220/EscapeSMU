@@ -79,7 +79,7 @@ const Stage13_1 = () => {
           <Text style={styles.text}>
             다음으로 방문할 장소는 학술정보관(L, 도서관)이야!
           </Text>
-          <Text style={styles.subText}>이제 마지막 스테이지야! 힘내자!</Text>
+          <Text style={styles.subText}>도서관은 공부하는 학생들이 많으니{'\n'}시끄럽지 않게 주의하자!</Text>
         </View>
 
         <TouchableOpacity

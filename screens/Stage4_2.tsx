@@ -92,29 +92,24 @@ const Stage4_2 = () => {
           />
         </TouchableOpacity>
 
-        {/* ✅ 문제 박스 */}
         <View style={styles.box}>
-          {/* ✅ 하얀색 박스 위에 waytostage2.png 추가 */}
           <Image
-            source={require('../assets/software.png')}
+            source={require('../assets/bongwan1.png')}
             style={styles.wayImage}
             resizeMode="contain"
           />
           <Text style={styles.text}>
-            3층 공과대학의 소프트웨어학과 소개글을 찾아보자!
+            다음은 본관 3층이야!
           </Text>
           <Text style={styles.subText}>
-            빨간 네모로 쳐진 글은 어떤 과의 소개글인지 찾아보자!
+            본관 3층에 공과대학의 학과들을{'\n'}소개하는 글이 있어!{'\n'}{'\n'}
+            빨간 네모로 쳐진 글은 어떤 과의{'\n'}소개글인지 찾아보자!
           </Text>
         </View>
-
-        {/* ✅ 다음 스테이지로 이동 버튼 */}
-        <TouchableOpacity
-          style={styles.nextButton}
-          onPress={handleNextStage}
-          activeOpacity={0.7}>
-          <Text style={styles.buttonText}>카메라 📸</Text>
+        <TouchableOpacity onPress={openModal} style={styles.inputContainer}>
+          <Text style={styles.inputText}>{answer || '정답 입력'}</Text>
         </TouchableOpacity>
+
 
         {/* ✅ 모달 */}
         <Modal
@@ -188,15 +183,12 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(255, 255, 255, 0.7)',
     marginTop: height * 0.15,
     width: width * 0.8,
-    height: height * 0.6,
+    height: height * 0.7,
     padding: height * 0.03,
     borderRadius: width * 0.04,
     alignItems: 'center',
     justifyContent: 'center',
-    shadowColor: '#000',
-    shadowOffset: {width: 0, height: 4},
-    shadowOpacity: 0.3,
-    shadowRadius: 4,
+    alignSelf: 'center',
     elevation: 5,
   },
   text: {

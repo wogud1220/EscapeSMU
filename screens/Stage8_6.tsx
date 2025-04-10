@@ -37,7 +37,7 @@ const Stage8_6 = () => {
     navigation.navigate('Map');
   };
   const handleNextStage = () => {
-    if (answer.trim() === '수뭉이와함께라면' && college ==='글로벌인문학부대학' || college === '공과대학') {
+    if (answer.trim() === '수뭉이와함께라면') {
       let nextStage = 'Stage10_1';
   
       if (department.includes('디자인학부')) {

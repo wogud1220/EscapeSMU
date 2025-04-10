@@ -6,8 +6,7 @@ import SignIn from './screens/Member/SignIn';
 import Main from './screens/Main';
 import StageList from './screens/StageList';
 import WarningPage from './screens/WarningPage';
-import WarningPage from './screens/WarningPage';
-import Stage1 from './screens/Stage1';
+import Stage1_1 from './screens/Stage1_1';
 import Stage1Camera from './screens/Stage1Camera';
 import Map from './screens/Map';
 import Stage1_2 from './screens/Stage1_2';
@@ -113,8 +112,8 @@ export type RootStackParamList = {
   SignIn: {college: string; department: string};
   Main: undefined;
   StageList: {college: string; department: string};
-  WarningPage: {college: string; department: string};
-  Stage1: {college: string; department: string};
+  WarningPage: undefined;
+  Stage1_1: {college: string; department: string};
   Stage1Camera: {college: string; department: string};
   Map: undefined;
   Stage1_2: {college: string; department: string};
@@ -249,8 +248,8 @@ const App = () => {
             options={{headerShown: false}}
           />
           <Stack.Screen
-            name="Stage1"
-            component={Stage1}
+            name="Stage1_1"
+            component={Stage1_1}
             options={{headerShown: false}}
           />
           <Stack.Screen

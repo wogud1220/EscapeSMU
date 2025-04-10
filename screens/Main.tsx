@@ -101,7 +101,7 @@ const Main = () => {
           onPress={handleNavigate}
           style={styles.button}
           activeOpacity={0.7}>
-          <Text style={styles.buttonText}>Stage 목록 보기</Text>
+          <Text style={styles.buttonText}>시작하기</Text>
         </TouchableOpacity>
       </ImageBackground>
     </View>

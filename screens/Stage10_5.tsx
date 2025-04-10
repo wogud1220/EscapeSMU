@@ -32,7 +32,7 @@ const Stage10_5 = () => {
   };
 
   const handleNextStage = () => {
-    navigation.navigate('Stage10_6', {college, department}); // ✅ Stage10_5 가즈아
+    navigation.navigate('Stage10_3', {college, department}); // ✅ Stage10_5 가즈아
   };
 
   return (

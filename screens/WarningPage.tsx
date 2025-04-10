@@ -10,14 +10,13 @@ const { width, height } = Dimensions.get('window');
 const WarningPage = () => {
   const navigation = useNavigation<NavigationProp>();
   const route = useRoute<RouteProp<RootStackParamList, 'WarningPage'>>();
-  const { college, department } = route.params;
 
   const handleMapPress = () => {
     navigation.navigate('Map');
   };
 
   const handleNextStage = () => {
-    navigation.navigate('Stage1', { college, department });
+    navigation.navigate('StageList');
   };
 
   return (

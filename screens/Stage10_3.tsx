@@ -68,13 +68,13 @@ const Stage10_3 = () => {
         {/* ✅ 가운데 투명한 흰색 박스 */}
         <View style={styles.box}>
           <Image
-            source={require('../assets/foodcourt.png')}
+            source={require('../assets/sharelounge.png')}
             style={styles.wayImage}
             resizeMode="contain"
           />
-          <Text style={styles.text}>위 이미지를 참고해서</Text>
+          <Text style={styles.text}>2층에 올라가니{'\n'}4명의 친구들이 기다리고 있어!</Text>
           <Text style={styles.subText}>
-            FoodCourt 엘리시온이라는 {'\n'} 글자를 찍어보자!
+            위 사진의 장소에서{'\n'}카메라를 이용해 사진을 찍어보자!
           </Text>
         </View>
 
@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
   box: {
     backgroundColor: 'rgba(255, 255, 255, 0.7)',
     width: width * 0.8,
-    height: height * 0.5,
+    height: height * 0.7,
     padding: height * 0.03,
     borderRadius: width * 0.04,
     alignItems: 'center',
@@ -127,7 +127,7 @@ const styles = StyleSheet.create({
     fontSize: width * 0.06,
     fontWeight: 'bold',
     marginBottom: height * 0.01,
-    marginTop: height * -0.1,
+    marginTop: height * -0.05,
     textAlign: 'center',
   },
   subText: {
@@ -173,7 +173,7 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   wayImage: {
-    width: width * 0.7, // ✅ waytostage2.png 크기 조정
+    width: width * 0.5, // ✅ waytostage2.png 크기 조정
     height: height * 0.5,
     marginBottom: height * 0.005, // ✅ 이미지와 텍스트 간격
     marginTop: height * -0.1,

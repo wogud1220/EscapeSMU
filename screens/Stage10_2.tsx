@@ -1,6 +1,6 @@
-//학생회관 안내
+//본관 퀴즈(카메라로 글씨 찾기 대신)
 
-import React from 'react';
+import React, {useState} from 'react';
 import {
   View,
   Text,
@@ -9,30 +9,57 @@ import {
   Dimensions,
   Image,
   TouchableOpacity,
+  TextInput,
+  Alert,
+  Modal,
+  TouchableWithoutFeedback,
 } from 'react-native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {useNavigation} from '@react-navigation/native';
 import {RootStackParamList} from '../App';
 import {useRoute, RouteProp} from '@react-navigation/native';
 
-type NavigationProp = NativeStackNavigationProp<
-  RootStackParamList,
-  'Stage10_2'
->;
+type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage10_2'>;
 
 const {width, height} = Dimensions.get('window');
 
 const Stage10_2 = () => {
   const navigation = useNavigation<NavigationProp>();
   const route = useRoute<RouteProp<RootStackParamList, 'Stage10_2'>>();
-  const {college, department} = route.params || {};
+  const {college = '', department = ''} = route.params || {};
+  const [answer, setAnswer] = useState('');
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
   const handleMapPress = () => {
     navigation.navigate('Map');
   };
 
   const handleNextStage = () => {
-    navigation.navigate('Stage10_3', {college, department}); // ✅ Stage6_1으로 이동하도록 수정
+    if (answer.trim() === '천원의 아침밥' || answer.trim() === '천원의아침밥') {
+      Alert.alert('정답입니다!', '다음 스테이지로 이동합니다.', [
+        {
+          text: '확인',
+          onPress: () => navigation.navigate('Stage10_4', {college, department}),
+        },
+      ]);
+      setIsModalVisible(false);
+    } else {
+      Alert.alert('오답입니다.', '다시 시도해 보세요!');
+    }
+  };
+
+  const handleHomePress = () => {
+    navigation.navigate('Main');
+  };
+
+  // ✅ 모달 열기
+  const openModal = () => {
+    setIsModalVisible(true);
+  };
+
+  // ✅ 모달 닫기
+  const closeModal = () => {
+    setIsModalVisible(false);
   };
 
   return (
@@ -45,7 +72,7 @@ const Stage10_2 = () => {
         {/* 🔥 투명 레이어 추가 */}
         <View style={styles.overlay} />
 
-        {/* ✅ 🗺️ 오른쪽 상단의 map.png */}
+        {/* ✅ 지도 버튼 */}
         <TouchableOpacity onPress={handleMapPress} style={styles.mapButton}>
           <Image
             source={require('../assets/map.png')}
@@ -65,25 +92,59 @@ const Stage10_2 = () => {
           />
         </TouchableOpacity>
 
-        {/* ✅ 가운데 투명한 흰색 박스 */}
         <View style={styles.box}>
+          <Image
+            source={require('../assets/1000bab.png')}
+            style={styles.wayImage}
+            resizeMode="contain"
+          />
           <Text style={styles.text}>
-            학생회관에는 많은 학생들이{'\n'}
-            이용하고 있는 학생식당이 있어!{'\n'}
-            엘리시온은 조식을 운영하고 있어.{'\n'}
-            조식으로 간편식과 라면을 제공하고 있으며 조식은 오전 8시부터 오전
-            10시 30분까지 운영하고 있어.
+            학생회관 1층 식당 쪽으로 들어가보자!
           </Text>
-          <Text style={styles.subText}></Text>
+          <Text style={styles.subText}>
+            식당 내에서 아래와 같은 포스터를{'\n'}찾을 수 있을까?{'\n'}{'\n'}이 포스터가 어떤 캠페인을{'\n'}말하고 있는지 써볼래?
+          </Text>
         </View>
-
-        {/* ✅ 다음 스테이지로 이동 버튼 */}
-        <TouchableOpacity
-          style={styles.nextButton}
-          onPress={handleNextStage}
-          activeOpacity={0.7}>
-          <Text style={styles.buttonText}>다음 ➡️</Text>
+        <TouchableOpacity onPress={openModal} style={styles.inputContainer}>
+          <Text style={styles.inputText}>{answer || '정답 입력'}</Text>
         </TouchableOpacity>
+
+
+        {/* ✅ 모달 */}
+        <Modal
+          animationType="fade"
+          transparent={true}
+          visible={isModalVisible}
+          onRequestClose={closeModal}>
+          <TouchableWithoutFeedback onPress={closeModal}>
+            <View style={styles.modalBackground}>
+              <TouchableWithoutFeedback>
+                <View style={styles.modalContainer}>
+                  <Text style={styles.modalTitle}>정답을 입력하세요</Text>
+
+                  {/* ✅ 입력 상자 */}
+                  <TextInput
+                    style={styles.modalInput}
+                    value={answer}
+                    onChangeText={setAnswer}
+                    placeholder="정답 입력"
+                    placeholderTextColor="#999"
+                    keyboardType="default"
+                    autoCapitalize="none"
+                    autoFocus={true}
+                  />
+
+                  {/* ✅ 제출 버튼 */}
+                  <TouchableOpacity
+                    style={styles.submitButton}
+                    onPress={handleNextStage}>
+                    <Text style={styles.buttonText}>제출하기</Text>
+                  </TouchableOpacity>
+                </View>
+              </TouchableWithoutFeedback>
+            </View>
+          </TouchableWithoutFeedback>
+        </Modal>
       </ImageBackground>
     </View>
   );
@@ -92,16 +153,26 @@ const Stage10_2 = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F5E6C4',
+  },
+  nextButton: {
+    position: 'absolute',
+    bottom: height * 0.05,
+    backgroundColor: 'rgba(0, 0, 255, 0.7)',
+    paddingVertical: height * 0.01,
+    paddingHorizontal: width * 0.05,
+    borderRadius: width * 0.03,
     alignItems: 'center',
+    alignSelf: 'center',
+  },
+  centerContainer: {
+    flex: 1,
     justifyContent: 'center',
+    alignItems: 'center',
   },
   image: {
     flex: 1,
     width: '100%',
     height: '100%',
-    justifyContent: 'center',
-    alignItems: 'center',
   },
   overlay: {
     ...StyleSheet.absoluteFillObject,
@@ -109,32 +180,82 @@ const styles = StyleSheet.create({
   },
   box: {
     backgroundColor: 'rgba(255, 255, 255, 0.7)',
+    marginTop: height * 0.15,
     width: width * 0.8,
-    height: height * 0.5, // ✅ 높이 조정 (이미지 공간 포함)
+    height: height * 0.7,
     padding: height * 0.03,
     borderRadius: width * 0.04,
     alignItems: 'center',
     justifyContent: 'center',
-    shadowColor: '#000',
-    shadowOffset: {width: 0, height: 4},
-    shadowOpacity: 0.3,
-    shadowRadius: 4,
+    alignSelf: 'center',
     elevation: 5,
   },
   text: {
-    marginTop: height * 0.05,
     color: '#333',
-    fontSize: width * 0.055,
+    fontSize: width * 0.06,
     fontWeight: 'bold',
     marginBottom: height * 0.01,
     textAlign: 'center',
-    lineHeight: height * 0.05, // ✅ 줄 간격
   },
   subText: {
     color: '#555',
     fontSize: width * 0.045,
     textAlign: 'center',
-    marginTop: height * 0.02,
+  },
+  inputContainer: {
+    marginTop: height * 0.05,
+    borderWidth: 1,
+    borderColor: '#999',
+    borderRadius: 5,
+    padding: height * 0.01,
+    width: width * 0.5,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+    alignSelf: 'center',
+  },
+  inputText: {
+    fontSize: width * 0.045,
+    color: '#333',
+  },
+  modalBackground: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  modalContainer: {
+    backgroundColor: '#fff',
+    width: width * 0.8,
+    padding: height * 0.03,
+    borderRadius: width * 0.04,
+    alignItems: 'center',
+    elevation: 5,
+  },
+  modalTitle: {
+    fontSize: width * 0.05,
+    fontWeight: 'bold',
+    marginBottom: height * 0.02,
+  },
+  modalInput: {
+    width: '100%',
+    borderBottomWidth: 1,
+    borderColor: '#999',
+    fontSize: width * 0.045,
+    paddingVertical: height * 0.01,
+    marginBottom: height * 0.02,
+    color: '#333',
+  },
+  submitButton: {
+    backgroundColor: 'rgba(0, 0, 255, 0.7)',
+    paddingVertical: height * 0.015,
+    paddingHorizontal: width * 0.2,
+    borderRadius: width * 0.03,
+  },
+  buttonText: {
+    color: '#FFFFFF',
+    fontSize: width * 0.045,
+    fontWeight: 'bold',
   },
   mapButton: {
     position: 'absolute',
@@ -146,20 +267,6 @@ const styles = StyleSheet.create({
   mapImage: {
     width: '100%',
     height: '100%',
-  },
-  nextButton: {
-    position: 'absolute',
-    bottom: height * 0.05,
-    backgroundColor: 'rgba(0, 0, 255, 0.7)', // ✅ 파란색 버튼
-    paddingVertical: height * 0.02,
-    paddingHorizontal: width * 0.2,
-    borderRadius: width * 0.03,
-    alignItems: 'center',
-  },
-  buttonText: {
-    color: '#FFFFFF',
-    fontSize: width * 0.045,
-    fontWeight: 'bold',
   },
   backButton: {
     position: 'absolute',
@@ -173,9 +280,35 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   wayImage: {
-    width: width * 0.6, // ✅ waytostage2.png 크기 조정
-    height: height * 0.5,
-    marginBottom: height * 0.005, // ✅ 이미지와 텍스트 간격
+    width: width * 0.7,
+    height: height * 0.3,
+    marginBottom: height * 0.02,
+  },
+  goBackButton: {
+    position: 'absolute',
+    top: height * 0.05,
+    left: width * 0.18, // 홈 버튼 옆에 배치
+    width: width * 0.1,
+    height: width * 0.1,
+  },
+  gogobackButton: {
+    position: 'absolute',
+    bottom: height * 0.05,
+    backgroundColor: 'rgba(0, 0, 255, 0.7)', // ✅ 파란색 버튼
+    paddingVertical: height * 0.01,
+    paddingHorizontal: width * 0.05,
+    borderRadius: width * 0.03,
+    alignItems: 'center',
+    alignSelf: 'center',
+  },
+  buttonText1: {
+    color: '#FFFFFF',
+    fontSize: width * 0.045,
+    fontWeight: 'bold',
+  },
+  goBackImage: {
+    width: '100%',
+    height: '100%',
   },
 });
 

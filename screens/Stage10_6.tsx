@@ -68,16 +68,17 @@ const Stage10_6 = () => {
         <View style={styles.box}>
           {/* ✅ 텍스트 위에 이미지 추가 */}
           <Image
-            source={require('../assets/sharelounge.png')}
+            source={require('../assets/sharelounge3.png')}
             style={styles.dokdoImage}
             resizeMode="contain"
           />
           <Text style={styles.text}>
             이곳은 학생회관 '쉐어라운지'야!{'\n'}
-            누구나 자유롭게 이용가능해!{'\n'}
-            쉐어라운지 내의 세미나실은 예약 없이 선착순으로 사용할 수 있어!
           </Text>
-          <Text style={styles.subText}></Text>
+          <Text style={styles.subText}>
+          누구나 자유롭게 사용할 수 있고,{'\n'}
+          쉐어라운지 내의 세미나실은 예약 없이 선착순으로 사용할 수 있어!
+          </Text>
         </View>
 
         {/* ✅ 다음 스테이지로 이동 버튼 */}
@@ -113,7 +114,7 @@ const styles = StyleSheet.create({
   box: {
     backgroundColor: 'rgba(255, 255, 255, 0.7)',
     width: width * 0.8,
-    height: height * 0.6, // ✅ 높이 조정 (이미지 공간 포함)
+    height: height * 0.6,
     padding: height * 0.03,
     borderRadius: width * 0.04,
     alignItems: 'center',
@@ -128,7 +129,7 @@ const styles = StyleSheet.create({
     color: '#333',
     fontSize: width * 0.055,
     fontWeight: 'bold',
-    marginTop: height * 0.0004, // ✅ 위쪽 간격
+    marginTop: height * -0.05, // ✅ 위쪽 간격
     marginBottom: height * 0.01,
     textAlign: 'center',
     lineHeight: height * 0.035, // ✅ 줄 간격
