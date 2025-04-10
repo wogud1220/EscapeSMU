@@ -6,6 +6,7 @@ import SignIn from './screens/Member/SignIn';
 import Main from './screens/Main';
 import StageList from './screens/StageList';
 import WarningPage from './screens/WarningPage';
+import WarningPage from './screens/WarningPage';
 import Stage1 from './screens/Stage1';
 import Stage1Camera from './screens/Stage1Camera';
 import Map from './screens/Map';
