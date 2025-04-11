@@ -113,7 +113,9 @@ def compare_images_orb(user_image_path, template_path):
     else:
         return {"result": "Fail", "message": "이미지가 충분히 유사하지 않음"}
 
-
+def compare_images(user_image_path, template_path):
+    return compare_images_orb(user_image_path, template_path)
+    
 if __name__ == "__main__":
     user_image_path = os.path.join(UPLOADS_FOLDER, "captured.jpg")
     template_path = os.path.join(BASE_DIR, "templates", "stage1", "template.jpeg")
