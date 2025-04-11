@@ -114,14 +114,25 @@ const Stage13_Sound = () => {
 
       Sound.start();
       Sound.onNewFrame = data => {
-        const mapped = Math.floor(data.value + 80);
+        const rawDbfs = data.value; // e.g. -60 ~ 0
+        const dbSPL = convertToSPL(rawDbfs);
+        const mapped = Math.floor(dbSPL); // 정수로 사용
         latestDecibelRef.current = mapped;
+
+        console.log('🔊 dBFS 원본:', rawDbfs);
+        console.log('🎧 변환된 dB SPL:', dbSPL);
       };
 
-      // 2초마다 최신 데시벨 값을 state에 업데이트
       intervalId = setInterval(() => {
         setCurrentDecibel(latestDecibelRef.current);
       }, 500);
+    };
+
+    const convertToSPL = (dbFS: number): number => {
+      const referenceLevel = 94;
+      const dbSPL = referenceLevel + 20 * Math.log10(Math.pow(10, dbFS / 20));
+      const adjustedSPL = dbSPL - 25; // 도서관에서 직접 수정하기
+      return Math.min(Math.max(adjustedSPL, 0), 94);
     };
 
     start();
@@ -131,6 +142,33 @@ const Stage13_Sound = () => {
       if (intervalId) clearInterval(intervalId);
     };
   }, []);
+  // useEffect(() => {
+  //   let intervalId: NodeJS.Timeout;
+
+  //   const start = async () => {
+  //     const granted = await requestMicPermission();
+  //     if (!granted) return;
+
+  //     Sound.start();
+  //     Sound.onNewFrame = data => {
+  //       const mapped = Math.floor(data.value + 80);
+  //       latestDecibelRef.current = mapped;
+  //       console.log('🔊 현재 데시벨:', data.value);
+  //     };
+
+  //     // 2초마다 최신 데시벨 값을 state에 업데이트
+  //     intervalId = setInterval(() => {
+  //       setCurrentDecibel(latestDecibelRef.current);
+  //     }, 500);
+  //   };
+
+  //   start();
+
+  //   return () => {
+  //     Sound.stop();
+  //     if (intervalId) clearInterval(intervalId);
+  //   };
+  // }, []);
 
   // 모달이 열려있는 상태에서 데시벨이 70을 초과하면 모달을 강제로 닫고 입력값을 초기화
   useEffect(() => {

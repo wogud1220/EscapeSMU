@@ -45,7 +45,7 @@ const Main = () => {
   };
 
   const handleNavigate = () => {
-    navigation.navigate('WarningPage');
+    navigation.navigate('StageList');
   };
 
   const handleLoginNavigate = () => {
