@@ -84,91 +84,70 @@ def load_image(image_path):
     return image
 
 
-def compare_images_sift(user_image_path, template_path):
-    start = time.perf_counter()
-
-    template = load_image(template_path)
-    user_image = load_image(user_image_path)
-
-    if template is None or user_image is None:
-        return None, "이미지를 불러올 수 없음", 0.0
-
-    sift = cv2.SIFT_create()
-    kp1, des1 = sift.detectAndCompute(template, None)
-    kp2, des2 = sift.detectAndCompute(user_image, None)
-
-    if des1 is None or des2 is None:
-        return None, "SIFT 특징점을 찾을 수 없음", 0.0
-
-    FLANN_INDEX_KDTREE = 1
-    index_params = dict(algorithm=FLANN_INDEX_KDTREE, trees=5)
-    search_params = dict(checks=50)
-    flann = cv2.FlannBasedMatcher(index_params, search_params)
-
-    matches = flann.knnMatch(des1, des2, k=2)
-    good_matches = [m for m, n in matches if m.distance < 0.7 * n.distance]
-
-    match_scores = [m.distance for m in good_matches]
-    avg_match_score = sum(match_scores) / len(match_scores) if match_scores else float('inf')
-
-    elapsed = time.perf_counter() - start
-    print(f"[SIFT] 전체 매칭 개수: {len(matches)}, 유사한 매칭 개수: {len(good_matches)}")
-    print(f"[SIFT] 평균 매칭 점수: {avg_match_score:.2f}")
-    print(f"[SIFT] 처리 시간: {elapsed:.4f}초")
-
-    result = "Pass" if len(good_matches) > 250 and avg_match_score < 170 else "Fail"
-    return {
-        "result": result,
-        "message": "SIFT 결과",
-        "sift_matches": len(good_matches),
-        "sift_score": avg_match_score,
-        "sift_time": elapsed
-    }, None
-
-
-def compare_images_orb(user_image_path, template_path):
-    start = time.perf_counter()
-
-    template = load_image(template_path)
-    user_image = load_image(user_image_path)
-
-    if template is None or user_image is None:
-        return None, "이미지를 불러올 수 없음", 0.0
-
-    orb = cv2.ORB_create(nfeatures=1000)
-    kp1, des1 = orb.detectAndCompute(template, None)
-    kp2, des2 = orb.detectAndCompute(user_image, None)
-
-    if des1 is None or des2 is None:
-        return None, "ORB 특징점을 찾을 수 없음", 0.0
-
-    bf = cv2.BFMatcher(cv2.NORM_HAMMING, crossCheck=True)
-    matches = bf.match(des1, des2)
-    matches = sorted(matches, key=lambda x: x.distance)
-
-    match_scores = [m.distance for m in matches]
-    avg_match_score = sum(match_scores) / len(match_scores) if match_scores else float('inf')
-
-    elapsed = time.perf_counter() - start
-    print(f"[ORB] 전체 매칭 개수: {len(matches)}")
-    print(f"[ORB] 평균 매칭 점수: {avg_match_score:.2f}")
-    print(f"[ORB] 처리 시간: {elapsed:.4f}초")
-
-    return {
-        "orb_matches": len(matches),
-        "orb_score": avg_match_score,
-        "orb_time": elapsed
-    }, None
-
-
 def compare_images(user_image_path, template_path):
-    orb_result, orb_error, _ = compare_images_orb(user_image_path, template_path)
-    sift_result, sift_error, _ = compare_images_sift(user_image_path, template_path)
+    template = load_image(template_path)
+    user_image = load_image(user_image_path)
 
-    if sift_result:
-        sift_result.update(orb_result or {})
-        return sift_result
-    elif sift_error:
-        return {"result": "Fail", "message": sift_error}
-    else:
-        return {"result": "Fail", "message": "비교 실패"}
+    if template is None or user_image is None:
+        return {"result": "Fail", "message": "이미지를 불러올 수 없음"}
+
+    # ORB
+    orb_start = time.time()
+    orb = cv2.ORB_create(nfeatures=1000)
+    kp1_orb, des1_orb = orb.detectAndCompute(template, None)
+    kp2_orb, des2_orb = orb.detectAndCompute(user_image, None)
+
+    orb_matches = []
+    orb_score = float('inf')
+    if des1_orb is not None and des2_orb is not None:
+        bf = cv2.BFMatcher(cv2.NORM_HAMMING, crossCheck=True)
+        orb_matches = bf.match(des1_orb, des2_orb)
+        orb_matches = sorted(orb_matches, key=lambda x: x.distance)
+        orb_scores = [m.distance for m in orb_matches]
+        orb_score = sum(orb_scores) / len(orb_scores) if orb_scores else float('inf')
+    orb_time = time.time() - orb_start
+
+    print(f"[ORB] 전체 매칭 개수: {len(orb_matches)}")
+    print(f"[ORB] 평균 매칭 점수: {orb_score:.2f}")
+    print(f"[ORB] 처리 시간: {orb_time:.4f}초")
+
+    # SIFT
+    sift_start = time.time()
+    sift = cv2.SIFT_create()
+    kp1_sift, des1_sift = sift.detectAndCompute(template, None)
+    kp2_sift, des2_sift = sift.detectAndCompute(user_image, None)
+
+    sift_matches = []
+    sift_good_matches = []
+    sift_score = float('inf')
+    if des1_sift is not None and des2_sift is not None:
+        index_params = dict(algorithm=1, trees=5)
+        search_params = dict(checks=50)
+        flann = cv2.FlannBasedMatcher(index_params, search_params)
+        matches = flann.knnMatch(des1_sift, des2_sift, k=2)
+        sift_good_matches = [m for m, n in matches if m.distance < 0.7 * n.distance]
+        sift_scores = [m.distance for m in sift_good_matches]
+        sift_score = sum(sift_scores) / len(sift_scores) if sift_scores else float('inf')
+    sift_time = time.time() - sift_start
+
+    print(f"[SIFT] 전체 매칭 개수: {len(matches)}")
+    print(f"[SIFT] 유사한 매칭 개수: {len(sift_good_matches)}")
+    print(f"[SIFT] 평균 매칭 점수: {sift_score:.2f}")
+    print(f"[SIFT] 처리 시간: {sift_time:.4f}초")
+
+    orb_effectiveness = len(orb_matches) / (orb_score + 1)
+    sift_effectiveness = len(sift_good_matches) / (sift_score + 1)
+    better = "ORB" if orb_effectiveness > sift_effectiveness else "SIFT"
+    print(f"✅ 최종 선택된 알고리즘: {better}")
+
+    return {
+        "result": "Pass" if better == "ORB" and orb_score < 50 else "Fail",
+        "message": f"{better} 알고리즘 사용됨",
+        "selected_algorithm": better,
+        "orb_score": orb_score,
+        "sift_score": sift_score,
+        "orb_matches": len(orb_matches),
+        "sift_matches": len(sift_good_matches),
+        "orb_time": orb_time,
+        "sift_time": sift_time,
+    }
