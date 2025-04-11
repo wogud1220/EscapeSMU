@@ -142,9 +142,11 @@ const Stage13_Sound = () => {
   }, [currentDecibel, isModalVisible]);
 
   const handleNextStage = () => {
-    if (userDepartment === '글로벌인문학부') {
+    if (userDepartment === '글로벌인문학부대학') {
+      updateStageData(userId, college, 'Stage5');
       navigation.navigate('Stage5', {college, department});
     } else if (userDepartment === '공과대학') {
+      updateStageData(userId, college, 'Stage4');
       navigation.navigate('Stage4', {college, department});
     } else {
       navigation.navigate('StageFinal', {college, department}); // Otherwise move to StageFinal
@@ -153,11 +155,6 @@ const Stage13_Sound = () => {
 
   const handleSubmitAnswer = async () => {
     if (answer.trim() === '1') {
-      try {
-        await updateStageData(userId, college, 'Stage4');
-      } catch (err) {
-        console.error('🔥 updateStageData error:', err);
-      }
       Alert.alert('정답입니다!', '다음 스테이지로 이동합니다.', [
         {text: '확인', onPress: handleNextStage},
       ]);

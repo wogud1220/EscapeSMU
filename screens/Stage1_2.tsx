@@ -306,7 +306,7 @@ const Stage1_2 = () => {
     if (answer.trim() === '1985') {
       setIsModalVisible(false);
       try {
-        await updateStageData(userId, college, 'Stage13');
+        await updateStageData(userId, college, 'Stage13_1');
       } catch (err) {
         console.error('🔥 updateStageData error:', err);
       }

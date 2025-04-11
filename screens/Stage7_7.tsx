@@ -18,12 +18,23 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {useNavigation} from '@react-navigation/native';
 import {RootStackParamList} from '../App';
 import {useRoute, RouteProp} from '@react-navigation/native';
+import {onAuthStateChanged} from 'firebase/auth';
+import {auth} from './firebase.config';
+import {updateStageData} from '../utils/updateStageData';
+import {incrementStageAttempt} from '../utils/incrementStageAttempt';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage7_7'>;
 
 const {width, height} = Dimensions.get('window');
 
 const Stage7_7 = () => {
+  useEffect(() => {
+    onAuthStateChanged(auth, user => {
+      if (user) {
+        setUserId(user.uid);
+      }
+    });
+  }, []);
   useEffect(() => {
     console.log('Stage7_7 log - Department:', department);
     console.log('Stage7_7 log - College:', college);
@@ -33,6 +44,7 @@ const Stage7_7 = () => {
   const {college, department} = route.params || {};
   const [answer, setAnswer] = useState('');
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [userId, setUserId] = useState('');
 
   const handleMapPress = () => {
     navigation.navigate('Map');
@@ -44,6 +56,7 @@ const Stage7_7 = () => {
 
   const handleNextStage = () => {
     if (answer.trim() === '학생기숙사') {
+      updateStageData(userId, college, 'Stage8_1');
       Alert.alert('정답입니다!', '다음 스테이지로 이동합니다.', [
         {
           text: '확인',
@@ -52,6 +65,7 @@ const Stage7_7 = () => {
       ]);
       setIsModalVisible(false);
     } else {
+      incrementStageAttempt(userId, college);
       Alert.alert('오답입니다.', '다시 시도해 보세요!');
     }
   };

@@ -13,6 +13,10 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {useNavigation} from '@react-navigation/native';
 import {RootStackParamList} from '../App';
 import {useRoute, RouteProp} from '@react-navigation/native';
+import {updateStageData} from '../utils/updateStageData';
+import {onAuthStateChanged} from 'firebase/auth';
+import {auth} from './firebase.config';
+import {incrementStageAttempt} from '../utils/incrementStageAttempt';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage7_3'>;
 
@@ -46,10 +50,16 @@ const Stage7_3 = () => {
   const navigation = useNavigation<NavigationProp>();
   const route = useRoute<RouteProp<RootStackParamList, 'Stage7_3'>>();
   const {college, department} = route.params || {};
-
+  const [userId, setUserId] = useState('');
   const [disabled, setDisabled] = useState(false);
   const [countdown, setCountdown] = useState<number | null>(null);
-
+  useEffect(() => {
+    onAuthStateChanged(auth, user => {
+      if (user) {
+        setUserId(user.uid);
+      }
+    });
+  }, []);
   // ✅ 카운트다운 타이머 설정
   useEffect(() => {
     let timer: NodeJS.Timeout;
@@ -75,6 +85,7 @@ const Stage7_3 = () => {
     if (disabled) return;
 
     if (value === 3) {
+      updateStageData(userId, college, 'Stage7_4');
       Alert.alert('정답입니다!', '다음 스테이지로 이동합니다.', [
         {
           text: '확인',
@@ -82,6 +93,7 @@ const Stage7_3 = () => {
         },
       ]);
     } else {
+      incrementStageAttempt(userId, college);
       Alert.alert('오답입니다.', '5분 뒤에 다시 시도해 보세요!');
       setDisabled(true);
       setCountdown(300); // ✅ 5분 타이머 설정
