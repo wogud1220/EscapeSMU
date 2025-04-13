@@ -282,6 +282,7 @@ import {updateStageData} from '../utils/updateStageData';
 import {onAuthStateChanged} from 'firebase/auth';
 import {auth} from './firebase.config';
 import {incrementStageAttempt} from '../utils/incrementStageAttempt';
+import {departmentToCollege} from '../utils/departmentToCollege';
 
 const {width, height} = Dimensions.get('window');
 
@@ -310,16 +311,16 @@ const Stage1_2 = () => {
       } catch (err) {
         console.error('🔥 updateStageData error:', err);
       }
-
-      if (college.includes('공과대학')) {
-        navigation.navigate('Stage13_1', {college, department});
-      } else if (college.includes('융합기술대학')) {
-        navigation.navigate('Stage2', {college, department});
-      } else if (college.includes('글로벌인문학부대학')) {
-        navigation.navigate('Stage13_1', {college, department});
-      } else {
-        navigation.navigate('Stage2', {college, department});
-      }
+      // if (college.includes('공과대학')) {
+      //   navigation.navigate('Stage13_1', {college, department});
+      // } else if (college.includes('융합기술대학')) {
+      //   navigation.navigate('Stage13_1', {college, department});
+      // } else if (college.includes('글로벌인문학부대학')) {
+      //   navigation.navigate('Stage13_1', {college, department});
+      // } else {
+      //   navigation.navigate('Stage2', {college, department});
+      // }
+      navigation.navigate('Stage13_1', {college, department});
 
       Alert.alert('정답입니다!', '다음 스테이지로 이동합니다.');
     } else {

@@ -1,37 +1,58 @@
 //상명스포츠센터 시설 퀴즈!
 
-import React, { useState, useEffect } from 'react';
-import { View, Text, ImageBackground, StyleSheet, Dimensions, Image, TouchableOpacity, Alert } from 'react-native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { useNavigation } from '@react-navigation/native';
-import { RootStackParamList } from '../App';
-import { useRoute, RouteProp } from '@react-navigation/native';
+import React, {useState, useEffect} from 'react';
+import {
+  View,
+  Text,
+  ImageBackground,
+  StyleSheet,
+  Dimensions,
+  Image,
+  TouchableOpacity,
+  Alert,
+} from 'react-native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {useNavigation} from '@react-navigation/native';
+import {RootStackParamList} from '../App';
+import {useRoute, RouteProp} from '@react-navigation/native';
+import {onAuthStateChanged} from 'firebase/auth';
+import {auth} from './firebase.config';
+import {updateStageData} from '../utils/updateStageData';
+import {incrementStageAttempt} from '../utils/incrementStageAttempt';
 
 // type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage11_3'>;
 
-const { width, height } = Dimensions.get('window');
+const {width, height} = Dimensions.get('window');
 
 const options = [
-  { label: '2~5명 이하의 팀만 입장 가능하다.', value: 1 },
-  { label: '골프클럽과 신발, 장갑은 개인 것을 사용해야 한다.', value: 2 },
-  { label: '운동복과 실내전용 골프화를 착용해야 한다.', value: 3 },
-  { label: '1팀이 이용할 수 있는 시간은 50분이다.', value: 4 },
-  { label: '전화 예약은 받지 않으며 반드시 내장하여 예약해야 한다.', value: 5 },
+  {label: '2~5명 이하의 팀만 입장 가능하다.', value: 1},
+  {label: '골프클럽과 신발, 장갑은 개인 것을 사용해야 한다.', value: 2},
+  {label: '운동복과 실내전용 골프화를 착용해야 한다.', value: 3},
+  {label: '1팀이 이용할 수 있는 시간은 50분이다.', value: 4},
+  {label: '전화 예약은 받지 않으며 반드시 내장하여 예약해야 한다.', value: 5},
 ];
 
 const Stage11_3 = () => {
   const navigation = useNavigation<NavigationProp>();
   const route = useRoute<RouteProp<RootStackParamList, 'Stage11_4'>>();
-const { department } = route.params;
+  const {college, department} = route.params || {};
   const [disabled, setDisabled] = useState(false); // ✅ 버튼 활성화 상태
   const [countdown, setCountdown] = useState<number | null>(null); // ✅ 남은 시간 상태
-
+  const [userId, setUserId] = useState('');
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, user => {
+      if (user) {
+        setUserId(user.uid);
+      }
+    });
+    return unsubscribe;
+  }, []);
   useEffect(() => {
     let timer: NodeJS.Timeout;
     if (countdown !== null) {
       // ✅ 매 초마다 countdown 감소
       timer = setInterval(() => {
-        setCountdown((prev) => (prev !== null ? prev - 1 : null));
+        setCountdown(prev => (prev !== null ? prev - 1 : null));
       }, 1000);
 
       if (countdown === 0) {
@@ -48,16 +69,22 @@ const { department } = route.params;
     navigation.navigate('Map');
   };
 
-  const handleOptionPress = (value: number) => {
+  const handleOptionPress = async (value: number) => {
     if (disabled) return;
 
     if (value === 4) {
+      await updateStageData(userId, college, 'Stage11_4'); // 스테이지 진행 정보 저장
       Alert.alert('정답입니다!', '다음 스테이지로 이동합니다.', [
-        { text: '확인', onPress: () => navigation.navigate('Stage11_4', {department}) },
+        {
+          text: '확인',
+          onPress: () =>
+            navigation.navigate('Stage11_4', {college, department}),
+        },
       ]);
     } else {
+      incrementStageAttempt(userId, college); // 시도 횟수 증가
       Alert.alert('오답입니다.', '5분 뒤에 다시 시도해 보세요!');
-      
+
       // ✅ 5분(300초) 동안 버튼 비활성화 + 타이머 시작
       setDisabled(true);
       setCountdown(300); // 180초 (3분)
@@ -70,16 +97,15 @@ const { department } = route.params;
 
   return (
     <View style={styles.container}>
-      <ImageBackground 
-        source={require('../assets/main.png')} 
+      <ImageBackground
+        source={require('../assets/main.png')}
         style={styles.image}
-        resizeMode="cover"
-      >
+        resizeMode="cover">
         <View style={styles.overlay} />
 
         {/* 지도 버튼 */}
         <TouchableOpacity onPress={handleMapPress} style={styles.mapButton}>
-          <Image 
+          <Image
             source={require('../assets/map.png')}
             style={styles.mapImage}
             resizeMode="contain"
@@ -88,7 +114,7 @@ const { department } = route.params;
 
         {/* 홈 버튼 */}
         <TouchableOpacity onPress={handleHomePress} style={styles.backButton}>
-          <Image 
+          <Image
             source={require('../assets/home.png')}
             style={styles.backImage}
             resizeMode="contain"
@@ -99,33 +125,38 @@ const { department } = route.params;
         <View style={styles.box}>
           <Text style={styles.text}>
             1층에는 스쿼시장과 스크린골프장이 있어!{'\n'}
-             스크린골프장을 사용하는데 {'\n'}<Text style={styles.highlight}>잘못된 </Text>이용 수칙을 골라봐!
+            스크린골프장을 사용하는데 {'\n'}
+            <Text style={styles.highlight}>잘못된 </Text>이용 수칙을 골라봐!
           </Text>
 
           {/* 서브텍스트 추가 */}
           <Text style={styles.subText}>
-            틀릴 시에는 다시 입력하기까지 <Text style={styles.highlight}>5분</Text>을 기다려야해... 신중하자!
+            틀릴 시에는 다시 입력하기까지{' '}
+            <Text style={styles.highlight}>5분</Text>을 기다려야해... 신중하자!
           </Text>
 
           {/* ✅ 타이머 표시 */}
           {countdown !== null && (
             <Text style={styles.timerText}>
-              {`다시 시도 가능까지: ${Math.floor(countdown / 60)}:${(countdown % 60).toString().padStart(2, '0')}`}
+              {`다시 시도 가능까지: ${Math.floor(countdown / 60)}:${(
+                countdown % 60
+              )
+                .toString()
+                .padStart(2, '0')}`}
             </Text>
           )}
 
           {/* 버튼 생성 */}
           <View style={styles.buttonContainer}>
-            {options.map((option) => (
+            {options.map(option => (
               <TouchableOpacity
                 key={option.value}
                 style={[
                   styles.optionButton,
-                  disabled && styles.disabledButton // ✅ 비활성화 시 스타일 적용
+                  disabled && styles.disabledButton, // ✅ 비활성화 시 스타일 적용
                 ]}
                 onPress={() => handleOptionPress(option.value)}
-                disabled={disabled}
-              >
+                disabled={disabled}>
                 <Text style={styles.optionText}>{option.label}</Text>
               </TouchableOpacity>
             ))}

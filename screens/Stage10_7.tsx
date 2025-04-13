@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -17,6 +17,9 @@ import {useNavigation} from '@react-navigation/native';
 import {RootStackParamList} from '../App';
 import {useRoute, RouteProp} from '@react-navigation/native';
 import {useDepartment} from './Member/DepartmentContext';
+import {updateStageData} from '../utils/updateStageData';
+import {onAuthStateChanged} from 'firebase/auth';
+import {auth} from './firebase.config';
 type NavigationProp = NativeStackNavigationProp<
   RootStackParamList,
   'Stage10_7'
@@ -30,16 +33,22 @@ const Stage10_7 = () => {
   const {college, department} = route.params || {};
   const [answer, setAnswer] = useState('');
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const handleNextStage = () => {
+  const [userId, setUserId] = useState('');
+  useEffect(() => {
+    onAuthStateChanged(auth, user => {
+      if (user) {
+        setUserId(user.uid);
+      }
+    });
+  }, []);
+  const handleNextStage = async () => {
     if (answer.trim() === 'H503') {
       let nextStage: keyof RootStackParamList = 'Stage13_1';
 
-      if (
-        department.includes('융합기술대학') &&
-        department.includes('스포츠융합학부')
-      ) {
+      if (department.includes('스포츠융합학부')) {
+        await updateStageData(userId, college, 'Stage11_1');
         nextStage = 'Stage11_1';
-      } else if (department.includes('예술학부')) {
+      } else if (college.includes('예술학부')) {
         nextStage = 'Stage12_1';
       } else if (college === '글로벌인문학부대학' || college === '공과대학') {
         nextStage = 'StageFinal';

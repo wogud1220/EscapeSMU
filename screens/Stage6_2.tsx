@@ -15,6 +15,11 @@ import {useNavigation} from '@react-navigation/native';
 import {RootStackParamList} from '../App';
 import {useRoute, RouteProp} from '@react-navigation/native';
 import Voice from '@react-native-voice/voice';
+import {onAuthStateChanged} from 'firebase/auth';
+import {auth} from './firebase.config';
+import {updateStageData} from '../utils/updateStageData';
+import {increment} from 'firebase/firestore';
+import {incrementStageAttempt} from '../utils/incrementStageAttempt';
 const {width, height} = Dimensions.get('window');
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage6_2'>;
 
@@ -23,8 +28,16 @@ const Stage6_2 = () => {
   const [isListening, setIsListening] = useState(false);
   const [recognizedText, setRecognizedText] = useState('');
   const route = useRoute<RouteProp<RootStackParamList, 'Stage6_2'>>();
-  const {department} = route.params;
-
+  const {college, department} = route.params || {};
+  const [userId, setUserId] = useState('');
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, user => {
+      if (user) {
+        setUserId(user.uid);
+      }
+    });
+    return unsubscribe;
+  }, []);
   const startListening = async () => {
     try {
       setRecognizedText('');
@@ -40,11 +53,19 @@ const Stage6_2 = () => {
     try {
       await Voice.stop();
       setIsListening(false);
-      if (recognizedText.includes('독도는 우리 땅')) {
+      if (recognizedText.trim() === '독도는 우리 땅') {
+        // 정답이라면
+        await updateStageData(userId, college, 'Stage6_3'); // 스테이지 진행 정보 저장 (독도)
         Alert.alert('성공', '정답입니다! 다음 스테이지로 이동합니다.', [
-          {text: '확인', onPress: () => navigation.navigate('Stage6_3')},
+          {
+            text: '확인',
+            onPress: () =>
+              navigation.navigate('Stage6_3', {college, department}),
+          },
         ]);
       } else {
+        // 정답이 아니라면
+        incrementStageAttempt(userId, college); // 시도 횟수 증가
         Alert.alert('실패', '정답이 아닙니다. 다시 시도해보세요.');
       }
     } catch (e) {
@@ -76,10 +97,6 @@ const Stage6_2 = () => {
 
   const handleMapPress = () => {
     navigation.navigate('Map');
-  };
-
-  const handleNextStage = () => {
-    navigation.navigate('Stage6_3', {department}); // ✅ Stage6_3으로 이동하도록 수정
   };
 
   return (

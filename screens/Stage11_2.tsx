@@ -1,49 +1,69 @@
 //송백관 마무리 퀴즈
 
-import React, { useState } from 'react';
-import { 
-  View, 
-  Text, 
-  ImageBackground, 
-  StyleSheet, 
-  Dimensions, 
-  Image, 
-  TouchableOpacity, 
-  TextInput, 
-  Alert, 
-  Modal, 
-  TouchableWithoutFeedback 
+import React, {useState, useEffect} from 'react';
+import {
+  View,
+  Text,
+  ImageBackground,
+  StyleSheet,
+  Dimensions,
+  Image,
+  TouchableOpacity,
+  TextInput,
+  Alert,
+  Modal,
+  TouchableWithoutFeedback,
 } from 'react-native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { useNavigation } from '@react-navigation/native';
-import { RootStackParamList } from '../App';
-import { useRoute, RouteProp } from '@react-navigation/native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {useNavigation} from '@react-navigation/native';
+import {RootStackParamList} from '../App';
+import {useRoute, RouteProp} from '@react-navigation/native';
+import {updateStageData} from '../utils/updateStageData';
+import {onAuthStateChanged} from 'firebase/auth';
+import {auth} from './firebase.config';
+import {increment} from 'firebase/firestore';
+import {incrementStageAttempt} from '../utils/incrementStageAttempt';
 
-type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage11_2'>;
+type NavigationProp = NativeStackNavigationProp<
+  RootStackParamList,
+  'Stage11_2'
+>;
 
-const { width, height } = Dimensions.get('window');
+const {width, height} = Dimensions.get('window');
 
 const Stage11_2 = () => {
   const navigation = useNavigation<NavigationProp>();
   const route = useRoute<RouteProp<RootStackParamList, 'Stage11_2'>>();
-const { department } = route.params;
+  const {college, department} = route.params || {};
   const [answer, setAnswer] = useState('');
   const [isModalVisible, setIsModalVisible] = useState(false);
-
+  const [userId, setUserId] = useState('');
   const handleMapPress = () => {
     navigation.navigate('Map');
   };
-
-  const handleNextStage = () => {
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, user => {
+      if (user) {
+        setUserId(user.uid);
+      }
+    });
+    return unsubscribe;
+  }, []);
+  const handleNextStage = async () => {
     if (answer.trim() === '파리') {
+      await updateStageData(userId, college, 'Stage11_3'); // 스테이지 진행 정보 저장
       Alert.alert('정답입니다!', '다음 스테이지로 이동합니다.', [
-        { 
-          text: '확인', 
-          onPress: () => navigation.navigate('Stage11_3', {department})
+        {
+          text: '확인',
+          onPress: () =>
+            navigation.navigate('Stage11_3', {college, department}),
         },
       ]);
       setIsModalVisible(false);
     } else {
+      // 정답이 아닐 경우
+      incrementStageAttempt(userId, college); // 시도 횟수 증가
+
       Alert.alert('오답입니다.', '다시 시도해 보세요!');
     }
   };
@@ -65,16 +85,15 @@ const { department } = route.params;
   return (
     <View style={styles.container}>
       {/* ✅ 배경 이미지 설정 */}
-      <ImageBackground 
-        source={require('../assets/main.png')} 
+      <ImageBackground
+        source={require('../assets/main.png')}
         style={styles.image}
-        resizeMode="cover"
-      >
+        resizeMode="cover">
         <View style={styles.overlay} />
 
         {/* ✅ 지도 버튼 */}
         <TouchableOpacity onPress={handleMapPress} style={styles.mapButton}>
-          <Image 
+          <Image
             source={require('../assets/map.png')}
             style={styles.mapImage}
             resizeMode="contain"
@@ -83,7 +102,7 @@ const { department } = route.params;
 
         {/* ✅ 홈 버튼 */}
         <TouchableOpacity onPress={handleHomePress} style={styles.backButton}>
-          <Image 
+          <Image
             source={require('../assets/home.png')}
             style={styles.backImage}
             resizeMode="contain"
@@ -92,27 +111,26 @@ const { department } = route.params;
 
         {/* ✅ 문제 박스 */}
         <View style={styles.box}>
-          <Text style={styles.text}>스포츠센터에 들어가니{'\n'}
+          <Text style={styles.text}>
+            스포츠센터에 들어가니{'\n'}
             앞에 포스터들이 있어!
           </Text>
-          
+
           {/* ✅ 이미지 추가 */}
-          <Image 
-            source={require('../assets/sportsposter.png')} 
+          <Image
+            source={require('../assets/sportsposter.png')}
             style={styles.wayImage}
             resizeMode="contain"
           />
 
           <Text style={styles.subText}>
-          포스터를 참고해서 1924년에 올림픽이 열린 도시를 찾아보자!
+            포스터를 참고해서 1924년에 올림픽이 열린 도시를 찾아보자!
           </Text>
         </View>
 
         {/* ✅ 입력 필드 → 터치 시 모달 열기 */}
         <TouchableOpacity onPress={openModal} style={styles.inputContainer}>
-          <Text style={styles.inputText}>
-            {answer || '정답 입력'}
-          </Text>
+          <Text style={styles.inputText}>{answer || '정답 입력'}</Text>
         </TouchableOpacity>
 
         {/* ✅ 모달 */}
@@ -120,8 +138,7 @@ const { department } = route.params;
           animationType="fade"
           transparent={true}
           visible={isModalVisible}
-          onRequestClose={closeModal}
-        >
+          onRequestClose={closeModal}>
           <TouchableWithoutFeedback onPress={closeModal}>
             <View style={styles.modalBackground}>
               <TouchableWithoutFeedback>
@@ -141,10 +158,9 @@ const { department } = route.params;
                   />
 
                   {/* ✅ 제출 버튼 */}
-                  <TouchableOpacity 
+                  <TouchableOpacity
                     style={styles.submitButton}
-                    onPress={handleNextStage}
-                  >
+                    onPress={handleNextStage}>
                     <Text style={styles.buttonText}>제출하기</Text>
                   </TouchableOpacity>
                 </View>

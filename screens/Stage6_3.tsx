@@ -1,15 +1,31 @@
 //독도의 날 맞추기
 
-import React, { useState } from 'react';
-import { View, Text, ImageBackground, StyleSheet, Dimensions, Image, TouchableOpacity, TextInput, Alert,  TouchableWithoutFeedback,Modal } from 'react-native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { useNavigation } from '@react-navigation/native';
-import { RootStackParamList } from '../App';
-import { useRoute, RouteProp } from '@react-navigation/native';
+import React, {useState, useEffect} from 'react';
+import {
+  View,
+  Text,
+  ImageBackground,
+  StyleSheet,
+  Dimensions,
+  Image,
+  TouchableOpacity,
+  TextInput,
+  Alert,
+  TouchableWithoutFeedback,
+  Modal,
+} from 'react-native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {useNavigation} from '@react-navigation/native';
+import {RootStackParamList} from '../App';
+import {useRoute, RouteProp} from '@react-navigation/native';
 import {useDepartment} from './Member/DepartmentContext';
+import {onAuthStateChanged} from 'firebase/auth';
+import {auth} from './firebase.config';
+import {updateStageData} from '../utils/updateStageData';
+import {decrementStageAttempt} from '../utils/decrementStageAttempt';
+import {incrementStageAttempt} from '../utils/incrementStageAttempt';
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage6_3'>;
 type Stage6_3RouteProp = RouteProp<RootStackParamList, 'Stage6_3'>;
-
 
 const {width, height} = Dimensions.get('window');
 
@@ -18,36 +34,44 @@ const Stage6_3 = () => {
   const [answer, setAnswer] = useState('');
   const [isModalVisible, setIsModalVisible] = useState(false);
   const route = useRoute<Stage6_3RouteProp>();
-  const { department } = route.params;
+  const {college, department} = route.params || {};
+  const [userId, setUserId] = useState('');
 
-  const {college} = useDepartment();
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, user => {
+      if (user) {
+        setUserId(user.uid);
+      }
+    });
+    return unsubscribe;
+  }, []);
+
   const handleMapPress = () => {
     navigation.navigate('Map');
   };
 
-  const handleNextStage = () => {
+  const handleNextStage = async () => {
     if (answer.trim() === '팔도총도') {
       let nextStage = 'Stage8_1'; // 기본값
-  
-      if (department.includes('글로벌인문학부대학')) {
-        nextStage = 'Stage7_1';
+
+      if (college.includes('글로벌인문학부대학')) {
+        nextStage = 'Stage7_1'; // 송백관 이동
+        await updateStageData(userId, college, 'Stage7_1'); // 스테이지 진행 정보 저장 (송백관)
       }
-  
+
       Alert.alert('정답입니다!', '다음 스테이지로 이동합니다.', [
         {
           text: '확인',
-          onPress: () =>
-            navigation.navigate(
-              college === '글로벌인문학부대학' ? 'Stage8_1' : 'Stage7_1',
-            ),
+          onPress: () => navigation.navigate(nextStage, {college, department}),
         },
       ]);
       setIsModalVisible(false);
     } else {
+      // 정답이 아닐 경우
+      incrementStageAttempt(userId, college); // 시도 횟수 감소
       Alert.alert('오답입니다.', '다시 시도해 보세요!');
     }
   };
-  
 
   const handleHomePress = () => {
     navigation.navigate('Main');
@@ -66,11 +90,10 @@ const Stage6_3 = () => {
   return (
     <View style={styles.container}>
       {/* ✅ 배경 이미지 설정 */}
-      <ImageBackground 
-        source={require('../assets/main.png')} 
+      <ImageBackground
+        source={require('../assets/main.png')}
         style={styles.image}
-        resizeMode="cover"
-      >
+        resizeMode="cover">
         {/* ✅ 투명 레이어 추가 */}
         <View style={styles.overlay} />
 
@@ -104,9 +127,7 @@ const Stage6_3 = () => {
 
         {/* ✅ 입력 필드 → 터치 시 모달 열기 */}
         <TouchableOpacity onPress={openModal} style={styles.inputContainer}>
-          <Text style={styles.inputText}>
-            {answer || '정답 입력'}
-          </Text>
+          <Text style={styles.inputText}>{answer || '정답 입력'}</Text>
         </TouchableOpacity>
 
         {/* ✅ 모달 */}
@@ -114,8 +135,7 @@ const Stage6_3 = () => {
           animationType="fade"
           transparent={true}
           visible={isModalVisible}
-          onRequestClose={closeModal}
-        >
+          onRequestClose={closeModal}>
           <TouchableWithoutFeedback onPress={closeModal}>
             <View style={styles.modalBackground}>
               <TouchableWithoutFeedback>
@@ -135,10 +155,9 @@ const Stage6_3 = () => {
                   />
 
                   {/* ✅ 제출 버튼 */}
-                  <TouchableOpacity 
+                  <TouchableOpacity
                     style={styles.submitButton}
-                    onPress={handleNextStage}
-                  >
+                    onPress={handleNextStage}>
                     <Text style={styles.buttonText}>제출하기</Text>
                   </TouchableOpacity>
                 </View>
@@ -179,7 +198,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
+    shadowOffset: {width: 0, height: 4},
     shadowOpacity: 0.3,
     shadowRadius: 4,
     elevation: 5,

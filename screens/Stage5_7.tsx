@@ -17,8 +17,8 @@ import {useRoute, RouteProp} from '@react-navigation/native';
 import {useDepartment} from './Member/DepartmentContext';
 import {updateStageData} from '../utils/updateStageData';
 import {decrementStageAttempt} from '../utils/decrementStageAttempt';
-import { onAuthStateChanged } from 'firebase/auth';
-import { auth } from './firebase.config';
+import {onAuthStateChanged} from 'firebase/auth';
+import {auth} from './firebase.config';
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage6_1'>;
 
 const {width, height} = Dimensions.get('window');
@@ -45,17 +45,9 @@ const Stage5_7 = () => {
     return unsubscribe;
   }, []);
   const handleNextStage = async () => {
-    if (college === '글로벌인문학부대학') {
-      navigation.navigate('Stage7_1', {college, department}); // ✅ 글로벌인문학부대학이면 Stage7_1(송백관)
-    } else {
-      try {
-        await updateStageData(userId, college, 'Stage8_1');
-        decrementStageAttempt(userId, college); // ✅ 시도 횟수 감소
-      } catch (err) {
-        console.error('🔥 updateStageData error:', err);
-      }
-      navigation.navigate('Stage8_1', {college, department}); // ✅ 그 외는 기숙사인 8_1
-    }
+    await updateStageData(userId, college, 'Stage6_1'); // 스테이지 진행 정보 저장 (독도)
+    decrementStageAttempt(userId, college); // 스테이지 시도 횟수 감소
+    navigation.navigate('Stage6_1', {college, department}); // 다음 스테이지로 이동(독도)
   };
   return (
     <View style={styles.container}>

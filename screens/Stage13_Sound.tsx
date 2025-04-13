@@ -119,8 +119,8 @@ const Stage13_Sound = () => {
         const mapped = Math.floor(dbSPL); // 정수로 사용
         latestDecibelRef.current = mapped;
 
-        console.log('🔊 dBFS 원본:', rawDbfs);
-        console.log('🎧 변환된 dB SPL:', dbSPL);
+        // console.log('🔊 dBFS 원본:', rawDbfs);
+        // console.log('🎧 변환된 dB SPL:', dbSPL);
       };
 
       intervalId = setInterval(() => {
@@ -186,6 +186,10 @@ const Stage13_Sound = () => {
     } else if (userDepartment === '공과대학') {
       updateStageData(userId, college, 'Stage4');
       navigation.navigate('Stage4', {college, department});
+    } else if (department === '스포츠융합학부') {
+      // 체대
+      updateStageData(userId, college, 'Stage5');
+      navigation.navigate('Stage5', {college, department});
     } else {
       navigation.navigate('StageFinal', {college, department}); // Otherwise move to StageFinal
     }
