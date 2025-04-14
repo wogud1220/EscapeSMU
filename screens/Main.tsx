@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
   titleImage: {
     position: 'absolute',
     top: height * 0.23,
-    width: width * 1.0,
+    width: width * 0.6,
     height: height * 0.15,
   },
   loginButton: {
@@ -154,6 +154,7 @@ const styles = StyleSheet.create({
     paddingVertical: height * 0.015,
     paddingHorizontal: width * 0.1,
     borderRadius: width * 0.03,
+    marginTop: height * 0.56,
   },
   button: {
     position: 'absolute',
