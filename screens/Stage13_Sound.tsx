@@ -198,6 +198,16 @@ const Stage13_Sound = () => {
   const handleSubmitAnswer = async () => {
     if (answer.trim() === '1') {
       Alert.alert('정답입니다!', '다음 스테이지로 이동합니다.', [
+  //       '이방인', - 오늘
+  // '노인과 바다', - 그는/그
+  // '메리골드 마음세탁소', - 봄
+  // '눈먼 자들의 도시', - 노란
+  // '흰 = The Elegy of Whiteness', - 흰
+  // '불편한 편의점 2', - 출근
+  // '인간실격', - 나
+  // '페스트', - 연대기
+  // '파우스트'(Goethe, Johann Wolfgang von) - 너희들
+
         {text: '확인', onPress: handleNextStage},
       ]);
       setIsModalVisible(false);
@@ -252,7 +262,7 @@ const Stage13_Sound = () => {
           )}
 
           <Text style={styles.text}>
-            해당 책의 35페이지 3번째 줄에 있는 첫 단어를 입력해보자
+            책의 서론을 제외한 본문에서의 첫 번째 단어를 입력해보자!
           </Text>
 
           <TouchableOpacity
