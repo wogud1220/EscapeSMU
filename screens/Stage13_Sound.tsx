@@ -142,33 +142,6 @@ const Stage13_Sound = () => {
       if (intervalId) clearInterval(intervalId);
     };
   }, []);
-  // useEffect(() => {
-  //   let intervalId: NodeJS.Timeout;
-
-  //   const start = async () => {
-  //     const granted = await requestMicPermission();
-  //     if (!granted) return;
-
-  //     Sound.start();
-  //     Sound.onNewFrame = data => {
-  //       const mapped = Math.floor(data.value + 80);
-  //       latestDecibelRef.current = mapped;
-  //       console.log('🔊 현재 데시벨:', data.value);
-  //     };
-
-  //     // 2초마다 최신 데시벨 값을 state에 업데이트
-  //     intervalId = setInterval(() => {
-  //       setCurrentDecibel(latestDecibelRef.current);
-  //     }, 500);
-  //   };
-
-  //   start();
-
-  //   return () => {
-  //     Sound.stop();
-  //     if (intervalId) clearInterval(intervalId);
-  //   };
-  // }, []);
 
   // 모달이 열려있는 상태에서 데시벨이 70을 초과하면 모달을 강제로 닫고 입력값을 초기화
   useEffect(() => {
@@ -180,23 +153,41 @@ const Stage13_Sound = () => {
   }, [currentDecibel, isModalVisible]);
 
   const handleNextStage = () => {
+    let actualCollege = college;
+    if (department === '디지털만화영상' || department === '사진영상') {
+      actualCollege = '융합기술대학';
+    }
+
     if (userDepartment === '글로벌인문학부대학') {
-      updateStageData(userId, college, 'Stage5');
-      navigation.navigate('Stage5', {college, department});
-    } else if (userDepartment === '공과대학') {
-      updateStageData(userId, college, 'Stage4');
-      navigation.navigate('Stage4', {college, department});
+      updateStageData(userId, actualCollege, 'Stage5');
+      navigation.navigate('Stage5', {college: actualCollege, department});
+    }
+    // + 식품공학도 공대루트
+    else if (userDepartment === '공과대학') {
+      updateStageData(userId, actualCollege, 'Stage4');
+      navigation.navigate('Stage4', {college: actualCollege, department});
     } else if (department === '스포츠융합학부') {
-      // 체대
-      updateStageData(userId, college, 'Stage5');
-      navigation.navigate('Stage5', {college, department});
-    } else {
-      navigation.navigate('StageFinal', {college, department}); // Otherwise move to StageFinal
+      updateStageData(userId, actualCollege, 'Stage5');
+      navigation.navigate('Stage5', {college: actualCollege, department});
+    }
+    //예술학부지만 융기대 루트 타는 학과
+    else if (department === '디지털만화영상' || department === '사진영상') {
+      updateStageData(userId, actualCollege, 'Stage2');
+      navigation.navigate('Stage2', {college: actualCollege, department});
+    } else if (userDepartment === '디자인학부') {
+      updateStageData(userId, actualCollege, 'Stage5');
+      navigation.navigate('Stage5', {college: actualCollege, department});
     }
   };
 
   const handleSubmitAnswer = async () => {
+    let actualCollege = college;
+    if (department === '디지털만화영상' || department === '사진영상') {
+      actualCollege = '융합기술대학';
+    }
     if (answer.trim() === '1') {
+      // ⛔ 데시벨 수집 중단
+      Sound.stop();
       Alert.alert('정답입니다!', '다음 스테이지로 이동합니다.', [
   //       '이방인', - 오늘
   // '노인과 바다', - 그는/그
@@ -210,9 +201,10 @@ const Stage13_Sound = () => {
 
         {text: '확인', onPress: handleNextStage},
       ]);
+
       setIsModalVisible(false);
     } else {
-      incrementStageAttempt(userId, college);
+      incrementStageAttempt(userId, actualCollege);
       Alert.alert('오답입니다.', '다시 시도해 보세요!');
     }
   };

@@ -78,10 +78,14 @@ const Stage13_6 = () => {
 
   const handleOptionPress = async (value: number) => {
     if (disabled) return;
+    let actualCollege = college;
+    if (department === '디지털만화영상' || department === '사진영상') {
+      actualCollege = '융합기술대학';
+    }
 
     if (value === 4) {
       try {
-        await updateStageData(userId, college, 'Stage13_6_1');
+        await updateStageData(userId, actualCollege, 'Stage13_6_1');
       } catch (err) {
         console.error('🔥 updateStageData error:', err);
       }
@@ -89,11 +93,14 @@ const Stage13_6 = () => {
         {
           text: '확인',
           onPress: () =>
-            navigation.navigate('Stage13_6_1', {college, department}),
+            navigation.navigate('Stage13_6_1', {
+              college: actualCollege,
+              department,
+            }),
         },
       ]);
     } else {
-      incrementStageAttempt(userId, college);
+      incrementStageAttempt(userId, actualCollege);
       Alert.alert('오답입니다.', '5분 뒤에 다시 시도해 보세요!');
 
       // ✅ 5분(300초) 동안 버튼 비활성화 + 타이머 시작

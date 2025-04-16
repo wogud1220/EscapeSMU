@@ -53,31 +53,35 @@ const departments: Record<string, string[]> = {
   ],
   융합기술대학: [
     '글금경',
-    '식품공학',
+    '식품공학', //공대
     '그린스마트시티',
     '간호학과',
-    '스포츠융합학부',
+    '스포츠융합학부', //체대
   ],
   예술학부: [
     '영화영상',
     '무대미술',
-    '디지털만화영상',
+    '디지털만화영상', //융기대
     '문화예술경영',
     '연극전공',
-    '사진영상',
+    '사진영상', //융기대
   ],
 };
 
 const departmentToCollege: Record<string, string> = Object.entries(
   departments,
 ).reduce((acc, [college, majors]) => {
-  majors.forEach(
-    major =>
-      (acc[major] =
-        college === '융합기술대학' && major === '스포츠융합학부'
-          ? '체육대학'
-          : college),
-  );
+  majors.forEach(major => {
+    if (major === '스포츠융합학부') {
+      acc[major] = '체육대학';
+    } else if (major === '디지털만화영상' || major === '사진영상') {
+      acc[major] = '융합기술대학';
+    } else if (major === '식품공학') {
+      acc[major] = '공과대학';
+    } else {
+      acc[major] = college;
+    }
+  });
   return acc;
 }, {} as Record<string, string>);
 
@@ -141,19 +145,24 @@ const StageList = () => {
               key={idx}
               style={styles.menuItemButton}
               onPress={() => {
-                const mappedCollege = departmentToCollege[major];
-                setCollege(mappedCollege);
-                setDepartment(major);
+                const originalCollege = selectedCollege; // 보여줄 학부
+                const mappedCollege = departmentToCollege[major]; // 경로로 사용할 학부 (사진영상 → 융기대)
+
+                setCollege(originalCollege); // 원래 학부 저장
+                setDepartment(major); // 전공 저장
 
                 onAuthStateChanged(auth, user => {
                   if (user) {
+                    console.log('✅ user.uid:', user.uid);
+                    console.log('✅ mappedCollege:', mappedCollege);
                     getLastClearedStage(user.uid, mappedCollege).then(
                       cleared => {
+                        console.log('📦 getLastClearedStage result:', cleared);
                         const next = formatStageKey(
                           cleared || 'stage1',
                         ) as keyof RootStackParamList;
                         navigation.navigate(next, {
-                          college: mappedCollege,
+                          college: mappedCollege, // 경로는 융기대 루트
                           department: major,
                         });
                       },

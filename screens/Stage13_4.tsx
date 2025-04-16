@@ -54,9 +54,13 @@ const Stage13_4 = () => {
     });
   }, []);
   const handleNextStage = async () => {
+    let actualCollege = college;
+    if (department === '디지털만화영상' || department === '사진영상') {
+      actualCollege = '융합기술대학';
+    }
     if (answer.trim() === '192') {
       try {
-        await updateStageData(userId, college, 'Stage13_5');
+        await updateStageData(userId, actualCollege, 'Stage13_5');
       } catch (err) {
         console.error('🔥 updateStageData error:', err);
       }
@@ -65,12 +69,12 @@ const Stage13_4 = () => {
         {
           text: '확인',
           onPress: () =>
-            navigation.navigate('Stage13_5', {college, department}),
+            navigation.navigate('Stage13_5', {college:actualCollege, department}),
         },
       ]);
       setIsModalVisible(false);
     } else {
-      incrementStageAttempt(userId, college);
+      incrementStageAttempt(userId, actualCollege);
       Alert.alert('오답입니다.', '다시 시도해 보세요!');
     }
   };

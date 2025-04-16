@@ -91,17 +91,20 @@ const Stage3Camera = ({navigation}: {navigation: any}) => {
         timeout: 10000,
       });
       setIsUploading(false);
-
+      let actualCollege = college;
+      if (department === '디지털만화영상' || department === '사진영상') {
+        actualCollege = '융합기술대학';
+      }
       const data = response.data;
       if (data.result === 'Pass') {
         try {
-          await updateStageData(userId, college, 'Stage3_2');
+          await updateStageData(userId, actualCollege, 'Stage3_2');
         } catch (err) {
           console.error('🔥 updateStageData error:', err);
         }
         setPass(true);
       } else {
-        incrementStageAttempt(userId, college);
+        incrementStageAttempt(userId, actualCollege);
         setPass(false);
       }
       setShowResult(true);
@@ -113,8 +116,12 @@ const Stage3Camera = ({navigation}: {navigation: any}) => {
   };
 
   const goToNextStage = async () => {
-    await updateStageData(userId, college, 'Stage3_2');
-    navigation.navigate('Stage3_2', {college, department});
+    let actualCollege = college;
+    if (department === '디지털만화영상' || department === '사진영상') {
+      actualCollege = '융합기술대학';
+    }
+    await updateStageData(userId, actualCollege, 'Stage3_2');
+    navigation.navigate('Stage3_2', {college: actualCollege, department});
   };
 
   if (permission === null) return <Text>🔄 권한 확인 중...</Text>;

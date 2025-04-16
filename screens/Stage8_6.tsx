@@ -53,7 +53,7 @@ const Stage8_6 = () => {
     if (answer.trim() === '수뭉이와함께라면') {
       let nextStage = 'Stage10_1';
 
-      if (department.includes('디자인학부')) {
+      if (college.includes('디자인학부')) {
         nextStage = 'Stage9_1';
       }
       await updateStageData(userId, college, nextStage);

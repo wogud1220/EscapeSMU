@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {act, useEffect, useRef, useState} from 'react';
 import {
   View,
   Text,
@@ -91,13 +91,16 @@ const Stage5Camera = ({navigation}: {navigation: any}) => {
         timeout: 10000,
       });
       setIsUploading(false);
-
+      let actualCollege = college;
+      if (department === '디지털만화영상' || department === '사진영상') {
+        actualCollege = '융합기술대학';
+      }
       const data = response.data;
       if (data.result === 'Pass') {
         goToNextStage();
         setPass(true);
       } else {
-        incrementStageAttempt(userId, college);
+        incrementStageAttempt(userId, actualCollege);
         setPass(false);
       }
       setShowResult(true);
@@ -109,8 +112,12 @@ const Stage5Camera = ({navigation}: {navigation: any}) => {
   };
 
   const goToNextStage = async () => {
-    await updateStageData(userId, college, 'Stage5_2');
-    navigation.navigate('Stage5_2', {college, department});
+    let actualCollege = college;
+    if (department === '디지털만화영상' || department === '사진영상') {
+      actualCollege = '융합기술대학';
+    }
+    await updateStageData(userId, actualCollege, 'Stage5_2');
+    navigation.navigate('Stage5_2', {college: actualCollege, department});
   };
 
   if (permission === null) return <Text>🔄 권한 확인 중...</Text>;

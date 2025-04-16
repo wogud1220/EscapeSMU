@@ -51,24 +51,48 @@ const Stage6_3 = () => {
   };
 
   const handleNextStage = async () => {
+    let actualCollege = college;
+    if (department === '디지털만화영상' || department === '사진영상') {
+      actualCollege = '융합기술대학';
+    }
     if (answer.trim() === '팔도총도') {
       let nextStage = 'Stage8_1'; // 기본값
-
+      //인문대학
       if (college.includes('글로벌인문학부대학')) {
         nextStage = 'Stage7_1'; // 송백관 이동
-        await updateStageData(userId, college, 'Stage7_1'); // 스테이지 진행 정보 저장 (송백관)
+        await updateStageData(userId, actualCollege, 'Stage7_1'); // 스테이지 진행 정보 저장 (송백관)
       }
-
+      //융기대, 디지털만화영상과, 사진영상과
+      else if (
+        department === '디지털만화영상' ||
+        department === '사진영상' ||
+        college.includes('융합기술대학')
+      ) {
+        await updateStageData(userId, actualCollege, 'Stage8_1'); //기숙사로 저장
+        nextStage = 'Stage8_1'; // 예대-융기대 라면 기숙사로 이동
+      }
+      //공대, 식품공학
+      else if (department === '식품공학' || college.includes('공과대학')) {
+        await updateStageData(userId, actualCollege, 'Stage8_1'); //기숙사로 저장
+        nextStage = 'Stage8_1'; // 공대, 식품공학이라면 기숙사로 이동
+      } else if (college.includes('디자인학부')) {
+        await updateStageData(userId, actualCollege, 'Stage9_1'); //디자인관 혹은 학생회관로 저장
+        nextStage = 'Stage9_1'; // 디자인학부라면 디자인관으로 이동
+      }
       Alert.alert('정답입니다!', '다음 스테이지로 이동합니다.', [
         {
           text: '확인',
-          onPress: () => navigation.navigate(nextStage, {college, department}),
+          onPress: () =>
+            navigation.navigate(nextStage, {
+              college: actualCollege,
+              department,
+            }),
         },
       ]);
       setIsModalVisible(false);
     } else {
       // 정답이 아닐 경우
-      incrementStageAttempt(userId, college); // 시도 횟수 감소
+      incrementStageAttempt(userId, actualCollege); // 시도 횟수 감소
       Alert.alert('오답입니다.', '다시 시도해 보세요!');
     }
   };

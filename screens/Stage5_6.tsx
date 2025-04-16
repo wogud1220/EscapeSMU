@@ -50,21 +50,29 @@ const Stage5_6 = () => {
   };
 
   const handleNextStage = async () => {
+    let actualCollege = college;
+    if (department === '디지털만화영상' || department === '사진영상') {
+      actualCollege = '융합기술대학';
+    }
     if (answer.trim() === '시크릿오더') {
       try {
-        await updateStageData(userId, college, 'Stage5_7');
+        await updateStageData(userId, actualCollege, 'Stage5_7');
       } catch (err) {
         console.error('🔥 updateStageData error:', err);
       }
       Alert.alert('정답입니다!', '다음 스테이지로 이동합니다.', [
         {
           text: '확인',
-          onPress: () => navigation.navigate('Stage5_7', {college, department}),
+          onPress: () =>
+            navigation.navigate('Stage5_7', {
+              college: actualCollege,
+              department,
+            }),
         },
       ]);
       setIsModalVisible(false);
     } else {
-      incrementStageAttempt(userId, college);
+      incrementStageAttempt(userId, actualCollege);
       Alert.alert('오답입니다.', '다시 시도해 보세요!');
     }
   };

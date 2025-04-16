@@ -1,13 +1,26 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, ImageBackground, StyleSheet, Dimensions, Image, TouchableOpacity, Alert } from 'react-native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { useNavigation } from '@react-navigation/native';
-import { RootStackParamList } from '../App';
-import { useRoute, RouteProp } from '@react-navigation/native';
+import React, {useState, useEffect} from 'react';
+import {
+  View,
+  Text,
+  ImageBackground,
+  StyleSheet,
+  Dimensions,
+  Image,
+  TouchableOpacity,
+  Alert,
+} from 'react-native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {useNavigation} from '@react-navigation/native';
+import {RootStackParamList} from '../App';
+import {useRoute, RouteProp} from '@react-navigation/native';
+import {updateStageData} from '../utils/updateStageData';
+import {incrementStageAttempt} from '../utils/incrementStageAttempt';
+import {onAuthStateChanged} from 'firebase/auth';
+import {auth} from './firebase.config';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage2_5'>;
 
-const { width, height } = Dimensions.get('window');
+const {width, height} = Dimensions.get('window');
 
 const correctPuzzleImages = [
   require('../assets/puzzle/1_1_1.png'),
@@ -47,33 +60,53 @@ const shuffleArray = (array: any[]) => {
 };
 
 const Stage2_5 = () => {
+  const [userId, setUserId] = useState('');
+
   const navigation = useNavigation<NavigationProp>();
-  const [puzzleImages, setPuzzleImages] = useState(() => shuffleArray([...correctPuzzleImages]));
-  const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(null);
-
+  const [puzzleImages, setPuzzleImages] = useState(() =>
+    shuffleArray([...correctPuzzleImages]),
+  );
+  const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(
+    null,
+  );
   const route = useRoute<RouteProp<RootStackParamList, 'Stage2_5'>>();
-  const { department } = route.params;
+  const {college, department} = route.params || {};
 
-
-// ✅ 경로 문자열로 변환 후 비교하기 위해 미리 변환
-const correctPaths = correctPuzzleImages.map((img) =>
-  Image.resolveAssetSource(img).uri
-);
-
-const checkCompletion = () => {
-  const currentPaths = puzzleImages.map((img) =>
-    Image.resolveAssetSource(img).uri
+  useEffect(() => {
+    onAuthStateChanged(auth, user => {
+      if (user) {
+        setUserId(user.uid);
+      }
+    });
+  }, []);
+  // ✅ 경로 문자열로 변환 후 비교하기 위해 미리 변환
+  const correctPaths = correctPuzzleImages.map(
+    img => Image.resolveAssetSource(img).uri,
   );
 
-  if (currentPaths.every((path, index) => path === correctPaths[index])) {
-    Alert.alert(
-      '성공 🎉',
-      '퍼즐을 완성했구나! 다음 스테이지로 이동하자!',
-      [{ text: '확인', onPress: () => navigation.navigate('Stage3', {department}) }]
+  const checkCompletion = () => {
+    let actualCollege = college;
+    if (department === '디지털만화영상' || department === '사진영상') {
+      actualCollege = '융합기술대학';
+    }
+    const currentPaths = puzzleImages.map(
+      img => Image.resolveAssetSource(img).uri,
     );
-  }
-};
-  
+
+    if (currentPaths.every((path, index) => path === correctPaths[index])) {
+      updateStageData(userId, actualCollege, 'Stage3');
+      Alert.alert('성공 🎉', '퍼즐을 완성했구나! 다음 스테이지로 이동하자!', [
+        {
+          text: '확인',
+          onPress: () => navigation.navigate('Stage3', {college, department}),
+        },
+      ]);
+    } else {
+      incrementStageAttempt(userId, actualCollege);
+      Alert.alert('실패 ❌', '퍼즐을 다시 맞춰보자!');
+    }
+  };
+
   useEffect(() => {
     setPuzzleImages(shuffleArray([...correctPuzzleImages]));
   }, []);
@@ -83,7 +116,15 @@ const checkCompletion = () => {
   };
 
   const handleHint = () => {
-    navigation.navigate('Stage2_Hint');
+    navigation.navigate('Stage2_Hint', {college, department});
+  };
+  const handleNextStage = () => {
+    let actualCollege = college;
+    if (department === '디지털만화영상' || department === '사진영상') {
+      actualCollege = '융합기술대학';
+    }
+    updateStageData(userId, actualCollege, 'Stage3');
+    navigation.navigate('Stage3', {college, department});
   };
 
   const handleImagePress = (index: number) => {
@@ -97,7 +138,10 @@ const checkCompletion = () => {
 
   const swapImages = (index1: number, index2: number) => {
     const newPuzzleImages = [...puzzleImages];
-    [newPuzzleImages[index1], newPuzzleImages[index2]] = [newPuzzleImages[index2], newPuzzleImages[index1]];
+    [newPuzzleImages[index1], newPuzzleImages[index2]] = [
+      newPuzzleImages[index2],
+      newPuzzleImages[index1],
+    ];
     setPuzzleImages(newPuzzleImages);
 
     setTimeout(() => {
@@ -107,23 +151,24 @@ const checkCompletion = () => {
 
   return (
     <View style={styles.container}>
-      <ImageBackground 
-        source={require('../assets/main.png')} 
+      <ImageBackground
+        source={require('../assets/main.png')}
         style={styles.image}
-        resizeMode="cover"
-      >
+        resizeMode="cover">
         <View style={styles.overlay} />
 
         <TouchableOpacity onPress={handleMapPress} style={styles.mapButton}>
-          <Image 
+          <Image
             source={require('../assets/map.png')}
             style={styles.mapImage}
             resizeMode="contain"
           />
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={() => navigation.navigate('Main')} style={styles.backButton}>
-          <Image 
+        <TouchableOpacity
+          onPress={() => navigation.navigate('Main')}
+          style={styles.backButton}>
+          <Image
             source={require('../assets/home.png')}
             style={styles.backImage}
             resizeMode="contain"
@@ -131,20 +176,25 @@ const checkCompletion = () => {
         </TouchableOpacity>
 
         <View style={styles.box}>
-          <Text style={styles.text}>다음 스테이지로 넘어가기 전 마지막 단계야!</Text>
+          <Text style={styles.text}>
+            다음 스테이지로 넘어가기 전 마지막 단계야!
+          </Text>
           <Text style={styles.subText}>이 퍼즐을 맞춰보자!</Text>
 
           <View style={styles.grid}>
             {puzzleImages.map((image, index) => (
-              <TouchableOpacity 
-                key={index} 
+              <TouchableOpacity
+                key={index}
                 onPress={() => handleImagePress(index)}
                 style={[
-                  styles.gridItem, 
-                  selectedImageIndex === index && styles.selectedGridItem
-                ]}
-              >
-                <Image source={image} style={styles.gridImage} resizeMode="contain" />
+                  styles.gridItem,
+                  selectedImageIndex === index && styles.selectedGridItem,
+                ]}>
+                <Image
+                  source={image}
+                  style={styles.gridImage}
+                  resizeMode="contain"
+                />
               </TouchableOpacity>
             ))}
           </View>
@@ -152,15 +202,20 @@ const checkCompletion = () => {
             두 이미지를 클릭해서 서로의 위치를 교환할 수 있어!{'\n'}
             <Text style={styles.highlightText}>
               완성한 것 같으면 가운데 이미지를 더블클릭해보자!
-              </Text>
-              </Text>
+            </Text>
+          </Text>
         </View>
+        <TouchableOpacity
+          style={styles.nextButton}
+          onPress={handleNextStage}
+          activeOpacity={0.7}>
+          <Text style={styles.nextButtonText}>다음 ➡️</Text>
+        </TouchableOpacity>
 
-        <TouchableOpacity 
+        <TouchableOpacity
           style={styles.hintButton}
           onPress={handleHint}
-          activeOpacity={0.7}
-        >
+          activeOpacity={0.7}>
           <Text style={styles.hintButtonText}>힌트 보기 💡</Text>
         </TouchableOpacity>
       </ImageBackground>
@@ -169,9 +224,24 @@ const checkCompletion = () => {
 };
 
 const gridSize = 5;
-const gridItemSize = width * 0.7 / gridSize;
+const gridItemSize = (width * 0.7) / gridSize;
 
 const styles = StyleSheet.create({
+  nextButton: {
+    position: 'absolute',
+    bottom: height * 0.14, // 힌트 버튼 위
+    backgroundColor: 'rgba(0, 0, 255, 0.7)',
+    paddingVertical: height * 0.015,
+    paddingHorizontal: width * 0.2,
+    borderRadius: width * 0.03,
+    marginLeft: width * 0.2,
+    alignItems: 'center',
+  },
+  nextButtonText: {
+    color: '#FFFFFF',
+    fontSize: width * 0.045,
+    fontWeight: 'bold',
+  },
   container: {
     flex: 1,
     backgroundColor: '#F5E6C4',
@@ -277,8 +347,6 @@ const styles = StyleSheet.create({
     color: 'red',
     fontWeight: 'bold',
   },
-  
 });
-
 
 export default Stage2_5;

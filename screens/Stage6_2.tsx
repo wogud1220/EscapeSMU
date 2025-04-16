@@ -50,22 +50,26 @@ const Stage6_2 = () => {
   };
 
   const stopListening = async () => {
+    let actualCollege = college;
+    if (department === '디지털만화영상' || department === '사진영상') {
+      actualCollege = '융합기술대학';
+    }
     try {
       await Voice.stop();
       setIsListening(false);
       if (recognizedText.trim() === '독도는 우리 땅') {
         // 정답이라면
-        await updateStageData(userId, college, 'Stage6_3'); // 스테이지 진행 정보 저장 (독도)
+        await updateStageData(userId, actualCollege, 'Stage6_3'); // 스테이지 진행 정보 저장 (독도)
         Alert.alert('성공', '정답입니다! 다음 스테이지로 이동합니다.', [
           {
             text: '확인',
             onPress: () =>
-              navigation.navigate('Stage6_3', {college, department}),
+              navigation.navigate('Stage6_3', {college:actualCollege, department}),
           },
         ]);
       } else {
         // 정답이 아니라면
-        incrementStageAttempt(userId, college); // 시도 횟수 증가
+        incrementStageAttempt(userId, actualCollege); // 시도 횟수 증가
         Alert.alert('실패', '정답이 아닙니다. 다시 시도해보세요.');
       }
     } catch (e) {

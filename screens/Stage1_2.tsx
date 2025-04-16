@@ -304,28 +304,23 @@ const Stage1_2 = () => {
     });
   }, []);
   const handleNextStage = async () => {
+    let actualCollege = college;
+    if (department === '디지털만화영상' || department === '사진영상') {
+      actualCollege = '융합기술대학';
+    }
     if (answer.trim() === '1985') {
       setIsModalVisible(false);
       try {
-        await updateStageData(userId, college, 'Stage13_1');
+        await updateStageData(userId, actualCollege, 'Stage13_1');
       } catch (err) {
         console.error('🔥 updateStageData error:', err);
       }
-      // if (college.includes('공과대학')) {
-      //   navigation.navigate('Stage13_1', {college, department});
-      // } else if (college.includes('융합기술대학')) {
-      //   navigation.navigate('Stage13_1', {college, department});
-      // } else if (college.includes('글로벌인문학부대학')) {
-      //   navigation.navigate('Stage13_1', {college, department});
-      // } else {
-      //   navigation.navigate('Stage2', {college, department});
-      // }
-      navigation.navigate('Stage13_1', {college, department});
+      navigation.navigate('Stage13_1', {college: actualCollege, department});
 
       Alert.alert('정답입니다!', '다음 스테이지로 이동합니다.');
     } else {
       try {
-        await incrementStageAttempt(userId, college);
+        await incrementStageAttempt(userId, actualCollege);
       } catch (err) {
         console.error('🔥 incrementStageAttempt error:', err);
       }

@@ -22,7 +22,7 @@ const {width, height} = Dimensions.get('window');
 const Stage2_1 = () => {
   const navigation = useNavigation<NavigationProp>();
   const route = useRoute<RouteProp<RootStackParamList, 'Stage2_1'>>();
-  const {college = '', department = ''} = route.params || {};
+  const {college, department} = route.params || {};
 
   const handleMapPress = () => {
     navigation.navigate('Map');
