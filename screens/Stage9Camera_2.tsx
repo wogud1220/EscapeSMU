@@ -1,75 +1,141 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View, Image, Dimensions } from 'react-native';
-import { Camera, CameraDevice } from 'react-native-vision-camera';
-import { useRoute, RouteProp } from '@react-navigation/native';
-import { RootStackParamList } from '../App';
+import React, {useEffect, useRef, useState} from 'react';
+import {
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+  StyleSheet,
+  Alert,
+  Dimensions,
+  Modal,
+  ActivityIndicator,
+  Platform,
+} from 'react-native';
+import {Camera, CameraDevice} from 'react-native-vision-camera';
+import {onAuthStateChanged} from 'firebase/auth';
+import {auth} from './firebase.config';
+import axios from 'axios';
+import {useRoute, RouteProp} from '@react-navigation/native';
+import {RootStackParamList} from '../App';
+import {updateStageData} from '../utils/updateStageData';
+import {incrementStageAttempt} from '../utils/incrementStageAttempt';
+import {departmentToCollege} from '../utils/departmentToCollege';
 
-const { width, height } = Dimensions.get('window');
+const {width, height} = Dimensions.get('window');
 
-const Stage9Camera_2 = ({ navigation }: { navigation: any }) => {
+type Stage9Camera_2RouteProp = RouteProp<RootStackParamList, 'Stage9Camera_2'>;
+
+const SERVER_URL = 'http://34.47.88.216:8000/compare';
+
+const Stage9Camera_2 = ({navigation}: {navigation: any}) => {
+  const [permission, setPermission] = useState<boolean | null>(null);
   const [device, setDevice] = useState<CameraDevice | undefined>();
+  const [isUploading, setIsUploading] = useState(false);
+  const [showResult, setShowResult] = useState(false);
+  const [pass, setPass] = useState(false);
+  const [userId, setUserId] = useState<string>('');
   const camera = useRef<Camera>(null);
-  const route = useRoute<RouteProp<RootStackParamList, 'Stage9Camera_2'>>();
-  const { department } = route.params;
+
+  const route = useRoute<Stage9Camera_2RouteProp>();
+  const {college, department} = route.params || {};
 
   useEffect(() => {
     const checkPermission = async () => {
-      const cameraPermission = await Camera.getCameraPermissionStatus();
-      console.log(`현재 권한 상태: ${cameraPermission}`);
-
-      if (cameraPermission === 'not-determined') {
-        await Camera.requestCameraPermission();
-      }
+      const cameraPermission = await Camera.requestCameraPermission();
+      setPermission(cameraPermission === 'granted');
     };
 
     const loadDevices = async () => {
-      const availableDevices = await Camera.getAvailableCameraDevices();
-      console.log('사용 가능한 장치 목록:', availableDevices);
+      const devices = await Camera.getAvailableCameraDevices();
+      const selected = devices.find(dev => dev.position === 'back');
+      setDevice(selected);
+    };
 
-      availableDevices.forEach((dev, index) => {
-        console.log(
-          `장치 ${index}: position = ${dev.position}, sensorOrientation = ${dev.sensorOrientation}`
-        );
+    const fetchUser = () => {
+      const unsubscribe = onAuthStateChanged(auth, user => {
+        if (user) {
+          setUserId(user.uid);
+        }
       });
-
-      const backCamera = availableDevices.find(
-        (dev) =>
-          dev.position === 'back' ||
-          dev.sensorOrientation === 'landscape-left' ||
-          dev.sensorOrientation === 90
-      );
-
-      console.log('선택된 백 카메라 상태:', backCamera);
-
-      if (backCamera) {
-        setTimeout(() => setDevice(backCamera), 100);
-      }
+      return unsubscribe;
     };
 
     checkPermission();
     loadDevices();
+    const unsubscribeAuth = fetchUser();
+
+    return () => unsubscribeAuth();
   }, []);
 
   const takePicture = async () => {
-    if (camera.current) {
-      const photo = await camera.current.takePhoto();
-      console.log(`사진 저장 경로: ${photo.path}`);
-      navigation.goBack(); // Stage1으로 복귀
+    if (!camera.current || !userId) return;
+
+    try {
+      const photo = await camera.current.takePhoto({quality: 90});
+      const fileUri =
+        Platform.OS === 'ios' ? photo.path : `file://${photo.path}`;
+
+      const formData = new FormData();
+      const fileData = {
+        uri: fileUri,
+        name: 'captured.jpg',
+        type: 'image/jpeg',
+      };
+      formData.append('file', fileData);
+      formData.append('user_id', userId);
+      formData.append('stage', 'stage9_2');
+
+      setIsUploading(true);
+      const response = await axios.post(SERVER_URL, formData, {
+        headers: {'Content-Type': 'multipart/form-data'},
+        timeout: 10000,
+      });
+      setIsUploading(false);
+
+      const data = response.data;
+      if (data.result === 'Pass') {
+        try {
+          await updateStageData(userId, college, 'Stage9_4');
+        } catch (err) {
+          console.error('🔥 updateStageData error:', err);
+        }
+        setPass(true);
+      } else {
+        incrementStageAttempt(userId, college);
+        setPass(false);
+      }
+      setShowResult(true);
+    } catch (error: any) {
+      setIsUploading(false);
+      console.error('🚨 서버 오류:', error);
+      Alert.alert('❌ 실패', '서버 연결에 실패했습니다.');
     }
   };
 
-  const goToNextStage = () => {
-    navigation.navigate('Stage9_4', {department}); // ✅ Stage1_2로 이동
+  const goToNextStage = async () => {
+    let actualCollege = college;
+
+    await updateStageData(userId, actualCollege, 'Stage9_4');
+    navigation.navigate('Stage9_4', {college: actualCollege, department});
   };
 
+  if (permission === null) return <Text>🔄 권한 확인 중...</Text>;
+  if (!permission) {
+    return (
+      <Text style={styles.permissionText}>
+        ⚠️ 카메라 권한이 필요합니다. iOS: 설정 → EscampeSMU → 카메라 ON!
+      </Text>
+    );
+  }
+
   if (!device) {
-    // ✅ 장치가 없으면 아무것도 렌더링하지 않음
-    return <View style={styles.container} />;
+    return (
+      <Text>⚠️ 카메라 장치를 찾을 수 없습니다. 실제 기기에서 실행하세요.</Text>
+    );
   }
 
   return (
     <View style={styles.container}>
-      {/* ✅ 카메라 컴포넌트 */}
       <Camera
         ref={camera}
         style={styles.camera}
@@ -78,55 +144,82 @@ const Stage9Camera_2 = ({ navigation }: { navigation: any }) => {
         photo={true}
       />
 
-                              <Image
-                              source={require('../assets/rabbit2.png')}
-                              style={styles.backImage}
-                              resizeMode="contain"
-                              />
+      <Image
+        source={require('../assets/rabbit2.png')}
+        style={styles.backImage}
+        resizeMode="contain"
+      />
 
-      {/* ✅ 사진 촬영 버튼 */}
       <TouchableOpacity onPress={takePicture} style={styles.captureButton}>
         <Text style={styles.buttonText}>📸</Text>
       </TouchableOpacity>
 
-      {/* ✅ 다음 버튼 */}
-      <TouchableOpacity onPress={goToNextStage} style={styles.nextButton}>
-        <Text style={styles.buttonText}>다음 ➡️</Text>
+      <TouchableOpacity onPress={goToNextStage} style={styles.tempButton}>
+        <Text style={styles.buttonText}>Stage9_4로 이동</Text>
       </TouchableOpacity>
+
+      <Modal visible={isUploading} transparent>
+        <View style={styles.modalOverlay}>
+          <ActivityIndicator size="large" color="#fff" />
+          <Text style={{color: '#fff', marginTop: 10}}>사진 확인 중...</Text>
+        </View>
+      </Modal>
+
+      <Modal visible={showResult} transparent animationType="fade">
+        <View style={styles.modalOverlay}>
+          <View style={styles.modalContainer}>
+            <Text style={styles.modalText}>
+              {pass
+                ? '✅ 성공! 다음 단계로 이동합니다.'
+                : '❌ 실패! 다시 시도해주세요.'}
+            </Text>
+            <TouchableOpacity
+              style={styles.resultButton}
+              onPress={() => {
+                if (pass) {
+                  goToNextStage();
+                } else {
+                  setShowResult(false);
+                }
+              }}>
+              <Text style={styles.buttonText}>
+                {pass ? '다음으로' : '다시 시도'}
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#000',
-  },
-  camera: {
-    width: '100%',
-    height: '100%',
-  },
+  container: {flex: 1, backgroundColor: '#000'},
+  camera: {width: '100%', height: '100%'},
   captureButton: {
     position: 'absolute',
     bottom: 100,
-    alignSelf: 'center',
+    left: '30%',
     backgroundColor: '#fff',
     padding: 20,
     borderRadius: 50,
   },
-  nextButton: {
+  tempButton: {
     position: 'absolute',
-    bottom: 30,
+    bottom: 160,
     alignSelf: 'center',
-    backgroundColor: '#1E90FF', // ✅ 파란색 버튼 스타일
+    backgroundColor: '#32CD32',
     paddingVertical: 15,
     paddingHorizontal: 30,
     borderRadius: 50,
   },
-  buttonText: {
-    fontSize: 18,
-    color: '#fff',
+  buttonText: {fontSize: 18, color: '#000', fontWeight: 'bold'},
+  permissionText: {
+    color: 'black',
+    fontSize: 20,
     fontWeight: 'bold',
+    textAlign: 'center',
+    marginTop: 300,
   },
   backImage: {
     position: 'absolute',
@@ -135,6 +228,29 @@ const styles = StyleSheet.create({
     height: height * 0.8,
     marginBottom: height * 0.005,
     marginTop: height * 0.05,
+  },
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.6)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  modalContainer: {
+    backgroundColor: '#fff',
+    padding: 30,
+    borderRadius: 10,
+    alignItems: 'center',
+  },
+  modalText: {
+    fontSize: 16,
+    fontWeight: '600',
+    marginBottom: 20,
+  },
+  resultButton: {
+    backgroundColor: '#1E90FF',
+    paddingVertical: 12,
+    paddingHorizontal: 30,
+    borderRadius: 30,
   },
 });
 
