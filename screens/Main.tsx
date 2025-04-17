@@ -45,7 +45,7 @@ const Main = () => {
   };
 
   const handleNavigate = () => {
-    navigation.navigate('RankingBoard');
+    navigation.navigate('Stage1Camera');
   };
 
   const handleLoginNavigate = () => {
