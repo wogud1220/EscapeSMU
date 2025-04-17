@@ -215,6 +215,7 @@ const styles = StyleSheet.create({
   box: {
     backgroundColor: 'rgba(255, 255, 255, 0.7)',
     marginTop: height * 0.3,
+    marginLeft: width * 0.1,
     width: width * 0.8,
     height: height * 0.3,
     padding: height * 0.03,

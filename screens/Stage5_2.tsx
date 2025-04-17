@@ -1,4 +1,6 @@
-import React, {useState, useEffect} from 'react';
+//멀베리 설명
+
+import React, {useEffect} from 'react';
 import {
   View,
   Text,
@@ -7,34 +9,17 @@ import {
   Dimensions,
   Image,
   TouchableOpacity,
-  TextInput,
-  Alert,
-  Modal,
-  TouchableWithoutFeedback,
 } from 'react-native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {useNavigation} from '@react-navigation/native';
 import {RootStackParamList} from '../App';
 import {useRoute, RouteProp} from '@react-navigation/native';
-import {increment} from 'firebase/firestore';
-import {incrementStageAttempt} from '../utils/incrementStageAttempt';
-import {updateStageData} from '../utils/updateStageData';
-import {onAuthStateChanged} from 'firebase/auth';
-import {auth} from './firebase.config';
 
-type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage5_2'>;
+type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage5'>;
 
 const {width, height} = Dimensions.get('window');
 
 const Stage5_2 = () => {
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, user => {
-      if (user) {
-        setUserId(user.uid);
-      }
-    });
-    return unsubscribe;
-  }, []);
   useEffect(() => {
     console.log('Stage5_2 log - Department:', department);
     console.log('Stage5_2 log - College:', college);
@@ -42,63 +27,26 @@ const Stage5_2 = () => {
   const navigation = useNavigation<NavigationProp>();
   const route = useRoute<RouteProp<RootStackParamList, 'Stage5_2'>>();
   const {college, department} = route.params || {};
-  const [answer, setAnswer] = useState('');
-  const [isModalVisible, setIsModalVisible] = useState(false);
-  const [userId, setUserId] = useState('');
+
   const handleMapPress = () => {
     navigation.navigate('Map');
   };
 
-  const handleNextStage = async () => {
-    let actualCollege = college;
-    if (department === '디지털만화영상' || department === '사진영상') {
-      actualCollege = '융합기술대학';
-    }
-    if (answer.trim().toLowerCase() === 'mulberry') {
-      try {
-        await updateStageData(userId, actualCollege, 'Stage5_3');
-      } catch (err) {
-        console.error('🔥 updateStageData error:', err);
-      }
-      Alert.alert('정답입니다!', '다음 스테이지로 이동합니다.', [
-        {
-          text: '확인',
-          onPress: () => navigation.navigate('Stage5_3', {college:actualCollege, department}),
-        },
-      ]);
-      setIsModalVisible(false);
-    } else {
-      // ✅ 오답 처리
-      incrementStageAttempt(userId, actualCollege);
-      Alert.alert('오답입니다.', '다시 시도해 보세요!');
-    }
-  };
-
-  const handleHomePress = () => {
-    navigation.navigate('Main');
-  };
-
-  // ✅ 모달 열기
-  const openModal = () => {
-    setIsModalVisible(true);
-  };
-
-  // ✅ 모달 닫기
-  const closeModal = () => {
-    setIsModalVisible(false);
+  const handleNextStage = () => {
+    navigation.navigate('Stage5_3', {college, department}); // ✅ Stage4_4로 이동
   };
 
   return (
     <View style={styles.container}>
-      {/* ✅ 배경 이미지 설정 */}
+      {/* ✅ main.png를 배경으로 설정 */}
       <ImageBackground
         source={require('../assets/main.png')}
         style={styles.image}
         resizeMode="cover">
-        {/* ✅ 투명 레이어 추가 */}
+        {/* 🔥 투명 레이어 추가 */}
         <View style={styles.overlay} />
 
-        {/* ✅ 오른쪽 상단의 지도 버튼 */}
+        {/* ✅ 🗺️ 오른쪽 상단의 map.png */}
         <TouchableOpacity onPress={handleMapPress} style={styles.mapButton}>
           <Image
             source={require('../assets/map.png')}
@@ -108,7 +56,9 @@ const Stage5_2 = () => {
         </TouchableOpacity>
 
         {/* ✅ 홈으로 이동 버튼 */}
-        <TouchableOpacity onPress={handleHomePress} style={styles.backButton}>
+        <TouchableOpacity
+          onPress={() => navigation.navigate('Main')}
+          style={styles.backButton}>
           <Image
             source={require('../assets/home.png')}
             style={styles.backImage}
@@ -116,34 +66,21 @@ const Stage5_2 = () => {
           />
         </TouchableOpacity>
 
-        {/* ✅ 가운데 흰색 박스 */}
         <View style={styles.box}>
+          <Text style={styles.text}>교직원 식당은!</Text>
           <Text style={styles.subText}>
-            혹시 식당의 이름을 확인해보았니? 정답을 영문으로 입력해보자!
-          </Text>
-          <Text style={styles.subText}>
-            이곳은 교직원 식당이지만 학생들도 이용할 수 있는 공간이야!
+            오전 11시부터 오후 1시 30분까지{'\n'}운영하고 있어!
+            명칭은 교직원 식당이지만 학생들도 이용 가능해.{'\n'}자율 배식이니 언제든지 또 방문해보자!
           </Text>
         </View>
 
-        {/* ✅ 입력 필드 + 제출 버튼 */}
-        <View style={styles.inputContainer}>
-          <TextInput
-            style={styles.input}
-            value={answer}
-            onChangeText={setAnswer}
-            placeholder="정답 입력"
-            placeholderTextColor="#999"
-            keyboardType="default" // ✅ 문자 입력 가능하도록 설정
-            autoCapitalize="none" // ✅ 대소문자 구분 없음
-          />
-          <TouchableOpacity
-            style={styles.submitButton}
-            onPress={handleNextStage}
-            activeOpacity={0.7}>
-            <Text style={styles.buttonText}>제출하기</Text>
-          </TouchableOpacity>
-        </View>
+        {/* ✅ 다음 스테이지로 이동 버튼 */}
+        <TouchableOpacity
+          style={styles.nextButton}
+          onPress={handleNextStage}
+          activeOpacity={0.7}>
+          <Text style={styles.buttonText}>다음 ➡️</Text>
+        </TouchableOpacity>
       </ImageBackground>
     </View>
   );
@@ -169,7 +106,6 @@ const styles = StyleSheet.create({
   },
   box: {
     backgroundColor: 'rgba(255, 255, 255, 0.7)',
-    marginTop: height * 0.15,
     width: width * 0.8,
     height: height * 0.3,
     padding: height * 0.03,
@@ -182,53 +118,19 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 5,
   },
-  permissionText: {
-    color: 'black',
-    fontSize: 20,
+  text: {
+    color: '#333',
+    fontSize: width * 0.06,
     fontWeight: 'bold',
+    marginBottom: height * 0.01,
     textAlign: 'center',
   },
   subText: {
     color: '#555',
     fontSize: width * 0.045,
     textAlign: 'center',
-    marginTop: height * 0.005,
-  },
-  inlineImage: {
-    width: width * 0.7,
-    height: height * 0.4,
-    marginVertical: height * 0.01, // ✅ 이미지 상하 간격 최소화
-  },
-  inputContainer: {
-    flexDirection: 'row',
-    marginTop: height * 0.05, // ✅ 간격 축소
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  input: {
-    width: width * 0.5,
-    height: height * 0.05,
-    borderWidth: 1,
-    borderColor: '#999',
-    borderRadius: 5,
-    paddingHorizontal: 10,
-    fontSize: width * 0.045,
-    color: '#333',
-    backgroundColor: '#fff',
-    marginRight: width * 0.02,
-    marginBottom: height * 0.1, // ✅ 간격 줄임
-  },
-  submitButton: {
-    backgroundColor: 'rgba(0, 0, 255, 0.7)',
-    paddingVertical: height * 0.015,
-    paddingHorizontal: width * 0.06,
-    borderRadius: width * 0.03,
-    marginBottom: height * 0.1, // ✅ 간격 줄임
-  },
-  buttonText: {
-    color: '#FFFFFF',
-    fontSize: width * 0.045,
-    fontWeight: 'bold',
+    marginTop: height * 0.02,
+    marginBottom: height * 0.02,
   },
   mapButton: {
     position: 'absolute',
@@ -240,6 +142,20 @@ const styles = StyleSheet.create({
   mapImage: {
     width: '100%',
     height: '100%',
+  },
+  nextButton: {
+    position: 'absolute',
+    bottom: height * 0.05,
+    backgroundColor: 'rgba(0, 0, 255, 0.7)', // ✅ 파란색 버튼
+    paddingVertical: height * 0.02,
+    paddingHorizontal: width * 0.2,
+    borderRadius: width * 0.03,
+    alignItems: 'center',
+  },
+  buttonText: {
+    color: '#FFFFFF',
+    fontSize: width * 0.045,
+    fontWeight: 'bold',
   },
   backButton: {
     position: 'absolute',
@@ -253,9 +169,9 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   wayImage: {
-    width: width * 0.7,
-    height: height * 0.3,
-    marginBottom: height * 0.02,
+    width: width * 0.6, // ✅ bae.png 크기 조정
+    height: height * 0.45,
+    marginBottom: height * 0.005, // ✅ 이미지와 텍스트 간격
   },
 });
 

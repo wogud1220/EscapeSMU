@@ -154,7 +154,7 @@ const Stage13_4 = () => {
                   onChangeText={setAnswer}
                   placeholder="정답 입력"
                   placeholderTextColor="#999"
-                  keyboardType="default"
+                  keyboardType="numeric"
                   autoCapitalize="none"
                   autoFocus={true}
                 />
