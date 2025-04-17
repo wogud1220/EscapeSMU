@@ -105,6 +105,7 @@ import Stage13_8 from './screens/Stage13_8';
 import Stage13_9 from './screens/Stage13_9';
 import Stage13_Sound from './screens/Stage13_Sound';
 import StageFinal from './screens/StageFinal';
+import RankingBoard from './screens/RankingBoard';
 import {DepartmentProvider} from './screens/Member/DepartmentContext';
 
 export type RootStackParamList = {
@@ -212,6 +213,7 @@ export type RootStackParamList = {
   Stage13_9: {college: string; department: string};
   Stage13_Sound: {college: string; department: string};
   StageFinal: {college: string; department: string};
+  RankingBoard: {college: string; department: string};
 };
 
 const Stack = createStackNavigator<RootStackParamList>();
@@ -740,6 +742,11 @@ const App = () => {
           <Stack.Screen
             name="StageFinal"
             component={StageFinal}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="RankingBoard"
+            component={RankingBoard}
             options={{headerShown: false}}
           />
         </Stack.Navigator>

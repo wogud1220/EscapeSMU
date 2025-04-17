@@ -52,6 +52,8 @@ const Stage10_7 = () => {
         nextStage = 'Stage12_1';
       } else if (college === '글로벌인문학부대학' || college === '공과대학') {
         nextStage = 'StageFinal';
+      } else if (college.includes('디자인학부')) {
+        nextStage = 'RankingBoard';
       }
 
       Alert.alert('정답입니다!', '다음 스테이지로 이동합니다.', [
