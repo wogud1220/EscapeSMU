@@ -45,7 +45,7 @@ const Main = () => {
   };
 
   const handleNavigate = () => {
-    navigation.navigate('StageList');
+    navigation.navigate('RankingBoard');
   };
 
   const handleLoginNavigate = () => {
