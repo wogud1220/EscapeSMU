@@ -96,6 +96,8 @@ const Stage9_4 = () => {
           onPress: () => navigation.navigate('Stage9_5', {college, department}),
         },
       ]);
+    } else {
+      Alert.alert('정답이 아닌 것 같아..', '아직 퍼즐이 완성되지 않았어!');
     }
   };
 

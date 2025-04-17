@@ -103,7 +103,7 @@ const Stage2_5 = () => {
       ]);
     } else {
       incrementStageAttempt(userId, actualCollege);
-      Alert.alert('실패 ❌', '퍼즐을 다시 맞춰보자!');
+      Alert.alert('정답이 아닌 것 같아..', '퍼즐을 다시 맞춰보자!');
     }
   };
 
