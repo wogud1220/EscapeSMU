@@ -78,3 +78,10 @@ yarn-error.log
 venv/
 .env/
 __pycache__/
+
+
+# OpenCV build & sources
+opencv/
+opencv_contrib/
+opencv_build/
+surf-env/
