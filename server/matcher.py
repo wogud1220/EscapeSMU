@@ -252,6 +252,120 @@
 
 
 
+# import cv2
+# import numpy as np
+# import os
+# import time
+
+# BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+# UPLOADS_FOLDER = os.path.join(BASE_DIR, "uploads")
+# OUTPUT_FOLDER = os.path.join(BASE_DIR, "outputs")
+# os.makedirs(OUTPUT_FOLDER, exist_ok=True)
+
+# def load_image(image_path):
+#     if not os.path.exists(image_path):
+#         print(f"❌ 파일이 존재하지 않습니다: {image_path}")
+#         return None
+
+#     image = cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)
+#     if image is None:
+#         print(f"🚨 OpenCV가 이미지를 불러올 수 없음: {image_path}")
+#     else:
+#         print(f"✅ 이미지 로드 성공: {image_path}")
+#     image = cv2.resize(image, (2080, 1944))
+#     return image
+
+# def match_and_score(kp1, des1, kp2, des2, method):
+#     start = time.time()
+#     index_params = dict(algorithm=1, trees=5)
+#     search_params = dict(checks=50)
+#     flann = cv2.FlannBasedMatcher(index_params, search_params)
+
+#     matches = flann.knnMatch(des1, des2, k=2)
+#     good = [m for m, n in matches if m.distance < 0.7 * n.distance]
+#     elapsed = time.time() - start
+#     avg_score = sum(m.distance for m in good) / len(good) if good else float('inf')
+#     print(f"[{method}] 매칭 수: {len(good):>3}, 평균 거리: {avg_score:6.2f}, 소요 시간: {elapsed:.3f}s")
+#     return good, avg_score, elapsed
+
+# def compare_images(user_image_path, template_path):
+#     template = load_image(template_path)
+#     user_image = load_image(user_image_path)
+
+#     if template is None or user_image is None:
+#         return {"result": "Fail", "message": "이미지를 불러올 수 없음"}
+
+#     results = []
+
+#     # ORB
+#     orb = cv2.ORB_create(nfeatures=1000)
+#     kp1_orb, des1_orb = orb.detectAndCompute(template, None)
+#     kp2_orb, des2_orb = orb.detectAndCompute(user_image, None)
+#     if des1_orb is None or des2_orb is None:
+#         print("❌ ORB 특징점 실패")
+#     else:
+#         bf = cv2.BFMatcher(cv2.NORM_HAMMING, crossCheck=True)
+#         start = time.time()
+#         matches_orb = bf.match(des1_orb, des2_orb)
+#         elapsed = time.time() - start
+#         avg = sum(m.distance for m in matches_orb) / len(matches_orb)
+#         score = len(matches_orb) / avg if avg != 0 else 0
+#         print(f"[ORB] 매칭 수: {len(matches_orb):>3}, 평균 거리: {avg:6.2f}, 소요 시간: {elapsed:.3f}s, 점수: {score:.2f}")
+#         orb_img = cv2.drawMatches(template, kp1_orb, user_image, kp2_orb, matches_orb[:30], None)
+#         cv2.imwrite(os.path.join(OUTPUT_FOLDER, "orb.jpg"), orb_img)
+#         results.append(("ORB", len(matches_orb), avg, elapsed, score))
+
+#     # SIFT
+#     sift = cv2.SIFT_create()
+#     kp1_sift, des1_sift = sift.detectAndCompute(template, None)
+#     kp2_sift, des2_sift = sift.detectAndCompute(user_image, None)
+#     if des1_sift is None or des2_sift is None:
+#         print("❌ SIFT 특징점 실패")
+#     else:
+#         matches_sift, avg_sift, time_sift = match_and_score(kp1_sift, des1_sift, kp2_sift, des2_sift, "SIFT")
+#         score = len(matches_sift) / avg_sift if avg_sift != 0 else 0
+#         sift_img = cv2.drawMatches(template, kp1_sift, user_image, kp2_sift, matches_sift[:30], None)
+#         cv2.imwrite(os.path.join(OUTPUT_FOLDER, "sift.jpg"), sift_img)
+#         results.append(("SIFT", len(matches_sift), avg_sift, time_sift, score))
+
+#     # SURF
+#     surf = cv2.xfeatures2d.SURF_create(hessianThreshold=400)
+#     kp1_surf, des1_surf = surf.detectAndCompute(template, None)
+#     kp2_surf, des2_surf = surf.detectAndCompute(user_image, None)
+#     if des1_surf is None or des2_surf is None:
+#         print("❌ SURF 특징점 실패")
+#     else:
+#         matches_surf, avg_surf, time_surf = match_and_score(kp1_surf, des1_surf, kp2_surf, des2_surf, "SURF")
+#         score = len(matches_surf) / avg_surf if avg_surf != 0 else 0
+#         surf_img = cv2.drawMatches(template, kp1_surf, user_image, kp2_surf, matches_surf[:30], None)
+#         cv2.imwrite(os.path.join(OUTPUT_FOLDER, "surf.jpg"), surf_img)
+#         results.append(("SURF", len(matches_surf), avg_surf, time_surf, score))
+
+#     print("\n📊 요약 결과:")
+#     for name, num, avg, t, score in results:
+#         print(f"{name:<6}: 매칭 수 = {num:>3}, 평균 거리 = {avg:6.2f}, 시간 = {t:.3f}s, 점수 = {score:.2f}")
+
+#     best = max(results, key=lambda x: x[-1]) if results else ("None", 0, 0, 0, 0)
+#     return {"result": "Pass" if best[-1] > 4.5 else "Fail", "message": f"최고 성능: {best[0]} ({best[-1]:.2f})"}
+
+# if __name__ == "__main__":
+#     user_image_path = os.path.join(UPLOADS_FOLDER, "captured.jpg")
+#     template_path = os.path.join(BASE_DIR, "templates", "stage1", "template.jpeg")
+#     result = compare_images(user_image_path, template_path)
+#     print(result)
+
+
+
+
+
+
+
+
+
+
+
+
+
 import cv2
 import numpy as np
 import os
@@ -269,77 +383,68 @@ def load_image(image_path):
 
     image = cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)
     if image is None:
-        print(f"🚨 OpenCV가 이미지를 불러올 수 없음: {image_path}")
+        print(f"🚨 OpenCV가 이미지를 불러오지 못함: {image_path}")
     else:
         print(f"✅ 이미지 로드 성공: {image_path}")
     image = cv2.resize(image, (2080, 1944))
     return image
 
-def match_and_score(kp1, des1, kp2, des2, method):
+def match_and_score(detector, template, user, method, use_bf=False):
     start = time.time()
-    index_params = dict(algorithm=1, trees=5)
-    search_params = dict(checks=50)
-    flann = cv2.FlannBasedMatcher(index_params, search_params)
+    kp1, des1 = detector.detectAndCompute(template, None)
+    kp2, des2 = detector.detectAndCompute(user, None)
 
-    matches = flann.knnMatch(des1, des2, k=2)
-    good = [m for m, n in matches if m.distance < 0.7 * n.distance]
+    if des1 is None or des2 is None:
+        print(f"❌ {method} 특정점 실패")
+        return [], float('inf'), 0.0, kp1, kp2
+
+    if use_bf:
+        matcher = cv2.BFMatcher(cv2.NORM_HAMMING, crossCheck=True)
+        matches = matcher.match(des1, des2)
+    else:
+        index_params = dict(algorithm=1, trees=5)
+        search_params = dict(checks=50)
+        flann = cv2.FlannBasedMatcher(index_params, search_params)
+        matches = flann.knnMatch(des1, des2, k=2)
+        matches = [m for m, n in matches if m.distance < 0.7 * n.distance]
+
     elapsed = time.time() - start
-    avg_score = sum(m.distance for m in good) / len(good) if good else float('inf')
-    print(f"[{method}] 매칭 수: {len(good):>3}, 평균 거리: {avg_score:6.2f}, 소요 시간: {elapsed:.3f}s")
-    return good, avg_score, elapsed
+    avg_score = sum(m.distance for m in matches) / len(matches) if matches else float('inf')
+    print(f"[{method}] 매칭 수: {len(matches):>3}, 평균 거리: {avg_score:6.2f}, 소요 시간: {elapsed:.3f}s")
+    return matches, avg_score, elapsed, kp1, kp2
 
 def compare_images(user_image_path, template_path):
     template = load_image(template_path)
     user_image = load_image(user_image_path)
 
     if template is None or user_image is None:
-        return {"result": "Fail", "message": "이미지를 불러올 수 없음"}
+        return {"result": "Fail", "message": "이미지를 불러오지 못함"}
 
     results = []
 
     # ORB
     orb = cv2.ORB_create(nfeatures=1000)
-    kp1_orb, des1_orb = orb.detectAndCompute(template, None)
-    kp2_orb, des2_orb = orb.detectAndCompute(user_image, None)
-    if des1_orb is None or des2_orb is None:
-        print("❌ ORB 특징점 실패")
-    else:
-        bf = cv2.BFMatcher(cv2.NORM_HAMMING, crossCheck=True)
-        start = time.time()
-        matches_orb = bf.match(des1_orb, des2_orb)
-        elapsed = time.time() - start
-        avg = sum(m.distance for m in matches_orb) / len(matches_orb)
-        score = len(matches_orb) / avg if avg != 0 else 0
-        print(f"[ORB] 매칭 수: {len(matches_orb):>3}, 평균 거리: {avg:6.2f}, 소요 시간: {elapsed:.3f}s, 점수: {score:.2f}")
-        orb_img = cv2.drawMatches(template, kp1_orb, user_image, kp2_orb, matches_orb[:30], None)
-        cv2.imwrite(os.path.join(OUTPUT_FOLDER, "orb.jpg"), orb_img)
-        results.append(("ORB", len(matches_orb), avg, elapsed, score))
+    matches_orb, avg_orb, time_orb, kp1_orb, kp2_orb = match_and_score(orb, template, user_image, "ORB", use_bf=True)
+    score_orb = len(matches_orb) / avg_orb if avg_orb != 0 else 0
+    orb_img = cv2.drawMatches(template, kp1_orb, user_image, kp2_orb, matches_orb[:30], None)
+    cv2.imwrite(os.path.join(OUTPUT_FOLDER, "orb.jpg"), orb_img)
+    results.append(("ORB", len(matches_orb), avg_orb, time_orb, score_orb))
 
     # SIFT
     sift = cv2.SIFT_create()
-    kp1_sift, des1_sift = sift.detectAndCompute(template, None)
-    kp2_sift, des2_sift = sift.detectAndCompute(user_image, None)
-    if des1_sift is None or des2_sift is None:
-        print("❌ SIFT 특징점 실패")
-    else:
-        matches_sift, avg_sift, time_sift = match_and_score(kp1_sift, des1_sift, kp2_sift, des2_sift, "SIFT")
-        score = len(matches_sift) / avg_sift if avg_sift != 0 else 0
-        sift_img = cv2.drawMatches(template, kp1_sift, user_image, kp2_sift, matches_sift[:30], None)
-        cv2.imwrite(os.path.join(OUTPUT_FOLDER, "sift.jpg"), sift_img)
-        results.append(("SIFT", len(matches_sift), avg_sift, time_sift, score))
+    matches_sift, avg_sift, time_sift, kp1_sift, kp2_sift = match_and_score(sift, template, user_image, "SIFT")
+    score_sift = len(matches_sift) / avg_sift if avg_sift != 0 else 0
+    sift_img = cv2.drawMatches(template, kp1_sift, user_image, kp2_sift, matches_sift[:30], None)
+    cv2.imwrite(os.path.join(OUTPUT_FOLDER, "sift.jpg"), sift_img)
+    results.append(("SIFT", len(matches_sift), avg_sift, time_sift, score_sift))
 
     # SURF
     surf = cv2.xfeatures2d.SURF_create(hessianThreshold=400)
-    kp1_surf, des1_surf = surf.detectAndCompute(template, None)
-    kp2_surf, des2_surf = surf.detectAndCompute(user_image, None)
-    if des1_surf is None or des2_surf is None:
-        print("❌ SURF 특징점 실패")
-    else:
-        matches_surf, avg_surf, time_surf = match_and_score(kp1_surf, des1_surf, kp2_surf, des2_surf, "SURF")
-        score = len(matches_surf) / avg_surf if avg_surf != 0 else 0
-        surf_img = cv2.drawMatches(template, kp1_surf, user_image, kp2_surf, matches_surf[:30], None)
-        cv2.imwrite(os.path.join(OUTPUT_FOLDER, "surf.jpg"), surf_img)
-        results.append(("SURF", len(matches_surf), avg_surf, time_surf, score))
+    matches_surf, avg_surf, time_surf, kp1_surf, kp2_surf = match_and_score(surf, template, user_image, "SURF")
+    score_surf = len(matches_surf) / avg_surf if avg_surf != 0 else 0
+    surf_img = cv2.drawMatches(template, kp1_surf, user_image, kp2_surf, matches_surf[:30], None)
+    cv2.imwrite(os.path.join(OUTPUT_FOLDER, "surf.jpg"), surf_img)
+    results.append(("SURF", len(matches_surf), avg_surf, time_surf, score_surf))
 
     print("\n📊 요약 결과:")
     for name, num, avg, t, score in results:
