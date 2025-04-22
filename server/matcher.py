@@ -383,6 +383,7 @@ def load_image(image_path):
 def match_and_score(kp1, des1, kp2, des2, method, matcher):
     match_start = time.time()
     matches = matcher.knnMatch(des1, des2, k=2)
+    total_matches = len(matches)
     good = [m for m, n in matches if m.distance < 0.7 * n.distance]
     match_time = time.time() - match_start
     avg_score = sum(m.distance for m in good) / len(good) if good else float('inf')
