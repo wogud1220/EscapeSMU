@@ -376,7 +376,8 @@ def load_image(image_path):
         print(f"🚨 OpenCV가 이미지를 불러올 수 없음: {image_path}")
     else:
         print(f"✅ 이미지 로드 성공: {image_path}")
-    image = cv2.resize(image, (2080, 1944))
+    # image = cv2.resize(image, (2080, 1944))
+    image = cv2.resize(image, (1040, 972))
     return image
 
 def match_and_score(kp1, des1, kp2, des2, method, matcher):
