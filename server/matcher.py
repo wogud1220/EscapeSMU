@@ -438,7 +438,7 @@ def compare_images(user_image_path, template_path):
         results.append(("SIFT", len(matches_sift), avg_sift, sift_time + time_sift, score))
 
     # SURF
-    surf = cv2.xfeatures2d.SURF_create(hessianThreshold=1200)
+    surf = cv2.xfeatures2d.SURF_create(hessianThreshold=800)
     surf_start = time.time()
     kp1_surf, des1_surf = surf.detectAndCompute(template, None)
     kp2_surf, des2_surf = surf.detectAndCompute(user_image, None)
@@ -446,7 +446,7 @@ def compare_images(user_image_path, template_path):
     if des1_surf is None or des2_surf is None:
         print("❌ SURF 특징점 실패")
     else:
-        matcher = cv2.FlannBasedMatcher(dict(algorithm=1, trees=5), dict(checks=20))
+        matcher = cv2.FlannBasedMatcher(dict(algorithm=1, trees=5), dict(checks=50))
         matches_surf, avg_surf, time_surf = match_and_score(kp1_surf, des1_surf, kp2_surf, des2_surf, "SURF", matcher)
         score = len(matches_surf) / avg_surf if avg_surf != 0 else 0
         surf_img = cv2.drawMatches(template, kp1_surf, user_image, kp2_surf, matches_surf[:30], None)
