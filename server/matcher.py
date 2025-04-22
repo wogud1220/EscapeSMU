@@ -438,7 +438,7 @@ def compare_images(user_image_path, template_path):
         results.append(("SIFT", len(matches_sift), avg_sift, sift_time + time_sift, score))
 
     # SURF
-    surf = cv2.xfeatures2d.SURF_create(hessianThreshold=3000)
+    surf = cv2.xfeatures2d.SURF_create(hessianThreshold=3500)
     surf_start = time.time()
     kp1_surf, des1_surf = surf.detectAndCompute(template, None)
     kp2_surf, des2_surf = surf.detectAndCompute(user_image, None)
