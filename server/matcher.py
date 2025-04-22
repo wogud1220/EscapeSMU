@@ -386,7 +386,8 @@ def match_and_score(kp1, des1, kp2, des2, method, matcher):
     good = [m for m, n in matches if m.distance < 0.7 * n.distance]
     match_time = time.time() - match_start
     avg_score = sum(m.distance for m in good) / len(good) if good else float('inf')
-    print(f"[{method}] 매칭 수: {len(good):>3}, 평균 거리: {avg_score:6.2f}, 소요 시간: {match_time:.3f}s")
+    print(f"[{method}] 전체 매칭 수: {total_matches:>3}, 좋은 매칭 수: {len(good):>3}, 평균 거리: {avg_score:6.2f}, 소요 시간: {match_time:.3f}s")
+    # print(f"[{method}] 매칭 수: {len(good):>3}, 평균 거리: {avg_score:6.2f}, 소요 시간: {match_time:.3f}s")
     return good, avg_score, match_time
 
 def compare_images(user_image_path, template_path):
