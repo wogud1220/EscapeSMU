@@ -171,10 +171,10 @@ const Stage1Camera = ({navigation}: {navigation: any}) => {
         </View>
       </Modal>
 
-      <Modal visible={showResult} transparent animationType="fade">
-        <View style={styles.modalOverlay}>
-          <View style={styles.modalContainer}>
-            <Text style={styles.modalText}>
+      {/* <Modal visible={showResult} transparent animationType="fade"> */}
+      {/* <View style={styles.modalOverlay}> */}
+      {/* <View style={styles.modalContainer}> */}
+      {/* <Text style={styles.modalText}>
               {pass
                 ? '✅ 성공! 다음 단계로 이동합니다.'
                 : '❌ 실패! 다시 시도해주세요.'}
@@ -191,10 +191,10 @@ const Stage1Camera = ({navigation}: {navigation: any}) => {
               <Text style={styles.buttonText}>
                 {pass ? '다음으로' : '다시 시도'}
               </Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </Modal>
+            </TouchableOpacity> */}
+      {/* </View> */}
+      {/* </View> */}
+      {/* </Modal> */}
     </View>
   );
 };
