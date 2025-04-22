@@ -377,7 +377,7 @@ def load_image(image_path):
     else:
         print(f"✅ 이미지 로드 성공: {image_path}")
     # image = cv2.resize(image, (2080, 1944))
-    image = cv2.resize(image, (1040, 972))
+    image = cv2.resize(image, (1040, 780))
     return image
 
 def match_and_score(kp1, des1, kp2, des2, method, matcher):
