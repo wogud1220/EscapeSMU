@@ -45,7 +45,7 @@ const Main = () => {
   };
 
   const handleNavigate = () => {
-    navigation.navigate('Stage1Camera');
+    navigation.navigate('Stage7Camera');
   };
 
   const handleLoginNavigate = () => {

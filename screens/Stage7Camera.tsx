@@ -36,6 +36,11 @@ const Stage7Camera = ({navigation}: {navigation: any}) => {
   const [userId, setUserId] = useState<string>('');
   const camera = useRef<Camera>(null);
 
+  const [hintVisible, setHintVisible] = useState(false);
+  const openHintModal = () => setHintVisible(true);
+  const closeHintModal = () => setHintVisible(false);
+
+
   const route = useRoute<Stage7CameraRouteProp>();
   const {college, department} = route.params || {};
 
@@ -138,6 +143,10 @@ const Stage7Camera = ({navigation}: {navigation: any}) => {
         photo={true}
       />
 
+<TouchableOpacity onPress={openHintModal} style={styles.hintButton}>
+  <Text style={styles.hintButtonText}>💡 힌트</Text>
+</TouchableOpacity>
+
       <Image
         source={require('../assets/songrule2.png')}
         style={styles.backImage}
@@ -183,6 +192,23 @@ const Stage7Camera = ({navigation}: {navigation: any}) => {
           </View>
         </View>
       </Modal>
+      <Modal
+  visible={hintVisible}
+  transparent
+  animationType="fade"
+  onRequestClose={closeHintModal}>
+  <View style={styles.modalOverlay}>
+    <View style={styles.modalContainer}>
+      <Text style={styles.modalText}>📌 만약, 네모칸을 못 맞춰서 글자를 얻기 힘들다면{'\n'} 휴게실 앞의 2글자
+        4번의 6번째 글자{'\n'}4번의 20번째 글자{'\n'}5번의 15번째 글자를 살펴보자!
+      </Text>
+      <TouchableOpacity style={styles.resultButton} onPress={closeHintModal}>
+        <Text style={styles.buttonText}>닫기</Text>
+      </TouchableOpacity>
+    </View>
+  </View>
+</Modal>
+
     </View>
   );
 };
@@ -239,6 +265,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '600',
     marginBottom: 20,
+    textAlign: 'center',
   },
   resultButton: {
     backgroundColor: '#1E90FF',
@@ -246,6 +273,22 @@ const styles = StyleSheet.create({
     paddingHorizontal: 30,
     borderRadius: 30,
   },
+  hintButton: {
+    position: 'absolute',
+    top: height * 0.07,
+    right: width * 0.05,
+    backgroundColor: 'rgba(255, 255, 255, 0.8)',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 20,
+    zIndex: 10,
+  },
+  hintButtonText: {
+    color: '#000',
+    fontWeight: 'bold',
+    fontSize: 16,
+  },
+  
 });
 
 export default Stage7Camera;

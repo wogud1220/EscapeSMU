@@ -75,7 +75,7 @@ const Stage7_6 = () => {
             resizeMode="contain"
           />
           <Text style={styles.text}>바로 옆에는 휴게실이 있어!</Text>
-          <Text style={styles.subText}>휴게실 안의 이용수칙을 살펴보자!</Text>
+          <Text style={styles.subText}>휴게실 안의 사용수칙을 살펴보자!</Text>
         </View>
 
         {/* ✅ 다음 스테이지로 이동 버튼 */}
