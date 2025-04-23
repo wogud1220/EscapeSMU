@@ -61,7 +61,7 @@ import Stage9_1 from './screens/Stage9_1';
 import Stage9Camera from './screens/Stage9Camera';
 import Stage9_2 from './screens/Stage9_2';
 import Stage9_2_1 from './screens/Stage9_2_1';
-import Stage9_2_2 from './screens/Stage9_2_2';
+// import Stage9_2_2 from './screens/Stage9_2_2';
 import Stage9_3 from './screens/Stage9_3';
 import Stage9Camera_2 from './screens/Stage9Camera_2';
 import Stage9_4 from './screens/Stage9_4';
@@ -107,6 +107,8 @@ import Stage13_Sound from './screens/Stage13_Sound';
 import StageFinal from './screens/StageFinal';
 import RankingBoard from './screens/RankingBoard';
 import {DepartmentProvider} from './screens/Member/DepartmentContext';
+import {Text} from 'react-native';
+import {TextInput} from 'react-native';
 
 export type RootStackParamList = {
   LogIn: {college: string; department: string};
@@ -217,6 +219,12 @@ export type RootStackParamList = {
 };
 
 const Stack = createStackNavigator<RootStackParamList>();
+
+if (Text.defaultProps == null) Text.defaultProps = {};
+Text.defaultProps.allowFontScaling = false;
+
+if (TextInput.defaultProps == null) TextInput.defaultProps = {};
+TextInput.defaultProps.allowFontScaling = false;
 
 const App = () => {
   return (
