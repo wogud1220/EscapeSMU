@@ -13,6 +13,7 @@ import {
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {useNavigation, useRoute, RouteProp} from '@react-navigation/native';
 import {RootStackParamList} from '../App';
+import CustomText from '../CustomText';
 
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage1_1'>;
@@ -67,7 +68,8 @@ const Stage1_1 = () => {
             style={styles.wayImage}
             resizeMode="contain"
           />
-          <Text style={styles.text}>드디어 상명대학교에 도착을 했어!</Text>
+          <CustomText style={{fontSize:30, marginTop: -20}}>폰트 테스트</CustomText>
+          <Text style={styles.subText}>폰트 테스트</Text>
           <Text style={styles.subText}>
             정문을 통과해서 다음 스테이지에 가기 위해서는 카메라를 이용해
             사진을찍어야 한다는데.. (경비실 앞 캠퍼스안내도 쪽에서 찍어보자!)

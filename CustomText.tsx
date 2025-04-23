@@ -5,7 +5,7 @@ interface CustomTextProps extends TextProps {}
 
 const CustomText: React.FC<CustomTextProps> = ({ style, ...rest}) => {
     const customStyle = {
-        fontFamily: 'SDMISaeng.ttf',
+        fontFamily: 'SDMiSaeng',
         color: '#000000'
     };
 
