@@ -97,8 +97,8 @@ const Stage9_4 = () => {
         },
       ]);
     } else {
-      Alert.alert('정답이 아닌 것 같아..', '아직 퍼즐이 완성되지 않았어!');
-    }
+    Alert.alert('오답 😢', '퍼즐이 아직 완성되지 않았어. 다시 시도해보자!');
+  }
   };
 
   useEffect(() => {
@@ -116,11 +116,16 @@ const Stage9_4 = () => {
   const handleImagePress = (index: number) => {
     if (selectedImageIndex === null) {
       setSelectedImageIndex(index);
+    } else if (selectedImageIndex === index) {
+      // ✅ 같은 이미지를 두 번 클릭한 경우 → checkCompletion 실행
+      checkCompletion();
+      setSelectedImageIndex(null);
     } else {
       swapImages(selectedImageIndex, index);
       setSelectedImageIndex(null);
     }
   };
+  
 
   const swapImages = (index1: number, index2: number) => {
     const newPuzzleImages = [...puzzleImages];
@@ -129,10 +134,6 @@ const Stage9_4 = () => {
       newPuzzleImages[index1],
     ];
     setPuzzleImages(newPuzzleImages);
-
-    setTimeout(() => {
-      checkCompletion();
-    }, 200);
   };
 
   return (
