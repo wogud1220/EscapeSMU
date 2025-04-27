@@ -14,6 +14,7 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {useNavigation} from '@react-navigation/native';
 import {RootStackParamList} from '../App';
 import {useRoute, RouteProp} from '@react-navigation/native';
+import CustomText from '../CustomText';
 
 type NavigationProp = NativeStackNavigationProp<
   RootStackParamList,
@@ -66,15 +67,15 @@ const Stage2_Hint = () => {
 
         {/* ✅ 가운데 투명한 흰색 박스 */}
         <View style={styles.box}>
-          <Text style={styles.text}>이 그림은 어디 있는 그림일까?</Text>
+          <CustomText style={{fontSize: 25, textAlign: 'center'}}>이 그림은{'\n'}어디 있는 그림일까?</CustomText>
           <Image
             source={require('../assets/waytopuzzle.png')}
             style={styles.wayImage}
             resizeMode="contain"
           />
-          <Text style={styles.subText}>
-            상록관 카페 뒤쪽으로 가서 좌회전하면 담장에 그림이 보이는 것 같아!
-          </Text>
+          <CustomText style={styles.subText}>
+            상록관 카페 뒤쪽으로 가서 좌회전하면{'\n'}담장에 그림이 보이는 것 같아!
+          </CustomText>
         </View>
 
         {/* ✅ 다음 스테이지로 이동 버튼 */}
@@ -82,7 +83,7 @@ const Stage2_Hint = () => {
           style={styles.nextButton}
           onPress={handleNextStage}
           activeOpacity={0.7}>
-          <Text style={styles.buttonText}>문제로 돌아가기</Text>
+          <CustomText style={{fontSize: 20, color: 'white'}}>문제로 돌아가기</CustomText>
         </TouchableOpacity>
       </ImageBackground>
     </View>
@@ -132,7 +133,7 @@ const styles = StyleSheet.create({
     color: '#555',
     fontSize: width * 0.045,
     textAlign: 'center',
-    marginTop: height * 0.02,
+    marginTop: height * -0.02,
   },
   mapButton: {
     position: 'absolute',

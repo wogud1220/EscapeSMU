@@ -28,6 +28,7 @@ import {ko} from 'date-fns/locale';
 import {useRoute, RouteProp} from '@react-navigation/native';
 import {RootStackParamList} from '../App';
 import {displayCollege} from '../utils/displayCollege';
+import CustomText from '../CustomText';
 interface GuestMessage {
   id: string;
   message: string;
@@ -127,9 +128,9 @@ const Guestbook = () => {
 
     return (
       <View style={styles.messageBox}>
-        <Text style={styles.message}>{item.message}</Text>
-        <Text style={styles.author}>작성자: {item.emailPrefix}</Text>
-        <Text>
+        <CustomText style={{fontSize: 15}}>{item.message}</CustomText>
+        <CustomText style={styles.author}>작성자: {item.emailPrefix}</CustomText>
+        <CustomText>
           부서:{' '}
           {item.college === '공과대학' && item.department === '식품공학'
             ? '융합기술대학'
@@ -139,8 +140,8 @@ const Guestbook = () => {
             ? '예술학부'
             : item.college}{' '}
           - {item.department}
-        </Text>
-        <Text style={styles.time}>{timeAgo}</Text>
+        </CustomText>
+        <CustomText style={styles.time}>{timeAgo}</CustomText>
         {item.uid === uid && (
           <TouchableOpacity
             onPress={() => handleDelete(item.id)}
@@ -159,10 +160,10 @@ const Guestbook = () => {
       <FlatList
         ListHeaderComponent={
           <>
-            <Text style={styles.title}>📖 방명록</Text>
-            <Text style={styles.departmentLabel}>
+            <CustomText style={styles.title}>📖 방명록</CustomText>
+            <CustomText style={styles.departmentLabel}>
               📌 {displayCollege[department]} - {department}
-            </Text>
+            </CustomText>
             <View style={styles.cardBox}>
               <TextInput
                 value={message}
@@ -171,7 +172,10 @@ const Guestbook = () => {
                 placeholderTextColor="#000"
                 style={styles.input}
               />
-              <Button title="방명록 남기기" onPress={handleSubmit} />
+              <TouchableOpacity style={styles.submitButton} onPress={handleSubmit}>
+  <CustomText style={styles.submitButtonText}>방명록 남기기</CustomText>
+</TouchableOpacity>
+
             </View>
           </>
         }
@@ -219,6 +223,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     borderRadius: 5,
     backgroundColor: '#fff',
+    fontFamily: 'BMHANNAPro',
   },
   messageBox: {
     marginBottom: 12,
@@ -228,6 +233,19 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     position: 'relative',
   },
+  submitButton: {
+    backgroundColor: '#4CAF50', // 버튼 배경색 (초록)
+    paddingVertical: 12,
+    borderRadius: 8,
+    alignItems: 'center',
+    marginTop: 10,
+  },
+  submitButtonText: {
+    fontSize: 16,
+    color: '#fff',
+    fontFamily: 'BMHANNAPro',
+  },
+  
   author: {marginTop: 4},
   time: {fontSize: 12, color: '#666', marginBottom: 4},
   deleteButton: {

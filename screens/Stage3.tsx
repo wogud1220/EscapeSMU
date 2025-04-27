@@ -14,6 +14,7 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {useNavigation} from '@react-navigation/native';
 import {RootStackParamList} from '../App';
 import {useRoute, RouteProp} from '@react-navigation/native';
+import CustomText from '../CustomText';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage3'>;
 
@@ -70,10 +71,10 @@ const Stage3 = () => {
             style={styles.wayImage}
             resizeMode="contain"
           />
-          <Text style={styles.text}>
+          <CustomText style={{fontSize: 25, textAlign: 'center'}}>
             다음으로 방문할 장소는 식물과학관이야!
-          </Text>
-          <Text style={styles.subText}>안으로 한 번 들어가보자!</Text>
+          </CustomText>
+          <CustomText style={styles.subText}>안으로 한 번 들어가보자!</CustomText>
         </View>
 
         {/* ✅ 다음 스테이지로 이동 버튼 */}
@@ -81,7 +82,7 @@ const Stage3 = () => {
           style={styles.nextButton}
           onPress={handleNextStage}
           activeOpacity={0.7}>
-          <Text style={styles.buttonText}>다음 ➡️</Text>
+          <CustomText style={{fontSize: 20, color: 'white'}}>다음 ➡️</CustomText>
         </TouchableOpacity>
       </ImageBackground>
     </View>

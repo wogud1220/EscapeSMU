@@ -17,6 +17,7 @@ import {updateStageData} from '../utils/updateStageData';
 import {incrementStageAttempt} from '../utils/incrementStageAttempt';
 import {onAuthStateChanged} from 'firebase/auth';
 import {auth} from './firebase.config';
+import CustomText from '../CustomText';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage2_5'>;
 
@@ -176,10 +177,10 @@ const Stage2_5 = () => {
         </TouchableOpacity>
 
         <View style={styles.box}>
-          <Text style={styles.text}>
+          <CustomText style={{fontSize: 25, textAlign: 'center'}}>
             다음 스테이지로 넘어가기 전 마지막 단계야!
-          </Text>
-          <Text style={styles.subText}>이 퍼즐을 맞춰보자!</Text>
+          </CustomText>
+          <CustomText style={styles.subText}>이 퍼즐을 맞춰보자!</CustomText>
 
           <View style={styles.grid}>
             {puzzleImages.map((image, index) => (
@@ -198,25 +199,25 @@ const Stage2_5 = () => {
               </TouchableOpacity>
             ))}
           </View>
-          <Text style={styles.subText}>
-            두 이미지를 클릭해서 서로의 위치를 교환할 수 있어!{'\n'}
-            <Text style={styles.highlightText}>
+          <CustomText style={styles.subText}>
+            두 이미지를 클릭해서{'\n'}서로의 위치를 교환할 수 있어!{'\n'}{'\n'}
+            <Text style={{fontSize: 15, color: 'red'}}>
               완성한 것 같으면 가운데 이미지를 더블클릭해보자!
             </Text>
-          </Text>
+          </CustomText>
         </View>
-        <TouchableOpacity
+        {/* <TouchableOpacity
           style={styles.nextButton}
           onPress={handleNextStage}
           activeOpacity={0.7}>
           <Text style={styles.nextButtonText}>다음 ➡️</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
 
         <TouchableOpacity
           style={styles.hintButton}
           onPress={handleHint}
           activeOpacity={0.7}>
-          <Text style={styles.hintButtonText}>힌트 보기 💡</Text>
+          <CustomText style={{fontSize: 15, color: 'white'}}>힌트 보기 💡</CustomText>
         </TouchableOpacity>
       </ImageBackground>
     </View>
@@ -277,6 +278,7 @@ const styles = StyleSheet.create({
     color: '#555',
     fontSize: width * 0.04,
     textAlign: 'center',
+    marginTop: height * 0.01,
     marginBottom: height * 0.02,
   },
   grid: {

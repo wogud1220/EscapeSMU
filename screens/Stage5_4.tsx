@@ -14,6 +14,7 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {useNavigation} from '@react-navigation/native';
 import {RootStackParamList} from '../App';
 import {useRoute, RouteProp} from '@react-navigation/native';
+import CustomText from '../CustomText';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage5_4'>;
 
@@ -74,21 +75,20 @@ const Stage5_4 = () => {
         {/* ✅ 가운데 투명한 흰색 박스 */}
         <View style={styles.box}>
           {/* ✅ 하얀색 박스 위에 bae.png 추가 */}
-          <Text style={styles.text}>좋아! 정답을 잘 맞췄구나!</Text>
-          <Text style={styles.subText}>
-            각 휴게실에서는 대화를 나눠도 상관없어! 다만, 주변 사람에게 피해가
-            가면 안되겠지? {'\n'}
-            {'\n'}
+          <CustomText style={{fontSize: 25, textAlign: 'center'}}>좋아! 정답을 잘 맞췄구나!</CustomText>
+          <CustomText style={styles.subText}>
+            각 휴게실에서는 대화를 나눠도 상관없어! 다만, 주변 사람에게{'\n'}피해가
+            가면 안되겠지?{'\n'}
             {'\n'}
             여기서는 방명록을 남길 수 있어! 중간까지의 후기나 너가 알고 있는
             꿀팁들을 더 공유해줘!!{'\n'}
-          </Text>
+          </CustomText>
 
           <TouchableOpacity
             style={styles.guestbookButton}
             onPress={handleGoToGuestbook}
             activeOpacity={0.7}>
-            <Text style={styles.guestbookButtonText}>방명록 남기러 가기</Text>
+            <CustomText style={{fontSize: 20, color: 'white'}}>방명록 남기러 가기</CustomText>
           </TouchableOpacity>
         </View>
 
@@ -97,7 +97,7 @@ const Stage5_4 = () => {
           style={styles.nextButton}
           onPress={handleNextStage}
           activeOpacity={0.7}>
-          <Text style={styles.buttonText}>다음 ➡️</Text>
+          <CustomText style={{fontSize: 20, color: 'white'}}>다음 ➡️</CustomText>
         </TouchableOpacity>
       </ImageBackground>
     </View>
@@ -148,6 +148,7 @@ const styles = StyleSheet.create({
     fontSize: width * 0.045,
     textAlign: 'center',
     marginTop: height * 0.02,
+    lineHeight: width * 0.065
   },
   mapButton: {
     position: 'absolute',

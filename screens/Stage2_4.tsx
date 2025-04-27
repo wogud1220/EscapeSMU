@@ -14,6 +14,7 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {useNavigation} from '@react-navigation/native';
 import {RootStackParamList} from '../App';
 import {useRoute, RouteProp} from '@react-navigation/native';
+import CustomText from '../CustomText';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage2_4'>;
 
@@ -64,12 +65,12 @@ const Stage2_4 = () => {
 
         {/* ✅ 가운데 투명한 흰색 박스 */}
         <View style={styles.box}>
-          <Text style={styles.text}>이 곳도 잘 찾았구나!</Text>
-          <Text style={styles.subText}>
+          <CustomText style={{fontSize: 25}}>이 곳도 잘 찾았구나!</CustomText>
+          <CustomText style={styles.subText}>
             이 곳은 다른 휴게실들에 비해 {'\n'}상대적으로 학생들이 적게 오는
             곳인데다가 전자레인지도 있으니 갈 곳 없을 때 이용해보는 것도 좋을 것
             같아!
-          </Text>
+          </CustomText>
         </View>
 
         {/* ✅ 다음 스테이지로 이동 버튼 */}
@@ -77,7 +78,7 @@ const Stage2_4 = () => {
           style={styles.nextButton}
           onPress={handleNextStage}
           activeOpacity={0.7}>
-          <Text style={styles.buttonText}>다음 ➡️</Text>
+          <CustomText style={{fontSize: 20, color: 'white'}}>다음 ➡️</CustomText>
         </TouchableOpacity>
       </ImageBackground>
     </View>

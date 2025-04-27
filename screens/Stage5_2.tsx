@@ -14,6 +14,7 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {useNavigation} from '@react-navigation/native';
 import {RootStackParamList} from '../App';
 import {useRoute, RouteProp} from '@react-navigation/native';
+import CustomText from '../CustomText';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage5'>;
 
@@ -67,11 +68,11 @@ const Stage5_2 = () => {
         </TouchableOpacity>
 
         <View style={styles.box}>
-          <Text style={styles.text}>교직원 식당은!</Text>
-          <Text style={styles.subText}>
-            오전 11시부터 오후 1시 30분까지{'\n'}운영하고 있어!
-            명칭은 교직원 식당이지만 학생들도 이용 가능해.{'\n'}자율 배식이니 언제든지 또 방문해보자!
-          </Text>
+          <CustomText style={{fontSize: 25, textAlign: 'center'}}>교직원 식당은!</CustomText>
+          <CustomText style={styles.subText}>
+            오전 11시부터 오후 1시 30분까지{'\n'}운영하고 있어!{'\n'}
+            명칭은 교직원 식당이지만{'\n'}학생들도 이용 가능해.{'\n'}자율 배식이니 언제든지 방문해보자!
+          </CustomText>
         </View>
 
         {/* ✅ 다음 스테이지로 이동 버튼 */}
@@ -79,7 +80,7 @@ const Stage5_2 = () => {
           style={styles.nextButton}
           onPress={handleNextStage}
           activeOpacity={0.7}>
-          <Text style={styles.buttonText}>다음 ➡️</Text>
+          <CustomText style={{fontSize: 20, color: 'white'}}>다음 ➡️</CustomText>
         </TouchableOpacity>
       </ImageBackground>
     </View>
@@ -107,7 +108,7 @@ const styles = StyleSheet.create({
   box: {
     backgroundColor: 'rgba(255, 255, 255, 0.7)',
     width: width * 0.8,
-    height: height * 0.3,
+    height: height * 0.35,
     padding: height * 0.03,
     borderRadius: width * 0.04,
     alignItems: 'center',
@@ -129,8 +130,9 @@ const styles = StyleSheet.create({
     color: '#555',
     fontSize: width * 0.045,
     textAlign: 'center',
-    marginTop: height * 0.02,
+    marginTop: height * 0.04,
     marginBottom: height * 0.02,
+    lineHeight: width * 0.065
   },
   mapButton: {
     position: 'absolute',

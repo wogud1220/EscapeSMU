@@ -117,7 +117,6 @@ const Stage9_4 = () => {
     if (selectedImageIndex === null) {
       setSelectedImageIndex(index);
     } else if (selectedImageIndex === index) {
-      // ✅ 같은 이미지를 두 번 클릭한 경우 → checkCompletion 실행
       checkCompletion();
       setSelectedImageIndex(null);
     } else {

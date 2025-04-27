@@ -1,4 +1,4 @@
-//청록관으로 이동하는 화면
+//청록관 휴게실 문제인데 수정할거임**********************************
 
 import React from 'react';
 import {
@@ -14,6 +14,7 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {useNavigation} from '@react-navigation/native';
 import {RootStackParamList} from '../App';
 import {useRoute, RouteProp} from '@react-navigation/native';
+import CustomText from '../CustomText';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage2_3'>;
 
@@ -70,11 +71,11 @@ const Stage2_3 = () => {
             style={styles.wayImage}
             resizeMode="contain"
           />
-          <Text style={styles.text}>잘 찾았구나!</Text>
-          <Text style={styles.subText}>
+          <CustomText style={{fontSize: 30}}>잘 찾았구나!</CustomText>
+          <CustomText style={styles.subText}>
             상록관 1층에는 학생들이 자유롭게 {'\n'}쉴 수 있는 휴게실도 있어!
             {'\n'}다음 이미지를 참고해서 카메라로 대보자!
-          </Text>
+          </CustomText>
         </View>
 
         {/* ✅ 다음 스테이지로 이동 버튼 */}
@@ -82,7 +83,7 @@ const Stage2_3 = () => {
           style={styles.nextButton}
           onPress={handleNextStage}
           activeOpacity={0.7}>
-          <Text style={styles.buttonText}>카메라 📸</Text>
+          <CustomText style={{fontSize: 25, color: 'white'}}>카메라 📸</CustomText>
         </TouchableOpacity>
       </ImageBackground>
     </View>

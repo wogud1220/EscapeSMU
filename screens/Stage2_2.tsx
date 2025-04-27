@@ -14,6 +14,7 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {useNavigation} from '@react-navigation/native';
 import {RootStackParamList} from '../App';
 import {useRoute, RouteProp} from '@react-navigation/native';
+import CustomText from '../CustomText';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage2_2'>;
 
@@ -70,14 +71,14 @@ const Stage2_2 = () => {
             style={styles.wayImage}
             resizeMode="contain"
           />
-          <Text style={styles.text}>
-            이 곳이 청록관이구나! {'\n'}그 옆 건물은 상록관이야!
-          </Text>
-          <Text style={styles.subText}>
+          <CustomText style={{fontSize: 25, marginTop: height * -0.08, textAlign: 'center'}}>
+            이 곳이 청록관이구나!{'\n'}그 옆 건물은 상록관이야!
+          </CustomText>
+          <CustomText style={styles.subText}>
             청록관/상록관은 융합기술대에서{'\n'}주로 사용하는 건물이야!{'\n'}
-            {'\n'}이 곳 2층 어딘가에{'\n'}Galary라고 빨간색 글씨가 써져 있는
-            텔레비전이 있다는데 찾아서{'\n'}카메라를 갖다대보자!
-          </Text>
+            {'\n'}이 곳 2층 어딘가에 Gallery라고{'\n'}빨간색 글씨가 써져 있는{'\n'}
+            텔레비전이 있다는데 찾아서{'\n'}카메라로 찍어보자!
+          </CustomText>
         </View>
 
         {/* ✅ 다음 스테이지로 이동 버튼 */}
@@ -85,7 +86,7 @@ const Stage2_2 = () => {
           style={styles.nextButton}
           onPress={handleNextStage}
           activeOpacity={0.7}>
-          <Text style={styles.buttonText}>카메라 📸</Text>
+          <CustomText style={{fontSize: 20, color: 'white'}}>카메라 📸</CustomText>
         </TouchableOpacity>
       </ImageBackground>
     </View>
@@ -113,7 +114,7 @@ const styles = StyleSheet.create({
   box: {
     backgroundColor: 'rgba(255, 255, 255, 0.7)',
     width: width * 0.8,
-    height: height * 0.7, // ✅ 높이 조정 (이미지 공간 포함)
+    height: height * 0.7,
     padding: height * 0.03,
     borderRadius: width * 0.04,
     alignItems: 'center',
@@ -134,7 +135,7 @@ const styles = StyleSheet.create({
   },
   subText: {
     color: '#555',
-    fontSize: width * 0.045,
+    fontSize: width * 0.05,
     textAlign: 'center',
     marginTop: height * 0.02,
     marginBottom: height * 0.15,
@@ -178,6 +179,7 @@ const styles = StyleSheet.create({
   wayImage: {
     width: width * 0.6, // ✅ waytostage2.png 크기 조정
     height: height * 0.5,
+    marginTop: height * 0.05,
     marginBottom: height * 0.002, // ✅ 이미지와 텍스트 간격
   },
 });

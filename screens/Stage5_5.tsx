@@ -20,6 +20,7 @@ import {updateStageData} from '../utils/updateStageData';
 import {onAuthStateChanged} from 'firebase/auth';
 import {auth} from './firebase.config';
 import {incrementStageAttempt} from '../utils/incrementStageAttempt';
+import CustomText from '../CustomText';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage5_5'>;
 
@@ -123,18 +124,18 @@ const Stage5_5 = () => {
 
         {/* ✅ 문제 박스 */}
         <View style={styles.box}>
-          <Text style={styles.text}>
+          <CustomText style={{fontSize: 25, textAlign: 'center'}}>
             혹시 방명록에 수뭉이가 {'\n'} 남긴 글을 봤어??
-          </Text>
-          <Text style={styles.subText}>
+          </CustomText>
+          <CustomText style={styles.subText}>
             그렇다면, 수뭉이가 어디로 가라고 했는지 말해볼래? {'\n'}(띄어쓰기
             없이 입력해줘!)
-          </Text>
+          </CustomText>
           <TouchableOpacity
             style={styles.guestbookButton}
             onPress={handleGoToGuestbook}
             activeOpacity={0.7}>
-            <Text style={styles.guestbookButtonText}>방명록 확인하기</Text>
+            <CustomText style={styles.guestbookButtonText}>방명록 확인하기</CustomText>
           </TouchableOpacity>
         </View>
 
@@ -171,7 +172,7 @@ const Stage5_5 = () => {
                   <TouchableOpacity
                     style={styles.submitButton}
                     onPress={handleNextStage}>
-                    <Text style={styles.buttonText}>제출하기</Text>
+                    <CustomText style={styles.buttonText}>제출하기</CustomText>
                   </TouchableOpacity>
                 </View>
               </TouchableWithoutFeedback>
@@ -203,9 +204,9 @@ const styles = StyleSheet.create({
   },
   box: {
     backgroundColor: 'rgba(255, 255, 255, 0.7)',
-    marginTop: height * 0.2,
+    marginTop: height * 0.3,
     width: width * 0.8,
-    height: height * 0.6,
+    height: height * 0.4,
     padding: height * 0.03,
     borderRadius: width * 0.04,
     alignItems: 'center',
@@ -224,6 +225,7 @@ const styles = StyleSheet.create({
     color: '#555',
     fontSize: width * 0.045,
     textAlign: 'center',
+    marginTop: height * 0.05,
   },
   inputContainer: {
     marginTop: height * 0.05,
@@ -238,8 +240,9 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   inputText: {
-    fontSize: width * 0.045,
+    fontSize: width * 0.035,
     color: '#333',
+    fontFamily: 'BMHANNAPro',
   },
   modalBackground: {
     flex: 1,
@@ -278,7 +281,6 @@ const styles = StyleSheet.create({
   buttonText: {
     color: '#FFFFFF',
     fontSize: width * 0.045,
-    fontWeight: 'bold',
   },
   mapButton: {
     position: 'absolute',
@@ -312,13 +314,13 @@ const styles = StyleSheet.create({
     paddingVertical: height * 0.015,
     paddingHorizontal: width * 0.1,
     borderRadius: width * 0.03,
-    marginTop: height * 0.02,
+    marginTop: height * 0.05,
     alignItems: 'center',
   },
   guestbookButtonText: {
     color: '#FFFFFF',
     fontSize: width * 0.045,
-    fontWeight: 'bold',
+    fontFamily: 'BMHANNAPro',
   },
 });
 

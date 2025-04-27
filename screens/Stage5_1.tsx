@@ -14,6 +14,7 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {useNavigation} from '@react-navigation/native';
 import {RootStackParamList} from '../App';
 import {useRoute, RouteProp} from '@react-navigation/native';
+import CustomText from '../CustomText';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage5_1'>;
 
@@ -73,10 +74,10 @@ const Stage5_1 = () => {
             style={styles.wayImage}
             resizeMode="contain"
           />
-          <Text style={styles.text}>위 사진이 어디일까?</Text>
-          <Text style={styles.subText}>
+          <CustomText style={{fontSize: 25, textAlign: 'center'}}>위 사진이 어디일까?</CustomText>
+          <CustomText style={styles.subText}>
             엘레베이터를 타고 9층으로 이동하면 볼 수 있다는데? 가볼까?
-          </Text>
+          </CustomText>
         </View>
 
         {/* ✅ 다음 스테이지로 이동 버튼 */}
@@ -84,7 +85,7 @@ const Stage5_1 = () => {
           style={styles.nextButton}
           onPress={handleNextStage}
           activeOpacity={0.7}>
-          <Text style={styles.buttonText}>다음 ➡️</Text>
+          <CustomText style={{fontSize: 20, color: 'white'}}>다음 ➡️</CustomText>
         </TouchableOpacity>
       </ImageBackground>
     </View>

@@ -18,6 +18,7 @@ import {updateStageData} from '../utils/updateStageData';
 import {onAuthStateChanged} from 'firebase/auth';
 import {auth} from './firebase.config';
 import {decrementStageAttempt} from '../utils/decrementStageAttempt';
+import CustomText from '../CustomText';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage3_2'>;
 
@@ -83,14 +84,14 @@ const Stage3_2 = () => {
         <View style={styles.box}>
           {/* ✅ 하얀색 박스 위에 waytostage2.png 추가 */}
           <Image
-            source={require('../assets/soomoong.png')}
+            source={require('../assets/deer.png')}
             style={styles.wayImage}
             resizeMode="contain"
           />
-          <Text style={styles.text}>정말 잘 찾는데??</Text>
-          <Text style={styles.subText}>
-            위 사진이 바로 우리 학교의 마스코트인 수뭉이야!
-          </Text>
+          <CustomText style={{fontSize: 25, textAlign: 'center'}}>정말 잘 찾는데??</CustomText>
+          <CustomText style={styles.subText}>
+            식물원은 누구나 이용할 수 있는 공간이야! 가끔식 자연을 느껴보고 싶다면 놀러와보자!
+          </CustomText>
         </View>
 
         {/* ✅ 다음 스테이지로 이동 버튼 */}
@@ -98,7 +99,7 @@ const Stage3_2 = () => {
           style={styles.nextButton}
           onPress={handleNextStage}
           activeOpacity={0.7}>
-          <Text style={styles.buttonText}>다음 ➡️</Text>
+          <CustomText style={{fontSize: 20, color: 'white'}}>다음 ➡️</CustomText>
         </TouchableOpacity>
       </ImageBackground>
     </View>
@@ -190,7 +191,7 @@ const styles = StyleSheet.create({
   wayImage: {
     width: width * 0.6, // ✅ waytostage2.png 크기 조정
     height: height * 0.5,
-    marginBottom: height * 0.005, // ✅ 이미지와 텍스트 간격
+    marginBottom: height * 0.02, // ✅ 이미지와 텍스트 간격
   },
 });
 

@@ -68,19 +68,18 @@ const Stage1_1 = () => {
             style={styles.wayImage}
             resizeMode="contain"
           />
-          <CustomText style={{fontSize:30, marginTop: -20}}>폰트 테스트</CustomText>
-          <Text style={styles.subText}>폰트 테스트</Text>
-          <Text style={styles.subText}>
-            정문을 통과해서 다음 스테이지에 가기 위해서는 카메라를 이용해
-            사진을찍어야 한다는데.. (경비실 앞 캠퍼스안내도 쪽에서 찍어보자!)
-          </Text>
+          <CustomText style={{fontSize:30, marginTop: -20, marginBottom: 10}}>상명대학교 정문이야!</CustomText>
+          <CustomText style={styles.subText}>
+            다음 스테이지에 가기 위해서는{'\n'}카메라를 이용해{'\n'}
+            사진을 찍어야 한다는데..{'\n'}(경비실 앞 캠퍼스안내도에서 찍어보자!)
+          </CustomText>
         </View>
 
         <TouchableOpacity
           style={styles.nextButton}
           onPress={handleNextStage}
           activeOpacity={0.7}>
-          <Text style={styles.buttonText}>카메라 📸</Text>
+          <CustomText style={{fontSize: 20, color: 'white'}}>카메라 📸</CustomText>
         </TouchableOpacity>
       </ImageBackground>
     </View>
@@ -129,7 +128,7 @@ const styles = StyleSheet.create({
   },
   subText: {
     color: '#555',
-    fontSize: width * 0.045,
+    fontSize: width * 0.05,
     textAlign: 'center',
     marginTop: height * -0.005,
   },

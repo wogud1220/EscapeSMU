@@ -283,6 +283,7 @@ import {onAuthStateChanged} from 'firebase/auth';
 import {auth} from './firebase.config';
 import {incrementStageAttempt} from '../utils/incrementStageAttempt';
 import {departmentToCollege} from '../utils/departmentToCollege';
+import CustomText from '../CustomText';
 
 const {width, height} = Dimensions.get('window');
 
@@ -357,22 +358,25 @@ const Stage1_2 = () => {
         </TouchableOpacity>
 
         <View style={styles.box}>
-          <Text style={styles.text}>
-            정문에서 풀어야 할 문제가 {'\n'}발견되었어!{'\n'}
-          </Text>
-          <Text style={styles.subText}>
-            1984년 6월 29일에 천안 캠퍼스를 준공하였고, {'\n'}
-            1984년 10월 6일에 상명 여자 대학 {'\n'}
-            천안 캠퍼스 개설 인가를 받았어!{'\n'}
+          <CustomText style={{fontSize: 30, color: '#333',
+    marginBottom: height * 0.01,
+    fontWeight: '500',
+    textAlign: 'center',}}>
+            정문에서 풀어야 할 문제가 발견되었어!{'\n'}
+          </CustomText>
+          <CustomText style={styles.subText}>
+            1984년 6월 29일에{'\n'}천안 캠퍼스를 준공하였고{'\n'}{'\n'}
+            1984년 10월 6일에{'\n'}상명 여자 대학
+            천안 캠퍼스{'\n'}개설 인가를 받았어!{'\n'}
             {'\n'}
             그렇다면, 상명대학교 천안캠퍼스가 {'\n'}개교한 연도는 언제일까?
-          </Text>
+          </CustomText>
         </View>
 
         <TouchableOpacity
           onPress={() => setIsModalVisible(true)}
           style={styles.inputContainer}>
-          <Text style={styles.inputText}>{answer || '정답 입력'}</Text>
+          <CustomText style={styles.inputText}>{answer || '정답 입력'}</CustomText>
         </TouchableOpacity>
       </ImageBackground>
 
@@ -385,7 +389,7 @@ const Stage1_2 = () => {
           <View style={styles.modalBackground}>
             <TouchableWithoutFeedback>
               <View style={styles.modalContainer}>
-                <Text style={styles.modalTitle}>정답을 입력하세요</Text>
+                <CustomText style={{fontSize: 25}}>정답을 입력하세요</CustomText>
                 <TextInput
                   style={styles.modalInput}
                   value={answer}
@@ -399,7 +403,7 @@ const Stage1_2 = () => {
                 <TouchableOpacity
                   style={styles.submitButton}
                   onPress={handleNextStage}>
-                  <Text style={styles.buttonText}>제출하기</Text>
+                  <CustomText style={{fontSize: 25, color: 'white'}}>제출하기</CustomText>
                 </TouchableOpacity>
               </View>
             </TouchableWithoutFeedback>
@@ -419,9 +423,9 @@ const styles = StyleSheet.create({
   },
   box: {
     backgroundColor: 'rgba(255, 255, 255, 0.7)',
-    marginTop: height * 0.15,
+    marginTop: height * 0.25,
     width: width * 0.8,
-    height: height * 0.6,
+    height: height * 0.5,
     padding: height * 0.03,
     borderRadius: width * 0.04,
     alignItems: 'center',
@@ -438,7 +442,7 @@ const styles = StyleSheet.create({
   },
   subText: {
     color: '#555',
-    fontSize: width * 0.045,
+    fontSize: width * 0.05,
     textAlign: 'center',
   },
   inputContainer: {
@@ -473,14 +477,13 @@ const styles = StyleSheet.create({
   },
   modalTitle: {
     fontSize: width * 0.05,
-    fontWeight: 'bold',
     marginBottom: height * 0.02,
   },
   modalInput: {
     width: '100%',
     borderBottomWidth: 1,
     borderColor: '#999',
-    fontSize: width * 0.045,
+    fontSize: width * 0.05,
     paddingVertical: height * 0.01,
     marginBottom: height * 0.02,
     color: '#333',

@@ -71,6 +71,7 @@
 	<key>UIAppFonts</key>
 	<array>
 		<string>SDMiSaeng.ttf</string>
+		<string>BMHANNAPro.ttf</string>
 	</array>
 </dict>
 </plist>

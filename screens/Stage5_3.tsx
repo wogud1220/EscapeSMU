@@ -19,6 +19,7 @@ import {onAuthStateChanged} from 'firebase/auth';
 import {auth} from './firebase.config';
 import {incrementStageAttempt} from '../utils/incrementStageAttempt';
 import {updateStageData} from '../utils/updateStageData';
+import CustomText from '../CustomText';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage5_4'>;
 
@@ -135,18 +136,18 @@ const Stage5_3 = () => {
 
         {/* 흰색 박스 */}
         <View style={styles.box}>
-          <Text style={styles.text}>
-            다음 중 휴게실이 존재하지 <Text style={styles.highlight}>않는</Text>{' '}
-            층수로{'\n'}옳은 것은?
-          </Text>
+          <CustomText style={{fontSize: 25, textAlign: 'center'}}>
+            다음 중 휴게실이 존재하지 <CustomText style={{fontSize: 25, color: 'red'}}>않는</CustomText>{' '}
+            층수는 어디일까?
+          </CustomText>
 
           {/* 서브텍스트 추가 */}
-          <Text style={styles.subText}>
+          <CustomText style={styles.subText}>
             한누리관에는 다양한 층에 휴게실이 있지만 {'\n'}일부 층에는 존재하지
             않아. {'\n'}
             {'\n'}틀릴 시에는 다시 입력하기까지{' '}
-            <Text style={styles.highlight}>5분</Text>을 기다려야해... 신중하자!
-          </Text>
+            <CustomText style={{fontSize: 20, color: 'red'}}>5분</CustomText>을 기다려야해... 신중하자!
+          </CustomText>
 
           {/* ✅ 타이머 표시 */}
           {countdown !== null && (
@@ -170,7 +171,7 @@ const Stage5_3 = () => {
                 ]}
                 onPress={() => handleOptionPress(option.value)}
                 disabled={disabled}>
-                <Text style={styles.optionText}>{option.label}</Text>
+                <CustomText style={{fontSize: 20, textAlign: 'center', color : 'white'}}>{option.label}</CustomText>
               </TouchableOpacity>
             ))}
           </View>
@@ -223,6 +224,7 @@ const styles = StyleSheet.create({
     color: '#555',
     fontSize: width * 0.04,
     marginBottom: height * 0.02,
+    marginTop: height * 0.02,
     textAlign: 'center',
     lineHeight: width * 0.05,
   },

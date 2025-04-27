@@ -20,6 +20,7 @@ import {onAuthStateChanged} from 'firebase/auth';
 import {auth} from './firebase.config';
 import {updateStageData} from '../utils/updateStageData';
 import {incrementStageAttempt} from '../utils/incrementStageAttempt';
+import CustomText from '../CustomText';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage4_4'>;
 
@@ -113,7 +114,7 @@ const Stage4_4 = () => {
 
         {/* ✅ 문제 박스 */}
         <View style={styles.box}>
-          <Text style={styles.text}>동상의 이름을 확인해서 입력해보자!</Text>
+          <CustomText style={{fontSize: 25, textAlign: 'center'}}>동상의 이름을 확인해서 입력해보자!</CustomText>
 
           {/* ✅ 이미지 추가 */}
           <Image
@@ -122,12 +123,12 @@ const Stage4_4 = () => {
             resizeMode="contain"
           />
 
-          <Text style={styles.subText}>동상의 이름은 무엇일까?</Text>
+          <CustomText style={styles.subText}>동상의 이름은 무엇일까?</CustomText>
         </View>
 
         {/* ✅ 입력 필드 → 터치 시 모달 열기 */}
         <TouchableOpacity onPress={openModal} style={styles.inputContainer}>
-          <Text style={styles.inputText}>{answer || '정답 입력'}</Text>
+          <CustomText style={styles.inputText}>{answer || '정답 입력'}</CustomText>
         </TouchableOpacity>
 
         {/* ✅ 모달 */}
@@ -140,7 +141,7 @@ const Stage4_4 = () => {
             <View style={styles.modalBackground}>
               <TouchableWithoutFeedback>
                 <View style={styles.modalContainer}>
-                  <Text style={styles.modalTitle}>정답을 입력하세요</Text>
+                  <CustomText style={{fontSize: 20, textAlign: 'center'}}>정답을 입력하세요</CustomText>
 
                   {/* ✅ 입력 상자 */}
                   <TextInput
@@ -158,7 +159,7 @@ const Stage4_4 = () => {
                   <TouchableOpacity
                     style={styles.submitButton}
                     onPress={handleNextStage}>
-                    <Text style={styles.buttonText}>제출하기</Text>
+                    <CustomText style={{fontSize: 20, color: 'white'}}>제출하기</CustomText>
                   </TouchableOpacity>
                 </View>
               </TouchableWithoutFeedback>
@@ -190,7 +191,7 @@ const styles = StyleSheet.create({
   },
   box: {
     backgroundColor: 'rgba(255, 255, 255, 0.7)',
-    marginTop: height * 0.15,
+    marginTop: height * 0.2,
     width: width * 0.8,
     height: height * 0.6,
     padding: height * 0.03,
@@ -255,6 +256,7 @@ const styles = StyleSheet.create({
     paddingVertical: height * 0.01,
     marginBottom: height * 0.02,
     color: '#333',
+    fontFamily: 'BMHANNAPro',
   },
   submitButton: {
     backgroundColor: 'rgba(0, 0, 255, 0.7)',
@@ -293,6 +295,7 @@ const styles = StyleSheet.create({
     width: width * 0.7,
     height: height * 0.3,
     marginBottom: height * 0.02,
+    marginTop: height * 0.02,
   },
 });
 

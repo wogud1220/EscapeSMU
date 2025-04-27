@@ -13,6 +13,7 @@ import {useNavigation} from '@react-navigation/native';
 import {RootStackParamList} from '../App';
 import {onAuthStateChanged, signOut} from 'firebase/auth';
 import {auth} from './firebase.config';
+import CustomText from '../CustomText';
 
 const {width, height} = Dimensions.get('window');
 
@@ -45,7 +46,7 @@ const Main = () => {
   };
 
   const handleNavigate = () => {
-    navigation.navigate('Stage1_1');
+    navigation.navigate('Stage5_7');
   };
 
   const handleLoginNavigate = () => {
@@ -57,54 +58,78 @@ const Main = () => {
   };
 
   return (
-    <View style={styles.container}>
-      <ImageBackground
-        source={require('../assets/main.png')}
-        style={styles.image}
-        resizeMode="cover">
-        <Image
-          source={require('../assets/main_title.png')}
-          style={styles.titleImage}
-          resizeMode="contain"
-        />
 
-        {userEmail ? (
-          <>
-            <Text
-              style={styles.userText}>{`로그인된 사용자: ${userEmail}`}</Text>
-            <TouchableOpacity
-              onPress={handleLogout}
-              style={styles.logoutButton}
-              activeOpacity={0.7}>
-              <Text style={styles.buttonText}>로그아웃</Text>
-            </TouchableOpacity>
-          </>
-        ) : (
-          <>
-            <TouchableOpacity
-              onPress={handleLoginNavigate}
-              style={styles.loginButton}
-              activeOpacity={0.7}>
-              <Text style={styles.buttonText}>로그인</Text>
-            </TouchableOpacity>
+<View style={styles.container}>
+  <ImageBackground
+    source={require('../assets/main.png')}
+    style={styles.image}
+    resizeMode="cover"
+  >
+    <Image
+      source={require('../assets/main_title.png')}
+      style={styles.titleImage}
+      resizeMode="contain"
+    />
 
-            <TouchableOpacity
-              onPress={handleSignInNavigate}
-              style={styles.SignInButton}
-              activeOpacity={0.7}>
-              <Text style={styles.buttonText}>회원가입</Text>
-            </TouchableOpacity>
-          </>
-        )}
+    {userEmail ? (
+      <>
+        <CustomText style={styles.userText}>
+          {`로그인된 사용자: ${userEmail}`}
+        </CustomText>
+      </>
+    ) : (
+      <>
+        <TouchableOpacity
+          onPress={handleLoginNavigate}
+          style={styles.loginButton}
+          activeOpacity={0.7}
+        >
+          <CustomText style={styles.buttonText}>로그인</CustomText>
+        </TouchableOpacity>
 
+        <TouchableOpacity
+          onPress={handleSignInNavigate}
+          style={styles.SignInButton}
+          activeOpacity={0.7}
+        >
+          <CustomText style={styles.buttonText}>회원가입</CustomText>
+        </TouchableOpacity>
+      </>
+    )}
+
+    {userEmail && (
+      <View style={styles.bottomButtonContainer}>
         <TouchableOpacity
           onPress={handleNavigate}
           style={styles.button}
-          activeOpacity={0.7}>
-          <Text style={styles.buttonText}>시작하기</Text>
+          activeOpacity={0.7}
+        >
+          <CustomText style={{fontSize: 25, color: 'white'}}>시작하기</CustomText>
         </TouchableOpacity>
-      </ImageBackground>
-    </View>
+
+        <TouchableOpacity
+          onPress={handleLogout}
+          style={styles.logoutButton}
+          activeOpacity={0.7}
+        >
+          <CustomText style={{fontSize: 25, color: 'white'}}>로그아웃</CustomText>
+        </TouchableOpacity>
+      </View>
+    )}
+
+    {!userEmail && (
+      <TouchableOpacity
+        onPress={handleNavigate}
+        style={styles.button}
+        activeOpacity={0.7}
+      >
+        <CustomText style={{fontSize: 30, color: 'white'}}>시작하기</CustomText>
+      </TouchableOpacity>
+    )}
+  </ImageBackground>
+</View>
+
+
   );
 };
 
@@ -147,23 +172,20 @@ const styles = StyleSheet.create({
     paddingHorizontal: width * 0.08,
     borderRadius: width * 0.03,
   },
-  logoutButton: {
-    position: 'absolute',
-    top: height * 0.1,
-    backgroundColor: 'rgba(255, 165, 0, 0.8)',
-    paddingVertical: height * 0.015,
-    paddingHorizontal: width * 0.1,
-    borderRadius: width * 0.03,
-    marginTop: height * 0.56,
-  },
   button: {
-    position: 'absolute',
-    bottom: height * 0.05,
     backgroundColor: 'rgba(0, 0, 255, 0.6)',
     paddingVertical: height * 0.02,
-    paddingHorizontal: width * 0.1,
+    paddingHorizontal: width * 0.07,
+    borderRadius: width * 0.03,
+    marginRight: width * 0.03, // 버튼 사이 띄우기
+  },
+  logoutButton: {
+    backgroundColor: 'rgba(255, 165, 0, 0.8)',
+    paddingVertical: height * 0.02,
+    paddingHorizontal: width * 0.07,
     borderRadius: width * 0.03,
   },
+  
   buttonText: {
     color: '#FFFFFF',
     fontSize: width * 0.045,
@@ -179,6 +201,14 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 5,
   },
+  bottomButtonContainer: {
+    position: 'absolute',
+    bottom: height * 0.05,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  
 });
 
 export default Main;

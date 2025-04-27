@@ -20,6 +20,7 @@ import {onAuthStateChanged} from 'firebase/auth';
 import {auth} from './firebase.config';
 import {incrementStageAttempt} from '../utils/incrementStageAttempt';
 import {updateStageData} from '../utils/updateStageData';
+import CustomText from '../CustomText';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage5_6'>;
 
@@ -120,20 +121,18 @@ const Stage5_6 = () => {
 
         {/* ✅ 문제 박스 */}
         <View style={styles.box}>
-          <Text style={styles.text}>한누리관 1층으로 다시 돌아왔어!</Text>
-          <Text style={styles.subText}>
-            한누리관 1층 카페 ing에서는 직접 가서 주문해도 되겠지만,{'\n'}
-            어플로도 비대면 주문이 가능한 거 알아?{'\n'}
-            {'\n'}
+          <CustomText style={{fontSize: 25, textAlign: 'center'}}>한누리관 1층으로 다시 돌아왔어!</CustomText>
+          <CustomText style={styles.subText}>
+            한누리관 1층 카페 ing에서는{'\n'}직접 가서 주문해도 되겠지만,{'\n'}
+            비대면 주문이 가능한 거 알아?{'\n'}
             그렇다면, 어플 이름이 뭘까?{'\n'}
-            {'\n'}
             카페 앞 배너를 살펴보자!
-          </Text>
+          </CustomText>
         </View>
 
         {/* ✅ 입력 필드 → 터치 시 모달 열기 */}
         <TouchableOpacity onPress={openModal} style={styles.inputContainer}>
-          <Text style={styles.inputText}>{answer || '정답 입력'}</Text>
+          <CustomText style={styles.inputText}>{answer || '정답 입력'}</CustomText>
         </TouchableOpacity>
 
         {/* ✅ 모달 */}
@@ -146,7 +145,7 @@ const Stage5_6 = () => {
             <View style={styles.modalBackground}>
               <TouchableWithoutFeedback>
                 <View style={styles.modalContainer}>
-                  <Text style={styles.modalTitle}>정답을 입력하세요</Text>
+                  <CustomText style={styles.modalTitle}>정답을 입력하세요</CustomText>
 
                   {/* ✅ 입력 상자 */}
                   <TextInput
@@ -164,7 +163,7 @@ const Stage5_6 = () => {
                   <TouchableOpacity
                     style={styles.submitButton}
                     onPress={handleNextStage}>
-                    <Text style={styles.buttonText}>제출하기</Text>
+                    <CustomText style={{fontSize: 20, color: 'white'}}>제출하기</CustomText>
                   </TouchableOpacity>
                 </View>
               </TouchableWithoutFeedback>
@@ -196,9 +195,9 @@ const styles = StyleSheet.create({
   },
   box: {
     backgroundColor: 'rgba(255, 255, 255, 0.7)',
-    marginTop: height * 0.2,
+    marginTop: height * 0.3,
     width: width * 0.8,
-    height: height * 0.6,
+    height: height * 0.4,
     padding: height * 0.03,
     borderRadius: width * 0.04,
     alignItems: 'center',
@@ -217,6 +216,8 @@ const styles = StyleSheet.create({
     color: '#555',
     fontSize: width * 0.045,
     textAlign: 'center',
+    marginTop: height * 0.03,
+    lineHeight: width * 0.065,
   },
   inputContainer: {
     marginTop: height * 0.05,
@@ -250,7 +251,7 @@ const styles = StyleSheet.create({
   },
   modalTitle: {
     fontSize: width * 0.05,
-    fontWeight: 'bold',
+    fontFamily: 'BMHANNAPro',
     marginBottom: height * 0.02,
   },
   modalInput: {
@@ -261,6 +262,7 @@ const styles = StyleSheet.create({
     paddingVertical: height * 0.01,
     marginBottom: height * 0.02,
     color: '#333',
+    fontFamily: 'BMHANNAPro',
   },
   submitButton: {
     backgroundColor: 'rgba(0, 0, 255, 0.7)',

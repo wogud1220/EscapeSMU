@@ -12,6 +12,7 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {useNavigation} from '@react-navigation/native';
 import {RootStackParamList} from '../App';
 import {useRoute, RouteProp} from '@react-navigation/native';
+import CustomText from '../CustomText';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage3_1'>;
 
@@ -64,16 +65,16 @@ const Stage3_1 = () => {
         <View style={styles.box}>
           {/* ✅ 하얀색 박스 위에 waytostage2.png 추가 */}
           <Image
-            source={require('../assets/deer.png')}
+            source={require('../assets/maple.png')}
             style={styles.wayImage}
             resizeMode="contain"
           />
-          <Text style={styles.text}>
-            다양한 식물들 사이에 우리 학교의 마스코트인 사슴이 숨어있다는데?
-          </Text>
-          <Text style={styles.subText}>
-            이 친구를 찾아서 카메라로 찍어보자!
-          </Text>
+          <CustomText style={{fontSize: 25, textAlign: 'center'}}>
+            식물과학관에는 식물원이 조성되어 있어!
+          </CustomText>
+          <CustomText style={styles.subText}>
+            식물원 안 어딘가에 있는 단풍을 찾아서 카메라로 찍어보자!
+          </CustomText>
         </View>
 
         {/* ✅ 다음 스테이지로 이동 버튼 */}
@@ -81,7 +82,7 @@ const Stage3_1 = () => {
           style={styles.nextButton}
           onPress={handleNextStage}
           activeOpacity={0.7}>
-          <Text style={styles.buttonText}>카메라 📸</Text>
+          <CustomText style={{fontSize: 20, color: 'white'}}>카메라 📸</CustomText>
         </TouchableOpacity>
       </ImageBackground>
     </View>
