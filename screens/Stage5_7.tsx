@@ -19,6 +19,8 @@ import {updateStageData} from '../utils/updateStageData';
 import {decrementStageAttempt} from '../utils/decrementStageAttempt';
 import {onAuthStateChanged} from 'firebase/auth';
 import {auth} from './firebase.config';
+import CustomText from '../CustomText';
+
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage6_1'>;
 
 const {width, height} = Dimensions.get('window');
@@ -81,12 +83,15 @@ const Stage5_7 = () => {
 
         {/* ✅ 가운데 투명한 흰색 박스 */}
         <View style={styles.box}>
-          <Text style={styles.text}>
-            시크릿 오더의 장점은 {'\n'}바로 비대면 주문이야!{'\n'}
-            강의실에 앉아서 주문하면 바로 주문이 완료돼!{'\n'}
+          <CustomText style={{fontSize: 25, textAlign: 'center', }}>
+            시크릿 오더의 장점은
+          </CustomText>
+          <CustomText style={styles.subText}>
+            바로 비대면 주문이야!{'\n'}
+            강의실에 앉아서 주문하면{'\n'}바로 주문이 완료돼!{'\n'}
             스탬프도 쌓을 수 있어!{'\n'}
             그럼 이제 다음 장소로 가볼까?
-          </Text>
+          </CustomText>
         </View>
 
         {/* ✅ 다음 스테이지로 이동 버튼 */}
@@ -94,7 +99,7 @@ const Stage5_7 = () => {
           style={styles.nextButton}
           onPress={handleNextStage}
           activeOpacity={0.7}>
-          <Text style={styles.buttonText}>다음 ➡️</Text>
+          <CustomText style={{fontSize: 20, color: 'white'}}>다음 ➡️</CustomText>
         </TouchableOpacity>
       </ImageBackground>
     </View>
@@ -122,7 +127,7 @@ const styles = StyleSheet.create({
   box: {
     backgroundColor: 'rgba(255, 255, 255, 0.7)',
     width: width * 0.8,
-    height: height * 0.5, // ✅ 높이 조정 (이미지 공간 포함)
+    height: height * 0.4, // ✅ 높이 조정 (이미지 공간 포함)
     padding: height * 0.03,
     borderRadius: width * 0.04,
     alignItems: 'center',
@@ -146,6 +151,7 @@ const styles = StyleSheet.create({
     fontSize: width * 0.045,
     textAlign: 'center',
     marginTop: height * 0.02,
+    lineHeight: width * 0.065,
   },
   mapButton: {
     position: 'absolute',
@@ -170,7 +176,6 @@ const styles = StyleSheet.create({
   buttonText: {
     color: '#FFFFFF',
     fontSize: width * 0.045,
-    fontWeight: 'bold',
   },
   backButton: {
     position: 'absolute',

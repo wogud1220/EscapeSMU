@@ -175,7 +175,6 @@ const styles = StyleSheet.create({
   buttonText: {
     color: '#FFFFFF',
     fontSize: width * 0.045,
-    fontWeight: 'bold',
   },
   backButton: {
     position: 'absolute',

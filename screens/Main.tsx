@@ -46,7 +46,7 @@ const Main = () => {
   };
 
   const handleNavigate = () => {
-    navigation.navigate('Stage5_7');
+    navigation.navigate('Stage5');
   };
 
   const handleLoginNavigate = () => {
@@ -189,7 +189,6 @@ const styles = StyleSheet.create({
   buttonText: {
     color: '#FFFFFF',
     fontSize: width * 0.045,
-    fontWeight: 'bold',
   },
   userText: {
     position: 'absolute',

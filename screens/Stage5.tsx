@@ -14,6 +14,7 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {useNavigation} from '@react-navigation/native';
 import {RootStackParamList} from '../App';
 import {useRoute, RouteProp} from '@react-navigation/native';
+import CustomText from '../CustomText';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage5'>;
 
@@ -74,12 +75,12 @@ const Stage5 = () => {
             style={styles.wayImage}
             resizeMode="contain"
           />
-          <Text style={styles.text}>다음 장소로 가보자!</Text>
-          <Text style={styles.subText}>
+          <CustomText style={styles.text}>다음 장소로 가보자!</CustomText>
+          <CustomText style={styles.subText}>
             한누리관은 종합강의동이자 동시에 공과대학 일부학과의 강의실 역할을
-            하고 있는 곳이야! 사진을 참고해서 가볼까! 오른쪽 위 지도를 참고해도
+            하고 있는 곳이야!{'\n'}사진을 참고해서 가볼까!{'\n'}오른쪽 위 지도를 참고해도
             좋아!
-          </Text>
+          </CustomText>
         </View>
 
         {/* ✅ 다음 스테이지로 이동 버튼 */}
@@ -87,7 +88,7 @@ const Stage5 = () => {
           style={styles.nextButton}
           onPress={handleNextStage}
           activeOpacity={0.7}>
-          <Text style={styles.buttonText}>다음 ➡️</Text>
+          <CustomText style={styles.buttonText}>다음 ➡️</CustomText>
         </TouchableOpacity>
       </ImageBackground>
     </View>
@@ -129,7 +130,6 @@ const styles = StyleSheet.create({
   text: {
     color: '#333',
     fontSize: width * 0.06,
-    fontWeight: 'bold',
     marginBottom: height * 0.01,
     textAlign: 'center',
   },
@@ -139,6 +139,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginTop: height * 0.02,
     marginBottom: height * 0.02,
+    lineHeight: width * 0.065,
   },
   mapButton: {
     position: 'absolute',
@@ -163,7 +164,6 @@ const styles = StyleSheet.create({
   buttonText: {
     color: '#FFFFFF',
     fontSize: width * 0.045,
-    fontWeight: 'bold',
   },
   backButton: {
     position: 'absolute',
@@ -180,6 +180,7 @@ const styles = StyleSheet.create({
     width: width * 0.6, // ✅ bae.png 크기 조정
     height: height * 0.45,
     marginBottom: height * 0.005, // ✅ 이미지와 텍스트 간격
+    marginTop: height * 0.02, // ✅ 이미지와 텍스트 간격
   },
 });
 

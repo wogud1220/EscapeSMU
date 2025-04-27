@@ -210,7 +210,6 @@ const styles = StyleSheet.create({
   text: {
     color: '#333',
     fontSize: width * 0.06,
-    fontWeight: 'bold',
     marginBottom: height * 0.01,
     textAlign: 'center',
   },
@@ -275,7 +274,6 @@ const styles = StyleSheet.create({
   buttonText: {
     color: '#FFFFFF',
     fontSize: width * 0.045,
-    fontWeight: 'bold',
   },
   mapButton: {
     position: 'absolute',
