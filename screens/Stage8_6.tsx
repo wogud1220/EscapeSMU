@@ -22,6 +22,7 @@ import {incrementStageAttempt} from '../utils/incrementStageAttempt';
 import {onAuthStateChanged} from 'firebase/auth';
 import {auth} from './firebase.config';
 import {updateStageData} from '../utils/updateStageData';
+import CustomText from '../CustomText';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage8_6'>;
 
@@ -114,19 +115,19 @@ const Stage8_6 = () => {
 
         {/* ✅ 문제 박스 */}
         <View style={styles.box}>
-          <Text style={styles.text}>
+          <CustomText style={styles.text}>
             컴퓨터를 사용해서 (smuescape.netlify.app)에 접속해보자!
-          </Text>
-          <Text style={styles.subText}>
+          </CustomText>
+          <CustomText style={styles.subText}>
             응??? 어딘가 많이 본 게임인데?{'\n'}
             {'\n'}
             30점을 달성하고 알림창을 보자!
-          </Text>
+          </CustomText>
         </View>
 
         {/* ✅ 입력 필드 → 터치 시 모달 열기 */}
         <TouchableOpacity onPress={openModal} style={styles.inputContainer}>
-          <Text style={styles.inputText}>{answer || '정답 입력'}</Text>
+          <CustomText style={styles.inputText}>{answer || '정답 입력'}</CustomText>
         </TouchableOpacity>
 
         {/* ✅ 모달 */}
@@ -139,7 +140,7 @@ const Stage8_6 = () => {
             <View style={styles.modalBackground}>
               <TouchableWithoutFeedback>
                 <View style={styles.modalContainer}>
-                  <Text style={styles.modalTitle}>정답을 입력하세요</Text>
+                  <CustomText style={styles.modalTitle}>정답을 입력하세요</CustomText>
 
                   {/* ✅ 입력 상자 */}
                   <TextInput
@@ -157,7 +158,7 @@ const Stage8_6 = () => {
                   <TouchableOpacity
                     style={styles.submitButton}
                     onPress={handleNextStage}>
-                    <Text style={styles.buttonText}>제출하기</Text>
+                    <CustomText style={styles.buttonText}>제출하기</CustomText>
                   </TouchableOpacity>
                 </View>
               </TouchableWithoutFeedback>
@@ -189,9 +190,9 @@ const styles = StyleSheet.create({
   },
   box: {
     backgroundColor: 'rgba(255, 255, 255, 0.7)',
-    marginTop: height * 0.15,
+    marginTop: height * 0.3,
     width: width * 0.8,
-    height: height * 0.6,
+    height: height * 0.4,
     padding: height * 0.03,
     borderRadius: width * 0.04,
     alignItems: 'center',
@@ -246,7 +247,6 @@ const styles = StyleSheet.create({
   },
   modalTitle: {
     fontSize: width * 0.05,
-    fontWeight: 'bold',
     marginBottom: height * 0.02,
   },
   modalInput: {
@@ -257,6 +257,7 @@ const styles = StyleSheet.create({
     paddingVertical: height * 0.01,
     marginBottom: height * 0.02,
     color: '#333',
+    fontFamily: 'BMHANNAPro',
   },
   submitButton: {
     backgroundColor: 'rgba(0, 0, 255, 0.7)',

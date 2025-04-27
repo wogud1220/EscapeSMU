@@ -17,6 +17,7 @@ import {updateStageData} from '../utils/updateStageData';
 import {onAuthStateChanged} from 'firebase/auth';
 import {auth} from './firebase.config';
 import {incrementStageAttempt} from '../utils/incrementStageAttempt';
+import CustomText from '../CustomText';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage7_3'>;
 
@@ -132,15 +133,15 @@ const Stage7_3 = () => {
 
         {/* ✅ 흰색 박스 */}
         <View style={styles.box}>
-          <Text style={styles.text}>
-            다음중 라운지 스터디룸 이용 방법으로{'\n'}옳지{' '}
-            <Text style={styles.highlight}>않은</Text> 것은 무엇일까?
-          </Text>
-          <Text style={styles.subText}>
+          <CustomText style={styles.text}>
+            다음중 라운지 스터디룸{'\n'}이용 방법으로옳지{' '}
+            <CustomText style={styles.highlight}>않은</CustomText> 것은 무엇일까?
+          </CustomText>
+          <CustomText style={styles.subText}>
             스터디룸 문에 붙어 있는 종이를 확인하자!{'\n'}
             틀릴 시에는 다시 입력하기까지{' '}
             <Text style={styles.highlight}>5분</Text>을 기다려야해... 신중하자!
-          </Text>
+          </CustomText>
 
           {/* ✅ 타이머 표시 */}
           {countdown !== null && (
@@ -161,7 +162,7 @@ const Stage7_3 = () => {
                 style={[styles.optionButton, disabled && styles.disabledButton]}
                 onPress={() => handleOptionPress(option.value)}
                 disabled={disabled}>
-                <Text style={styles.optionText}>{option.label}</Text>
+                <CustomText style={styles.optionText}>{option.label}</CustomText>
               </TouchableOpacity>
             ))}
           </View>
@@ -202,14 +203,12 @@ const styles = StyleSheet.create({
   text: {
     color: '#333',
     fontSize: width * 0.05,
-    fontWeight: 'bold',
     marginBottom: height * 0.01,
     textAlign: 'center',
     marginTop: height * 0.02,
   },
   highlight: {
     color: 'red',
-    fontWeight: 'bold',
   },
   subText: {
     color: '#555',
@@ -241,7 +240,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: '#FFF',
     fontSize: width * 0.045,
-    fontWeight: 'bold',
+    lineHeight: width * 0.05,
   },
   disabledButton: {
     backgroundColor: 'gray',

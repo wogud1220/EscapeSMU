@@ -24,6 +24,7 @@ import {auth} from './firebase.config';
 import {updateStageData} from '../utils/updateStageData';
 import {decrementStageAttempt} from '../utils/decrementStageAttempt';
 import {incrementStageAttempt} from '../utils/incrementStageAttempt';
+import CustomText from '../CustomText';
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage6_3'>;
 type Stage6_3RouteProp = RouteProp<RootStackParamList, 'Stage6_3'>;
 
@@ -141,17 +142,17 @@ const Stage6_3 = () => {
 
         {/* ✅ 문제 박스 */}
         <View style={styles.box}>
-          <Text style={styles.text}>
+          <CustomText style={styles.text}>
             독도 조형물 앞에{'\n'}10가지 설명문이 있어!
-          </Text>
-          <Text style={styles.subText}>
+          </CustomText>
+          <CustomText style={styles.subText}>
             독도를 최초로 표시한 지도의 이름을 설명문에서 찾아서 적어줘!
-          </Text>
+          </CustomText>
         </View>
 
         {/* ✅ 입력 필드 → 터치 시 모달 열기 */}
         <TouchableOpacity onPress={openModal} style={styles.inputContainer}>
-          <Text style={styles.inputText}>{answer || '정답 입력'}</Text>
+          <CustomText style={styles.inputText}>{answer || '정답 입력'}</CustomText>
         </TouchableOpacity>
 
         {/* ✅ 모달 */}
@@ -164,7 +165,7 @@ const Stage6_3 = () => {
             <View style={styles.modalBackground}>
               <TouchableWithoutFeedback>
                 <View style={styles.modalContainer}>
-                  <Text style={styles.modalTitle}>정답을 입력하세요</Text>
+                  <CustomText style={styles.modalTitle}>정답을 입력하세요</CustomText>
 
                   {/* ✅ 입력 상자 */}
                   <TextInput
@@ -182,7 +183,7 @@ const Stage6_3 = () => {
                   <TouchableOpacity
                     style={styles.submitButton}
                     onPress={handleNextStage}>
-                    <Text style={styles.buttonText}>제출하기</Text>
+                    <CustomText style={styles.buttonText}>제출하기</CustomText>
                   </TouchableOpacity>
                 </View>
               </TouchableWithoutFeedback>
@@ -238,6 +239,7 @@ const styles = StyleSheet.create({
     color: '#555',
     fontSize: width * 0.045,
     textAlign: 'center',
+    lineHeight: width * 0.065,
   },
   inputContainer: {
     marginTop: height * 0.05,
@@ -271,7 +273,6 @@ const styles = StyleSheet.create({
   },
   modalTitle: {
     fontSize: width * 0.05,
-    fontWeight: 'bold',
     marginBottom: height * 0.02,
   },
   modalInput: {
@@ -282,6 +283,7 @@ const styles = StyleSheet.create({
     paddingVertical: height * 0.01,
     marginBottom: height * 0.02,
     color: '#333',
+    fontFamily: 'BMHANNAPro',
   },
   submitButton: {
     backgroundColor: 'rgba(0, 0, 255, 0.7)',

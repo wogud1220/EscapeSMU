@@ -22,6 +22,7 @@ import {onAuthStateChanged} from 'firebase/auth';
 import {auth} from './firebase.config';
 import {updateStageData} from '../utils/updateStageData';
 import {incrementStageAttempt} from '../utils/incrementStageAttempt';
+import CustomText from '../CustomText';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage7_7'>;
 
@@ -113,9 +114,9 @@ const Stage7_7 = () => {
 
         {/* ✅ 문제 박스 */}
         <View style={styles.box}>
-          <Text style={styles.text}>
+          <CustomText style={styles.text}>
             방금 화면에서 얻어낸 글자들을 조합해보자!
-          </Text>
+          </CustomText>
 
           {/* ✅ 이미지 추가 */}
           <Image
@@ -124,12 +125,12 @@ const Stage7_7 = () => {
             resizeMode="contain"
           />
 
-          <Text style={styles.subText}>네모 칸에 사진을 정확히 맞춰보자!</Text>
+          <CustomText style={styles.subText}>네모 칸에 사진을 정확히 맞춰보자!</CustomText>
         </View>
 
         {/* ✅ 입력 필드 → 터치 시 모달 열기 */}
         <TouchableOpacity onPress={openModal} style={styles.inputContainer}>
-          <Text style={styles.inputText}>{answer || '정답 입력'}</Text>
+          <CustomText style={styles.inputText}>{answer || '정답 입력'}</CustomText>
         </TouchableOpacity>
 
         {/* ✅ 모달 */}
@@ -142,7 +143,7 @@ const Stage7_7 = () => {
             <View style={styles.modalBackground}>
               <TouchableWithoutFeedback>
                 <View style={styles.modalContainer}>
-                  <Text style={styles.modalTitle}>정답을 입력하세요</Text>
+                  <CustomText style={styles.modalTitle}>정답을 입력하세요</CustomText>
 
                   {/* ✅ 입력 상자 */}
                   <TextInput
@@ -160,7 +161,7 @@ const Stage7_7 = () => {
                   <TouchableOpacity
                     style={styles.submitButton}
                     onPress={handleNextStage}>
-                    <Text style={styles.buttonText}>제출하기</Text>
+                    <CustomText style={styles.buttonText}>제출하기</CustomText>
                   </TouchableOpacity>
                 </View>
               </TouchableWithoutFeedback>
@@ -172,7 +173,7 @@ const Stage7_7 = () => {
         style={styles.gogobackButton}
         onPress={handleBackStage}
         activeOpacity={0.7}>
-        <Text style={styles.buttonText1}>카메라로 다시 살펴보기</Text>
+        <CustomText style={styles.buttonText1}>카메라로 다시 살펴보기</CustomText>
       </TouchableOpacity>
     </View>
   );
@@ -210,14 +211,15 @@ const styles = StyleSheet.create({
   },
   text: {
     color: '#333',
-    fontSize: width * 0.06,
-    marginBottom: height * 0.01,
+    fontSize: width * 0.055,
+    marginBottom: height * 0.02,
     textAlign: 'center',
   },
   subText: {
     color: '#555',
     fontSize: width * 0.045,
     textAlign: 'center',
+    marginTop: height * 0.02,
   },
   inputContainer: {
     marginTop: height * 0.05,
@@ -251,7 +253,6 @@ const styles = StyleSheet.create({
   },
   modalTitle: {
     fontSize: width * 0.05,
-    fontWeight: 'bold',
     marginBottom: height * 0.02,
   },
   modalInput: {
@@ -262,6 +263,7 @@ const styles = StyleSheet.create({
     paddingVertical: height * 0.01,
     marginBottom: height * 0.02,
     color: '#333',
+    fontFamily: 'BMHANNAPro',
   },
   submitButton: {
     backgroundColor: 'rgba(0, 0, 255, 0.7)',
@@ -297,7 +299,7 @@ const styles = StyleSheet.create({
   },
   wayImage: {
     width: width * 0.7,
-    height: height * 0.3,
+    height: height * 0.4,
     marginBottom: height * 0.02,
   },
   goBackButton: {
@@ -320,7 +322,8 @@ const styles = StyleSheet.create({
   buttonText1: {
     color: '#FFFFFF',
     fontSize: width * 0.045,
-    fontWeight: 'bold',
+    textAlign: 'center',
+    height: height * 0.025,
   },
   goBackImage: {
     width: '100%',

@@ -20,6 +20,7 @@ import {incrementStageAttempt} from '../utils/incrementStageAttempt';
 import {updateStageData} from '../utils/updateStageData';
 import {onAuthStateChanged} from 'firebase/auth';
 import {auth} from './firebase.config';
+import CustomText from '../CustomText';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage9_5'>;
 
@@ -111,17 +112,17 @@ const Stage9_5 = () => {
             style={styles.wayImage}
             resizeMode="contain"
           />
-          <Text style={styles.text}>
+          <CustomText style={styles.text}>
             마지막 문제야! {'\n'}디자인관 1층에서 다음 로고를 찾아보자
-          </Text>
-          <Text style={styles.subText}>
+          </CustomText>
+          <CustomText style={styles.subText}>
             해당 로고를 가진 곳의 이름을 영어로 입력해볼까?
-          </Text>
+          </CustomText>
         </View>
 
         {/* ✅ 입력 필드 → 터치 시 모달 열기 */}
         <TouchableOpacity onPress={openModal} style={styles.inputContainer}>
-          <Text style={styles.inputText}>{answer || '정답 입력'}</Text>
+          <CustomText style={styles.inputText}>{answer || '정답 입력'}</CustomText>
         </TouchableOpacity>
 
         {/* ✅ 모달 */}
@@ -134,7 +135,7 @@ const Stage9_5 = () => {
             <View style={styles.modalBackground}>
               <TouchableWithoutFeedback>
                 <View style={styles.modalContainer}>
-                  <Text style={styles.modalTitle}>정답을 입력하세요</Text>
+                  <CustomText style={styles.modalTitle}>정답을 입력하세요</CustomText>
 
                   {/* ✅ 입력 상자 */}
                   <TextInput
@@ -152,7 +153,7 @@ const Stage9_5 = () => {
                   <TouchableOpacity
                     style={styles.submitButton}
                     onPress={handleNextStage}>
-                    <Text style={styles.buttonText}>제출하기</Text>
+                    <CustomText style={styles.buttonText}>제출하기</CustomText>
                   </TouchableOpacity>
                 </View>
               </TouchableWithoutFeedback>
@@ -196,9 +197,10 @@ const styles = StyleSheet.create({
   },
   text: {
     color: '#333',
-    fontSize: width * 0.06,
+    fontSize: width * 0.055,
     marginBottom: height * 0.01,
     textAlign: 'center',
+    lineHeight: width * 0.065,
   },
   subText: {
     color: '#555',
@@ -237,7 +239,6 @@ const styles = StyleSheet.create({
   },
   modalTitle: {
     fontSize: width * 0.05,
-    fontWeight: 'bold',
     marginBottom: height * 0.02,
   },
   modalInput: {
@@ -248,6 +249,7 @@ const styles = StyleSheet.create({
     paddingVertical: height * 0.01,
     marginBottom: height * 0.02,
     color: '#333',
+    fontFamily: 'BMHANNAPro',
   },
   submitButton: {
     backgroundColor: 'rgba(0, 0, 255, 0.7)',

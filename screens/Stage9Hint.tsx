@@ -6,6 +6,7 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from '../App';
 import { useRoute, RouteProp } from '@react-navigation/native';
+import CustomText from '../CustomText';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage9Hint'>;
 
@@ -55,15 +56,15 @@ const { department } = route.params;
 
         {/* ✅ 가운데 투명한 흰색 박스 */}
         <View style={styles.box}>
-          <Text style={styles.text}>퍼즐 그림의 원본은 {'\n'}어디 있는 그림일까?</Text>
+          <CustomText style={styles.text}>퍼즐 그림의 원본은 {'\n'}어디 있는 그림일까?</CustomText>
           <Image
             source={require('../assets/designmoong.png')}
             style={styles.wayImage}
             resizeMode="contain"
           />
-          <Text style={styles.subText}>
+          <CustomText style={styles.subText}>
             아까 D106에서 찍은 수뭉이 인형 뒤를 살펴보자!
-          </Text>
+          </CustomText>
         </View>
 
         {/* ✅ 다음 스테이지로 이동 버튼 */}
@@ -72,7 +73,7 @@ const { department } = route.params;
           onPress={handleNextStage}
           activeOpacity={0.7}
         >
-          <Text style={styles.buttonText}>문제로 돌아가기</Text>
+          <CustomText style={styles.buttonText}>문제로 돌아가기</CustomText>
         </TouchableOpacity>
       </ImageBackground>
     </View>
@@ -114,8 +115,6 @@ const styles = StyleSheet.create({
   text: {
     color: '#333',
     fontSize: width * 0.06,
-    fontWeight: 'bold',
-    marginBottom: height * -0.05,
     textAlign: 'center',
   },
   subText: {
@@ -163,6 +162,7 @@ const styles = StyleSheet.create({
     width: width * 0.6, // ✅ waytostage2.png 크기 조정
     height: height * 0.5,
     marginBottom: height * -0.05,
+    marginTop: height * -0.02,
   },
 });
 

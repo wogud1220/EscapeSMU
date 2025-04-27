@@ -17,6 +17,7 @@ import {onAuthStateChanged} from 'firebase/auth';
 import {auth} from './firebase.config';
 import {updateStageData} from '../utils/updateStageData';
 import {incrementStageAttempt} from '../utils/incrementStageAttempt';
+import CustomText from '../CustomText';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage9_4'>;
 
@@ -159,8 +160,8 @@ const Stage9_4 = () => {
           />
         </TouchableOpacity>
         <View style={styles.box}>
-          <Text style={styles.text}>토끼가 퍼즐을 풀어달래!!</Text>
-          <Text style={styles.subText}>이 퍼즐을 맞춰보자!</Text>
+          <CustomText style={styles.text}>토끼가 퍼즐을 풀어달래!!</CustomText>
+          <CustomText style={styles.subText}>이 퍼즐을 맞춰보자!</CustomText>
 
           <View style={styles.grid}>
             {puzzleImages.map((image, index) => (
@@ -179,23 +180,23 @@ const Stage9_4 = () => {
               </TouchableOpacity>
             ))}
           </View>
-          <Text style={styles.subText}>
+          <CustomText style={styles.subText}>
             두 이미지를 클릭해서 서로의 위치를 교환할 수 있어!{'\n'}
-            <Text style={styles.highlightText}>
+            <CustomText style={styles.highlightText}>
               완성한 것 같으면 아무 이미지나 더블클릭해보자!
-            </Text>
-          </Text>
+            </CustomText>
+          </CustomText>
         </View>
-        <TouchableOpacity
+        {/* <TouchableOpacity
           onPress={handleCheckButtonPress}
           style={styles.checkButton}>
-          <Text style={styles.checkButtonText}>확인</Text>
-        </TouchableOpacity>
+          <CustomText style={styles.checkButtonText}>확인</CustomText>
+        </TouchableOpacity> */}
         <TouchableOpacity
           style={styles.hintButton}
           onPress={handleHint}
           activeOpacity={0.7}>
-          <Text style={styles.hintButtonText}>힌트 보기 💡</Text>
+          <CustomText style={styles.hintButtonText}>힌트 보기 💡</CustomText>
         </TouchableOpacity>
       </ImageBackground>
     </View>
@@ -220,7 +221,6 @@ const styles = StyleSheet.create({
   checkButtonText: {
     color: '#fff',
     fontSize: 16,
-    fontWeight: 'bold',
   },
   container: {
     flex: 1,
@@ -250,7 +250,6 @@ const styles = StyleSheet.create({
   text: {
     color: '#333',
     fontSize: width * 0.05,
-    fontWeight: 'bold',
     marginBottom: height * 0.01,
     textAlign: 'center',
   },
@@ -259,6 +258,7 @@ const styles = StyleSheet.create({
     fontSize: width * 0.04,
     textAlign: 'center',
     marginBottom: height * 0.02,
+    marginTop: height * 0.015,
   },
   grid: {
     width: width * 0.9,
@@ -299,7 +299,6 @@ const styles = StyleSheet.create({
   hintButtonText: {
     color: '#FFFFFF',
     fontSize: width * 0.045,
-    fontWeight: 'bold',
   },
 
   mapButton: {
@@ -326,7 +325,6 @@ const styles = StyleSheet.create({
   },
   highlightText: {
     color: 'red',
-    fontWeight: 'bold',
   },
 });
 

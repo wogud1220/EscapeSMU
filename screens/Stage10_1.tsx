@@ -15,6 +15,7 @@ import {useNavigation} from '@react-navigation/native';
 import {RootStackParamList} from '../App';
 import {useRoute, RouteProp} from '@react-navigation/native';
 import {useDepartment} from './Member/DepartmentContext';
+import CustomText from '../CustomText';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage9_1'>;
 
@@ -71,7 +72,7 @@ const Stage10_1 = () => {
             style={styles.dokdoImage}
             resizeMode="contain"
           />
-          <Text style={styles.text}>다음으로 방문할 곳은 학생회관이야!</Text>
+          <CustomText style={styles.text}>다음으로 방문할 곳은 학생회관이야!</CustomText>
           <Text style={styles.subText}></Text>
         </View>
 
@@ -80,7 +81,7 @@ const Stage10_1 = () => {
           style={styles.nextButton}
           onPress={handleNextStage}
           activeOpacity={0.7}>
-          <Text style={styles.buttonText}>다음 ➡️</Text>
+          <CustomText style={styles.buttonText}>다음 ➡️</CustomText>
         </TouchableOpacity>
       </ImageBackground>
     </View>
@@ -108,7 +109,7 @@ const styles = StyleSheet.create({
   box: {
     backgroundColor: 'rgba(255, 255, 255, 0.7)',
     width: width * 0.8,
-    height: height * 0.7, // ✅ 높이 조정 (이미지 공간 포함)
+    height: height * 0.6, // ✅ 높이 조정 (이미지 공간 포함)
     padding: height * 0.03,
     borderRadius: width * 0.04,
     alignItems: 'center',
@@ -122,7 +123,6 @@ const styles = StyleSheet.create({
   text: {
     color: '#333',
     fontSize: width * 0.055,
-    fontWeight: 'bold',
     marginTop: height * 0.04, // ✅ 위쪽 간격
     marginBottom: height * 0.01,
     textAlign: 'center',
@@ -177,6 +177,7 @@ const styles = StyleSheet.create({
     width: width * 0.7, // ✅ 이미지 크기 설정
     height: height * 0.4, // ✅ 이미지 높이 설정
     marginBottom: height * 0.02, // ✅ 이미지와 텍스트 사이 간격 조정
+    marginTop: height * 0.04, // ✅ 이미지와 텍스트 사이 간격 조정
   },
 });
 

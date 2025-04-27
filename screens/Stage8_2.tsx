@@ -20,6 +20,7 @@ import {incrementStageAttempt} from '../utils/incrementStageAttempt';
 import {onAuthStateChanged} from 'firebase/auth';
 import {auth} from './firebase.config';
 import {updateStageData} from '../utils/updateStageData';
+import CustomText from '../CustomText';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage8_3'>;
 
@@ -121,28 +122,28 @@ const Stage8_2 = () => {
 
         {/* ✅ 문제 박스 */}
         <View style={styles.box}>
-          <Text style={styles.text}>
+          <CustomText style={styles.text}>
             학생생활관 1층에는{'\n'}'오름라운지'가 존재해!
-          </Text>
-          <Text style={styles.subText}>
+          </CustomText>
+          <CustomText style={styles.subText}>
             오름라운지는 기숙사생이 아니더라도{'\n'}이용 가능한 공간이야.
             {'\n'}
             오름라운지에서는 학생들이 사용할 수 있는 와이파이를 제공하고 있어.
             {'\n'}
             {'\n'}
             그렇다면, SM1F-1_wifi의 비밀번호를 입력해보자!
-          </Text>
+          </CustomText>
           <TouchableOpacity
             style={styles.hintButton}
             onPress={handleHint}
             activeOpacity={0.7}>
-            <Text style={styles.hintButtonText}>힌트 보기 💡</Text>
+            <CustomText style={styles.hintButtonText}>힌트 보기 💡</CustomText>
           </TouchableOpacity>
         </View>
 
         {/* ✅ 입력 필드 → 터치 시 모달 열기 */}
         <TouchableOpacity onPress={openModal} style={styles.inputContainer}>
-          <Text style={styles.inputText}>{answer || '정답 입력'}</Text>
+          <CustomText style={styles.inputText}>{answer || '정답 입력'}</CustomText>
         </TouchableOpacity>
 
         {/* ✅ 모달 */}
@@ -155,7 +156,7 @@ const Stage8_2 = () => {
             <View style={styles.modalBackground}>
               <TouchableWithoutFeedback>
                 <View style={styles.modalContainer}>
-                  <Text style={styles.modalTitle}>정답을 입력하세요</Text>
+                  <CustomText style={styles.modalTitle}>정답을 입력하세요</CustomText>
 
                   {/* ✅ 입력 상자 */}
                   <TextInput
@@ -173,7 +174,7 @@ const Stage8_2 = () => {
                   <TouchableOpacity
                     style={styles.submitButton}
                     onPress={handleNextStage}>
-                    <Text style={styles.buttonText}>제출하기</Text>
+                    <CustomText style={styles.buttonText}>제출하기</CustomText>
                   </TouchableOpacity>
                 </View>
               </TouchableWithoutFeedback>
@@ -225,6 +226,8 @@ const styles = StyleSheet.create({
     color: '#555',
     fontSize: width * 0.045,
     textAlign: 'center',
+    lineHeight: width * 0.065,
+    marginTop: height * 0.02,
   },
   inputContainer: {
     marginTop: height * 0.05,
@@ -258,7 +261,6 @@ const styles = StyleSheet.create({
   },
   modalTitle: {
     fontSize: width * 0.05,
-    fontWeight: 'bold',
     marginBottom: height * 0.02,
   },
   modalInput: {
@@ -269,6 +271,7 @@ const styles = StyleSheet.create({
     paddingVertical: height * 0.01,
     marginBottom: height * 0.02,
     color: '#333',
+    fontFamily: 'BMHANNAPro',
   },
   submitButton: {
     backgroundColor: 'rgba(0, 0, 255, 0.7)',
@@ -319,7 +322,6 @@ const styles = StyleSheet.create({
   hintButtonText: {
     color: '#FFFFFF',
     fontSize: width * 0.045,
-    fontWeight: 'bold',
     textAlign: 'center',
   },
 });

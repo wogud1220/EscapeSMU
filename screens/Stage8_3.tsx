@@ -14,6 +14,7 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {useNavigation} from '@react-navigation/native';
 import {RootStackParamList} from '../App';
 import {useRoute, RouteProp} from '@react-navigation/native';
+import CustomText from '../CustomText';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage8_3'>;
 
@@ -69,14 +70,14 @@ const Stage8_3 = () => {
 
         {/* ✅ 가운데 투명한 흰색 박스 */}
         <View style={styles.box}>
-          <Text style={styles.text}>비밀번호를 잘 찾았구나!{'\n'}</Text>
-          <Text style={styles.subText}>
+          <CustomText style={styles.text}>비밀번호를 잘 찾았구나!{'\n'}</CustomText>
+          <CustomText style={styles.subText}>
             공부할 곳이나 휴식할 곳이 마땅치 않으면 오름라운지를 이용하는 것도
             나쁘지 않겠지?{'\n'}
-            아직 오름라운지 안이라면, 고개를 올려봐!{'\n'}
+            아직 오름라운지 안이라면,{'\n'}고개를 올려봐!
             2층에는 카페도 있어!{'\n'}
             입구 옆에 있는 계단을 사용하면 기숙사생이 아니어도 2층을 갈 수 있어!
-          </Text>
+          </CustomText>
         </View>
 
         {/* ✅ 다음 스테이지로 이동 버튼 */}
@@ -84,7 +85,7 @@ const Stage8_3 = () => {
           style={styles.nextButton}
           onPress={handleNextStage}
           activeOpacity={0.7}>
-          <Text style={styles.buttonText}>다음 ➡️</Text>
+          <CustomText style={styles.buttonText}>다음 ➡️</CustomText>
         </TouchableOpacity>
       </ImageBackground>
     </View>
@@ -126,7 +127,6 @@ const styles = StyleSheet.create({
   text: {
     color: '#333',
     fontSize: width * 0.055,
-    fontWeight: 'bold',
     marginBottom: height * 0.01,
     textAlign: 'center',
     lineHeight: height * 0.035, // ✅ 줄 간격
@@ -136,6 +136,7 @@ const styles = StyleSheet.create({
     fontSize: width * 0.045,
     textAlign: 'center',
     marginTop: height * 0.02,
+    lineHeight: width * 0.065,
   },
   mapButton: {
     position: 'absolute',

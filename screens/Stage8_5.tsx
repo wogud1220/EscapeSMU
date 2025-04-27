@@ -14,6 +14,7 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {useNavigation} from '@react-navigation/native';
 import {RootStackParamList} from '../App';
 import {useRoute, RouteProp} from '@react-navigation/native';
+import CustomText from '../CustomText';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage8_5'>;
 
@@ -68,14 +69,14 @@ const Stage8_5 = () => {
 
         {/* ✅ 가운데 투명한 흰색 박스 */}
         <View style={styles.box}>
-          <Text style={styles.text}>
+          <CustomText style={styles.text}>
             학생생활관 2층에는 컴퓨터실(정보프라자)가 있어.
-          </Text>
-          <Text style={styles.subText}>
+          </CustomText>
+          <CustomText style={styles.subText}>
             이 곳에서는 컴퓨터를 사용할 수 있어!{'\n'}
             {'\n'}
             다음 장소로 가기 위한 힌트는 컴퓨터를 켜서 확인해보자!
-          </Text>
+          </CustomText>
         </View>
 
         {/* ✅ 다음 스테이지로 이동 버튼 */}
@@ -83,7 +84,7 @@ const Stage8_5 = () => {
           style={styles.nextButton}
           onPress={handleNextStage}
           activeOpacity={0.7}>
-          <Text style={styles.buttonText}>다음 ➡️</Text>
+          <CustomText style={styles.buttonText}>다음 ➡️</CustomText>
         </TouchableOpacity>
       </ImageBackground>
     </View>
@@ -125,7 +126,6 @@ const styles = StyleSheet.create({
   text: {
     color: '#333',
     fontSize: width * 0.055,
-    fontWeight: 'bold',
     marginBottom: height * 0.01,
     textAlign: 'center',
     lineHeight: height * 0.035, // ✅ 줄 간격
@@ -135,6 +135,7 @@ const styles = StyleSheet.create({
     fontSize: width * 0.045,
     textAlign: 'center',
     marginTop: height * 0.02,
+    lineHeight: width * 0.065,
   },
   mapButton: {
     position: 'absolute',

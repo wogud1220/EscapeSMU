@@ -14,6 +14,7 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {useNavigation} from '@react-navigation/native';
 import {RootStackParamList} from '../App';
 import {useRoute, RouteProp} from '@react-navigation/native';
+import CustomText from '../CustomText';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage8_4'>;
 
@@ -68,10 +69,10 @@ const Stage8_4 = () => {
 
         {/* ✅ 가운데 투명한 흰색 박스 */}
         <View style={styles.box}>
-          <Text style={styles.text}>
+          <CustomText style={styles.text}>
             {'\n'}
             {'\n'}2층의 헬스장을 지나서 편의점이 있는 곳까지 가보자!
-          </Text>
+          </CustomText>
           <Text style={styles.subText}></Text>
         </View>
 
@@ -80,7 +81,7 @@ const Stage8_4 = () => {
           style={styles.nextButton}
           onPress={handleNextStage}
           activeOpacity={0.7}>
-          <Text style={styles.buttonText}>다음 ➡️</Text>
+          <CustomText style={styles.buttonText}>다음 ➡️</CustomText>
         </TouchableOpacity>
       </ImageBackground>
     </View>
@@ -108,7 +109,7 @@ const styles = StyleSheet.create({
   box: {
     backgroundColor: 'rgba(255, 255, 255, 0.7)',
     width: width * 0.8,
-    height: height * 0.4, // ✅ 높이 조정 (이미지 공간 포함)
+    height: height * 0.3, // ✅ 높이 조정 (이미지 공간 포함)
     padding: height * 0.03,
     borderRadius: width * 0.04,
     alignItems: 'center',
@@ -122,7 +123,6 @@ const styles = StyleSheet.create({
   text: {
     color: '#333',
     fontSize: width * 0.055,
-    fontWeight: 'bold',
     marginBottom: height * 0.01,
     textAlign: 'center',
     lineHeight: height * 0.035, // ✅ 줄 간격

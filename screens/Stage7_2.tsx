@@ -14,6 +14,7 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {useNavigation} from '@react-navigation/native';
 import {RootStackParamList} from '../App';
 import {useRoute, RouteProp} from '@react-navigation/native';
+import CustomText from '../CustomText';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage7_2'>;
 
@@ -73,17 +74,17 @@ const Stage7_2 = () => {
             style={styles.dokdoImage}
             resizeMode="contain"
           />
-          <Text style={styles.text}>
+          <CustomText style={styles.text}>
             송백관에도 학생들이 {'\n'}공부할 수 있는 공간이 있어!
-          </Text>
-          <Text style={styles.subText}>이 곳을 한 번 찾아가볼까?{'\n'}</Text>
+          </CustomText>
+          <CustomText style={styles.subText}>이 곳을 한 번 찾아가볼까?{'\n'}</CustomText>
         </View>
 
         <TouchableOpacity
           style={styles.nextButton}
           onPress={handleNextStage}
           activeOpacity={0.7}>
-          <Text style={styles.buttonText}>다음 ➡️</Text>
+          <CustomText style={styles.buttonText}>다음 ➡️</CustomText>
         </TouchableOpacity>
       </ImageBackground>
     </View>
@@ -125,7 +126,6 @@ const styles = StyleSheet.create({
   text: {
     color: '#333',
     fontSize: width * 0.055,
-    fontWeight: 'bold',
     marginBottom: height * 0.01,
     textAlign: 'center',
     lineHeight: height * 0.035, // ✅ 줄 간격

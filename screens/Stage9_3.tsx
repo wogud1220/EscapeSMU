@@ -14,6 +14,7 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {useNavigation} from '@react-navigation/native';
 import {RootStackParamList} from '../App';
 import {useRoute, RouteProp} from '@react-navigation/native';
+import CustomText from '../CustomText';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage9_3'>;
 
@@ -69,12 +70,12 @@ const Stage9_3 = () => {
             style={styles.wayImage}
             resizeMode="contain"
           />
-          <Text style={styles.text}>
+          <CustomText style={styles.text}>
             1층에서 디자인 놀이터를{'\n'}찾아보자!
-          </Text>
-          <Text style={styles.subText}>
+          </CustomText>
+          <CustomText style={styles.subText}>
             디자인 놀이터에서 놀고 있는{'\n'} 토끼를 찾아서 찍어보자!
-          </Text>
+          </CustomText>
         </View>
 
         {/* ✅ 다음 스테이지로 이동 버튼 */}
@@ -132,6 +133,7 @@ const styles = StyleSheet.create({
     fontSize: width * 0.045,
     textAlign: 'center',
     marginTop: height * 0.02,
+    lineHeight: width * 0.065,
   },
   mapButton: {
     position: 'absolute',

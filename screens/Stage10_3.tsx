@@ -14,6 +14,7 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {useNavigation} from '@react-navigation/native';
 import {RootStackParamList} from '../App';
 import {useRoute, RouteProp} from '@react-navigation/native';
+import CustomText from '../CustomText';
 
 type NavigationProp = NativeStackNavigationProp<
   RootStackParamList,
@@ -72,10 +73,10 @@ const Stage10_3 = () => {
             style={styles.wayImage}
             resizeMode="contain"
           />
-          <Text style={styles.text}>2층에 올라가니{'\n'}4명의 친구들이 기다리고 있어!</Text>
-          <Text style={styles.subText}>
+          <CustomText style={styles.text}>2층에 올라가니{'\n'}4명의 친구들이 기다리고 있어!</CustomText>
+          <CustomText style={styles.subText}>
             위 사진의 장소에서{'\n'}카메라를 이용해 사진을 찍어보자!
-          </Text>
+          </CustomText>
         </View>
 
         {/* ✅ 다음 스테이지로 이동 버튼 */}
@@ -83,7 +84,7 @@ const Stage10_3 = () => {
           style={styles.nextButton}
           onPress={handleNextStage}
           activeOpacity={0.7}>
-          <Text style={styles.buttonText}>카메라 📸</Text>
+          <CustomText style={styles.buttonText}>카메라 📸</CustomText>
         </TouchableOpacity>
       </ImageBackground>
     </View>
@@ -125,7 +126,6 @@ const styles = StyleSheet.create({
   text: {
     color: '#333',
     fontSize: width * 0.06,
-    fontWeight: 'bold',
     marginBottom: height * 0.01,
     marginTop: height * -0.05,
     textAlign: 'center',
@@ -135,6 +135,7 @@ const styles = StyleSheet.create({
     fontSize: width * 0.045,
     textAlign: 'center',
     marginTop: height * 0.02,
+    lineHeight: width * 0.065,
   },
   mapButton: {
     position: 'absolute',

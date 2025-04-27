@@ -22,6 +22,7 @@ import {onAuthStateChanged} from 'firebase/auth';
 import {auth} from './firebase.config';
 import {updateStageData} from '../utils/updateStageData';
 import {incrementStageAttempt} from '../utils/incrementStageAttempt';
+import CustomText from '../CustomText';
 
 type NavigationProp = NativeStackNavigationProp<
   RootStackParamList,
@@ -121,14 +122,14 @@ const Stage10_2 = () => {
             style={styles.wayImage}
             resizeMode="contain"
           />
-          <Text style={styles.text}>학생회관 1층 식당 쪽으로 들어가보자!</Text>
-          <Text style={styles.subText}>
+          <CustomText style={styles.text}>학생회관 1층 식당 쪽으로 들어가보자!</CustomText>
+          <CustomText style={styles.subText}>
             식당 내에서 아래와 같은 포스터를{'\n'}찾을 수 있을까?{'\n'}
             {'\n'}이 포스터가 어떤 캠페인을{'\n'}말하고 있는지 써볼래?
-          </Text>
+          </CustomText>
         </View>
         <TouchableOpacity onPress={openModal} style={styles.inputContainer}>
-          <Text style={styles.inputText}>{answer || '정답 입력'}</Text>
+          <CustomText style={styles.inputText}>{answer || '정답 입력'}</CustomText>
         </TouchableOpacity>
 
         {/* ✅ 모달 */}
@@ -141,7 +142,7 @@ const Stage10_2 = () => {
             <View style={styles.modalBackground}>
               <TouchableWithoutFeedback>
                 <View style={styles.modalContainer}>
-                  <Text style={styles.modalTitle}>정답을 입력하세요</Text>
+                  <CustomText style={styles.modalTitle}>정답을 입력하세요</CustomText>
 
                   {/* ✅ 입력 상자 */}
                   <TextInput
@@ -159,7 +160,7 @@ const Stage10_2 = () => {
                   <TouchableOpacity
                     style={styles.submitButton}
                     onPress={handleNextStage}>
-                    <Text style={styles.buttonText}>제출하기</Text>
+                    <CustomText style={styles.buttonText}>제출하기</CustomText>
                   </TouchableOpacity>
                 </View>
               </TouchableWithoutFeedback>
@@ -218,9 +219,11 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   subText: {
+    marginTop: height * 0.02,
     color: '#555',
     fontSize: width * 0.045,
     textAlign: 'center',
+    lineHeight: width * 0.065,
   },
   inputContainer: {
     marginTop: height * 0.05,
@@ -254,7 +257,6 @@ const styles = StyleSheet.create({
   },
   modalTitle: {
     fontSize: width * 0.05,
-    fontWeight: 'bold',
     marginBottom: height * 0.02,
   },
   modalInput: {
@@ -265,6 +267,7 @@ const styles = StyleSheet.create({
     paddingVertical: height * 0.01,
     marginBottom: height * 0.02,
     color: '#333',
+    fontFamily: 'BMHANNAPro',
   },
   submitButton: {
     backgroundColor: 'rgba(0, 0, 255, 0.7)',

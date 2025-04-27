@@ -1,4 +1,4 @@
-//디자인관 개구리 사진찍기
+//디자인관 수뭉이 인형 사진찍기
 
 import React from 'react';
 import {
@@ -14,6 +14,7 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {useNavigation} from '@react-navigation/native';
 import {RootStackParamList} from '../App';
 import {useRoute, RouteProp} from '@react-navigation/native';
+import CustomText from '../CustomText';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage9_2'>;
 
@@ -70,10 +71,10 @@ const Stage9_2 = () => {
             style={styles.wayImage}
             resizeMode="contain"
           />
-          <Text style={styles.text}>
+          <CustomText style={styles.text}>
             D106 주변에 사진에서 볼 수 있는 인형이 있다는데..?
-          </Text>
-          <Text style={styles.subText}>찾아서 찍어보자!</Text>
+          </CustomText>
+          <CustomText style={styles.subText}>찾아서 찍어보자!</CustomText>
         </View>
 
         {/* ✅ 다음 스테이지로 이동 버튼 */}
@@ -81,7 +82,7 @@ const Stage9_2 = () => {
           style={styles.nextButton}
           onPress={handleNextStage}
           activeOpacity={0.7}>
-          <Text style={styles.buttonText}>카메라 📸</Text>
+          <CustomText style={styles.buttonText}>카메라 📸</CustomText>
         </TouchableOpacity>
       </ImageBackground>
     </View>

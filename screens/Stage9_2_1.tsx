@@ -211,6 +211,7 @@ import {incrementStageAttempt} from '../utils/incrementStageAttempt';
 import {updateStageData} from '../utils/updateStageData';
 import {onAuthStateChanged} from 'firebase/auth';
 import {auth} from './firebase.config';
+import CustomText from '../CustomText';
 
 type NavigationProp = NativeStackNavigationProp<
   RootStackParamList,
@@ -221,11 +222,11 @@ const {width, height} = Dimensions.get('window');
 
 // ✅ 객관식 옵션 설정
 const options = [
-  {label: '① 디자인대학(원) 및 전공별 행사', value: 1},
-  {label: '② 디자인대학(원) 전공수업', value: 2},
-  {label: '③ 디자인대학, 학부 및 대학원 학생회 및 각 전공 학회 행사', value: 3},
-  {label: '④ 개인 모임 행사', value: 4},
-  {label: '⑤ 디자인대학생 개인사용', value: 5},
+  {label: '1. 디자인대학(원) 및 전공별 행사', value: 1},
+  {label: '2. 디자인대학(원) 전공수업', value: 2},
+  {label: '3.  디자인대학, 학부 및 대학원 학생회 및 각 전공 학회 행사', value: 3},
+  {label: '4.  개인 모임 행사', value: 4},
+  {label: '5. 디자인대학생 개인사용', value: 5},
 ];
 
 const Stage9_2_1 = () => {
@@ -277,7 +278,7 @@ const Stage9_2_1 = () => {
       Alert.alert('정답입니다!', '다음 스테이지로 이동합니다.', [
         {
           text: '확인',
-          onPress: () => navigation.navigate('Stage9_3', {college, department}),
+          onPress: () => navigation.navigate('Stage9_4', {college, department}),
         },
       ]);
     } else {
@@ -320,29 +321,29 @@ const Stage9_2_1 = () => {
 
         {/* ✅ 흰색 박스 */}
         <View style={styles.box}>
-          <Text style={styles.text}>
+          <CustomText style={styles.text}>
             그 옆에 디자인 대학 사용법이 있어!{'\n'}
-            <Text style={styles.subText}>
+            <CustomText style={styles.subText}>
               디자인놀이터, 디자인GOGO장, 디자인모임터
-            </Text>
+            </CustomText>
             의 {'\n'}사용 우선순위로 옳지{' '}
-            <Text style={styles.highlight}>않은</Text> 것은 무엇일까?
-          </Text>
-          <Text style={styles.subText}>
+            <CustomText style={{fontSize: 20, color: 'red'}}>않은</CustomText> 것은 무엇일까?
+          </CustomText>
+          <CustomText style={styles.subText}>
             책자 안의 사용우선순위를 확인하자!{'\n'}
             틀릴 시에는 다시 입력하기까지{' '}
-            <Text style={styles.highlight}>5분</Text>을 기다려야해... 신중하자!
-          </Text>
+            <CustomText style={{fontSize: 15, color: 'red'}}>5분</CustomText>을 기다려야해... 신중하자!
+          </CustomText>
 
           {/* ✅ 타이머 표시 */}
           {countdown !== null && (
-            <Text style={styles.timerText}>
+            <CustomText style={styles.timerText}>
               {`다시 시도 가능까지: ${Math.floor(countdown / 60)}:${(
                 countdown % 60
               )
                 .toString()
                 .padStart(2, '0')}`}
-            </Text>
+            </CustomText>
           )}
 
           {/* ✅ 객관식 버튼 */}
@@ -353,7 +354,7 @@ const Stage9_2_1 = () => {
                 style={[styles.optionButton, disabled && styles.disabledButton]}
                 onPress={() => handleOptionPress(option.value)}
                 disabled={disabled}>
-                <Text style={styles.optionText}>{option.label}</Text>
+                <CustomText style={styles.optionText}>{option.label}</CustomText>
               </TouchableOpacity>
             ))}
           </View>
@@ -394,7 +395,6 @@ const styles = StyleSheet.create({
   text: {
     color: '#333',
     fontSize: width * 0.05,
-    fontWeight: 'bold',
     marginBottom: height * 0.01,
     textAlign: 'center',
     marginTop: height * 0.02,
@@ -413,7 +413,6 @@ const styles = StyleSheet.create({
   timerText: {
     color: '#ff4500',
     fontSize: width * 0.045,
-    fontWeight: 'bold',
     marginBottom: height * 0.02,
   },
   buttonContainer: {
@@ -424,7 +423,8 @@ const styles = StyleSheet.create({
   optionButton: {
     backgroundColor: 'rgba(0, 0, 255, 0.7)',
     width: width * 0.6,
-    paddingVertical: height * 0.015,
+    paddingVertical: height * 0.02,
+    paddingHorizontal: width * 0.01,
     borderRadius: width * 0.03,
     marginVertical: height * 0.008,
     alignItems: 'center',
@@ -433,7 +433,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: '#FFF',
     fontSize: width * 0.045,
-    fontWeight: 'bold',
   },
   disabledButton: {
     backgroundColor: 'gray',

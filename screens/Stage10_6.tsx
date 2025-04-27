@@ -14,6 +14,7 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {useNavigation} from '@react-navigation/native';
 import {RootStackParamList} from '../App';
 import {useRoute, RouteProp} from '@react-navigation/native';
+import CustomText from '../CustomText';
 
 type NavigationProp = NativeStackNavigationProp<
   RootStackParamList,
@@ -72,13 +73,13 @@ const Stage10_6 = () => {
             style={styles.dokdoImage}
             resizeMode="contain"
           />
-          <Text style={styles.text}>
+          <CustomText style={styles.text}>
             이곳은 학생회관 '쉐어라운지'야!{'\n'}
-          </Text>
-          <Text style={styles.subText}>
+          </CustomText>
+          <CustomText style={styles.subText}>
           누구나 자유롭게 사용할 수 있고,{'\n'}
           쉐어라운지 내의 세미나실은 예약 없이 선착순으로 사용할 수 있어!
-          </Text>
+          </CustomText>
         </View>
 
         {/* ✅ 다음 스테이지로 이동 버튼 */}
@@ -86,7 +87,7 @@ const Stage10_6 = () => {
           style={styles.nextButton}
           onPress={handleNextStage}
           activeOpacity={0.7}>
-          <Text style={styles.buttonText}>다음 ➡️</Text>
+          <CustomText style={styles.buttonText}>다음 ➡️</CustomText>
         </TouchableOpacity>
       </ImageBackground>
     </View>
@@ -128,7 +129,6 @@ const styles = StyleSheet.create({
   text: {
     color: '#333',
     fontSize: width * 0.055,
-    fontWeight: 'bold',
     marginTop: height * -0.05, // ✅ 위쪽 간격
     marginBottom: height * 0.01,
     textAlign: 'center',
@@ -138,6 +138,7 @@ const styles = StyleSheet.create({
     color: '#555',
     fontSize: width * 0.045,
     textAlign: 'center',
+    lineHeight: width * 0.065,
   },
   mapButton: {
     position: 'absolute',

@@ -14,6 +14,7 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {useNavigation} from '@react-navigation/native';
 import {RootStackParamList} from '../App';
 import {useRoute, RouteProp} from '@react-navigation/native';
+import CustomText from '../CustomText';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage7_6'>;
 
@@ -74,8 +75,8 @@ const Stage7_6 = () => {
             style={styles.wayImage}
             resizeMode="contain"
           />
-          <Text style={styles.text}>바로 옆에는 휴게실이 있어!</Text>
-          <Text style={styles.subText}>휴게실 안의 사용수칙을 살펴보자!</Text>
+          <CustomText style={styles.text}>바로 옆에는 휴게실이 있어!</CustomText>
+          <CustomText style={styles.subText}>휴게실 안의 사용수칙을 살펴보자!</CustomText>
         </View>
 
         {/* ✅ 다음 스테이지로 이동 버튼 */}
@@ -83,7 +84,7 @@ const Stage7_6 = () => {
           style={styles.nextButton}
           onPress={handleNextStage}
           activeOpacity={0.7}>
-          <Text style={styles.buttonText}>카메라 📷</Text>
+          <CustomText style={styles.buttonText}>카메라 📷</CustomText>
         </TouchableOpacity>
       </ImageBackground>
     </View>
@@ -111,7 +112,7 @@ const styles = StyleSheet.create({
   box: {
     backgroundColor: 'rgba(255, 255, 255, 0.7)',
     width: width * 0.8,
-    height: height * 0.7, // ✅ 높이 조정 (이미지 공간 포함)
+    height: height * 0.65, // ✅ 높이 조정 (이미지 공간 포함)
     padding: height * 0.03,
     borderRadius: width * 0.04,
     alignItems: 'center',
@@ -126,6 +127,7 @@ const styles = StyleSheet.create({
     color: '#333',
     fontSize: width * 0.06,
     marginBottom: height * 0.01,
+    marginTop: height * 0.02,
     textAlign: 'center',
   },
   subText: {

@@ -14,6 +14,7 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {useNavigation} from '@react-navigation/native';
 import {RootStackParamList} from '../App';
 import {useRoute, RouteProp} from '@react-navigation/native';
+import CustomText from '../CustomText';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage7_5'>;
 
@@ -74,12 +75,12 @@ const Stage7_5 = () => {
             style={styles.wayImage}
             resizeMode="contain"
           />
-          <Text style={styles.text}>
+          <CustomText style={styles.text}>
             피어오름에서는 다양한 비교과 활동들을 소개, 지원해주고 있어
-          </Text>
-          <Text style={styles.subText}>
+          </CustomText>
+          <CustomText style={styles.subText}>
             나중에 기회가 된다면 다양한 행사에 참여해보자!
-          </Text>
+          </CustomText>
         </View>
 
         {/* ✅ 다음 스테이지로 이동 버튼 */}
@@ -87,7 +88,7 @@ const Stage7_5 = () => {
           style={styles.nextButton}
           onPress={handleNextStage}
           activeOpacity={0.7}>
-          <Text style={styles.buttonText}>다음 ➡️</Text>
+          <CustomText style={styles.buttonText}>다음 ➡️</CustomText>
         </TouchableOpacity>
       </ImageBackground>
     </View>
@@ -128,7 +129,7 @@ const styles = StyleSheet.create({
   },
   text: {
     color: '#333',
-    fontSize: width * 0.06,
+    fontSize: width * 0.055,
     marginBottom: height * 0.01,
     textAlign: 'center',
   },

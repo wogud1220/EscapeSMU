@@ -20,6 +20,7 @@ import {auth} from './firebase.config';
 import {updateStageData} from '../utils/updateStageData';
 import {increment} from 'firebase/firestore';
 import {incrementStageAttempt} from '../utils/incrementStageAttempt';
+import CustomText from '../CustomText';
 const {width, height} = Dimensions.get('window');
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage6_2'>;
 
@@ -135,18 +136,19 @@ const Stage6_2 = () => {
             style={styles.wayImage}
             resizeMode="contain"
           />
-          <Text style={styles.text}>독도 조형물이야!</Text>
-          <Text style={styles.subText}>
+          <CustomText style={styles.text}>독도 조형물이야!</CustomText>
+          <CustomText style={styles.subText}>
             실제 독도 모습을 축소한 조형물을 설치해 '독도사랑, 나라사랑' 정신을
-            되새기게 하기 위한 목적으로 설치되었어!
-          </Text>
+            되새기게 하기 위한 목적으로 설치되었어!{'\n'}{'\n'}
+            독도는 우리 땅!을 말해볼까?
+          </CustomText>
           <TouchableOpacity
             style={styles.nextButton}
             onPress={toggleListening}
             activeOpacity={0.7}>
-            <Text style={styles.buttonText}>
+            <CustomText style={styles.buttonText}>
               {isListening ? '🛑 중지하기' : '🎤 말하기 시작'}
-            </Text>
+            </CustomText>
           </TouchableOpacity>
           {recognizedText !== '' && (
             <Text style={styles.recognizedText}>
@@ -196,6 +198,7 @@ const styles = StyleSheet.create({
     fontSize: width * 0.06,
     marginBottom: height * 0.01,
     textAlign: 'center',
+    marginTop: height * 0.02,
   },
   subText: {
     color: '#555',
@@ -203,6 +206,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginTop: height * 0.02,
     marginBottom: height * 0.02,
+    lineHeight: width * 0.065,
   },
   mapButton: {
     position: 'absolute',

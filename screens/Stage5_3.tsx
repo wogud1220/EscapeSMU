@@ -151,13 +151,13 @@ const Stage5_3 = () => {
 
           {/* ✅ 타이머 표시 */}
           {countdown !== null && (
-            <Text style={styles.timerText}>
+            <CustomText style={styles.timerText}>
               {`다시 시도 가능까지: ${Math.floor(countdown / 60)}:${(
                 countdown % 60
               )
                 .toString()
                 .padStart(2, '0')}`}
-            </Text>
+            </CustomText>
           )}
 
           {/* 버튼 생성 */}
@@ -231,7 +231,6 @@ const styles = StyleSheet.create({
   timerText: {
     color: '#ff4500',
     fontSize: width * 0.045,
-    fontWeight: 'bold',
     marginBottom: height * 0.02,
   },
   buttonContainer: {
