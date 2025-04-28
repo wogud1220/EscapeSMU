@@ -46,7 +46,7 @@ const Main = () => {
   };
 
   const handleNavigate = () => {
-    navigation.navigate('Stage10_6');
+    navigation.navigate('Stage6_2');
   };
 
   const handleLoginNavigate = () => {
@@ -58,78 +58,75 @@ const Main = () => {
   };
 
   return (
+    <View style={styles.container}>
+      <ImageBackground
+        source={require('../assets/main.png')}
+        style={styles.image}
+        resizeMode="cover">
+        <Image
+          source={require('../assets/main_title.png')}
+          style={styles.titleImage}
+          resizeMode="contain"
+        />
 
-<View style={styles.container}>
-  <ImageBackground
-    source={require('../assets/main.png')}
-    style={styles.image}
-    resizeMode="cover"
-  >
-    <Image
-      source={require('../assets/main_title.png')}
-      style={styles.titleImage}
-      resizeMode="contain"
-    />
+        {userEmail ? (
+          <>
+            <CustomText style={styles.userText}>
+              {`로그인된 사용자: ${userEmail}`}
+            </CustomText>
+          </>
+        ) : (
+          <>
+            <TouchableOpacity
+              onPress={handleLoginNavigate}
+              style={styles.loginButton}
+              activeOpacity={0.7}>
+              <CustomText style={styles.buttonText}>로그인</CustomText>
+            </TouchableOpacity>
 
-    {userEmail ? (
-      <>
-        <CustomText style={styles.userText}>
-          {`로그인된 사용자: ${userEmail}`}
-        </CustomText>
-      </>
-    ) : (
-      <>
-        <TouchableOpacity
-          onPress={handleLoginNavigate}
-          style={styles.loginButton}
-          activeOpacity={0.7}
-        >
-          <CustomText style={styles.buttonText}>로그인</CustomText>
-        </TouchableOpacity>
+            <TouchableOpacity
+              onPress={handleSignInNavigate}
+              style={styles.SignInButton}
+              activeOpacity={0.7}>
+              <CustomText style={styles.buttonText}>회원가입</CustomText>
+            </TouchableOpacity>
+          </>
+        )}
 
-        <TouchableOpacity
-          onPress={handleSignInNavigate}
-          style={styles.SignInButton}
-          activeOpacity={0.7}
-        >
-          <CustomText style={styles.buttonText}>회원가입</CustomText>
-        </TouchableOpacity>
-      </>
-    )}
+        {userEmail && (
+          <View style={styles.bottomButtonContainer}>
+            <TouchableOpacity
+              onPress={handleNavigate}
+              style={styles.button}
+              activeOpacity={0.7}>
+              <CustomText style={{fontSize: 25, color: 'white'}}>
+                시작하기
+              </CustomText>
+            </TouchableOpacity>
 
-    {userEmail && (
-      <View style={styles.bottomButtonContainer}>
-        <TouchableOpacity
-          onPress={handleNavigate}
-          style={styles.button}
-          activeOpacity={0.7}
-        >
-          <CustomText style={{fontSize: 25, color: 'white'}}>시작하기</CustomText>
-        </TouchableOpacity>
+            <TouchableOpacity
+              onPress={handleLogout}
+              style={styles.logoutButton}
+              activeOpacity={0.7}>
+              <CustomText style={{fontSize: 25, color: 'white'}}>
+                로그아웃
+              </CustomText>
+            </TouchableOpacity>
+          </View>
+        )}
 
-        <TouchableOpacity
-          onPress={handleLogout}
-          style={styles.logoutButton}
-          activeOpacity={0.7}
-        >
-          <CustomText style={{fontSize: 25, color: 'white'}}>로그아웃</CustomText>
-        </TouchableOpacity>
-      </View>
-    )}
-
-    {!userEmail && (
-      <TouchableOpacity
-        onPress={handleNavigate}
-        style={styles.button}
-        activeOpacity={0.7}
-      >
-        <CustomText style={{fontSize: 30, color: 'white'}}>시작하기</CustomText>
-      </TouchableOpacity>
-    )}
-  </ImageBackground>
-</View>
-
-
+        {!userEmail && (
+          <TouchableOpacity
+            onPress={handleNavigate}
+            style={styles.button}
+            activeOpacity={0.7}>
+            <CustomText style={{fontSize: 30, color: 'white'}}>
+              시작하기
+            </CustomText>
+          </TouchableOpacity>
+        )}
+      </ImageBackground>
+    </View>
   );
 };
 
@@ -185,7 +182,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: width * 0.07,
     borderRadius: width * 0.03,
   },
-  
+
   buttonText: {
     color: '#FFFFFF',
     fontSize: width * 0.045,
@@ -207,7 +204,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  
 });
 
 export default Main;
