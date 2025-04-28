@@ -1,43 +1,53 @@
 //상명 스포츠센터 가는길
 
 import React from 'react';
-import { View, Text, ImageBackground, StyleSheet, Dimensions, Image, TouchableOpacity } from 'react-native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { useNavigation } from '@react-navigation/native';
-import { RootStackParamList } from '../App';
-import { useRoute, RouteProp } from '@react-navigation/native';
+import {
+  View,
+  Text,
+  ImageBackground,
+  StyleSheet,
+  Dimensions,
+  Image,
+  TouchableOpacity,
+} from 'react-native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {useNavigation} from '@react-navigation/native';
+import {RootStackParamList} from '../App';
+import {useRoute, RouteProp} from '@react-navigation/native';
 
-type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage11Run'>;
+type NavigationProp = NativeStackNavigationProp<
+  RootStackParamList,
+  'Stage11Run'
+>;
 
-const { width, height } = Dimensions.get('window');
+const {width, height} = Dimensions.get('window');
 
 const Stage11Run = () => {
   const navigation = useNavigation<NavigationProp>();
   const route = useRoute<RouteProp<RootStackParamList, 'Stage11Run'>>();
-const { department } = route.params;
+  const {college, department} = route.params || {};
 
   const handleMapPress = () => {
     navigation.navigate('Map');
   };
 
   const handleNextStage = () => {
-    navigation.navigate('Stage11_4', {department}); // ✅ Stage11Run 가즈아
+    navigation.navigate('Stage11_4', {college, department}); // ✅ Stage11Run 가즈아
   };
 
   return (
     <View style={styles.container}>
       {/* ✅ main.png를 배경으로 설정 */}
-      <ImageBackground 
-        source={require('../assets/main.png')} 
+      <ImageBackground
+        source={require('../assets/main.png')}
         style={styles.image}
-        resizeMode="cover"
-      >
+        resizeMode="cover">
         {/* 🔥 투명 레이어 추가 */}
         <View style={styles.overlay} />
 
         {/* ✅ 🗺️ 오른쪽 상단의 map.png */}
         <TouchableOpacity onPress={handleMapPress} style={styles.mapButton}>
-          <Image 
+          <Image
             source={require('../assets/map.png')}
             style={styles.mapImage}
             resizeMode="contain"
@@ -45,8 +55,10 @@ const { department } = route.params;
         </TouchableOpacity>
 
         {/* ✅ 홈으로 이동 버튼 */}
-        <TouchableOpacity onPress={() => navigation.navigate('Main')} style={styles.backButton}>
-          <Image 
+        <TouchableOpacity
+          onPress={() => navigation.navigate('Main')}
+          style={styles.backButton}>
+          <Image
             source={require('../assets/home.png')}
             style={styles.backImage}
             resizeMode="contain"
@@ -55,25 +67,22 @@ const { department } = route.params;
 
         <View style={styles.box}>
           {/* ✅ 텍스트 위에 이미지 추가 */}
-          <Image 
-          source={require('../assets/temp.png')} 
-          style={styles.dokdoImage} 
-          resizeMode="contain"
+          <Image
+            source={require('../assets/temp.png')}
+            style={styles.dokdoImage}
+            resizeMode="contain"
           />
-          <Text style={styles.text}>
-            현재 속도는? {'\n'}
-          </Text>
+          <Text style={styles.text}>현재 속도는? {'\n'}</Text>
           <Text style={styles.subText}>
-          잠시 스트레칭을 할 겸, 달리기를 해보자!
+            잠시 스트레칭을 할 겸, 달리기를 해보자!
           </Text>
-            </View>
+        </View>
 
         {/* ✅ 다음 스테이지로 이동 버튼 */}
-        <TouchableOpacity 
+        <TouchableOpacity
           style={styles.nextButton}
           onPress={handleNextStage}
-          activeOpacity={0.7}
-        >
+          activeOpacity={0.7}>
           <Text style={styles.buttonText}>다음 ➡️</Text>
         </TouchableOpacity>
       </ImageBackground>
@@ -108,7 +117,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
+    shadowOffset: {width: 0, height: 4},
     shadowOpacity: 0.3,
     shadowRadius: 4,
     elevation: 5,
@@ -172,7 +181,6 @@ const styles = StyleSheet.create({
     height: height * 0.4, // ✅ 이미지 높이 설정
     marginBottom: height * 0.02, // ✅ 이미지와 텍스트 사이 간격 조정
   },
-  
 });
 
 export default Stage11Run;

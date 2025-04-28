@@ -1,16 +1,27 @@
 //계당관 가는길
 
 import React from 'react';
-import { View, Text, ImageBackground, StyleSheet, Dimensions, Image, TouchableOpacity } from 'react-native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { useNavigation } from '@react-navigation/native';
-import { RootStackParamList } from '../App';
-import { useRoute, RouteProp } from '@react-navigation/native';
+import {
+  View,
+  Text,
+  ImageBackground,
+  StyleSheet,
+  Dimensions,
+  Image,
+  TouchableOpacity,
+} from 'react-native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {useNavigation} from '@react-navigation/native';
+import {RootStackParamList} from '../App';
+import {useRoute, RouteProp} from '@react-navigation/native';
 import CustomText from '../CustomText';
 
-type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage12_1'>;
+type NavigationProp = NativeStackNavigationProp<
+  RootStackParamList,
+  'Stage12_1'
+>;
 
-const { width, height } = Dimensions.get('window');
+const {width, height} = Dimensions.get('window');
 
 const Stage12_1 = () => {
   const navigation = useNavigation<NavigationProp>();
@@ -22,23 +33,22 @@ const Stage12_1 = () => {
   };
 
   const handleNextStage = () => {
-    navigation.navigate('Stage12_2', {department}); // ✅ Stage12_1 가즈아
+    navigation.navigate('Stage12_2', {college, department}); // ✅ Stage12_1 가즈아
   };
 
   return (
     <View style={styles.container}>
       {/* ✅ main.png를 배경으로 설정 */}
-      <ImageBackground 
-        source={require('../assets/main.png')} 
+      <ImageBackground
+        source={require('../assets/main.png')}
         style={styles.image}
-        resizeMode="cover"
-      >
+        resizeMode="cover">
         {/* 🔥 투명 레이어 추가 */}
         <View style={styles.overlay} />
 
         {/* ✅ 🗺️ 오른쪽 상단의 map.png */}
         <TouchableOpacity onPress={handleMapPress} style={styles.mapButton}>
-          <Image 
+          <Image
             source={require('../assets/map.png')}
             style={styles.mapImage}
             resizeMode="contain"
@@ -46,8 +56,10 @@ const Stage12_1 = () => {
         </TouchableOpacity>
 
         {/* ✅ 홈으로 이동 버튼 */}
-        <TouchableOpacity onPress={() => navigation.navigate('Main')} style={styles.backButton}>
-          <Image 
+        <TouchableOpacity
+          onPress={() => navigation.navigate('Main')}
+          style={styles.backButton}>
+          <Image
             source={require('../assets/home.png')}
             style={styles.backImage}
             resizeMode="contain"
@@ -56,26 +68,25 @@ const Stage12_1 = () => {
 
         <View style={styles.box}>
           {/* ✅ 텍스트 위에 이미지 추가 */}
-          <Image 
-          source={require('../assets/gyedang.png')} 
-          style={styles.dokdoImage} 
-          resizeMode="contain"
+          <Image
+            source={require('../assets/gyedang.png')}
+            style={styles.dokdoImage}
+            resizeMode="contain"
           />
           <CustomText style={styles.text}>
             좋았어! 이제 마지막까지 {'\n'} 얼마 안 남은 것 같아!
           </CustomText>
           <CustomText style={styles.subText}>
-          조금만 더 힘내보도록 하자!{'\n'}
-          다음 장소는 바로 '계당관'이야!
+            조금만 더 힘내보도록 하자!{'\n'}
+            다음 장소는 바로 '계당관'이야!
           </CustomText>
-            </View>
+        </View>
 
         {/* ✅ 다음 스테이지로 이동 버튼 */}
-        <TouchableOpacity 
+        <TouchableOpacity
           style={styles.nextButton}
           onPress={handleNextStage}
-          activeOpacity={0.7}
-        >
+          activeOpacity={0.7}>
           <CustomText style={styles.buttonText}>다음 ➡️</CustomText>
         </TouchableOpacity>
       </ImageBackground>
@@ -110,7 +121,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
+    shadowOffset: {width: 0, height: 4},
     shadowOpacity: 0.3,
     shadowRadius: 4,
     elevation: 5,
@@ -173,7 +184,6 @@ const styles = StyleSheet.create({
     height: height * 0.4, // ✅ 이미지 높이 설정
     marginBottom: height * 0.02, // ✅ 이미지와 텍스트 사이 간격 조정
   },
-  
 });
 
 export default Stage12_1;

@@ -1,7 +1,7 @@
 //계당관 호 맞추기
 //모달 적용해봄
 
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {
   View,
   Text,
@@ -16,20 +16,23 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
 } from 'react-native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { useNavigation } from '@react-navigation/native';
-import { RootStackParamList } from '../App';
-import { useRoute, RouteProp } from '@react-navigation/native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {useNavigation} from '@react-navigation/native';
+import {RootStackParamList} from '../App';
+import {useRoute, RouteProp} from '@react-navigation/native';
 import CustomText from '../CustomText';
 
-type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage12_5_1'>;
+type NavigationProp = NativeStackNavigationProp<
+  RootStackParamList,
+  'Stage12_5_1'
+>;
 
-const { width, height } = Dimensions.get('window');
+const {width, height} = Dimensions.get('window');
 
 const Stage12_5_1 = () => {
   const navigation = useNavigation<NavigationProp>();
   const route = useRoute<RouteProp<RootStackParamList, 'Stage12_5_1'>>();
-const { department } = route.params;
+  const {college, department} = route.params || {};
   const [answer, setAnswer] = useState('');
   const [isModalVisible, setIsModalVisible] = useState(false);
 
@@ -42,7 +45,8 @@ const { department } = route.params;
       Alert.alert('정답입니다!', '다음 스테이지로 이동합니다.', [
         {
           text: '확인',
-          onPress: () => navigation.navigate('Stage12_6', {department}),
+          onPress: () =>
+            navigation.navigate('Stage12_6', {college, department}),
         },
       ]);
       setIsModalVisible(false);
@@ -70,8 +74,7 @@ const { department } = route.params;
       <ImageBackground
         source={require('../assets/main.png')}
         style={styles.image}
-        resizeMode="cover"
-      >
+        resizeMode="cover">
         <View style={styles.overlay} />
 
         {/* 지도 버튼 */}
@@ -94,17 +97,16 @@ const { department } = route.params;
 
         {/* 박스 및 텍스트 */}
         <View style={styles.box}>
-          <Image 
+          <Image
             source={require('../assets/gyedangposter.jpg')}
             style={styles.wayImage}
             resizeMode="contain"
           />
-          <CustomText style={styles.text}>
-            연극의 제목을 찾아보자!
-          </CustomText>
+          <CustomText style={styles.text}>연극의 제목을 찾아보자!</CustomText>
           <CustomText style={styles.subText}>
-            계당관에서 체육관으로 올라가는 계단에는 진행되었던 다양한 연극 포스터들이 있어!{'\n'}
-            이 연극은 2022년 7월 2일부터 3일까지 진행되었다는데..
+            계당관에서 체육관으로 올라가는 계단에는 진행되었던 다양한 연극
+            포스터들이 있어!{'\n'}이 연극은 2022년 7월 2일부터 3일까지
+            진행되었다는데..
           </CustomText>
         </View>
 
@@ -121,13 +123,14 @@ const { department } = route.params;
         animationType="fade"
         transparent={true}
         visible={isModalVisible}
-        onRequestClose={closeModal}
-      >
+        onRequestClose={closeModal}>
         <TouchableWithoutFeedback onPress={closeModal}>
           <View style={styles.modalBackground}>
             <TouchableWithoutFeedback onPress={() => {}}>
               <View style={styles.modalContainer}>
-                <CustomText style={styles.modalTitle}>정답을 입력하세요</CustomText>
+                <CustomText style={styles.modalTitle}>
+                  정답을 입력하세요
+                </CustomText>
 
                 {/* ✅ 입력 상자 */}
                 <TextInput
@@ -140,12 +143,11 @@ const { department } = route.params;
                   autoCapitalize="none"
                   autoFocus={true}
                 />
-                
+
                 {/* ✅ 제출 버튼 */}
                 <TouchableOpacity
                   style={styles.submitButton}
-                  onPress={handleNextStage}
-                >
+                  onPress={handleNextStage}>
                   <CustomText style={styles.buttonText}>제출하기</CustomText>
                 </TouchableOpacity>
               </View>

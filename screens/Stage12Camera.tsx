@@ -1,14 +1,14 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { Camera, CameraDevice } from 'react-native-vision-camera';
-import { useRoute, RouteProp } from '@react-navigation/native';
-import { RootStackParamList } from '../App';
+import React, {useEffect, useRef, useState} from 'react';
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {Camera, CameraDevice} from 'react-native-vision-camera';
+import {useRoute, RouteProp} from '@react-navigation/native';
+import {RootStackParamList} from '../App';
 
-const Stage12Camera = ({ navigation }: { navigation: any }) => {
+const Stage12Camera = ({navigation}: {navigation: any}) => {
   const [device, setDevice] = useState<CameraDevice | undefined>();
   const camera = useRef<Camera>(null);
   const route = useRoute<RouteProp<RootStackParamList, 'Stage12Camera'>>();
-  const { department } = route.params;
+  const {college, department} = route.params || {};
 
   useEffect(() => {
     const checkPermission = async () => {
@@ -26,15 +26,15 @@ const Stage12Camera = ({ navigation }: { navigation: any }) => {
 
       availableDevices.forEach((dev, index) => {
         console.log(
-          `장치 ${index}: position = ${dev.position}, sensorOrientation = ${dev.sensorOrientation}`
+          `장치 ${index}: position = ${dev.position}, sensorOrientation = ${dev.sensorOrientation}`,
         );
       });
 
       const backCamera = availableDevices.find(
-        (dev) =>
+        dev =>
           dev.position === 'back' ||
           dev.sensorOrientation === 'landscape-left' ||
-          dev.sensorOrientation === 90
+          dev.sensorOrientation === 90,
       );
 
       console.log('선택된 백 카메라 상태:', backCamera);
