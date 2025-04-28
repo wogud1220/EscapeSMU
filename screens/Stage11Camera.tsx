@@ -1,15 +1,15 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { Camera, CameraDevice } from 'react-native-vision-camera';
-import { useRoute, RouteProp } from '@react-navigation/native';
-import { RootStackParamList } from '../App';
+import React, {useEffect, useRef, useState} from 'react';
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {Camera, CameraDevice} from 'react-native-vision-camera';
+import {useRoute, RouteProp, useIsFocused} from '@react-navigation/native';
+import {RootStackParamList} from '../App';
 
-const Stage11Camera = ({ navigation }: { navigation: any }) => {
+const Stage11Camera = ({navigation}: {navigation: any}) => {
   const [device, setDevice] = useState<CameraDevice | undefined>();
   const camera = useRef<Camera>(null);
-    const route = useRoute<RouteProp<RootStackParamList, 'Stage11Camera'>>();
-  const { department } = route.params;
-
+  const route = useRoute<RouteProp<RootStackParamList, 'Stage11Camera'>>();
+  const {college, department} = route.params || {};
+  const isFocused = useIsFocused(); // 화면 포커스 상태 가져옴
   useEffect(() => {
     const checkPermission = async () => {
       const cameraPermission = await Camera.getCameraPermissionStatus();
@@ -26,15 +26,15 @@ const Stage11Camera = ({ navigation }: { navigation: any }) => {
 
       availableDevices.forEach((dev, index) => {
         console.log(
-          `장치 ${index}: position = ${dev.position}, sensorOrientation = ${dev.sensorOrientation}`
+          `장치 ${index}: position = ${dev.position}, sensorOrientation = ${dev.sensorOrientation}`,
         );
       });
 
       const backCamera = availableDevices.find(
-        (dev) =>
+        dev =>
           dev.position === 'back' ||
           dev.sensorOrientation === 'landscape-left' ||
-          dev.sensorOrientation === 90
+          dev.sensorOrientation === 90,
       );
 
       console.log('선택된 백 카메라 상태:', backCamera);
@@ -57,7 +57,7 @@ const Stage11Camera = ({ navigation }: { navigation: any }) => {
   };
 
   const goToNextStage = () => {
-    navigation.navigate('Stage12_1', { department });
+    navigation.navigate('Stage12_1', {college, department});
   };
 
   if (!device) {
@@ -72,7 +72,7 @@ const Stage11Camera = ({ navigation }: { navigation: any }) => {
         ref={camera}
         style={styles.camera}
         device={device}
-        isActive={true}
+        isActive={isFocused}
         photo={true}
       />
 

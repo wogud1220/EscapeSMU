@@ -15,7 +15,7 @@ import {Camera, CameraDevice} from 'react-native-vision-camera';
 import {onAuthStateChanged} from 'firebase/auth';
 import {auth} from './firebase.config';
 import axios from 'axios';
-import {useRoute, RouteProp} from '@react-navigation/native';
+import {useRoute, RouteProp, useIsFocused} from '@react-navigation/native';
 import {RootStackParamList} from '../App';
 import {updateStageData} from '../utils/updateStageData';
 import {incrementStageAttempt} from '../utils/incrementStageAttempt';
@@ -38,6 +38,7 @@ const Stage2Camera = ({navigation}: {navigation: any}) => {
 
   const route = useRoute<Stage2CameraRouteProp>();
   const {college, department} = route.params || {};
+  const isFocused = useIsFocused(); // 화면 포커스 상태 가져옴
 
   useEffect(() => {
     const checkPermission = async () => {
@@ -146,7 +147,7 @@ const Stage2Camera = ({navigation}: {navigation: any}) => {
         ref={camera}
         style={styles.camera}
         device={device}
-        isActive={true}
+        isActive={isFocused}
         photo={true}
       />
 

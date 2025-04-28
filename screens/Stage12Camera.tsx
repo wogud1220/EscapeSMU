@@ -1,7 +1,7 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {Camera, CameraDevice} from 'react-native-vision-camera';
-import {useRoute, RouteProp} from '@react-navigation/native';
+import {useRoute, RouteProp, useIsFocused} from '@react-navigation/native';
 import {RootStackParamList} from '../App';
 
 const Stage12Camera = ({navigation}: {navigation: any}) => {
@@ -9,7 +9,7 @@ const Stage12Camera = ({navigation}: {navigation: any}) => {
   const camera = useRef<Camera>(null);
   const route = useRoute<RouteProp<RootStackParamList, 'Stage12Camera'>>();
   const {college, department} = route.params || {};
-
+  const isFocused = useIsFocused(); // 화면 포커스 상태 가져옴
   useEffect(() => {
     const checkPermission = async () => {
       const cameraPermission = await Camera.getCameraPermissionStatus();
@@ -72,7 +72,7 @@ const Stage12Camera = ({navigation}: {navigation: any}) => {
         ref={camera}
         style={styles.camera}
         device={device}
-        isActive={true}
+        isActive={isFocused}
         photo={true}
       />
 

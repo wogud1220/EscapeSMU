@@ -15,7 +15,7 @@ import {Camera, CameraDevice} from 'react-native-vision-camera';
 import {onAuthStateChanged} from 'firebase/auth';
 import {auth} from './firebase.config';
 import axios from 'axios';
-import {useRoute, RouteProp} from '@react-navigation/native';
+import {useRoute, RouteProp, useIsFocused} from '@react-navigation/native';
 import {RootStackParamList} from '../App';
 import {updateStageData} from '../utils/updateStageData';
 import {incrementStageAttempt} from '../utils/incrementStageAttempt';
@@ -40,10 +40,9 @@ const Stage7Camera = ({navigation}: {navigation: any}) => {
   const openHintModal = () => setHintVisible(true);
   const closeHintModal = () => setHintVisible(false);
 
-
   const route = useRoute<Stage7CameraRouteProp>();
   const {college, department} = route.params || {};
-
+  const isFocused = useIsFocused(); // 화면 포커스 상태 가져옴
   useEffect(() => {
     const checkPermission = async () => {
       const cameraPermission = await Camera.requestCameraPermission();
@@ -139,13 +138,13 @@ const Stage7Camera = ({navigation}: {navigation: any}) => {
         ref={camera}
         style={styles.camera}
         device={device}
-        isActive={true}
+        isActive={isFocused}
         photo={true}
       />
 
-<TouchableOpacity onPress={openHintModal} style={styles.hintButton}>
-  <Text style={styles.hintButtonText}>💡 힌트</Text>
-</TouchableOpacity>
+      <TouchableOpacity onPress={openHintModal} style={styles.hintButton}>
+        <Text style={styles.hintButtonText}>💡 힌트</Text>
+      </TouchableOpacity>
 
       <Image
         source={require('../assets/songrule2.png')}
@@ -193,22 +192,25 @@ const Stage7Camera = ({navigation}: {navigation: any}) => {
         </View>
       </Modal>
       <Modal
-  visible={hintVisible}
-  transparent
-  animationType="fade"
-  onRequestClose={closeHintModal}>
-  <View style={styles.modalOverlay}>
-    <View style={styles.modalContainer}>
-      <Text style={styles.modalText}>📌 만약, 네모칸을 못 맞춰서 글자를 얻기 힘들다면{'\n'} 휴게실 앞의 2글자
-        4번의 6번째 글자{'\n'}4번의 20번째 글자{'\n'}5번의 15번째 글자를 살펴보자!
-      </Text>
-      <TouchableOpacity style={styles.resultButton} onPress={closeHintModal}>
-        <Text style={styles.buttonText}>닫기</Text>
-      </TouchableOpacity>
-    </View>
-  </View>
-</Modal>
-
+        visible={hintVisible}
+        transparent
+        animationType="fade"
+        onRequestClose={closeHintModal}>
+        <View style={styles.modalOverlay}>
+          <View style={styles.modalContainer}>
+            <Text style={styles.modalText}>
+              📌 만약, 네모칸을 못 맞춰서 글자를 얻기 힘들다면{'\n'} 휴게실 앞의
+              2글자 4번의 6번째 글자{'\n'}4번의 20번째 글자{'\n'}5번의 15번째
+              글자를 살펴보자!
+            </Text>
+            <TouchableOpacity
+              style={styles.resultButton}
+              onPress={closeHintModal}>
+              <Text style={styles.buttonText}>닫기</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 };
@@ -288,7 +290,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 16,
   },
-  
 });
 
 export default Stage7Camera;
