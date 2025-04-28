@@ -6,6 +6,8 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from '../App';
 import { useRoute, RouteProp } from '@react-navigation/native';
+import CustomText from '../CustomText';
+import { Linking } from 'react-native'
 
 type NavigationProp = NativeStackNavigationProp<
   RootStackParamList,
@@ -17,14 +19,14 @@ const {width, height} = Dimensions.get('window');
 const StageFinal = () => {
   const navigation = useNavigation<NavigationProp>();
   const route = useRoute<RouteProp<RootStackParamList, 'StageFinal'>>();
-const { department } = route.params;
+  const {college, department} = route.params || {};
 
   const handleMapPress = () => {
     navigation.navigate('Map');
   };
 
   const handleNextStage = () => {
-    navigation.navigate('Stage13_1', {department});
+    navigation.navigate('RankingBoard', {department});
   };
 
   return (
@@ -57,21 +59,25 @@ const { department } = route.params;
           />
         </TouchableOpacity>
 
-        {/* ✅ 가운데 투명한 흰색 박스 */}
         <View style={styles.box}>
-          <Text style={styles.text}>모든 스테이지가 다 끝이났어.</Text>
-          <Text style={styles.subText}>
+          <CustomText style={styles.text}>모든 스테이지가 다 끝이났어.</CustomText>
+          <CustomText style={styles.subText}>
             캠퍼스와는 좀 친해진 것 같아?{'\n'}
-            google.form 머시기
-          </Text>
-        </View>
+            다음 설문조사를 통해서 너가 느꼈던 것들을 알려줬으면 좋겠어!{'\n'}
+            <CustomText
+            style={styles.linkText}
+            onPress={() => Linking.openURL('https://docs.google.com/forms/d/e/1FAIpQLSf1EDoxfVVbABCT4T15F19yFIe_r-4vAGe1oafI5XoEWW5hPg/viewform?usp=header')}>
+              여기!
+              </CustomText>
+              </CustomText>
+              </View>
 
         {/* ✅ 다음 스테이지로 이동 버튼 */}
         <TouchableOpacity
           style={styles.nextButton}
           onPress={handleNextStage}
           activeOpacity={0.7}>
-          <Text style={styles.buttonText}>랭킹 👑</Text>
+          <CustomText style={styles.buttonText}>랭킹 👑</CustomText>
         </TouchableOpacity>
       </ImageBackground>
     </View>
@@ -113,16 +119,21 @@ const styles = StyleSheet.create({
   text: {
     color: '#333',
     fontSize: width * 0.055,
-    fontWeight: 'bold',
     marginBottom: height * 0.01,
     textAlign: 'center',
     lineHeight: height * 0.035, // ✅ 줄 간격
   },
+  linkText: {
+    color: 'blue',
+    textDecorationLine: 'underline',
+  },
+  
   subText: {
     color: '#555',
     fontSize: width * 0.045,
     textAlign: 'center',
     marginTop: height * 0.02,
+    lineHeight: width * 0.065,
   },
   mapButton: {
     position: 'absolute',
@@ -143,6 +154,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: width * 0.2,
     borderRadius: width * 0.03,
     alignItems: 'center',
+    marginBottom: height * 0.05,
   },
   buttonText: {
     color: '#FFFFFF',

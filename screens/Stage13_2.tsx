@@ -74,13 +74,12 @@ const Stage13_2 = () => {
 
         {/* ✅ 가운데 투명한 흰색 박스 */}
         <View style={styles.box}>
-          <Text style={styles.text}>1층으로 가보자!</Text>
-          <Text style={styles.subText}>
+          <CustomText style={styles.text}>1층으로 가보자!</CustomText>
+          <CustomText style={styles.subText}>
             1층에는 자유롭게 공부할 수 있는 공간인 프라임홀, 열람실, KB 홀이
-            있어!{'\n'}
-            {'\n'}
-            복사실, 도서관이 있는 층은 2층이니{'\n'} 헷갈리지 말자!
-          </Text>
+            있어!
+            복사실, 도서관이 있는 층은 2층이니 헷갈리지 말자!
+          </CustomText>
         </View>
 
         {/* ✅ 다음 스테이지로 이동 버튼 */}
@@ -88,7 +87,7 @@ const Stage13_2 = () => {
           style={styles.nextButton}
           onPress={handleNextStage}
           activeOpacity={0.7}>
-          <Text style={styles.buttonText}>다음 ➡️</Text>
+          <CustomText style={styles.buttonText}>다음 ➡️</CustomText>
         </TouchableOpacity>
       </ImageBackground>
     </View>
@@ -131,7 +130,6 @@ const styles = StyleSheet.create({
     marginTop: height * 0.05,
     color: '#333',
     fontSize: width * 0.055,
-    fontWeight: 'bold',
     marginBottom: height * 0.01,
     textAlign: 'center',
     lineHeight: height * 0.035, // ✅ 줄 간격
@@ -141,6 +139,7 @@ const styles = StyleSheet.create({
     fontSize: width * 0.045,
     textAlign: 'center',
     marginTop: height * 0.02,
+    lineHeight: width * 0.065,
   },
   mapButton: {
     position: 'absolute',
@@ -161,6 +160,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: width * 0.2,
     borderRadius: width * 0.03,
     alignItems: 'center',
+    marginBottom: height * 0.05,
   },
   buttonText: {
     color: '#FFFFFF',

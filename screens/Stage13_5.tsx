@@ -14,6 +14,7 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {useNavigation} from '@react-navigation/native';
 import {RootStackParamList} from '../App';
 import {useRoute, RouteProp} from '@react-navigation/native';
+import CustomText from '../CustomText';
 
 type NavigationProp = NativeStackNavigationProp<
   RootStackParamList,
@@ -71,15 +72,13 @@ const Stage13_5 = () => {
 
         {/* ✅ 가운데 투명한 흰색 박스 */}
         <View style={styles.box}>
-          <Text style={styles.text}>
+          <CustomText style={styles.text}>
             좋아! 앞으로 시험기간에 {'\n'}열람실을 이용하기 전에
-          </Text>
-          <Text style={styles.subText}>
-            '클리커'를 이용해서 남는 자리가 있는지{'\n'} 확인해보고 갈 수도
-            있겠어!{'\n'}
-            {'\n'}
+          </CustomText>
+          <CustomText style={styles.subText}>
+            '클리커'를 이용해서 남는 자리가 있는지 확인해보고 갈 수 있겠어!
             이제 도서관이 있는 2층으로 올라가보자!
-          </Text>
+          </CustomText>
         </View>
 
         {/* ✅ 다음 스테이지로 이동 버튼 */}
@@ -87,7 +86,7 @@ const Stage13_5 = () => {
           style={styles.nextButton}
           onPress={handleNextStage}
           activeOpacity={0.7}>
-          <Text style={styles.buttonText}>다음 ➡️</Text>
+          <CustomText style={styles.buttonText}>다음 ➡️</CustomText>
         </TouchableOpacity>
       </ImageBackground>
     </View>
@@ -130,7 +129,6 @@ const styles = StyleSheet.create({
     marginTop: height * 0.05,
     color: '#333',
     fontSize: width * 0.055,
-    fontWeight: 'bold',
     marginBottom: height * 0.01,
     textAlign: 'center',
     lineHeight: height * 0.035, // ✅ 줄 간격
@@ -140,6 +138,7 @@ const styles = StyleSheet.create({
     fontSize: width * 0.045,
     textAlign: 'center',
     marginTop: height * 0.02,
+    lineHeight: width * 0.065,
   },
   mapButton: {
     position: 'absolute',
@@ -160,6 +159,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: width * 0.2,
     borderRadius: width * 0.03,
     alignItems: 'center',
+    marginBottom: height * 0.05,
   },
   buttonText: {
     color: '#FFFFFF',

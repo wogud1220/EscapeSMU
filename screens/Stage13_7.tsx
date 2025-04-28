@@ -14,6 +14,7 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {useNavigation} from '@react-navigation/native';
 import {RootStackParamList} from '../App';
 import {useRoute, RouteProp} from '@react-navigation/native';
+import CustomText from '../CustomText';
 
 type NavigationProp = NativeStackNavigationProp<
   RootStackParamList,
@@ -72,12 +73,12 @@ const Stage13_7 = () => {
 
         {/* ✅ 가운데 투명한 흰색 박스 */}
         <View style={styles.box}>
-          <Text style={styles.text}>
+          <CustomText style={styles.text}>
             앞에 있는 PC들 중 빈 자리에 앉아 전원을 켜봐!
-          </Text>
-          <Text style={styles.subText}>
+          </CustomText>
+          <CustomText style={styles.subText}>
             PC를 켜서 인터넷을 통해{'\n'} 학술정보관 페이지로 들어가보자!
-          </Text>
+          </CustomText>
         </View>
 
         {/* ✅ 다음 스테이지로 이동 버튼 */}
@@ -85,7 +86,7 @@ const Stage13_7 = () => {
           style={styles.nextButton}
           onPress={handleNextStage}
           activeOpacity={0.7}>
-          <Text style={styles.buttonText}>다음 ➡️</Text>
+          <CustomText style={styles.buttonText}>다음 ➡️</CustomText>
         </TouchableOpacity>
       </ImageBackground>
     </View>
@@ -128,7 +129,6 @@ const styles = StyleSheet.create({
     marginTop: height * 0.05,
     color: '#333',
     fontSize: width * 0.055,
-    fontWeight: 'bold',
     marginBottom: height * 0.01,
     textAlign: 'center',
     lineHeight: height * 0.035, // ✅ 줄 간격
@@ -158,6 +158,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: width * 0.2,
     borderRadius: width * 0.03,
     alignItems: 'center',
+    marginBottom: height * 0.05,
   },
   buttonText: {
     color: '#FFFFFF',

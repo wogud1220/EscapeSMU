@@ -14,6 +14,7 @@ import {useDepartment} from './Member/DepartmentContext';
 import {onAuthStateChanged} from 'firebase/auth';
 import {auth} from './firebase.config';
 import {getLastClearedStage} from '../utils/getLastClearedStage';
+import CustomText from '../CustomText';
 
 const {width, height} = Dimensions.get('window');
 
@@ -122,7 +123,7 @@ const StageList = () => {
           setShowLeftMenu(!showLeftMenu);
           setSelectedCollege(null);
         }}>
-        <Text style={styles.buttonText}>학과 선택</Text>
+        <CustomText style={styles.buttonText}>학과 선택</CustomText>
       </TouchableOpacity>
 
       {showLeftMenu && !selectedCollege && (
@@ -132,7 +133,7 @@ const StageList = () => {
               key={idx}
               style={styles.menuItemButton}
               onPress={() => setSelectedCollege(dept)}>
-              <Text style={styles.menuItem}>{dept}</Text>
+              <CustomText style={styles.menuItem}>{dept}</CustomText>
             </TouchableOpacity>
           ))}
         </View>
@@ -170,7 +171,7 @@ const StageList = () => {
                   }
                 });
               }}>
-              <Text style={styles.menuItem}>{major}</Text>
+              <CustomText style={styles.menuItem}>{major}</CustomText>
             </TouchableOpacity>
           ))}
         </View>
@@ -196,7 +197,6 @@ const styles = StyleSheet.create({
   buttonText: {
     color: '#fff',
     fontSize: 18,
-    fontWeight: 'bold',
   },
   menu: {
     marginTop: 10,
@@ -204,11 +204,13 @@ const styles = StyleSheet.create({
   },
   menuItemButton: {
     width: width * 0.6,
+    height: height * 0.05,
     paddingVertical: 10,
     backgroundColor: '#DDEEFF',
     marginBottom: 8,
     borderRadius: 8,
     paddingHorizontal: 10,
+    justifyContent: 'center',
   },
   menuItem: {
     fontSize: 16,

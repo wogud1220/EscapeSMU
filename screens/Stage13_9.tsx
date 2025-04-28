@@ -14,6 +14,7 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {useNavigation} from '@react-navigation/native';
 import {RootStackParamList} from '../App';
 import {useRoute, RouteProp} from '@react-navigation/native';
+import CustomText from '../CustomText';
 
 type NavigationProp = NativeStackNavigationProp<
   RootStackParamList,
@@ -73,14 +74,14 @@ const Stage13_9 = () => {
 
         {/* ✅ 가운데 투명한 흰색 박스 */}
         <View style={styles.box}>
-          <Text style={styles.text}>2층의 어문학 자료실로 이동해볼까?</Text>
-          <Text style={styles.subText}>
+          <CustomText style={styles.text}>어문학 자료실로 이동해볼까?</CustomText>
+          <CustomText style={styles.subText}>
             도서관에서는 당연히 정숙해야 해!{'\n'}
-            지금부터 <Text style={styles.highlight}>데시벨 측정</Text>이 시작될
+            지금부터 <CustomText style={styles.highlight}>데시벨 측정</CustomText>이 시작될
             거야.{'\n'}
             일정 데시벨을 넘어가면 찾아야 하는 도서가
-            <Text style={styles.highlight}> 초기화</Text>되니 조심해!
-          </Text>
+            <CustomText style={styles.highlight}> 초기화</CustomText>되니 조심해!
+          </CustomText>
         </View>
 
         {/* ✅ 다음 스테이지로 이동 버튼 */}
@@ -88,7 +89,7 @@ const Stage13_9 = () => {
           style={styles.nextButton}
           onPress={handleNextStage}
           activeOpacity={0.7}>
-          <Text style={styles.buttonText}>시작!</Text>
+          <CustomText style={styles.buttonText}>시작!</CustomText>
         </TouchableOpacity>
       </ImageBackground>
     </View>
@@ -98,7 +99,6 @@ const Stage13_9 = () => {
 const styles = StyleSheet.create({
   highlight: {
     color: 'red',
-    fontWeight: 'bold',
   },
   container: {
     flex: 1,
@@ -135,7 +135,6 @@ const styles = StyleSheet.create({
     marginTop: height * 0.05,
     color: '#333',
     fontSize: width * 0.055,
-    fontWeight: 'bold',
     marginBottom: height * 0.01,
     textAlign: 'center',
     lineHeight: height * 0.035, // ✅ 줄 간격
@@ -145,6 +144,7 @@ const styles = StyleSheet.create({
     fontSize: width * 0.045,
     textAlign: 'center',
     marginTop: height * 0.02,
+    lineHeight: width * 0.065,
   },
   mapButton: {
     position: 'absolute',
@@ -165,6 +165,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: width * 0.2,
     borderRadius: width * 0.03,
     alignItems: 'center',
+    marginBottom: height * 0.05,
   },
   buttonText: {
     color: '#FFFFFF',

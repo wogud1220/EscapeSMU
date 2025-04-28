@@ -23,6 +23,7 @@ import {updateStageData} from '../utils/updateStageData';
 import {onAuthStateChanged} from 'firebase/auth';
 import {auth} from './firebase.config';
 import {incrementStageAttempt} from '../utils/incrementStageAttempt';
+import CustomText from '../CustomText';
 
 type NavigationProp = NativeStackNavigationProp<
   RootStackParamList,
@@ -131,21 +132,19 @@ const Stage13_6_1 = () => {
             style={styles.wayImage}
             resizeMode="contain"
           />
-          <Text style={styles.text}>
+          <CustomText style={styles.text}>
             맞아! 정보검색실은 도서관과 같은 층에 있어!
-          </Text>
-          <Text style={styles.subText}>
+          </CustomText>
+          <CustomText style={styles.subText}>
             정보검색실을 찾아가보자! 입구에 들어가 오른쪽에서 'Library Guide를
-            찾아볼래?'{'\n'}
-            {'\n'}
-            만약 찾았다면, 'Library Guide'의 맨 뒤에 있는 QR을 스캔해서 나오는
-            {'\n'}앱의 이름을 입력해보자!
-          </Text>
+            찾아볼래?'
+            만약 찾았다면, 'Library Guide'의 맨 뒤에 있는 QR을 스캔해서 나오는 앱의 이름을 입력해보자!
+          </CustomText>
         </View>
 
         {/* 입력 필드 (모달로 오픈) */}
         <TouchableOpacity onPress={openModal} style={styles.inputContainer}>
-          <Text style={styles.inputText}>{answer || '정답 입력'}</Text>
+          <CustomText style={styles.inputText}>{answer || '정답 입력'}</CustomText>
         </TouchableOpacity>
       </ImageBackground>
 
@@ -159,7 +158,7 @@ const Stage13_6_1 = () => {
           <View style={styles.modalBackground}>
             <TouchableWithoutFeedback onPress={() => {}}>
               <View style={styles.modalContainer}>
-                <Text style={styles.modalTitle}>정답을 입력하세요</Text>
+                <CustomText style={styles.modalTitle}>정답을 입력하세요</CustomText>
 
                 {/* ✅ 입력 상자 */}
                 <TextInput
@@ -177,7 +176,7 @@ const Stage13_6_1 = () => {
                 <TouchableOpacity
                   style={styles.submitButton}
                   onPress={handleNextStage}>
-                  <Text style={styles.buttonText}>제출하기</Text>
+                  <CustomText style={styles.buttonText}>제출하기</CustomText>
                 </TouchableOpacity>
               </View>
             </TouchableWithoutFeedback>
@@ -228,6 +227,7 @@ const styles = StyleSheet.create({
     color: '#555',
     fontSize: width * 0.045,
     textAlign: 'center',
+    lineHeight: width * 0.065,
   },
   inputContainer: {
     marginTop: height * 0.05,
@@ -261,7 +261,6 @@ const styles = StyleSheet.create({
   },
   modalTitle: {
     fontSize: width * 0.05,
-    fontWeight: 'bold',
     marginBottom: height * 0.02,
   },
   modalInput: {
@@ -272,6 +271,7 @@ const styles = StyleSheet.create({
     paddingVertical: height * 0.01,
     marginBottom: height * 0.02,
     color: '#333',
+    fontFamily: 'BMHANNAPro',
   },
   submitButton: {
     backgroundColor: 'rgba(0, 0, 255, 0.7)',

@@ -25,6 +25,7 @@ import {onAuthStateChanged} from 'firebase/auth';
 import {auth} from './firebase.config';
 import {updateStageData} from '../utils/updateStageData';
 import {incrementStageAttempt} from '../utils/incrementStageAttempt';
+import CustomText from '../CustomText';
 
 const {width, height} = Dimensions.get('window');
 
@@ -185,7 +186,8 @@ const Stage13_Sound = () => {
     if (department === '디지털만화영상' || department === '사진영상') {
       actualCollege = '융합기술대학';
     }
-    if (answer.trim() === '1') {
+    if (answer.trim() === '오늘' || answer.trim() === '그는' || answer.trim() === '그' || answer.trim() === '봄' || answer.trim() === '노란' || answer.trim() === '흰'
+    || answer.trim() === '출근' || answer.trim() === '나' || answer.trim() === '연대기' || answer.trim() === '너희들' || answer.trim() === '너희') {
       // ⛔ 데시벨 수집 중단
       Sound.stop();
       Alert.alert('정답입니다!', '다음 스테이지로 이동합니다.', [
@@ -243,9 +245,9 @@ const Stage13_Sound = () => {
         </TouchableOpacity>
 
         <View style={styles.box}>
-          <Text style={styles.decibelText}>
+          <CustomText style={styles.decibelText}>
             현재 데시벨: {currentDecibel} dB
-          </Text>
+          </CustomText>
 
           {randomBook && (
             <Animated.Text style={[styles.bookTitle, {opacity: fadeAnim}]}>
@@ -253,9 +255,9 @@ const Stage13_Sound = () => {
             </Animated.Text>
           )}
 
-          <Text style={styles.text}>
+          <CustomText style={styles.text}>
             책의 서론을 제외한 본문에서의 첫 번째 단어를 입력해보자!
-          </Text>
+          </CustomText>
 
           <TouchableOpacity
             onPress={() => {
@@ -264,13 +266,13 @@ const Stage13_Sound = () => {
               setIsModalVisible(true);
             }}
             style={styles.inputContainer}>
-            <Text style={styles.inputText}>정답 입력하기</Text>
+            <CustomText style={styles.inputText}>정답 입력하기</CustomText>
           </TouchableOpacity>
 
-          <Text style={styles.noticeText}>
+          <CustomText style={styles.noticeText}>
             위의 버튼을 누르면 전부 대출되어서{'\n'}책이 없는 상황일 때 다시
             랜덤으로 초기화해주는 버튼이야!
-          </Text>
+          </CustomText>
         </View>
 
         <Modal animationType="fade" transparent visible={isModalVisible}>
@@ -321,21 +323,20 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 5,
     alignSelf: 'center',
-    marginTop: height * 0.2,
+    marginTop: height * 0.25,
   },
   decibelText: {
     fontSize: width * 0.05,
-    fontWeight: 'bold',
     color: 'red',
     marginBottom: height * 0.01,
   },
   bookTitle: {
     marginTop: height * 0.05,
     fontSize: width * 0.06,
-    fontWeight: 'bold',
     color: '#FF5733',
     marginVertical: height * 0.01,
     textAlign: 'center',
+    fontFamily: 'BMHANNAPro',
   },
   inputContainer: {
     marginTop: height * 0.05,
@@ -347,7 +348,6 @@ const styles = StyleSheet.create({
     marginTop: height * 0.05,
     color: '#333',
     fontSize: width * 0.055,
-    fontWeight: 'bold',
     marginBottom: height * 0.01,
     textAlign: 'center',
     lineHeight: height * 0.035,

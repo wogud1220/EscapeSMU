@@ -184,6 +184,7 @@ import {collection, getDocs, DocumentData} from 'firebase/firestore';
 import {onAuthStateChanged} from 'firebase/auth';
 import {db, auth} from './firebase.config';
 import {Picker} from '@react-native-picker/picker';
+import CustomText from '../CustomText';
 
 interface RankItem {
   uid: string;
@@ -285,10 +286,10 @@ const RankingBoard = () => {
 
       {myRank && (
         <View style={styles.myBox}>
-          <Text style={styles.sectionTitle}>✨ 나의 순위</Text>
-          <Text style={styles.myText}>
+          <CustomText style={styles.sectionTitle}>✨ 나의 순위</CustomText>
+          <CustomText style={styles.myText}>
             {myRank.rank}위 - {myRank.emailPrefix} ({myRank.score}회 시도)
-          </Text>
+          </CustomText>
         </View>
       )}
 
@@ -296,11 +297,11 @@ const RankingBoard = () => {
         sections={rankData}
         keyExtractor={item => item.uid}
         renderSectionHeader={({section: {title}}) => (
-          <Text style={styles.sectionTitle}>{title} 랭킹 TOP 10</Text>
+          <CustomText style={styles.sectionTitle}>{title} 랭킹 TOP 10</CustomText>
         )}
         renderItem={({item}) => (
           <View style={styles.row}>
-            <Text style={styles.rank}>
+            <CustomText style={styles.rank}>
               {item.rank === 1
                 ? '🥇'
                 : item.rank === 2
@@ -308,9 +309,9 @@ const RankingBoard = () => {
                 : item.rank === 3
                 ? '🥉'
                 : `${item.rank}위`}
-            </Text>
-            <Text style={styles.name}>{item.emailPrefix}</Text>
-            <Text style={styles.score}>{item.score} 회</Text>
+            </CustomText>
+            <CustomText style={styles.name}>{item.emailPrefix}</CustomText>
+            <CustomText style={styles.score}>{item.score} 회</CustomText>
           </View>
         )}
         contentContainerStyle={{padding: 20}}
@@ -323,7 +324,6 @@ const styles = StyleSheet.create({
   loader: {flex: 1, justifyContent: 'center', alignItems: 'center'},
   sectionTitle: {
     fontSize: 20,
-    fontWeight: 'bold',
     marginTop: 16,
     marginBottom: 8,
     textAlign: 'center',
@@ -335,7 +335,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderColor: '#eee',
   },
-  rank: {fontWeight: 'bold', width: 40},
+  rank: {width: 40},
   name: {flex: 1},
   score: {width: 60, textAlign: 'right'},
   myBox: {
@@ -346,7 +346,6 @@ const styles = StyleSheet.create({
   },
   myText: {
     fontSize: 16,
-    fontWeight: 'bold',
     textAlign: 'center',
   },
 });

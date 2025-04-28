@@ -13,6 +13,7 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {useNavigation} from '@react-navigation/native';
 import {RootStackParamList} from '../App';
 import {useRoute, RouteProp} from '@react-navigation/native';
+import CustomText from '../CustomText';
 
 type NavigationProp = NativeStackNavigationProp<
   RootStackParamList,
@@ -99,7 +100,7 @@ const Stage13_8 = () => {
 
         {/* ✅ 가운데 박스 */}
         <View style={styles.box}>
-          <Text style={styles.text}>이제 도서를 검색해볼거야!</Text>
+          <CustomText style={styles.text}>이제 도서를 검색해볼거야!</CustomText>
 
           {/* ✅ 무작위 책 제목 애니메이션 적용 */}
           {randomBook && (
@@ -108,10 +109,9 @@ const Stage13_8 = () => {
             </Animated.Text>
           )}
 
-          <Text style={styles.subText}>
-            위의 책 제목을 학술정보관 페이지의 자료검색을 통해 청구기호를 찾아서
-            입력해줘!
-          </Text>
+          <CustomText style={styles.subText}>
+            위의 책 제목을 학술정보관 페이지의 자료검색을 통해 청구기호를 찾아보자!
+          </CustomText>
         </View>
 
         {/* ✅ 다음 스테이지 버튼 */}
@@ -119,7 +119,7 @@ const Stage13_8 = () => {
           style={styles.nextButton}
           onPress={handleNextStage}
           activeOpacity={0.7}>
-          <Text style={styles.buttonText}>다음 ➡️</Text>
+          <CustomText style={styles.buttonText}>다음 ➡️</CustomText>
         </TouchableOpacity>
       </ImageBackground>
     </View>
@@ -161,25 +161,25 @@ const styles = StyleSheet.create({
   text: {
     color: '#333',
     fontSize: width * 0.05,
-    fontWeight: 'bold',
     marginBottom: height * 0.02,
     textAlign: 'center',
   },
   bookTitle: {
     color: '#FF5733', // ✅ 강조 색상 (주황색)
     fontSize: width * 0.07, // ✅ 폰트 크기 증가
-    fontWeight: 'bold', // ✅ 굵게 표시
     textAlign: 'center',
     marginVertical: height * 0.01,
     textShadowColor: 'rgba(0, 0, 0, 0.3)', // ✅ 텍스트에 그림자 효과 추가
     textShadowOffset: {width: 2, height: 2},
     textShadowRadius: 4,
+    fontFamily: 'BMHANNAPro',
   },
   subText: {
     color: '#555',
     fontSize: width * 0.045,
     textAlign: 'center',
     marginTop: height * 0.02,
+    lineHeight: width * 0.065,
   },
   mapButton: {
     position: 'absolute',
@@ -200,6 +200,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: width * 0.2,
     borderRadius: width * 0.03,
     alignItems: 'center',
+    marginBottom: height * 0.05,
   },
   buttonText: {
     color: '#FFFFFF',

@@ -3,6 +3,7 @@ import {View, TextInput, Button, Text, StyleSheet} from 'react-native';
 import {auth} from '../firebase.config';
 import {onAuthStateChanged, signInWithEmailAndPassword} from 'firebase/auth';
 import {useNavigation} from '@react-navigation/native';
+import CustomText from '../../CustomText';
 
 const LogIn = () => {
   const navigation = useNavigation();
@@ -87,15 +88,16 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   input: {
+    fontFamily: 'BMHANNAPro',
     width: '80%',
     padding: 10,
     borderWidth: 1,
     borderColor: '#ccc',
     marginBottom: 10,
     borderRadius: 5,
-    fontFamily: 'BMHANNAPro',
   },
   errorText: {
+    fontFamily: 'BMHANNAPro',
     color: 'red',
     marginTop: 10,
   },
