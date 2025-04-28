@@ -20,6 +20,7 @@ import {auth} from './firebase.config';
 import {updateStageData} from '../utils/updateStageData';
 import {increment} from 'firebase/firestore';
 import {incrementStageAttempt} from '../utils/incrementStageAttempt';
+import CustomText from '../CustomText';
 
 type NavigationProp = NativeStackNavigationProp<
   RootStackParamList,
@@ -127,16 +128,16 @@ const Stage11_5 = () => {
 
         {/* 흰색 박스 */}
         <View style={styles.box}>
-          <Text style={styles.text}>
+          <CustomText style={styles.text}>
             어느 정도 스포츠센터를 돌아봤니? 그러면 스포츠센터에 존재하지{' '}
-            <Text style={styles.highlight}>않는</Text> 시설을 골라봐!
-          </Text>
+            <CustomText style={styles.highlight}>않는</CustomText> 시설을 골라봐!
+          </CustomText>
 
           {/* 서브텍스트 추가 */}
-          <Text style={styles.subText}>
+          <CustomText style={styles.subText}>
             틀릴 시에는 다시 입력하기까지{' '}
-            <Text style={styles.highlight}>5분</Text>을 기다려야해... 신중하자!
-          </Text>
+            <CustomText style={styles.highlight}>5분</CustomText>을 기다려야해... 신중하자!
+          </CustomText>
 
           {/* ✅ 타이머 표시 */}
           {countdown !== null && (
@@ -160,7 +161,7 @@ const Stage11_5 = () => {
                 ]}
                 onPress={() => handleOptionPress(option.value)}
                 disabled={disabled}>
-                <Text style={styles.optionText}>{option.label}</Text>
+                <CustomText style={styles.optionText}>{option.label}</CustomText>
               </TouchableOpacity>
             ))}
           </View>
@@ -201,13 +202,11 @@ const styles = StyleSheet.create({
   text: {
     color: '#333',
     fontSize: width * 0.05,
-    fontWeight: 'bold',
     marginBottom: height * 0.01,
     textAlign: 'center',
   },
   highlight: {
     color: 'red',
-    fontWeight: 'bold',
   },
   subText: {
     color: '#555',
@@ -238,7 +237,6 @@ const styles = StyleSheet.create({
   optionText: {
     color: '#FFF',
     fontSize: width * 0.045,
-    fontWeight: 'bold',
   },
   disabledButton: {
     backgroundColor: 'gray',

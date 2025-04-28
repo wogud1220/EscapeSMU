@@ -6,6 +6,7 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from '../App';
 import { useRoute, RouteProp } from '@react-navigation/native';
+import CustomText from '../CustomText';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage12_1'>;
 
@@ -14,7 +15,7 @@ const { width, height } = Dimensions.get('window');
 const Stage12_1 = () => {
   const navigation = useNavigation<NavigationProp>();
   const route = useRoute<RouteProp<RootStackParamList, 'Stage12_1'>>();
-const { department } = route.params;
+  const {college, department} = route.params || {};
 
   const handleMapPress = () => {
     navigation.navigate('Map');
@@ -60,13 +61,13 @@ const { department } = route.params;
           style={styles.dokdoImage} 
           resizeMode="contain"
           />
-          <Text style={styles.text}>
+          <CustomText style={styles.text}>
             좋았어! 이제 마지막까지 {'\n'} 얼마 안 남은 것 같아!
-          </Text>
-          <Text style={styles.subText}>
+          </CustomText>
+          <CustomText style={styles.subText}>
           조금만 더 힘내보도록 하자!{'\n'}
           다음 장소는 바로 '계당관'이야!
-          </Text>
+          </CustomText>
             </View>
 
         {/* ✅ 다음 스테이지로 이동 버튼 */}
@@ -75,7 +76,7 @@ const { department } = route.params;
           onPress={handleNextStage}
           activeOpacity={0.7}
         >
-          <Text style={styles.buttonText}>다음 ➡️</Text>
+          <CustomText style={styles.buttonText}>다음 ➡️</CustomText>
         </TouchableOpacity>
       </ImageBackground>
     </View>
@@ -117,7 +118,6 @@ const styles = StyleSheet.create({
   text: {
     color: '#333',
     fontSize: width * 0.055,
-    fontWeight: 'bold',
     marginTop: height * 0.04, // ✅ 위쪽 간격
     marginBottom: height * 0.01,
     textAlign: 'center',

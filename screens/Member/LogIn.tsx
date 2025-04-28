@@ -60,12 +60,14 @@ const LogIn = () => {
         placeholder="Email"
         value={email}
         onChangeText={setEmail}
+        placeholderTextColor={'#999'}
         style={styles.input}
       />
       <TextInput
         placeholder="Password"
         value={password}
         onChangeText={setPassword}
+        placeholderTextColor={'#999'}
         secureTextEntry
         style={styles.input}
       />
@@ -91,6 +93,7 @@ const styles = StyleSheet.create({
     borderColor: '#ccc',
     marginBottom: 10,
     borderRadius: 5,
+    fontFamily: 'BMHANNAPro',
   },
   errorText: {
     color: 'red',

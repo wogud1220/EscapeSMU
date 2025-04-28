@@ -20,6 +20,7 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from '../App';
 import { useRoute, RouteProp } from '@react-navigation/native';
+import CustomText from '../CustomText';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage12_5_1'>;
 
@@ -98,20 +99,20 @@ const { department } = route.params;
             style={styles.wayImage}
             resizeMode="contain"
           />
-          <Text style={styles.text}>
+          <CustomText style={styles.text}>
             연극의 제목을 찾아보자!
-          </Text>
-          <Text style={styles.subText}>
-            계당관에서 체육관으로 올라가는 계단에는 진행되었던 다양한 연극 포스터들이 있어!{'\n'}{'\n'}
+          </CustomText>
+          <CustomText style={styles.subText}>
+            계당관에서 체육관으로 올라가는 계단에는 진행되었던 다양한 연극 포스터들이 있어!{'\n'}
             이 연극은 2022년 7월 2일부터 3일까지 진행되었다는데..
-          </Text>
+          </CustomText>
         </View>
 
         {/* 입력 필드 (모달로 오픈) */}
         <TouchableOpacity onPress={openModal} style={styles.inputContainer}>
-          <Text style={styles.inputText}>
+          <CustomText style={styles.inputText}>
             {answer || '정답 입력'}
-          </Text>
+          </CustomText>
         </TouchableOpacity>
       </ImageBackground>
 
@@ -126,7 +127,7 @@ const { department } = route.params;
           <View style={styles.modalBackground}>
             <TouchableWithoutFeedback onPress={() => {}}>
               <View style={styles.modalContainer}>
-                <Text style={styles.modalTitle}>정답을 입력하세요</Text>
+                <CustomText style={styles.modalTitle}>정답을 입력하세요</CustomText>
 
                 {/* ✅ 입력 상자 */}
                 <TextInput
@@ -145,7 +146,7 @@ const { department } = route.params;
                   style={styles.submitButton}
                   onPress={handleNextStage}
                 >
-                  <Text style={styles.buttonText}>제출하기</Text>
+                  <CustomText style={styles.buttonText}>제출하기</CustomText>
                 </TouchableOpacity>
               </View>
             </TouchableWithoutFeedback>
@@ -196,6 +197,7 @@ const styles = StyleSheet.create({
     color: '#555',
     fontSize: width * 0.045,
     textAlign: 'center',
+    lineHeight: width * 0.065,
   },
   inputContainer: {
     marginTop: height * 0.05,
@@ -229,7 +231,6 @@ const styles = StyleSheet.create({
   },
   modalTitle: {
     fontSize: width * 0.05,
-    fontWeight: 'bold',
     marginBottom: height * 0.02,
   },
   modalInput: {
@@ -240,6 +241,7 @@ const styles = StyleSheet.create({
     paddingVertical: height * 0.01,
     marginBottom: height * 0.02,
     color: '#333',
+    fontFamily: 'BMHANNAPro',
   },
   submitButton: {
     backgroundColor: 'rgba(0, 0, 255, 0.7)',

@@ -20,6 +20,8 @@ import {useDepartment} from './Member/DepartmentContext';
 import {updateStageData} from '../utils/updateStageData';
 import {onAuthStateChanged} from 'firebase/auth';
 import {auth} from './firebase.config';
+import CustomText from '../CustomText';
+
 type NavigationProp = NativeStackNavigationProp<
   RootStackParamList,
   'Stage10_7'
@@ -114,10 +116,10 @@ const Stage10_7 = () => {
 
         {/* ✅ 문제 박스 */}
         <View style={styles.box}>
-          <Text style={styles.text}>
+          <CustomText style={styles.text}>
             학생회관 5층에는 동아리들이 사용할 수 있는 동방이 있어!
-          </Text>
-          <Text style={styles.subText}>
+          </CustomText>
+          <CustomText style={styles.subText}>
             여러 중앙 동아리 중,{' '}
             <View style={styles.inlineContainer}>
               <Image
@@ -125,15 +127,15 @@ const Stage10_7 = () => {
                 style={styles.inlineImage}
                 resizeMode="contain"
               />
-              <Text style={styles.highlight}>CodeCure</Text>
+              <CustomText style={styles.highlight}>CodeCure</CustomText>
             </View>{' '}
             가 사용하는 동방의 호수는 몇 호일까?
-          </Text>
+          </CustomText>
         </View>
 
         {/* ✅ 입력 필드 → 터치 시 모달 열기 */}
         <TouchableOpacity onPress={openModal} style={styles.inputContainer}>
-          <Text style={styles.inputText}>{answer || '정답 입력'}</Text>
+          <CustomText style={styles.inputText}>{answer || '정답 입력'}</CustomText>
         </TouchableOpacity>
 
         {/* ✅ 모달 */}
@@ -146,7 +148,7 @@ const Stage10_7 = () => {
             <View style={styles.modalBackground}>
               <TouchableWithoutFeedback>
                 <View style={styles.modalContainer}>
-                  <Text style={styles.modalTitle}>정답을 입력하세요</Text>
+                  <CustomText style={styles.modalTitle}>정답을 입력하세요</CustomText>
 
                   {/* ✅ 입력 상자 */}
                   <TextInput
@@ -164,7 +166,7 @@ const Stage10_7 = () => {
                   <TouchableOpacity
                     style={styles.submitButton}
                     onPress={handleNextStage}>
-                    <Text style={styles.buttonText}>제출하기</Text>
+                    <CustomText style={styles.buttonText}>제출하기</CustomText>
                   </TouchableOpacity>
                 </View>
               </TouchableWithoutFeedback>
@@ -253,7 +255,6 @@ const styles = StyleSheet.create({
   },
   modalTitle: {
     fontSize: width * 0.05,
-    fontWeight: 'bold',
     marginBottom: height * 0.02,
   },
   modalInput: {
@@ -264,6 +265,7 @@ const styles = StyleSheet.create({
     paddingVertical: height * 0.01,
     marginBottom: height * 0.02,
     color: '#333',
+    fontFamily: 'BMHANNAPro',
   },
   submitButton: {
     backgroundColor: 'rgba(0, 0, 255, 0.7)',
@@ -313,7 +315,6 @@ const styles = StyleSheet.create({
   },
   highlight: {
     color: '#0000FF', // 파란색 글씨
-    fontWeight: 'bold',
     paddingHorizontal: 4,
     borderRadius: 4,
   },

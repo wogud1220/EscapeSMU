@@ -14,6 +14,7 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {useNavigation, useRoute, RouteProp} from '@react-navigation/native';
 import {RootStackParamList} from '../App';
 import {useEffect} from 'react';
+import CustomText from '../CustomText';
 
 const {width, height} = Dimensions.get('window');
 
@@ -76,17 +77,17 @@ const Stage13_1 = () => {
             style={styles.dokdoImage}
             resizeMode="contain"
           />
-          <Text style={styles.text}>
+          <CustomText style={styles.text}>
             다음으로 방문할 장소는 학술정보관(L, 도서관)이야!
-          </Text>
-          <Text style={styles.subText}>도서관은 공부하는 학생들이 많으니{'\n'}시끄럽지 않게 주의하자!</Text>
+          </CustomText>
+          <CustomText style={styles.subText}>도서관은 공부하는 학생들이 많으니{'\n'}시끄럽지 않게 주의하자!</CustomText>
         </View>
 
         <TouchableOpacity
           style={styles.nextButton}
           onPress={handleNextStage}
           activeOpacity={0.7}>
-          <Text style={styles.buttonText}>다음 ➡️</Text>
+          <CustomText style={styles.buttonText}>다음 ➡️</CustomText>
         </TouchableOpacity>
       </ImageBackground>
     </View>
@@ -128,7 +129,6 @@ const styles = StyleSheet.create({
   text: {
     color: '#333',
     fontSize: width * 0.055,
-    fontWeight: 'bold',
     marginTop: height * 0.04,
     marginBottom: height * 0.01,
     textAlign: 'center',

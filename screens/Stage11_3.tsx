@@ -19,6 +19,7 @@ import {onAuthStateChanged} from 'firebase/auth';
 import {auth} from './firebase.config';
 import {updateStageData} from '../utils/updateStageData';
 import {incrementStageAttempt} from '../utils/incrementStageAttempt';
+import CustomText from '../CustomText';
 
 // type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage11_3'>;
 
@@ -123,27 +124,27 @@ const Stage11_3 = () => {
 
         {/* 흰색 박스 */}
         <View style={styles.box}>
-          <Text style={styles.text}>
-            1층에는 스쿼시장과 스크린골프장이 있어!{'\n'}
+          <CustomText style={styles.text}>
+            1층에는 스쿼시장과{'\n'}스크린골프장이 있어!{'\n'}
             스크린골프장을 사용하는데 {'\n'}
-            <Text style={styles.highlight}>잘못된 </Text>이용 수칙을 골라봐!
-          </Text>
+            <CustomText style={styles.highlight}>잘못된 </CustomText>이용 수칙을 골라봐!
+          </CustomText>
 
           {/* 서브텍스트 추가 */}
-          <Text style={styles.subText}>
+          <CustomText style={styles.subText}>
             틀릴 시에는 다시 입력하기까지{' '}
             <Text style={styles.highlight}>5분</Text>을 기다려야해... 신중하자!
-          </Text>
+          </CustomText>
 
           {/* ✅ 타이머 표시 */}
           {countdown !== null && (
-            <Text style={styles.timerText}>
+            <CustomText style={styles.timerText}>
               {`다시 시도 가능까지: ${Math.floor(countdown / 60)}:${(
                 countdown % 60
               )
                 .toString()
                 .padStart(2, '0')}`}
-            </Text>
+            </CustomText>
           )}
 
           {/* 버튼 생성 */}
@@ -157,7 +158,7 @@ const Stage11_3 = () => {
                 ]}
                 onPress={() => handleOptionPress(option.value)}
                 disabled={disabled}>
-                <Text style={styles.optionText}>{option.label}</Text>
+                <CustomText style={styles.optionText}>{option.label}</CustomText>
               </TouchableOpacity>
             ))}
           </View>
@@ -187,9 +188,9 @@ const styles = StyleSheet.create({
   },
   box: {
     backgroundColor: 'rgba(255, 255, 255, 0.85)',
-    marginTop: height * 0.12,
+    marginTop: height * 0.09,
     width: width * 0.85,
-    height: height * 0.7,
+    height: height * 0.75,
     padding: height * 0.03,
     borderRadius: width * 0.04,
     alignItems: 'center',
@@ -198,13 +199,11 @@ const styles = StyleSheet.create({
   text: {
     color: '#333',
     fontSize: width * 0.05,
-    fontWeight: 'bold',
     marginBottom: height * 0.01,
     textAlign: 'center',
   },
   highlight: {
     color: 'red',
-    fontWeight: 'bold',
   },
   subText: {
     color: '#555',
@@ -216,7 +215,6 @@ const styles = StyleSheet.create({
   timerText: {
     color: '#ff4500',
     fontSize: width * 0.045,
-    fontWeight: 'bold',
     marginBottom: height * 0.02,
   },
   buttonContainer: {
@@ -235,7 +233,6 @@ const styles = StyleSheet.create({
   optionText: {
     color: '#FFF',
     fontSize: width * 0.045,
-    fontWeight: 'bold',
     textAlign: 'center',
   },
   disabledButton: {

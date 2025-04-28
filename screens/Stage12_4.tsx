@@ -6,6 +6,7 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from '../App';
 import { useRoute, RouteProp } from '@react-navigation/native';
+import CustomText from '../CustomText';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage12_5'>;
 
@@ -14,7 +15,8 @@ const { width, height } = Dimensions.get('window');
 const Stage12_4 = () => {
   const navigation = useNavigation<NavigationProp>();
   const route = useRoute<RouteProp<RootStackParamList, 'Stage12_4'>>();
-const { department } = route.params;
+  const department = route?.params?.department ?? '';
+
 
   const handleMapPress = () => {
     navigation.navigate('Map');
@@ -55,11 +57,11 @@ const { department } = route.params;
 
         {/* ✅ 가운데 투명한 흰색 박스 */}
         <View style={styles.box}>
-          <Text style={styles.text}>
+          <CustomText style={styles.text}>
           좋아! 계당관 쉐어라운지에서는 
-          자유롭게 대화를 나눠도 되지만 {'\n'} 큰 소음을 유발하거나 취식, 훼손과
-          같은 행위는 금지되는 거 명심하자!
-          </Text>
+          자유롭게 대화를 나눠도 되지만{'\n'}큰 소음을 유발하거나 취식, 훼손과
+          같은 행위는{'\n'}자제하도록 하자!
+          </CustomText>
           <Text style={styles.subText}>
           </Text>
 
@@ -71,7 +73,7 @@ const { department } = route.params;
           onPress={handleNextStage}
           activeOpacity={0.7}
         >
-          <Text style={styles.buttonText}>다음 ➡️</Text>
+          <CustomText style={styles.buttonText}>다음 ➡️</CustomText>
         </TouchableOpacity>
       </ImageBackground>
     </View>
@@ -114,7 +116,6 @@ const styles = StyleSheet.create({
     marginTop: height * 0.05,
     color: '#333',
     fontSize: width * 0.055,
-    fontWeight: 'bold',
     marginBottom: height * 0.01,
     textAlign: 'center',
     lineHeight: height * 0.035, // ✅ 줄 간격
@@ -144,6 +145,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: width * 0.2,
     borderRadius: width * 0.03,
     alignItems: 'center',
+    marginBottom: height * 0.05,
   },
   buttonText: {
     color: '#FFFFFF',

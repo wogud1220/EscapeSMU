@@ -6,6 +6,7 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from '../App';
 import { useRoute, RouteProp } from '@react-navigation/native';
+import CustomText from '../CustomText';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage12_3'>;
 
@@ -14,7 +15,7 @@ const { width, height } = Dimensions.get('window');
 const Stage12_3 = () => {
   const navigation = useNavigation<NavigationProp>();
   const route = useRoute<RouteProp<RootStackParamList, 'Stage12_3'>>();
-const { department } = route.params;
+  const department = route?.params?.department ?? '';
 
   const handleMapPress = () => {
     navigation.navigate('Map');
@@ -59,12 +60,12 @@ const { department } = route.params;
             style={styles.wayImage} 
             resizeMode="contain"
           />
-          <Text style={styles.text}>
-            계당관에도 '쉐어라운지'가 있어서 학생들이 편하게 쉴 수 있는 공간이 있어!
-          </Text>
-          <Text style={styles.subText}>
-            이미지에 보이는 로봇 친구를 사진으로 찍어보자!
-          </Text>
+          <CustomText style={styles.text}>
+            계당관에도 '쉐어라운지'가 있어서 학생들이 편하게{'\n'}쉴 수 있는 공간이 있어!
+          </CustomText>
+          <CustomText style={styles.subText}>
+            이미지에 보이는 로봇 친구를{'\n'}사진으로 찍어보자!
+          </CustomText>
         </View>
 
         <TouchableOpacity 
@@ -72,7 +73,7 @@ const { department } = route.params;
           onPress={handleNextStage}
           activeOpacity={0.7}
         >
-          <Text style={styles.buttonText}>카메라 📸</Text>
+          <CustomText style={styles.buttonText}>카메라 📸</CustomText>
         </TouchableOpacity>
       </ImageBackground>
     </View>
@@ -159,8 +160,8 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   wayImage: {
-    width: width * 0.4, // ✅ waytostage2.png 크기 조정
-    height: height * 0.3,
+    width: width * 0.5, // ✅ waytostage2.png 크기 조정
+    height: height * 0.4,
     marginBottom: height * 0.005, // ✅ 이미지와 텍스트 간격
   },
 });

@@ -6,6 +6,7 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from '../App';
 import { useRoute, RouteProp } from '@react-navigation/native';
+import CustomText from '../CustomText';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage12_6'>;
 
@@ -55,12 +56,12 @@ const { department } = route.params;
 
         {/* ✅ 가운데 투명한 흰색 박스 */}
         <View style={styles.box}>
-          <Text style={styles.text}>잘 찾아냈구나!
-          </Text>
-          <Text style={styles.subText}>
-          계당관에 존재하는 계당아트홀(중극장)에서 다양한 뮤지컬 공연이나 연극이 자유롭게 진행되고 있어!{'\n'}
+          <CustomText style={styles.text}>잘 찾아냈구나!
+          </CustomText>
+          <CustomText style={styles.subText}>
+          계당관에 존재하는 계당아트홀(중극장)에서 다양한 뮤지컬 공연이나 연극이{'\n'}자유롭게 진행되고 있어!{'\n'}
           게시판 같은 곳을 눈 여겨봐서 뮤지컬이나 연극 홍보가 올라오면{'\n'} 한 번 친구들이랑 보러가보자!
-          </Text>
+          </CustomText>
 
         </View>
 
@@ -70,7 +71,7 @@ const { department } = route.params;
           onPress={handleNextStage}
           activeOpacity={0.7}
         >
-          <Text style={styles.buttonText}>다음 ➡️</Text>
+          <CustomText style={styles.buttonText}>다음 ➡️</CustomText>
         </TouchableOpacity>
       </ImageBackground>
     </View>
@@ -112,7 +113,6 @@ const styles = StyleSheet.create({
   text: {
     color: '#333',
     fontSize: width * 0.055,
-    fontWeight: 'bold',
     marginBottom: height * 0.01,
     textAlign: 'center',
     lineHeight: height * 0.035, // ✅ 줄 간격
@@ -122,6 +122,7 @@ const styles = StyleSheet.create({
     fontSize: width * 0.045,
     textAlign: 'center',
     marginTop: height * 0.02,
+    lineHeight: width * 0.065,
   },
   mapButton: {
     position: 'absolute',
@@ -142,6 +143,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: width * 0.2,
     borderRadius: width * 0.03,
     alignItems: 'center',
+    marginBottom: height * 0.05,
   },
   buttonText: {
     color: '#FFFFFF',

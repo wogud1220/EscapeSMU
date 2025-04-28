@@ -16,6 +16,7 @@ import {RootStackParamList} from '../App';
 import {useRoute, RouteProp} from '@react-navigation/native';
 import {onAuthStateChanged} from 'firebase/auth';
 import {auth} from './firebase.config';
+import CustomText from '../CustomText';
 
 type NavigationProp = NativeStackNavigationProp<
   RootStackParamList,
@@ -75,8 +76,8 @@ const Stage11_6 = () => {
             style={styles.wayImage}
             resizeMode="contain"
           />
-          <Text style={styles.text}>위층으로 올라가는 계단으로 가보자!</Text>
-          <Text style={styles.subText}>계단에 그림들이 붙어 있어!</Text>
+          <CustomText style={styles.text}>위층으로 올라가는 계단으로 가보자!</CustomText>
+          <CustomText style={styles.subText}>계단에 그림들이 붙어 있어!</CustomText>
         </View>
 
         {/* ✅ 다음 스테이지로 이동 버튼 */}
@@ -84,7 +85,7 @@ const Stage11_6 = () => {
           style={styles.nextButton}
           onPress={handleNextStage}
           activeOpacity={0.7}>
-          <Text style={styles.buttonText}>다음 ➡️</Text>
+          <CustomText style={styles.buttonText}>다음 ➡️</CustomText>
         </TouchableOpacity>
       </ImageBackground>
     </View>
@@ -126,7 +127,6 @@ const styles = StyleSheet.create({
   text: {
     color: '#333',
     fontSize: width * 0.06,
-    fontWeight: 'bold',
     marginBottom: height * 0.01,
     marginTop: height * 0.05,
     textAlign: 'center',

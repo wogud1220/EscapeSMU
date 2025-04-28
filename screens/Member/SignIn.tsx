@@ -9,6 +9,7 @@ import {doc, setDoc} from 'firebase/firestore';
 import {useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {RootStackParamList} from '../../App';
+import CustomText from '../../CustomText';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'SignIn'>;
 const SignIn = () => {
@@ -64,12 +65,14 @@ const SignIn = () => {
         placeholder="@를 포함한 이메일 형식으로 적어주세요"
         value={email}
         onChangeText={setEmail}
+        placeholderTextColor={'#999'}
         style={styles.input}
       />
       <TextInput
         placeholder="6자리 이상 비밀번호를 사용해주세요"
         value={password}
         onChangeText={setPassword}
+        placeholderTextColor={'#999'}
         secureTextEntry
         style={styles.input}
       />
@@ -77,12 +80,13 @@ const SignIn = () => {
         placeholder="비밀번호 확인"
         value={confirmPassword}
         onChangeText={setConfirmPassword}
+        placeholderTextColor={'#999'}
         secureTextEntry
         style={styles.input}
       />
       <Button title="Sign Up" onPress={handleSignUp} />
       {errorMessage ? (
-        <Text style={styles.errorText}>{errorMessage}</Text>
+        <CustomText style={styles.errorText}>{errorMessage}</CustomText>
       ) : null}
     </View>
   );
@@ -97,11 +101,12 @@ const styles = StyleSheet.create({
   },
   input: {
     width: '80%',
-    height: 40,
+    height: 50,
     borderColor: 'gray',
     borderWidth: 1,
     marginBottom: 10,
     paddingHorizontal: 10,
+    fontFamily: 'BMHANNAPro',
   },
   errorText: {
     color: 'red',

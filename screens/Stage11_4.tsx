@@ -14,6 +14,7 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {useNavigation} from '@react-navigation/native';
 import {RootStackParamList} from '../App';
 import {useRoute, RouteProp} from '@react-navigation/native';
+import CustomText from '../CustomText';
 
 type NavigationProp = NativeStackNavigationProp<
   RootStackParamList,
@@ -68,13 +69,12 @@ const Stage11_2 = () => {
         <View style={styles.box}>
           {/* ✅ 텍스트 위에 이미지 추가 */}
 
-          <Text style={styles.text}>스쿼시장과 스크린골프장은</Text>
-          <Text style={styles.subText}>
+          <CustomText style={styles.text}>스쿼시장과 스크린골프장은</CustomText>
+          <CustomText style={styles.subText}>
             스포츠융합학부 학생들이 아니라도 상명대학교 학생이라면 학생증을
             제시하면 무료로 이용할 수 있어!{'\n'}
-            {'\n'}
             여기 와서 친구들과 가끔 운동도 하고, 스크린골프도 쳐보자!{'\n'}
-          </Text>
+          </CustomText>
         </View>
 
         {/* ✅ 다음 스테이지로 이동 버튼 */}
@@ -82,7 +82,7 @@ const Stage11_2 = () => {
           style={styles.nextButton}
           onPress={handleNextStage}
           activeOpacity={0.7}>
-          <Text style={styles.buttonText}>다음 ➡️</Text>
+          <CustomText style={styles.buttonText}>다음 ➡️</CustomText>
         </TouchableOpacity>
       </ImageBackground>
     </View>
@@ -124,7 +124,6 @@ const styles = StyleSheet.create({
   text: {
     color: '#333',
     fontSize: width * 0.055,
-    fontWeight: 'bold',
     marginBottom: height * 0.01,
     marginTop: height * 0.03,
     textAlign: 'center',
@@ -134,6 +133,7 @@ const styles = StyleSheet.create({
     color: '#555',
     fontSize: width * 0.045,
     textAlign: 'center',
+    lineHeight: width * 0.065,
   },
   mapButton: {
     position: 'absolute',
