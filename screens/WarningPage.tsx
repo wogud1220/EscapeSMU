@@ -60,9 +60,9 @@ const WarningPage = () => {
 
         <View style={styles.box}>
           <CustomText style={styles.text}>
-            {'\n'}권장하는 플레이 시간대는 {'\n'}<Text style={styles.highlight}>오전 8시 ~ 오후 5시</Text>야!{'\n'}
-            실내에서는 당연히 뛰어다니면 안되겠지?
-            가급적 걷기 편한 신발을 착용하고 안전사고에 유의하면서 진행해 줘!{'\n'}{'\n'}{'\n'}
+            {'\n'}권장하는 플레이 시간대는{'\n'}<Text style={styles.highlight}>오전 8시 ~ 오후 5시</Text>야!{'\n'}{'\n'}
+            실내에서는 당연히 뛰어다니면 안되겠지?{'\n'}
+            가급적 걷기 편한 신발을 착용하고{'\n'}안전사고에 유의하면서 진행해 줘!{'\n'}{'\n'}
             <CustomText style={styles.highlight}>미션은 정문에서부터 시작해!</CustomText>
           </CustomText>
         </View>
@@ -144,7 +144,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: width * 0.2,
     borderRadius: width * 0.03,
     alignItems: 'center',
-    marginBottom: height * 0.02,
   },
   buttonText: {
     color: '#FFFFFF',
@@ -194,7 +193,7 @@ const styles = StyleSheet.create({
     width: width * 0.3,
     height: width * 0.3,
     alignSelf: 'center',
-    marginTop: 2,
+    marginTop: 5,
     marginRight: width * 0.1,
   },
   highlight: {
