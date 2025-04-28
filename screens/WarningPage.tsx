@@ -4,6 +4,8 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
 import { RootStackParamList } from '../App';
 import CustomText from '../CustomText';
+import Animated, { useSharedValue, useAnimatedStyle, withSpring, withTiming, runOnJS } from 'react-native-reanimated';
+
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'WarningPage'>;
 const { width, height } = Dimensions.get('window');
@@ -12,13 +14,40 @@ const WarningPage = () => {
   const navigation = useNavigation<NavigationProp>();
   const route = useRoute<RouteProp<RootStackParamList, 'WarningPage'>>();
 
+  const scale = useSharedValue(1);
+  const rotation = useSharedValue(0);
+
+  const animatedStyle = useAnimatedStyle(() => {
+    return {
+      transform: [
+        { scale: scale.value },
+        { rotate: `${rotation.value}deg` },
+      ],
+    };
+  });
+  
+
   const handleMapPress = () => {
     navigation.navigate('Map');
   };
 
   const handleNextStage = () => {
+    scale.value = withSpring(0.9, {}, () => {
+      scale.value = withSpring(1);
+      rotation.value = withTiming(360, { duration: 500 }, (finished) => {
+        if (finished) {
+          runOnJS(navigateToStageList)(); // ← 이렇게!
+        }
+      });
+    });
+  };
+  
+  // runOnJS에 넘길 함수 따로 정의
+  const navigateToStageList = () => {
     navigation.navigate('StageList');
   };
+  
+  
 
   return (
     <View style={styles.container}>
@@ -67,13 +96,15 @@ const WarningPage = () => {
           </CustomText>
         </View>
 
-        <TouchableOpacity 
-          style={styles.nextButton}
-          onPress={handleNextStage}
-          activeOpacity={0.7}
-        >
-          <CustomText style={styles.buttonText}>다음 ➡️</CustomText>
-        </TouchableOpacity>
+        <Animated.View style={[styles.nextButton, animatedStyle]}>
+          <TouchableOpacity
+            onPress={handleNextStage}
+            activeOpacity={0.7}
+            style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
+          >
+            <CustomText style={styles.buttonText}>다음 ➡️</CustomText>
+          </TouchableOpacity>
+        </Animated.View>
       </ImageBackground>
     </View>
   );
