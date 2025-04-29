@@ -14,11 +14,17 @@ import {RootStackParamList} from '../App';
 import {onAuthStateChanged, signOut} from 'firebase/auth';
 import {auth} from './firebase.config';
 import CustomText from '../CustomText';
-import Animated, { useSharedValue, useAnimatedStyle, withSpring, runOnJS } from 'react-native-reanimated';
+import Animated, {
+  useSharedValue,
+  useAnimatedStyle,
+  withSpring,
+  runOnJS,
+} from 'react-native-reanimated';
 
 const {width, height} = Dimensions.get('window');
 
-const AnimatedTouchableOpacity = Animated.createAnimatedComponent(TouchableOpacity);
+const AnimatedTouchableOpacity =
+  Animated.createAnimatedComponent(TouchableOpacity);
 
 const Main = () => {
   const navigation = useNavigation<NavigationProp>();
@@ -40,7 +46,7 @@ const Main = () => {
 
   const animatedStyle = useAnimatedStyle(() => {
     return {
-      transform: [{ scale: scale.value }],
+      transform: [{scale: scale.value}],
     };
   });
 
@@ -62,7 +68,7 @@ const Main = () => {
   };
 
   const handleNavigate = () => {
-    navigation.navigate('Stage3');
+    navigation.navigate('WarningPage');
   };
 
   const handleLoginNavigate = () => {
