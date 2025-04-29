@@ -8,6 +8,7 @@ dotenv_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), ".env")
 load_dotenv(dotenv_path)  # .env 파일에서 환경변수 로드
 
 API_KEY = os.getenv("OPENAI_API_KEY")  # 🔑 .env에서 키 불러오기
+print("dotenv_path:", dotenv_path)
 print("✅ API_KEY 로드됨:", API_KEY)
 print("🔑 API_KEY")
 def send_to_gpt(user_img_path, template_img_path):
