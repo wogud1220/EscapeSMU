@@ -120,7 +120,7 @@ const Stage7_7 = () => {
 
           {/* ✅ 이미지 추가 */}
           <Image
-            source={require('../assets/songrule.png')}
+            source={require('../assets/gyuchik.jpg')}
             style={styles.wayImage}
             resizeMode="contain"
           />

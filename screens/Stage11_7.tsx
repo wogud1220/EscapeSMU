@@ -113,7 +113,7 @@ const Stage11_7 = () => {
 
           {/* ✅ 이미지 추가 */}
           <Image
-            source={require('../assets/sportski.png')}
+            source={require('../assets/butterfly.jpg')}
             style={styles.wayImage}
             resizeMode="contain"
           />

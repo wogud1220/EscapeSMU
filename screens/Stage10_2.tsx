@@ -118,7 +118,7 @@ const Stage10_2 = () => {
 
         <View style={styles.box}>
           <Image
-            source={require('../assets/1000bab.png')}
+            source={require('../assets/bab.jpg')}
             style={styles.wayImage}
             resizeMode="contain"
           />

@@ -71,7 +71,7 @@ const Stage7_6 = () => {
         <View style={styles.box}>
           {/* ✅ 하얀색 박스 위에 waytostage2.png 추가 */}
           <Image
-            source={require('../assets/songrule.png')}
+            source={require('../assets/gyuchik.jpg')}
             style={styles.wayImage}
             resizeMode="contain"
           />

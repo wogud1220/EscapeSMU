@@ -74,7 +74,7 @@ const Stage5_1_1 = () => {
         <View style={styles.box}>
           {/* ✅ 하얀색 박스 위에 bae.png 추가 */}
           <Image
-            source={require('../assets/mulberry2.png')}
+            source={require('../assets/logomul.jpg')}
             style={styles.wayImage}
             resizeMode="contain"
           />

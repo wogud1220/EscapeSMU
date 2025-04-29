@@ -72,7 +72,7 @@ const Stage9Hint = () => {
             퍼즐 그림의 원본은 {'\n'}어디 있는 그림일까?
           </CustomText>
           <Image
-            source={require('../assets/designmoong.png')}
+            source={require('../assets/sumung.jpg')}
             style={styles.wayImage}
             resizeMode="contain"
           />
