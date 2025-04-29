@@ -78,7 +78,7 @@ yarn-error.log
 venv/
 .env/
 __pycache__/
-
+.env
 
 # OpenCV build & sources
 opencv/
