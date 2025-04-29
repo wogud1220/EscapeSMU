@@ -19,6 +19,9 @@ import {onAuthStateChanged} from 'firebase/auth';
 import {auth} from './firebase.config';
 import {decrementStageAttempt} from '../utils/decrementStageAttempt';
 import CustomText from '../CustomText';
+import Animated, { useSharedValue, useAnimatedStyle, withSpring, runOnJS } from 'react-native-reanimated';
+
+const AnimatedTouchableOpacity = Animated.createAnimatedComponent(TouchableOpacity);
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage3_2'>;
 
@@ -28,6 +31,16 @@ const Stage3_2 = () => {
   const navigation = useNavigation<NavigationProp>();
   const route = useRoute<RouteProp<RootStackParamList, 'Stage3_2'>>();
   const {college, department} = route.params || {};
+    const scale = useSharedValue(1);
+
+  const animatedStyle = useAnimatedStyle(() => {
+    return {
+      transform: [{ scale: scale.value }],
+    };
+  });
+
+
+
   const [userId, setUserId] = useState('');
   const handleMapPress = () => {
     navigation.navigate('Map');
@@ -39,16 +52,29 @@ const Stage3_2 = () => {
       }
     });
   }, []);
-  const handleNextStage = async () => {
+
+
+  const handleNextStageAsync = async () => {
     try {
       await updateStageData(userId, college, 'Stage5');
       decrementStageAttempt(userId, college);
     } catch (err) {
       console.error('🔥 updateStageData error:', err);
     }
-
-    navigation.navigate('Stage5', {college, department}); // ✅ Stage4로
+  
+    navigation.navigate('Stage5', { college, department });
   };
+  
+  const handleNextStage = () => {
+    scale.value = withSpring(1.2, {}, () => {
+      'worklet';
+      scale.value = withSpring(1, {}, () => {
+        'worklet';
+        runOnJS(handleNextStageAsync)(); // ✅ 비동기 로직은 반드시 runOnJS로 분리 호출
+      });
+    });
+  };
+  
 
   return (
     <View style={styles.container}>
@@ -95,12 +121,12 @@ const Stage3_2 = () => {
         </View>
 
         {/* ✅ 다음 스테이지로 이동 버튼 */}
-        <TouchableOpacity
-          style={styles.nextButton}
+        <AnimatedTouchableOpacity
+          style={[styles.nextButton, animatedStyle]}
           onPress={handleNextStage}
           activeOpacity={0.7}>
           <CustomText style={{fontSize: 20, color: 'white'}}>다음 ➡️</CustomText>
-        </TouchableOpacity>
+        </AnimatedTouchableOpacity>
       </ImageBackground>
     </View>
   );

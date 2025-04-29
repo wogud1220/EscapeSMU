@@ -15,6 +15,9 @@ import {useNavigation} from '@react-navigation/native';
 import {RootStackParamList} from '../App';
 import {useRoute, RouteProp} from '@react-navigation/native';
 import CustomText from '../CustomText';
+import Animated, { useSharedValue, useAnimatedStyle, withSpring, runOnJS } from 'react-native-reanimated';
+
+const AnimatedTouchableOpacity = Animated.createAnimatedComponent(TouchableOpacity);
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage4'>;
 
@@ -23,27 +26,48 @@ const {width, height} = Dimensions.get('window');
 const Stage4 = () => {
   const navigation = useNavigation<NavigationProp>();
   const route = useRoute<RouteProp<RootStackParamList, 'Stage4'>>();
-  const {college = '', department = ''} = route.params || {};
+  const { college = '', department = '' } = route.params || {};
+  const scale = useSharedValue(1);
 
+  const animatedStyle = useAnimatedStyle(() => {
+    return {
+      transform: [{ scale: scale.value }],
+    };
+  });
+
+  // ✅ navigation을 JS Thread에서 실행할 함수
+  const goToNextStage = () => {
+    navigation.navigate('Stage4_1', { college, department });
+  };
+
+  // ✅ UI Thread → JS Thread 넘어가는 안전한 포장 함수
+  const triggerNavigation = () => {
+    'worklet';
+    runOnJS(goToNextStage)();
+  };
+
+  // ✅ 애니메이션 실행 함수 (UI Thread)
+  const handleNextStage = () => {
+    'worklet';
+    scale.value = withSpring(1.2, {}, () => {
+      'worklet';
+      scale.value = withSpring(1, {}, triggerNavigation);
+    });
+  };
+
+  // ✅ map 버튼 핸들러는 JS thread이므로 별도 문제 없음
   const handleMapPress = () => {
     navigation.navigate('Map');
   };
 
-  const handleNextStage = () => {
-    navigation.navigate('Stage4_1', {college, department}); // ✅ Stage4_1으로 이동하기
-  };
-
   return (
-    <View style={styles.container}>
-      {/* ✅ main.png를 배경으로 설정 */}
+    <Animated.View style={styles.container}>
       <ImageBackground
         source={require('../assets/main.png')}
         style={styles.image}
         resizeMode="cover">
-        {/* 🔥 투명 레이어 추가 */}
         <View style={styles.overlay} />
 
-        {/* ✅ 🗺️ 오른쪽 상단의 map.png */}
         <TouchableOpacity onPress={handleMapPress} style={styles.mapButton}>
           <Image
             source={require('../assets/map.png')}
@@ -52,7 +76,6 @@ const Stage4 = () => {
           />
         </TouchableOpacity>
 
-        {/* ✅ 홈으로 이동 버튼 */}
         <TouchableOpacity
           onPress={() => navigation.navigate('Main')}
           style={styles.backButton}>
@@ -63,32 +86,33 @@ const Stage4 = () => {
           />
         </TouchableOpacity>
 
-        {/* ✅ 가운데 투명한 흰색 박스 */}
         <View style={styles.box}>
-          {/* ✅ 하얀색 박스 위에 waytostage2.png 추가 */}
           <Image
             source={require('../assets/waytobongwan.png')}
             style={styles.wayImage}
             resizeMode="contain"
           />
-          <CustomText style={{fontSize: 25, textAlign: 'center'}}>다시 이동해볼까?</CustomText>
+          <CustomText style={{ fontSize: 25, textAlign: 'center' }}>
+            다시 이동해볼까?
+          </CustomText>
           <CustomText style={styles.subText}>
             우리의 다음 목적지는 본관이야! 본관은 식물 과학관에서 나와서 바로
             정면에 있는 건물이야!{'\n'}사진을 참고해보자!
           </CustomText>
         </View>
 
-        {/* ✅ 다음 스테이지로 이동 버튼 */}
-        <TouchableOpacity
-          style={styles.nextButton}
+        {/* ✅ AnimatedTouchableOpacity 사용 가능 */}
+        <AnimatedTouchableOpacity
+          style={[styles.nextButton, animatedStyle]}
           onPress={handleNextStage}
           activeOpacity={0.7}>
-          <CustomText style={{fontSize: 20, color: 'white'}}>다음 ➡️</CustomText>
-        </TouchableOpacity>
+          <CustomText style={{ fontSize: 20, color: 'white' }}>다음 ➡️</CustomText>
+        </AnimatedTouchableOpacity>
       </ImageBackground>
-    </View>
+    </Animated.View>
   );
 };
+
 
 const styles = StyleSheet.create({
   container: {
