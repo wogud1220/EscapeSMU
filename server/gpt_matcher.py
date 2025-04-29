@@ -3,7 +3,8 @@ import base64
 import requests
 import os
 from dotenv import load_dotenv
-
+# EscapeSMU/.env 를 명시적으로 지정
+dotenv_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), ".env")
 load_dotenv()  # .env 파일에서 환경변수 로드
 
 API_KEY = os.getenv("OPENAI_API_KEY")  # 🔑 .env에서 키 불러오기
