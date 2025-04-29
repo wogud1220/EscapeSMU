@@ -312,14 +312,27 @@ const Stage1Camera = ({navigation}: {navigation: any}) => {
 
   const takePicture = async () => {
     if (!camera.current) return;
+
     try {
       const photo = await camera.current.takePhoto({quality: 90});
       const fileUri =
         Platform.OS === 'ios' ? photo.path : `file://${photo.path}`;
-      const base64Image = await RNFS.readFile(fileUri, 'base64');
+
+      const formData = new FormData();
+      formData.append('file', {
+        uri: fileUri,
+        name: 'captured.jpg',
+        type: 'image/jpeg',
+      });
+      formData.append('user_id', 'test-user'); // 임시값 (원래는 실제 로그인 ID)
+      formData.append('stage', 'stage1');
 
       setIsUploading(true);
-      const response = await axios.post(SERVER_URL, {image: base64Image});
+
+      const response = await axios.post(SERVER_URL, formData, {
+        headers: {'Content-Type': 'multipart/form-data'},
+      });
+
       setIsUploading(false);
 
       const result = response.data.result;

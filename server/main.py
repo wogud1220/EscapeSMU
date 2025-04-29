@@ -116,6 +116,8 @@ async def compare_images_gpt(
     user_id: str = Form(...),
     stage: str = Form(...)
 ):
+    print("🔧 gpt-compare 요청 받음")
+    print(f"📎 user_id: {user_id}, stage: {stage}, file: {file.filename}")
     user_folder = os.path.join(UPLOAD_FOLDER, user_id)
     os.makedirs(user_folder, exist_ok=True)
 
