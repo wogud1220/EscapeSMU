@@ -22,7 +22,7 @@ def send_to_gpt(user_img_path, template_img_path):
     }
 
     payload = {
-        "model": "gpt-4-vision-preview",
+        "model": "gpt-4o",
         "messages": [
             {
                 "role": "user",
@@ -38,12 +38,21 @@ def send_to_gpt(user_img_path, template_img_path):
 
     try:
         res = requests.post("https://api.openai.com/v1/chat/completions", headers=headers, json=payload)
-        answer = res.json()["choices"][0]["message"]["content"]
-        print("🧠 GPT 응답:", answer)
-        if "같다" in answer:
-            return {"result": "Pass", "message": "GPT: 이미지가 일치합니다"}
+        data = res.json()
+        print("📦 GPT 전체 응답:", data)
+
+        if "choices" in data and data["choices"]:
+            answer = data["choices"][0]["message"]["content"]
+            print("🧠 GPT 응답:", answer)
+            if "같다" in answer:
+                return {"result": "Pass", "message": "GPT: 이미지가 일치합니다"}
+            else:
+                return {"result": "Fail", "message": "GPT: 이미지가 다릅니다"}
         else:
-            return {"result": "Fail", "message": "GPT: 이미지가 다릅니다"}
+            error_msg = data.get("error", {}).get("message", "GPT 응답 형식이 올바르지 않습니다.")
+            print("⚠️ GPT 응답 오류:", error_msg)
+            return {"result": "Error", "message": error_msg}
+
     except Exception as e:
         print("❌ GPT 요청 실패:", e)
         return {"result": "Error", "message": str(e)}
