@@ -1,4 +1,4 @@
-//청/상록관 퍼즐
+//상록관
 
 import React from 'react';
 import {
@@ -15,6 +15,10 @@ import {useNavigation} from '@react-navigation/native';
 import {RootStackParamList} from '../App';
 import {useRoute, RouteProp} from '@react-navigation/native';
 import CustomText from '../CustomText';
+import Animated, { useSharedValue, useAnimatedStyle, withSpring, runOnJS } from 'react-native-reanimated';
+
+const AnimatedTouchableOpacity = Animated.createAnimatedComponent(TouchableOpacity);
+
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage2_4'>;
 
@@ -24,14 +28,26 @@ const Stage2_4 = () => {
   const navigation = useNavigation<NavigationProp>();
   const route = useRoute<RouteProp<RootStackParamList, 'Stage2_4'>>();
   const {college, department} = route.params || {};
+  const scale = useSharedValue(1);
+
+  const animatedStyle = useAnimatedStyle(() => {
+    return {
+      transform: [{ scale: scale.value }],
+    };
+  });
+
+const handleNextStage = () => {
+  scale.value = withSpring(1.2, {}, () => {
+    scale.value = withSpring(1, {}, () => {
+      runOnJS(navigation.navigate)('Stage2_5', {college, department});
+    });
+  });
+};
 
   const handleMapPress = () => {
     navigation.navigate('Map');
   };
 
-  const handleNextStage = () => {
-    navigation.navigate('Stage2_5', {college, department}); // ✅ Stage6_1으로 이동하도록 수정
-  };
 
   return (
     <View style={styles.container}>
@@ -65,21 +81,20 @@ const Stage2_4 = () => {
 
         {/* ✅ 가운데 투명한 흰색 박스 */}
         <View style={styles.box}>
-          <CustomText style={{fontSize: 25}}>이 곳도 잘 찾았구나!</CustomText>
+          <CustomText style={{fontSize: 25}}>상록관 1층에는!</CustomText>
           <CustomText style={styles.subText}>
-            이 곳은 다른 휴게실들에 비해 {'\n'}상대적으로 학생들이 적게 오는
-            곳인데다가 전자레인지도 있으니 갈 곳 없을 때 이용해보는 것도 좋을 것
+            다른 곳들에 비해 상대적으로 학생들이 적게 오는 휴게실이 있어! 전자레인지도 있으니 갈 곳 없을 때 이용해보는 것도 좋을 것
             같아!
           </CustomText>
         </View>
 
         {/* ✅ 다음 스테이지로 이동 버튼 */}
-        <TouchableOpacity
-          style={styles.nextButton}
+        <AnimatedTouchableOpacity
+          style={[styles.nextButton, animatedStyle]}
           onPress={handleNextStage}
           activeOpacity={0.7}>
           <CustomText style={{fontSize: 20, color: 'white'}}>다음 ➡️</CustomText>
-        </TouchableOpacity>
+        </AnimatedTouchableOpacity>
       </ImageBackground>
     </View>
   );
@@ -130,6 +145,7 @@ const styles = StyleSheet.create({
     fontSize: width * 0.045,
     textAlign: 'center',
     marginTop: height * 0.02,
+    lineHeight: width * 0.065,
   },
   mapButton: {
     position: 'absolute',
@@ -150,6 +166,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: width * 0.2,
     borderRadius: width * 0.03,
     alignItems: 'center',
+    marginBottom: height * 0.05,
   },
   buttonText: {
     color: '#FFFFFF',

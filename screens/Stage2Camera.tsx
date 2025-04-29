@@ -137,7 +137,10 @@ const Stage2Camera = ({navigation}: {navigation: any}) => {
 
   if (!device) {
     return (
-      <Text>⚠️ 카메라 장치를 찾을 수 없습니다. 실제 기기에서 실행하세요.</Text>
+            <View style={styles.modalOverlay}>
+              <ActivityIndicator size="large" color="#fff" />
+              <Text style={{color: '#fff', marginTop: 10}}>뒤로 갔다가 다시 실행해주세요!</Text>
+            </View>
     );
   }
 

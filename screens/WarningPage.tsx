@@ -4,11 +4,12 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
 import { RootStackParamList } from '../App';
 import CustomText from '../CustomText';
-import Animated, { useSharedValue, useAnimatedStyle, withSpring, withTiming, runOnJS } from 'react-native-reanimated';
+import Animated, { useSharedValue, useAnimatedStyle, withSpring, runOnJS, createAnimatedComponent } from 'react-native-reanimated';
 
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'WarningPage'>;
 const { width, height } = Dimensions.get('window');
+const AnimatedTouchableOpacity = Animated.createAnimatedComponent(TouchableOpacity);
 
 const WarningPage = () => {
   const navigation = useNavigation<NavigationProp>();
@@ -25,28 +26,22 @@ const WarningPage = () => {
       ],
     };
   });
-  
 
   const handleMapPress = () => {
     navigation.navigate('Map');
   };
 
   const handleNextStage = () => {
-    scale.value = withSpring(0.9, {}, () => {
-      scale.value = withSpring(1);
-      rotation.value = withTiming(360, { duration: 500 }, (finished) => {
-        if (finished) {
-          runOnJS(navigateToStageList)(); // ← 이렇게!
-        }
+    scale.value = withSpring(1.2, {}, () => {
+      scale.value = withSpring(1, {}, () => {
+        runOnJS(navigateToStageList)();
       });
     });
   };
   
-  // runOnJS에 넘길 함수 따로 정의
   const navigateToStageList = () => {
     navigation.navigate('StageList');
   };
-  
   
 
   return (
@@ -96,15 +91,14 @@ const WarningPage = () => {
           </CustomText>
         </View>
 
-        <Animated.View style={[styles.nextButton, animatedStyle]}>
-          <TouchableOpacity
-            onPress={handleNextStage}
-            activeOpacity={0.7}
-            style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
-          >
-            <CustomText style={styles.buttonText}>다음 ➡️</CustomText>
-          </TouchableOpacity>
-        </Animated.View>
+        <AnimatedTouchableOpacity
+        onPress={handleNextStage}
+        style={[styles.nextButton, animatedStyle]}
+        activeOpacity={0.7}
+        >
+          <CustomText style={styles.buttonText}>다음 ➡️</CustomText>
+        </AnimatedTouchableOpacity>
+
       </ImageBackground>
     </View>
   );

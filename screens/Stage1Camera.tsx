@@ -23,6 +23,7 @@ import {departmentToCollege} from '../utils/departmentToCollege';
 import {useFocusEffect} from '@react-navigation/native';
 const {width, height} = Dimensions.get('window');
 
+
 type Stage1CameraRouteProp = RouteProp<RootStackParamList, 'Stage1Camera'>;
 
 const SERVER_URL = 'http://34.47.88.216:8000/compare';
@@ -137,8 +138,14 @@ const Stage1Camera = ({navigation}: {navigation: any}) => {
   }
 
   if (!device) {
-    return <Text>⚠️ 뒤로 갔다가 다시 실행해주세요!</Text>;
+    return (
+      <View style={styles.modalOverlay}>
+        <ActivityIndicator size="large" color="#fff" />
+        <Text style={{color: '#fff', marginTop: 10}}>뒤로 갔다가 다시 실행해주세요!</Text>
+      </View>
+    );
   }
+  
 
   return (
     <View style={styles.container}>

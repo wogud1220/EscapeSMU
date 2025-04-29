@@ -14,6 +14,9 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {useNavigation, useRoute, RouteProp} from '@react-navigation/native';
 import {RootStackParamList} from '../App';
 import CustomText from '../CustomText';
+import Animated, { useSharedValue, useAnimatedStyle, withSpring, runOnJS } from 'react-native-reanimated';
+
+const AnimatedTouchableOpacity = Animated.createAnimatedComponent(TouchableOpacity);
 
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage1_1'>;
@@ -25,14 +28,24 @@ const Stage1_1 = () => {
   const navigation = useNavigation<NavigationProp>();
   const route = useRoute<Stage1RouteProp>();
   const {college = '', department = ''} = route.params || {};
+  const scale = useSharedValue(1);
 
+  const animatedStyle = useAnimatedStyle(() => {
+    return {
+      transform: [{ scale: scale.value }],
+    };
+  });
+  
   const handleMapPress = () => {
     navigation.navigate('Map');
   };
 
   const handleNextStage = () => {
-    
-    navigation.navigate('Stage1Camera', {college, department});
+    scale.value = withSpring(1.2, {}, () => {
+      scale.value = withSpring(1, {}, () => {
+        runOnJS(navigation.navigate)('Stage1Camera', {college, department});
+      });
+    });
   };
 
   return (
@@ -75,12 +88,14 @@ const Stage1_1 = () => {
           </CustomText>
         </View>
 
-        <TouchableOpacity
-          style={styles.nextButton}
-          onPress={handleNextStage}
-          activeOpacity={0.7}>
-          <CustomText style={{fontSize: 20, color: 'white'}}>카메라 📸</CustomText>
-        </TouchableOpacity>
+        <AnimatedTouchableOpacity
+  style={[styles.nextButton, animatedStyle]}
+  onPress={handleNextStage}
+  activeOpacity={0.7}
+>
+  <CustomText style={{fontSize: 20, color: 'white'}}>카메라 📸</CustomText>
+</AnimatedTouchableOpacity>
+
       </ImageBackground>
     </View>
   );

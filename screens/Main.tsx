@@ -14,16 +14,16 @@ import {RootStackParamList} from '../App';
 import {onAuthStateChanged, signOut} from 'firebase/auth';
 import {auth} from './firebase.config';
 import CustomText from '../CustomText';
+import Animated, { useSharedValue, useAnimatedStyle, withSpring, runOnJS } from 'react-native-reanimated';
 
 const {width, height} = Dimensions.get('window');
 
-type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Main'>;
+const AnimatedTouchableOpacity = Animated.createAnimatedComponent(TouchableOpacity);
 
 const Main = () => {
   const navigation = useNavigation<NavigationProp>();
   const [userEmail, setUserEmail] = useState<string | null>(null);
 
-  // 사용자 로그인 상태 감지
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, user => {
       if (user) {
@@ -36,6 +36,22 @@ const Main = () => {
     return unsubscribe;
   }, []);
 
+  const scale = useSharedValue(1);
+
+  const animatedStyle = useAnimatedStyle(() => {
+    return {
+      transform: [{ scale: scale.value }],
+    };
+  });
+
+  const handleStartPress = () => {
+    scale.value = withSpring(1.2, {}, () => {
+      scale.value = withSpring(1, {}, () => {
+        runOnJS(handleNavigate)();
+      });
+    });
+  };
+
   const handleLogout = async () => {
     try {
       await signOut(auth);
@@ -46,7 +62,7 @@ const Main = () => {
   };
 
   const handleNavigate = () => {
-    navigation.navigate('WarningPage');
+    navigation.navigate('Stage2_3');
   };
 
   const handleLoginNavigate = () => {
@@ -70,11 +86,25 @@ const Main = () => {
         />
 
         {userEmail ? (
-          <>
-            <CustomText style={styles.userText}>
-              {`로그인된 사용자: ${userEmail}`}
-            </CustomText>
-          </>
+          <View style={styles.bottomButtonContainer}>
+            <AnimatedTouchableOpacity
+              onPress={handleStartPress}
+              style={[styles.button, animatedStyle]}
+              activeOpacity={0.7}>
+              <CustomText style={{fontSize: 25, color: 'white'}}>
+                시작하기
+              </CustomText>
+            </AnimatedTouchableOpacity>
+
+            <TouchableOpacity
+              onPress={handleLogout}
+              style={styles.logoutButton}
+              activeOpacity={0.7}>
+              <CustomText style={{fontSize: 25, color: 'white'}}>
+                로그아웃
+              </CustomText>
+            </TouchableOpacity>
+          </View>
         ) : (
           <>
             <TouchableOpacity
@@ -90,40 +120,16 @@ const Main = () => {
               activeOpacity={0.7}>
               <CustomText style={styles.buttonText}>회원가입</CustomText>
             </TouchableOpacity>
-          </>
-        )}
 
-        {userEmail && (
-          <View style={styles.bottomButtonContainer}>
-            <TouchableOpacity
-              onPress={handleNavigate}
-              style={styles.button}
+            <AnimatedTouchableOpacity
+              onPress={handleStartPress}
+              style={[styles.button, animatedStyle]}
               activeOpacity={0.7}>
-              <CustomText style={{fontSize: 25, color: 'white'}}>
+              <CustomText style={{fontSize: 30, color: 'white'}}>
                 시작하기
               </CustomText>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              onPress={handleLogout}
-              style={styles.logoutButton}
-              activeOpacity={0.7}>
-              <CustomText style={{fontSize: 25, color: 'white'}}>
-                로그아웃
-              </CustomText>
-            </TouchableOpacity>
-          </View>
-        )}
-
-        {!userEmail && (
-          <TouchableOpacity
-            onPress={handleNavigate}
-            style={styles.button}
-            activeOpacity={0.7}>
-            <CustomText style={{fontSize: 30, color: 'white'}}>
-              시작하기
-            </CustomText>
-          </TouchableOpacity>
+            </AnimatedTouchableOpacity>
+          </>
         )}
       </ImageBackground>
     </View>
