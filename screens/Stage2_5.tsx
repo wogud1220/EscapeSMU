@@ -18,6 +18,8 @@ import {incrementStageAttempt} from '../utils/incrementStageAttempt';
 import {onAuthStateChanged} from 'firebase/auth';
 import {auth} from './firebase.config';
 import CustomText from '../CustomText';
+import { LayoutAnimation, UIManager, Platform } from 'react-native';
+
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage2_5'>;
 
@@ -79,6 +81,11 @@ const Stage2_5 = () => {
         setUserId(user.uid);
       }
     });
+
+    if (Platform.OS === 'android') {
+      UIManager.setLayoutAnimationEnabledExperimental &&
+        UIManager.setLayoutAnimationEnabledExperimental(true);
+    }
   }, []);
   // ✅ 경로 문자열로 변환 후 비교하기 위해 미리 변환
   const correctPaths = correctPuzzleImages.map(
@@ -137,18 +144,25 @@ const Stage2_5 = () => {
     }
   };
 
+  const handleImageDoublePress = (index: number) => {
+    const centerIndex = Math.floor(puzzleImages.length / 2);
+    if (index === centerIndex) {
+      checkCompletion();
+    }
+  };
+  
+
   const swapImages = (index1: number, index2: number) => {
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+  
     const newPuzzleImages = [...puzzleImages];
     [newPuzzleImages[index1], newPuzzleImages[index2]] = [
       newPuzzleImages[index2],
       newPuzzleImages[index1],
     ];
     setPuzzleImages(newPuzzleImages);
-
-    setTimeout(() => {
-      checkCompletion();
-    }, 200);
   };
+  
 
   return (
     <View style={styles.container}>
@@ -185,24 +199,28 @@ const Stage2_5 = () => {
           <View style={styles.grid}>
             {puzzleImages.map((image, index) => (
               <TouchableOpacity
-                key={index}
-                onPress={() => handleImagePress(index)}
-                style={[
-                  styles.gridItem,
-                  selectedImageIndex === index && styles.selectedGridItem,
-                ]}>
-                <Image
-                  source={image}
-                  style={styles.gridImage}
-                  resizeMode="contain"
-                />
-              </TouchableOpacity>
+              key={index}
+              onPress={() => handleImagePress(index)}
+              onLongPress={() => handleImageDoublePress(index)}
+              delayLongPress={300}
+              style={[
+                styles.gridItem,
+                selectedImageIndex === index && styles.selectedGridItem,
+              ]}
+            >
+              <Image
+                source={image}
+                style={styles.gridImage}
+                resizeMode="contain"
+              />
+            </TouchableOpacity>
+            
             ))}
           </View>
           <CustomText style={styles.subText}>
             두 이미지를 클릭해서{'\n'}서로의 위치를 교환할 수 있어!{'\n'}{'\n'}
             <Text style={{fontSize: 15, color: 'red'}}>
-              완성한 것 같으면 가운데 이미지를 더블클릭해보자!
+              완성한 것 같으면 가운데 이미지를 꾹 눌러보자!
             </Text>
           </CustomText>
         </View>
