@@ -112,21 +112,52 @@ def send_to_gpt(user_img_path, template_img_path):
         "Content-Type": "application/json"
     }
 
+    # payload = {
+    #     "model": "gpt-4o",
+    #     "temperature": 0.0,
+    #     "max_tokens": 10,
+    #     "messages": [
+    #         {
+    #             "role": "user",
+    #             "content": [
+    #                 {"type": "text", "text": "두 이미지는 같은 장소를 촬영한 것인지 판별해줘. 같으면 '같다', 다르면 '다르다'로만 답해."},
+    #                 {"type": "image_url", "image_url": {"url": f"data:image/jpeg;base64,{template_image_b64}"}},
+    #                 {"type": "image_url", "image_url": {"url": f"data:image/jpeg;base64,{user_image_b64}"}}
+    #             ]
+    #         }
+    #     ]
+    # }
+
+
     payload = {
-        "model": "gpt-4o",
-        "temperature": 0.0,
-        "max_tokens": 10,
-        "messages": [
-            {
-                "role": "user",
-                "content": [
-                    {"type": "text", "text": "두 이미지는 같은 장소를 촬영한 것인지 판별해줘. 같으면 '같다', 다르면 '다르다'로만 답해."},
-                    {"type": "image_url", "image_url": {"url": f"data:image/jpeg;base64,{template_image_b64}"}},
-                    {"type": "image_url", "image_url": {"url": f"data:image/jpeg;base64,{user_image_b64}"}}
-                ]
-            }
-        ]
-    }
+    "model": "gpt-4o",
+    "temperature": 0.0,
+    "max_tokens": 20,
+    "messages": [
+        {
+            "role": "user",
+            "content": [
+                {
+                    "type": "text",
+                    "text": (
+                        "다음 두 이미지를 비교해. 실제 현장에서 찍은 사진인지, 모니터(또는 화면) 사진인지 판별해줘.\n"
+                        "1. 키보드, 마우스, 모니터 화면이 보이면 화면 촬영으로 간주해.\n"
+                        "2. 반사광, 픽셀, 왜곡이 있으면 화면 촬영으로 간주해.\n"
+                        "3. 같은 장소의 실제 촬영이면 '실제 촬영: 같다'라고 답해.\n"
+                        "4. 다르면 '실제 촬영: 다르다'라고 답해.\n"
+                        "5. 화면을 찍은 것으로 보이면 '화면 촬영'이라고 답해.\n\n"
+                        "세 가지 중 하나로만 정확히 짧게 답해:\n"
+                        "- 실제 촬영: 같다\n"
+                        "- 실제 촬영: 다르다\n"
+                        "- 화면 촬영"
+                    )
+                },
+                {"type": "image_url", "image_url": {"url": f"data:image/jpeg;base64,{template_image_b64}"}},
+                {"type": "image_url", "image_url": {"url": f"data:image/jpeg;base64,{user_image_b64}"}}
+            ]
+        }
+    ]
+}
 
     try:
         start_time = time.time()
