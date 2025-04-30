@@ -10,7 +10,6 @@ load_dotenv(dotenv_path)  # .env 파일에서 환경변수 로드
 API_KEY = os.getenv("OPENAI_API_KEY")  # 🔑 .env에서 키 불러오기
 print("dotenv_path:", dotenv_path)
 print("✅ API_KEY 로드됨:", API_KEY)
-print("🔑 API_KEY")
 def send_to_gpt(user_img_path, template_img_path):
     def encode_image_base64(path):
         with open(path, "rb") as f:
@@ -40,9 +39,13 @@ def send_to_gpt(user_img_path, template_img_path):
     }
 
     try:
+        start_time = time.time()
         res = requests.post("https://api.openai.com/v1/chat/completions", headers=headers, json=payload)
+        elapsed = time.time() - start_time
+
         data = res.json()
         print("📦 GPT 전체 응답:", data)
+        print(f"⏱️ GPT 응답 시간: {elapsed:.2f}초")
 
         if "choices" in data and data["choices"]:
             answer = data["choices"][0]["message"]["content"]
