@@ -132,7 +132,7 @@ def send_to_gpt(user_img_path, template_img_path):
     payload = {
     "model": "gpt-4o",
     "temperature": 0.0,
-    "max_tokens": 20,
+    "max_tokens": 10,
     "messages": [
         {
             "role": "user",
