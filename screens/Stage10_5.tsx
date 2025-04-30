@@ -69,7 +69,7 @@ const Stage10_5 = () => {
         <View style={styles.box}>
           {/* ✅ 텍스트 위에 이미지 추가 */}
           <Image
-            source={require('../assets/centerstair.png')}
+            source={require('../assets/centerstair.jpg')}
             style={styles.dokdoImage}
             resizeMode="contain"
           />

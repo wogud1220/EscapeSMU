@@ -71,7 +71,7 @@ const Stage5 = () => {
         <View style={styles.box}>
           {/* ✅ 하얀색 박스 위에 bae.png 추가 */}
           <Image
-            source={require('../assets/waytohan.png')}
+            source={require('../assets/waytohan.jpg')}
             style={styles.wayImage}
             resizeMode="contain"
           />

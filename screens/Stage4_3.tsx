@@ -65,9 +65,8 @@ const Stage4_3 = () => {
 
         {/* ✅ 가운데 투명한 흰색 박스 */}
         <View style={styles.box}>
-          {/* ✅ 하얀색 박스 위에 bae.png 추가 */}
           <Image
-            source={require('../assets/bae.png')}
+            source={require('../assets/bae.jpg')}
             style={styles.wayImage}
             resizeMode="contain"
           />
@@ -171,7 +170,7 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   wayImage: {
-    width: width * 0.6, // ✅ bae.png 크기 조정
+    width: width * 0.6,
     height: height * 0.5,
     marginBottom: height * 0.005, // ✅ 이미지와 텍스트 간격
   },

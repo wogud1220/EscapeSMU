@@ -70,7 +70,7 @@ const Stage7_2 = () => {
         <View style={styles.box}>
           {/* ✅ 텍스트 위에 이미지 추가 */}
           <Image
-            source={require('../assets/song2.png')}
+            source={require('../assets/song2.jpg')}
             style={styles.dokdoImage}
             resizeMode="contain"
           />

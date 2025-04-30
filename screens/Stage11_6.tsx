@@ -72,7 +72,7 @@ const Stage11_6 = () => {
         {/* ✅ 가운데 투명한 흰색 박스 */}
         <View style={styles.box}>
           <Image
-            source={require('../assets/sportstair.png')}
+            source={require('../assets/sportstair.jpg')}
             style={styles.wayImage}
             resizeMode="contain"
           />

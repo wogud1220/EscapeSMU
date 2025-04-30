@@ -118,7 +118,7 @@ const Stage4_4 = () => {
 
           {/* ✅ 이미지 추가 */}
           <Image
-            source={require('../assets/bae.png')}
+            source={require('../assets/bae.jpg')}
             style={styles.wayImage}
             resizeMode="contain"
           />

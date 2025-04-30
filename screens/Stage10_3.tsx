@@ -69,7 +69,7 @@ const Stage10_3 = () => {
         {/* ✅ 가운데 투명한 흰색 박스 */}
         <View style={styles.box}>
           <Image
-            source={require('../assets/sharelounge.png')}
+            source={require('../assets/sharelounge.jpg')}
             style={styles.wayImage}
             resizeMode="contain"
           />

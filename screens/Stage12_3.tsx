@@ -68,7 +68,7 @@ const Stage12_3 = () => {
 
         <View style={styles.box}>
           <Image
-            source={require('../assets/robot.png')}
+            source={require('../assets/robot.jpg')}
             style={styles.wayImage}
             resizeMode="contain"
           />
