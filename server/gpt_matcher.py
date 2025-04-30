@@ -2,6 +2,7 @@
 import base64
 import requests
 import os
+import time
 from dotenv import load_dotenv
 # EscapeSMU/.env 를 명시적으로 지정
 dotenv_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), ".env")
