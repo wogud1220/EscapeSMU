@@ -20,6 +20,9 @@ import {decrementStageAttempt} from '../utils/decrementStageAttempt';
 import {onAuthStateChanged} from 'firebase/auth';
 import {auth} from './firebase.config';
 import CustomText from '../CustomText';
+import Animated, { useSharedValue, useAnimatedStyle, withSpring, runOnJS } from 'react-native-reanimated';
+
+const AnimatedTouchableOpacity = Animated.createAnimatedComponent(TouchableOpacity);
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage6_1'>;
 
@@ -34,6 +37,24 @@ const Stage5_7 = () => {
   const route = useRoute<RouteProp<RootStackParamList, 'Stage5_7'>>();
   const {college, department} = route.params || {};
   const [userId, setUserId] = useState('');
+  const scale = useSharedValue(1);
+
+  const animatedStyle = useAnimatedStyle(() => {
+    return {
+      transform: [{ scale: scale.value }],
+    };
+  });
+
+const handleNextStage = () => {
+  scale.value = withSpring(1.2, {}, () => {
+    scale.value = withSpring(1, {}, async () => {
+      await updateStageData(userId, college, 'Stage6_1');
+      decrementStageAttempt(userId, college);
+      runOnJS(navigation.navigate)('Stage6_1', {college, department});
+    });
+  });
+};
+
   const handleMapPress = () => {
     navigation.navigate('Map');
   };
@@ -46,11 +67,7 @@ const Stage5_7 = () => {
     });
     return unsubscribe;
   }, []);
-  const handleNextStage = async () => {
-    await updateStageData(userId, college, 'Stage6_1'); // 스테이지 진행 정보 저장 (독도)
-    decrementStageAttempt(userId, college); // 스테이지 시도 횟수 감소
-    navigation.navigate('Stage6_1', {college, department}); // 다음 스테이지로 이동(독도)
-  };
+
   return (
     <View style={styles.container}>
       {/* ✅ main.png를 배경으로 설정 */}
@@ -95,12 +112,12 @@ const Stage5_7 = () => {
         </View>
 
         {/* ✅ 다음 스테이지로 이동 버튼 */}
-        <TouchableOpacity
-          style={styles.nextButton}
+        <AnimatedTouchableOpacity
+          style={[styles.nextButton, animatedStyle]}
           onPress={handleNextStage}
           activeOpacity={0.7}>
           <CustomText style={{fontSize: 20, color: 'white'}}>다음 ➡️</CustomText>
-        </TouchableOpacity>
+        </AnimatedTouchableOpacity>
       </ImageBackground>
     </View>
   );
@@ -172,6 +189,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: width * 0.2,
     borderRadius: width * 0.03,
     alignItems: 'center',
+    marginBottom: height * 0.05,
   },
   buttonText: {
     color: '#FFFFFF',

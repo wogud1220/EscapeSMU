@@ -21,6 +21,9 @@ import {onAuthStateChanged} from 'firebase/auth';
 import {auth} from './firebase.config';
 import {incrementStageAttempt} from '../utils/incrementStageAttempt';
 import CustomText from '../CustomText';
+import Animated, { useSharedValue, useAnimatedStyle, withSpring, runOnJS } from 'react-native-reanimated';
+
+const AnimatedTouchableOpacity = Animated.createAnimatedComponent(TouchableOpacity);
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage5_5'>;
 
@@ -43,6 +46,22 @@ const Stage5_5 = () => {
   const navigation = useNavigation<NavigationProp>();
   const route = useRoute<RouteProp<RootStackParamList, 'Stage5_5'>>();
   const {college, department} = route.params || {};
+  const scale = useSharedValue(1);
+
+  const animatedStyle = useAnimatedStyle(() => {
+    return {
+      transform: [{ scale: scale.value }],
+    };
+  });
+
+const handleGoToGuestbook = () => {
+  scale.value = withSpring(1.2, {}, () => {
+    scale.value = withSpring(1, {}, () => {
+      runOnJS(navigation.navigate)('Guestbook', {college, department});
+    });
+  });
+};
+
   const [answer, setAnswer] = useState('');
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [userId, setUserId] = useState('');
@@ -80,10 +99,6 @@ const Stage5_5 = () => {
 
   const handleHomePress = () => {
     navigation.navigate('Main');
-  };
-
-  const handleGoToGuestbook = () => {
-    navigation.navigate('Guestbook', {college, department});
   };
 
   // ✅ 모달 열기
@@ -131,12 +146,12 @@ const Stage5_5 = () => {
             그렇다면, 수뭉이가 어디로 가라고 했는지 말해볼래? {'\n'}(띄어쓰기
             없이 입력해줘!)
           </CustomText>
-          <TouchableOpacity
-            style={styles.guestbookButton}
+          <AnimatedTouchableOpacity
+            style={[styles.guestbookButton, animatedStyle]}
             onPress={handleGoToGuestbook}
             activeOpacity={0.7}>
             <CustomText style={styles.guestbookButtonText}>방명록 확인하기</CustomText>
-          </TouchableOpacity>
+          </AnimatedTouchableOpacity>
         </View>
 
         {/* ✅ 입력 필드 → 터치 시 모달 열기 */}
