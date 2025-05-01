@@ -1,6 +1,6 @@
 //디자인대 문제 수정하자
 
-import React from 'react';
+import React, {useState} from 'react';
 import {
   View,
   Text,
@@ -15,6 +15,8 @@ import {useNavigation} from '@react-navigation/native';
 import {RootStackParamList} from '../App';
 import {useRoute, RouteProp} from '@react-navigation/native';
 import CustomText from '../CustomText';
+import {updateStageData} from '../utils/updateStageData';
+import {decrementStageAttempt} from '../utils/decrementStageAttempt';
 
 type NavigationProp = NativeStackNavigationProp<
   RootStackParamList,
@@ -27,12 +29,18 @@ const Stage12_6 = () => {
   const navigation = useNavigation<NavigationProp>();
   const route = useRoute<RouteProp<RootStackParamList, 'Stage12_6'>>();
   const {college, department} = route.params || {};
-
+  const [userId, setUserId] = useState('');
   const handleMapPress = () => {
     navigation.navigate('Map');
   };
 
   const handleNextStage = () => {
+    let actualCollege = college;
+    if (department === '디지털만화영상' || department === '사진영상') {
+      actualCollege = '융합기술대학';
+    }
+    updateStageData(userId, actualCollege, 'Stage5');
+    decrementStageAttempt(userId, actualCollege);
     navigation.navigate('Stage13_1', {college, department});
   };
 

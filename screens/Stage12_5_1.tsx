@@ -21,6 +21,9 @@ import {useNavigation} from '@react-navigation/native';
 import {RootStackParamList} from '../App';
 import {useRoute, RouteProp} from '@react-navigation/native';
 import CustomText from '../CustomText';
+import {updateStageData} from '../utils/updateStageData';
+import {increment} from 'firebase/firestore';
+import {incrementStageAttempt} from '../utils/incrementStageAttempt';
 
 type NavigationProp = NativeStackNavigationProp<
   RootStackParamList,
@@ -41,7 +44,12 @@ const Stage12_5_1 = () => {
   };
 
   const handleNextStage = () => {
+    let actualCollege = college;
+    if (department === '디지털만화영상' || department === '사진영상') {
+      actualCollege = '융합기술대학';
+    }
     if (answer.trim() === '시련') {
+      updateStageData('userId', actualCollege, 'Stage12_6');
       Alert.alert('정답입니다!', '다음 스테이지로 이동합니다.', [
         {
           text: '확인',
@@ -51,6 +59,7 @@ const Stage12_5_1 = () => {
       ]);
       setIsModalVisible(false);
     } else {
+      incrementStageAttempt('userId', actualCollege);
       Alert.alert('오답입니다.', '다시 시도해 보세요!');
     }
   };
