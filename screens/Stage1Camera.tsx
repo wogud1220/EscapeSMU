@@ -474,6 +474,10 @@ const Stage1Camera = ({navigation}: {navigation: any}) => {
   }, []);
 
   const takePicture = async () => {
+    if (!camera.current || !userId) {
+      Alert.alert('❌ 사용자 정보 오류', '로그인 상태를 확인하세요.');
+      return;
+    }
     if (!camera.current) return;
     try {
       const photo = await camera.current.takePhoto({quality: 90});
@@ -517,6 +521,7 @@ const Stage1Camera = ({navigation}: {navigation: any}) => {
         incrementStageAttempt(userId, actualCollege);
         Alert.alert('❌ 실패', '다른 이미지입니다. 다시 시도하세요.');
       } else {
+        incrementStageAttempt(userId, actualCollege);
         Alert.alert('⚠️ GPT 응답', result);
       }
     } catch (err: any) {

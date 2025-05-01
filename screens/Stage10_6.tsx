@@ -18,6 +18,7 @@ import CustomText from '../CustomText';
 import {updateStageData} from '../utils/updateStageData';
 import {onAuthStateChanged} from 'firebase/auth';
 import {auth} from './firebase.config';
+import {decrementStageAttempt} from '../utils/decrementStageAttempt';
 
 type NavigationProp = NativeStackNavigationProp<
   RootStackParamList,
@@ -55,11 +56,13 @@ const Stage10_6 = () => {
     //예술학부라면 (디만영, 사진영상은 융합기술대학으로)
     else if (actualCollege.includes('예술학부')) {
       updateStageData(userId, actualCollege, 'StageFinal');
+      decrementStageAttempt(userId, actualCollege);
       navigation.navigate('StageFinal', {college: actualCollege, department});
     }
     //융기대 + 디만영 + 사진영상
     else if (actualCollege === '융합기술대학') {
       updateStageData(userId, actualCollege, 'StageFinal');
+      decrementStageAttempt(userId, actualCollege);
       navigation.navigate('StageFinal', {college: actualCollege, department});
     }
     //인문대 + 공대라면
@@ -68,11 +71,13 @@ const Stage10_6 = () => {
       actualCollege === '공과대학'
     ) {
       updateStageData(userId, actualCollege, 'StageFinal');
+      decrementStageAttempt(userId, actualCollege);
       navigation.navigate('StageFinal', {college: actualCollege, department});
     }
     //디자인학부라면
     else if (college.includes('디자인학부')) {
       updateStageData(userId, actualCollege, 'StageFinal');
+      decrementStageAttempt(userId, actualCollege);
       navigation.navigate('StageFinal', {college: actualCollege, department});
     }
   };
