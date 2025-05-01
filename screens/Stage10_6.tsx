@@ -1,6 +1,6 @@
 //학생회관 2층
 
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -15,6 +15,9 @@ import {useNavigation} from '@react-navigation/native';
 import {RootStackParamList} from '../App';
 import {useRoute, RouteProp} from '@react-navigation/native';
 import CustomText from '../CustomText';
+import {updateStageData} from '../utils/updateStageData';
+import {onAuthStateChanged} from 'firebase/auth';
+import {auth} from './firebase.config';
 
 type NavigationProp = NativeStackNavigationProp<
   RootStackParamList,
@@ -27,13 +30,51 @@ const Stage10_6 = () => {
   const navigation = useNavigation<NavigationProp>();
   const route = useRoute<RouteProp<RootStackParamList, 'Stage10_6'>>();
   const {college, department} = route.params || {};
-
+  const [userId, setUserId] = useState('');
+  useEffect(() => {
+    onAuthStateChanged(auth, user => {
+      if (user) {
+        setUserId(user.uid);
+      }
+    });
+  }, []);
   const handleMapPress = () => {
     navigation.navigate('Map');
   };
 
   const handleNextStage = () => {
-    navigation.navigate('Stage10_7', {college, department}); // ✅ Stage10_6 가즈아
+    let actualCollege = college;
+    if (department === '디지털만화영상' || department === '사진영상') {
+      actualCollege = '융합기술대학';
+    }
+    //체대라면
+    if (department.includes('스포츠융합학부')) {
+      updateStageData(userId, actualCollege, 'Stage11_1');
+      navigation.navigate('Stage11_1', {college: actualCollege, department});
+    }
+    //예술학부라면 (디만영, 사진영상은 융합기술대학으로)
+    else if (actualCollege.includes('예술학부')) {
+      updateStageData(userId, actualCollege, 'StageFinal');
+      navigation.navigate('StageFinal', {college: actualCollege, department});
+    }
+    //융기대 + 디만영 + 사진영상
+    else if (actualCollege === '융합기술대학') {
+      updateStageData(userId, actualCollege, 'StageFinal');
+      navigation.navigate('StageFinal', {college: actualCollege, department});
+    }
+    //인문대 + 공대라면
+    else if (
+      actualCollege === '글로벌인문학부대학' ||
+      actualCollege === '공과대학'
+    ) {
+      updateStageData(userId, actualCollege, 'StageFinal');
+      navigation.navigate('StageFinal', {college: actualCollege, department});
+    }
+    //디자인학부라면
+    else if (college.includes('디자인학부')) {
+      updateStageData(userId, actualCollege, 'StageFinal');
+      navigation.navigate('StageFinal', {college: actualCollege, department});
+    }
   };
 
   return (
@@ -77,8 +118,8 @@ const Stage10_6 = () => {
             이곳은 학생회관 '쉐어라운지'야!{'\n'}
           </CustomText>
           <CustomText style={styles.subText}>
-          누구나 자유롭게 사용할 수 있고,{'\n'}
-          쉐어라운지 내의 세미나실은 예약 없이 선착순으로 사용할 수 있어!
+            누구나 자유롭게 사용할 수 있고,{'\n'}
+            쉐어라운지 내의 세미나실은 예약 없이 선착순으로 사용할 수 있어!
           </CustomText>
         </View>
 
