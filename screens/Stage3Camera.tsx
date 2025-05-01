@@ -181,10 +181,9 @@ const Stage3Camera = ({navigation}: {navigation: any}) => {
             <TouchableOpacity
               style={styles.resultButton}
               onPress={() => {
+                setShowResult(false); // ✅ 먼저 모달 닫기
                 if (pass) {
                   goToNextStage();
-                } else {
-                  setShowResult(false);
                 }
               }}>
               <Text style={styles.buttonText}>
