@@ -1,13 +1,21 @@
 //모든 스테이지 클리어 후 화면
 
 import React from 'react';
-import { View, Text, ImageBackground, StyleSheet, Dimensions, Image, TouchableOpacity } from 'react-native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { useNavigation } from '@react-navigation/native';
-import { RootStackParamList } from '../App';
-import { useRoute, RouteProp } from '@react-navigation/native';
+import {
+  View,
+  Text,
+  ImageBackground,
+  StyleSheet,
+  Dimensions,
+  Image,
+  TouchableOpacity,
+} from 'react-native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {useNavigation} from '@react-navigation/native';
+import {RootStackParamList} from '../App';
+import {useRoute, RouteProp} from '@react-navigation/native';
 import CustomText from '../CustomText';
-import { Linking } from 'react-native'
+import {Linking} from 'react-native';
 
 type NavigationProp = NativeStackNavigationProp<
   RootStackParamList,
@@ -26,7 +34,7 @@ const StageFinal = () => {
   };
 
   const handleNextStage = () => {
-    navigation.navigate('RankingBoard', {department});
+    navigation.navigate('RankingBoard', {college, department});
   };
 
   return (
@@ -60,17 +68,23 @@ const StageFinal = () => {
         </TouchableOpacity>
 
         <View style={styles.box}>
-          <CustomText style={styles.text}>모든 스테이지가 다 끝이났어.</CustomText>
+          <CustomText style={styles.text}>
+            모든 스테이지가 다 끝이났어.
+          </CustomText>
           <CustomText style={styles.subText}>
             캠퍼스와는 좀 친해진 것 같아?{'\n'}
             다음 설문조사를 통해서 너가 느꼈던 것들을 알려줬으면 좋겠어!{'\n'}
             <CustomText
-            style={styles.linkText}
-            onPress={() => Linking.openURL('https://docs.google.com/forms/d/e/1FAIpQLSf1EDoxfVVbABCT4T15F19yFIe_r-4vAGe1oafI5XoEWW5hPg/viewform?usp=header')}>
+              style={styles.linkText}
+              onPress={() =>
+                Linking.openURL(
+                  'https://docs.google.com/forms/d/e/1FAIpQLSf1EDoxfVVbABCT4T15F19yFIe_r-4vAGe1oafI5XoEWW5hPg/viewform?usp=header',
+                )
+              }>
               여기!
-              </CustomText>
-              </CustomText>
-              </View>
+            </CustomText>
+          </CustomText>
+        </View>
 
         {/* ✅ 다음 스테이지로 이동 버튼 */}
         <TouchableOpacity
@@ -127,7 +141,7 @@ const styles = StyleSheet.create({
     color: 'blue',
     textDecorationLine: 'underline',
   },
-  
+
   subText: {
     color: '#555',
     fontSize: width * 0.045,
