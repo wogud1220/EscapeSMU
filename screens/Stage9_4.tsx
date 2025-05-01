@@ -91,6 +91,7 @@ const Stage9_4 = () => {
     );
 
     if (currentPaths.every((path, index) => path === correctPaths[index])) {
+      updateStageData(userId, college, 'Stage9_5');
       Alert.alert('성공 🎉', '퍼즐을 완성했구나! 다음 스테이지로 이동하자!', [
         {
           text: '확인',
@@ -98,8 +99,9 @@ const Stage9_4 = () => {
         },
       ]);
     } else {
-    Alert.alert('오답 😢', '퍼즐이 아직 완성되지 않았어. 다시 시도해보자!');
-  }
+      incrementStageAttempt(userId, college);
+      Alert.alert('오답 😢', '퍼즐이 아직 완성되지 않았어. 다시 시도해보자!');
+    }
   };
 
   useEffect(() => {
@@ -125,7 +127,6 @@ const Stage9_4 = () => {
       setSelectedImageIndex(null);
     }
   };
-  
 
   const swapImages = (index1: number, index2: number) => {
     const newPuzzleImages = [...puzzleImages];
