@@ -23,6 +23,9 @@ import {auth} from './firebase.config';
 import {updateStageData} from '../utils/updateStageData';
 import {incrementStageAttempt} from '../utils/incrementStageAttempt';
 import CustomText from '../CustomText';
+import Animated, { useSharedValue, useAnimatedStyle, withSpring, runOnJS } from 'react-native-reanimated';
+
+const AnimatedTouchableOpacity = Animated.createAnimatedComponent(TouchableOpacity);
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage7_7'>;
 
@@ -46,13 +49,24 @@ const Stage7_7 = () => {
   const [answer, setAnswer] = useState('');
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [userId, setUserId] = useState('');
+  const scale = useSharedValue(1);
+
+  const animatedStyle = useAnimatedStyle(() => {
+    return {
+      transform: [{ scale: scale.value }],
+    };
+  });
 
   const handleMapPress = () => {
     navigation.navigate('Map');
   };
 
   const handleBackStage = () => {
-    navigation.navigate('Stage7Camera', {college, department});
+    scale.value = withSpring(1.2, {}, () => {
+      scale.value = withSpring(1, {}, () => {
+        runOnJS(navigation.navigate)('Stage7Camera', {college, department});
+      });
+    });
   };
 
   const handleNextStage = () => {
@@ -169,12 +183,12 @@ const Stage7_7 = () => {
           </TouchableWithoutFeedback>
         </Modal>
       </ImageBackground>
-      <TouchableOpacity
-        style={styles.gogobackButton}
+      <AnimatedTouchableOpacity
+        style={[styles.gogobackButton, animatedStyle]}
         onPress={handleBackStage}
         activeOpacity={0.7}>
         <CustomText style={styles.buttonText1}>카메라로 다시 살펴보기</CustomText>
-      </TouchableOpacity>
+      </AnimatedTouchableOpacity>
     </View>
   );
 };

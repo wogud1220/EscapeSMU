@@ -18,6 +18,9 @@ import {auth} from './firebase.config';
 import {updateStageData} from '../utils/updateStageData';
 import {incrementStageAttempt} from '../utils/incrementStageAttempt';
 import CustomText from '../CustomText';
+import Animated, { useSharedValue, useAnimatedStyle, withSpring, runOnJS } from 'react-native-reanimated';
+
+const AnimatedTouchableOpacity = Animated.createAnimatedComponent(TouchableOpacity);
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage9_4'>;
 
@@ -110,9 +113,21 @@ const Stage9_4 = () => {
     navigation.navigate('Map');
   };
 
-  const handleHint = () => {
-    navigation.navigate('Stage9Hint', {college, department});
-  };
+  const scale = useSharedValue(1);
+
+  const animatedStyle = useAnimatedStyle(() => {
+    return {
+      transform: [{ scale: scale.value }],
+    };
+  });
+
+const handleHint = () => {
+  scale.value = withSpring(1.2, {}, () => {
+    scale.value = withSpring(1, {}, () => {
+      runOnJS(navigation.navigate)('Stage9Hint', {college, department});
+    });
+  });
+};
 
   const handleImagePress = (index: number) => {
     if (selectedImageIndex === null) {
@@ -192,12 +207,12 @@ const Stage9_4 = () => {
           style={styles.checkButton}>
           <CustomText style={styles.checkButtonText}>확인</CustomText>
         </TouchableOpacity> */}
-        <TouchableOpacity
-          style={styles.hintButton}
+        <AnimatedTouchableOpacity
+          style={[styles.hintButton, animatedStyle]}
           onPress={handleHint}
           activeOpacity={0.7}>
           <CustomText style={styles.hintButtonText}>힌트 보기 💡</CustomText>
-        </TouchableOpacity>
+        </AnimatedTouchableOpacity>
       </ImageBackground>
     </View>
   );

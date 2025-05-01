@@ -15,6 +15,9 @@ import {useNavigation} from '@react-navigation/native';
 import {RootStackParamList} from '../App';
 import {useRoute, RouteProp} from '@react-navigation/native';
 import CustomText from '../CustomText';
+import Animated, { useSharedValue, useAnimatedStyle, withSpring, runOnJS } from 'react-native-reanimated';
+
+const AnimatedTouchableOpacity = Animated.createAnimatedComponent(TouchableOpacity);
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage9_1'>;
 
@@ -24,13 +27,24 @@ const Stage9_1 = () => {
   const navigation = useNavigation<NavigationProp>();
   const route = useRoute<RouteProp<RootStackParamList, 'Stage9_1'>>();
   const {college, department} = route.params || {};
+  const scale = useSharedValue(1);
+
+  const animatedStyle = useAnimatedStyle(() => {
+    return {
+      transform: [{ scale: scale.value }],
+    };
+  });
+
+const handleNextStage = () => {
+  scale.value = withSpring(1.2, {}, () => {
+    scale.value = withSpring(1, {}, () => {
+      runOnJS(navigation.navigate)('Stage9_2', {college, department});
+    });
+  });
+};
 
   const handleMapPress = () => {
     navigation.navigate('Map');
-  };
-
-  const handleNextStage = () => {
-    navigation.navigate('Stage9_2', {college, department}); // ✅ Stage9_1 가즈아
   };
 
   return (
@@ -80,12 +94,12 @@ const Stage9_1 = () => {
         </View>
 
         {/* ✅ 다음 스테이지로 이동 버튼 */}
-        <TouchableOpacity
-          style={styles.nextButton}
+        <AnimatedTouchableOpacity
+          style={[styles.nextButton, animatedStyle]}
           onPress={handleNextStage}
           activeOpacity={0.7}>
           <CustomText style={styles.buttonText}>다음 ➡️</CustomText>
-        </TouchableOpacity>
+        </AnimatedTouchableOpacity>
       </ImageBackground>
     </View>
   );
