@@ -1,76 +1,4 @@
-
-# import base64
-# import requests
-# import os
-# import time
-# from dotenv import load_dotenv
-# # EscapeSMU/.env 를 명시적으로 지정
-# dotenv_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), ".env")
-# load_dotenv(dotenv_path)  # .env 파일에서 환경변수 로드
-
-# API_KEY = os.getenv("OPENAI_API_KEY")  # 🔑 .env에서 키 불러오기
-# print("dotenv_path:", dotenv_path)
-# print("✅ API_KEY 로드됨:", API_KEY)
-# def send_to_gpt(user_img_path, template_img_path):
-#     def encode_image_base64(path):
-#         with open(path, "rb") as f:
-#             return base64.b64encode(f.read()).decode("utf-8")
-
-#     user_image_b64 = encode_image_base64(user_img_path)
-#     template_image_b64 = encode_image_base64(template_img_path)
-
-#     headers = {
-#         "Authorization": f"Bearer {API_KEY}",
-#         "Content-Type": "application/json"
-#     }
-
-#     payload = {
-#         "model": "gpt-4o",
-#         "messages": [
-#             {
-#                 "role": "user",
-#                 "content": [
-#                     {"type": "text", "text": "두 이미지는 같은 장소를 촬영한 것인지 판별해줘. 같으면 '같다', 다르면 '다르다'로만 답해."},
-#                     {"type": "image_url", "image_url": {"url": f"data:image/jpeg;base64,{template_image_b64}"}},
-#                     {"type": "image_url", "image_url": {"url": f"data:image/jpeg;base64,{user_image_b64}"}}
-#                 ]
-#             }
-#         ],
-#         "max_tokens": 10
-#     }
-
-#     try:
-#         start_time = time.time()
-#         res = requests.post("https://api.openai.com/v1/chat/completions", headers=headers, json=payload)
-#         elapsed = time.time() - start_time
-
-#         data = res.json()
-#         print("📦 GPT 전체 응답:", data)
-#         print(f"⏱️ GPT 응답 시간: {elapsed:.2f}초")
-
-#         if "choices" in data and data["choices"]:
-#             answer = data["choices"][0]["message"]["content"]
-#             print("🧠 GPT 응답:", answer)
-#             if "같다" in answer:
-#                 return {"result": "Pass", "message": "GPT: 이미지가 일치합니다"}
-#             else:
-#                 return {"result": "Fail", "message": "GPT: 이미지가 다릅니다"}
-#         else:
-#             error_msg = data.get("error", {}).get("message", "GPT 응답 형식이 올바르지 않습니다.")
-#             print("⚠️ GPT 응답 오류:", error_msg)
-#             return {"result": "Error", "message": error_msg}
-
-#     except Exception as e:
-#         print("❌ GPT 요청 실패:", e)
-#         return {"result": "Error", "message": str(e)}
-
-
-
-
-
-
 # resize, max tokens, temperature 변경
-
 import base64
 import requests
 import os
@@ -111,23 +39,6 @@ def send_to_gpt(user_img_path, template_img_path):
         "Authorization": f"Bearer {API_KEY}",
         "Content-Type": "application/json"
     }
-
-    # payload = {
-    #     "model": "gpt-4o",
-    #     "temperature": 0.0,
-    #     "max_tokens": 10,
-    #     "messages": [
-    #         {
-    #             "role": "user",
-    #             "content": [
-    #                 {"type": "text", "text": "두 이미지는 같은 장소를 촬영한 것인지 판별해줘. 같으면 '같다', 다르면 '다르다'로만 답해."},
-    #                 {"type": "image_url", "image_url": {"url": f"data:image/jpeg;base64,{template_image_b64}"}},
-    #                 {"type": "image_url", "image_url": {"url": f"data:image/jpeg;base64,{user_image_b64}"}}
-    #             ]
-    #         }
-    #     ]
-    # }
-
 
     payload = {
     "model": "gpt-4o",
