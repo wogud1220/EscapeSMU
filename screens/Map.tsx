@@ -179,39 +179,6 @@ const Map = () => {
       return false;
     }
   };
-  // 고도 넣기 전 동작
-  // const getCurrentLocation = async () => {
-  //   console.log('📡 현재 위치 가져오는 중...');
-  //   const hasPermission = await requestLocationPermission();
-  //   if (!hasPermission) return;
-
-  //   Geolocation.getCurrentPosition(
-  //     position => {
-  //       if (!position?.coords) {
-  //         console.log('🚨 위치 정보를 찾을 수 없음');
-  //         Alert.alert('위치 오류', '위치를 가져올 수 없습니다.');
-  //         return;
-  //       }
-
-  //       const {latitude, longitude, accuracy} = position.coords;
-  //       console.log(
-  //         `📡 위치 정보: 위도 ${latitude}, 경도 ${longitude}, 정확도 ${accuracy}m`,
-  //       );
-
-  //       setLocation({lat: latitude, lng: longitude});
-  //       setShouldUpdateMap(true);
-  //     },
-  //     error => {
-  //       console.log('🚨 위치 가져오기 실패:', error);
-  //       Alert.alert('위치 오류', '위치를 가져올 수 없습니다.');
-  //     },
-  //     {
-  //       enableHighAccuracy: true,
-  //       timeout: 15000,
-  //       maximumAge: 10000,
-  //     },
-  //   );
-  // };
 
   const getCurrentLocation = async () => {
     console.log('📡 현재 위치 가져오는 중...');
@@ -243,8 +210,8 @@ const Map = () => {
         Alert.alert('위치 오류', '위치를 가져올 수 없습니다.');
       },
       {
-        enableHighAccuracy: true, // 정확도 높은 GPS 정보 사용
-        timeout: 15000, // 15초 타임아웃
+        enableHighAccuracy: false, // 정확도 높은 GPS 정보 사용
+        timeout: 1000, // 15초 타임아웃
         maximumAge: 10000, // 10초 내의 캐시된 위치 허용
       },
     );
@@ -328,5 +295,3 @@ const styles = StyleSheet.create({
 });
 
 export default Map;
-
-////////////////////////////////////////////////////////

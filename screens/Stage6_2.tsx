@@ -64,6 +64,8 @@ const Stage6_2 = () => {
   };
 
   console.log('🧩 Voice 모듈:', Voice);
+  console.log('🧩 Voice.start 타입:', typeof Voice.start);
+
 
 
   const startListening = async () => {
