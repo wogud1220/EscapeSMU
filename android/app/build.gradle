@@ -121,3 +121,9 @@ dependencies {
         implementation jscFlavor
     }
 }
+
+tasks.whenTaskAdded { task ->
+    if (task.name == 'extractDeepLinksRelease') {
+        task.mustRunAfter 'processReleaseGoogleServices'
+    }
+}
