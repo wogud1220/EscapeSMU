@@ -15,6 +15,9 @@ import {useNavigation} from '@react-navigation/native';
 import {RootStackParamList} from '../App';
 import {useRoute, RouteProp} from '@react-navigation/native';
 import CustomText from '../CustomText';
+import Animated, { useSharedValue, useAnimatedStyle, withSpring, runOnJS } from 'react-native-reanimated';
+
+const AnimatedTouchableOpacity = Animated.createAnimatedComponent(TouchableOpacity);
 
 type NavigationProp = NativeStackNavigationProp<
   RootStackParamList,
@@ -27,13 +30,24 @@ const Stage12_3 = () => {
   const navigation = useNavigation<NavigationProp>();
   const route = useRoute<RouteProp<RootStackParamList, 'Stage12_3'>>();
   const {college, department} = route.params || {};
+  const scale = useSharedValue(1);
+
+  const animatedStyle = useAnimatedStyle(() => {
+    return {
+      transform: [{ scale: scale.value }],
+    };
+  });
+
+const handleNextStage = () => {
+  scale.value = withSpring(1.2, {}, () => {
+    scale.value = withSpring(1, {}, () => {
+      runOnJS(navigation.navigate)('Stage12Camera', {college, department});
+    });
+  });
+};
 
   const handleMapPress = () => {
     navigation.navigate('Map');
-  };
-
-  const handleNextStage = () => {
-    navigation.navigate('Stage12Camera', {college, department});
   };
 
   return (
@@ -81,12 +95,12 @@ const Stage12_3 = () => {
           </CustomText>
         </View>
 
-        <TouchableOpacity
-          style={styles.nextButton}
+        <AnimatedTouchableOpacity
+          style={[styles.nextButton, animatedStyle]}
           onPress={handleNextStage}
           activeOpacity={0.7}>
           <CustomText style={styles.buttonText}>카메라 📸</CustomText>
-        </TouchableOpacity>
+        </AnimatedTouchableOpacity>
       </ImageBackground>
     </View>
   );
@@ -113,7 +127,7 @@ const styles = StyleSheet.create({
   box: {
     backgroundColor: 'rgba(255, 255, 255, 0.7)',
     width: width * 0.8,
-    height: height * 0.7, // ✅ 높이 조정 (이미지 공간 포함)
+    height: height * 0.65, // ✅ 높이 조정 (이미지 공간 포함)
     padding: height * 0.03,
     borderRadius: width * 0.04,
     alignItems: 'center',

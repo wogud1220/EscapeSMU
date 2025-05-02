@@ -15,6 +15,9 @@ import {useNavigation, useRoute, RouteProp} from '@react-navigation/native';
 import {RootStackParamList} from '../App';
 import {useEffect} from 'react';
 import CustomText from '../CustomText';
+import Animated, { useSharedValue, useAnimatedStyle, withSpring, runOnJS } from 'react-native-reanimated';
+
+const AnimatedTouchableOpacity = Animated.createAnimatedComponent(TouchableOpacity);
 
 const {width, height} = Dimensions.get('window');
 
@@ -41,9 +44,21 @@ const Stage13_1 = () => {
     navigation.navigate('Map');
   };
 
-  const handleNextStage = () => {
-    navigation.navigate('Stage13_2', {college, department});
-  };
+  const scale = useSharedValue(1);
+
+  const animatedStyle = useAnimatedStyle(() => {
+    return {
+      transform: [{ scale: scale.value }],
+    };
+  });
+
+const handleNextStage = () => {
+  scale.value = withSpring(1.2, {}, () => {
+    scale.value = withSpring(1, {}, () => {
+      runOnJS(navigation.navigate)('Stage13_2', {college, department});
+    });
+  });
+};
 
   return (
     <View style={styles.container}>
@@ -83,12 +98,12 @@ const Stage13_1 = () => {
           <CustomText style={styles.subText}>도서관은 공부하는 학생들이 많으니{'\n'}시끄럽지 않게 주의하자!</CustomText>
         </View>
 
-        <TouchableOpacity
-          style={styles.nextButton}
+        <AnimatedTouchableOpacity
+          style={[styles.nextButton, animatedStyle]}
           onPress={handleNextStage}
           activeOpacity={0.7}>
           <CustomText style={styles.buttonText}>다음 ➡️</CustomText>
-        </TouchableOpacity>
+        </AnimatedTouchableOpacity>
       </ImageBackground>
     </View>
   );

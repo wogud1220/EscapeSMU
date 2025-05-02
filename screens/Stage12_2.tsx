@@ -98,7 +98,7 @@ const Stage12_2 = () => {
             '계당관'이라는 이름은 {'\n'}어디서 따왔을까?
           </CustomText>
           <CustomText style={styles.subText}>
-            '계당'은 상명대학교 설립자인 {'\n'}'배상명'의 호에서 따왔어.그렇다면
+            '계당'은 상명대학교 설립자인 {'\n'}'배상명'의 호에서 따왔어. 그렇다면
             '배상명'의 또다른 호는 무엇일까? 한글로 입력해줘!
           </CustomText>
         </View>
@@ -172,12 +172,14 @@ const styles = StyleSheet.create({
     fontSize: width * 0.06,
     marginBottom: height * 0.01,
     textAlign: 'center',
+    marginTop: height * 0.02,
   },
   subText: {
     color: '#555',
     fontSize: width * 0.045,
     textAlign: 'center',
     lineHeight: width * 0.065,
+    marginTop: height * 0.02,
   },
   inputContainer: {
     marginTop: height * 0.05,

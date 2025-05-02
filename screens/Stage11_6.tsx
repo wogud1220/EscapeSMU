@@ -17,6 +17,9 @@ import {useRoute, RouteProp} from '@react-navigation/native';
 import {onAuthStateChanged} from 'firebase/auth';
 import {auth} from './firebase.config';
 import CustomText from '../CustomText';
+import Animated, { useSharedValue, useAnimatedStyle, withSpring, runOnJS } from 'react-native-reanimated';
+
+const AnimatedTouchableOpacity = Animated.createAnimatedComponent(TouchableOpacity);
 
 type NavigationProp = NativeStackNavigationProp<
   RootStackParamList,
@@ -30,13 +33,24 @@ const Stage11_6 = () => {
   const route = useRoute<RouteProp<RootStackParamList, 'Stage11_6'>>();
   const {college, department} = route.params || {};
   const [userId, setUserId] = useState('');
+  const scale = useSharedValue(1);
+
+  const animatedStyle = useAnimatedStyle(() => {
+    return {
+      transform: [{ scale: scale.value }],
+    };
+  });
+
+const handleNextStage = () => {
+  scale.value = withSpring(1.2, {}, () => {
+    scale.value = withSpring(1, {}, () => {
+      runOnJS(navigation.navigate)('Stage11_7', {college, department});
+    });
+  });
+};
 
   const handleMapPress = () => {
     navigation.navigate('Map');
-  };
-
-  const handleNextStage = () => {
-    navigation.navigate('Stage11_7', {college, department});
   };
 
   return (
@@ -76,17 +90,17 @@ const Stage11_6 = () => {
             style={styles.wayImage}
             resizeMode="contain"
           />
-          <CustomText style={styles.text}>위층으로 올라가는 계단으로 가보자!</CustomText>
-          <CustomText style={styles.subText}>계단에 그림들이 붙어 있어!</CustomText>
+          <CustomText style={styles.text}>위층으로 올라가는{'\n'}계단으로 가보자!</CustomText>
+          <CustomText style={styles.subText}>계단에 그림들이 붙어 있을거야!</CustomText>
         </View>
 
         {/* ✅ 다음 스테이지로 이동 버튼 */}
-        <TouchableOpacity
-          style={styles.nextButton}
+        <AnimatedTouchableOpacity
+          style={[styles.nextButton, animatedStyle]}
           onPress={handleNextStage}
           activeOpacity={0.7}>
           <CustomText style={styles.buttonText}>다음 ➡️</CustomText>
-        </TouchableOpacity>
+        </AnimatedTouchableOpacity>
       </ImageBackground>
     </View>
   );
@@ -128,8 +142,9 @@ const styles = StyleSheet.create({
     color: '#333',
     fontSize: width * 0.06,
     marginBottom: height * 0.01,
-    marginTop: height * 0.05,
+    marginTop: height * 0.01,
     textAlign: 'center',
+    lineHeight: width * 0.065,
   },
   subText: {
     color: '#555',
