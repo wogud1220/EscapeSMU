@@ -14,10 +14,18 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {useNavigation, useRoute, RouteProp} from '@react-navigation/native';
 import {RootStackParamList} from '../App';
 import CustomText from '../CustomText';
-import Animated, { useSharedValue, useAnimatedStyle, withSpring, runOnJS } from 'react-native-reanimated';
+import Animated, {
+  useSharedValue,
+  useAnimatedStyle,
+  withSpring,
+  runOnJS,
+} from 'react-native-reanimated';
+import Geolocation from '@react-native-community/geolocation';
+import {PermissionsAndroid, Platform, Alert} from 'react-native';
+import {useEffect} from 'react';
 
-const AnimatedTouchableOpacity = Animated.createAnimatedComponent(TouchableOpacity);
-
+const AnimatedTouchableOpacity =
+  Animated.createAnimatedComponent(TouchableOpacity);
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage1_1'>;
 type Stage1RouteProp = RouteProp<RootStackParamList, 'Stage1_1'>;
@@ -32,10 +40,30 @@ const Stage1_1 = () => {
 
   const animatedStyle = useAnimatedStyle(() => {
     return {
-      transform: [{ scale: scale.value }],
+      transform: [{scale: scale.value}],
     };
   });
-  
+
+  useEffect(() => {
+    const requestLocationPermission = async () => {
+      if (Platform.OS === 'android') {
+        const granted = await PermissionsAndroid.request(
+          PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+        );
+        if (granted !== PermissionsAndroid.RESULTS.GRANTED) {
+          Alert.alert(
+            '❌ 위치 권한 필요',
+            '게임을 진행하려면 위치 권한이 필요합니다.',
+          );
+        }
+      } else {
+        Geolocation.requestAuthorization(); // iOS는 내부적으로 prompt를 띄움
+      }
+    };
+
+    requestLocationPermission();
+  }, []);
+
   const handleMapPress = () => {
     navigation.navigate('Map');
   };
@@ -49,7 +77,6 @@ const Stage1_1 = () => {
   };
 
   return (
-    
     <View style={styles.container}>
       <ImageBackground
         source={require('../assets/main.png')}
@@ -81,7 +108,9 @@ const Stage1_1 = () => {
             style={styles.wayImage}
             resizeMode="contain"
           />
-          <CustomText style={{fontSize:30, marginTop: -20, marginBottom: 10}}>상명대학교 정문이야!</CustomText>
+          <CustomText style={{fontSize: 30, marginTop: -20, marginBottom: 10}}>
+            상명대학교 정문이야!
+          </CustomText>
           <CustomText style={styles.subText}>
             다음 스테이지에 가기 위해서는{'\n'}카메라를 이용해{'\n'}
             사진을 찍어야 한다는데..{'\n'}(경비실 앞 캠퍼스안내도에서 찍어보자!)
@@ -89,13 +118,13 @@ const Stage1_1 = () => {
         </View>
 
         <AnimatedTouchableOpacity
-  style={[styles.nextButton, animatedStyle]}
-  onPress={handleNextStage}
-  activeOpacity={0.7}
->
-  <CustomText style={{fontSize: 20, color: 'white'}}>카메라 📸</CustomText>
-</AnimatedTouchableOpacity>
-
+          style={[styles.nextButton, animatedStyle]}
+          onPress={handleNextStage}
+          activeOpacity={0.7}>
+          <CustomText style={{fontSize: 20, color: 'white'}}>
+            카메라 📸
+          </CustomText>
+        </AnimatedTouchableOpacity>
       </ImageBackground>
     </View>
   );
