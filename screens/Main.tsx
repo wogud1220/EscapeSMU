@@ -134,8 +134,13 @@ const Main = () => {
 
             <AnimatedTouchableOpacity
               onPress={handleStartPress}
-              style={[styles.button, animatedStyle]}
-              activeOpacity={0.7}>
+              style={[
+                styles.button,
+                animatedStyle,
+                !userEmail && styles.disabledButton,
+              ]}
+              activeOpacity={0.7}
+              disabled={!userEmail}>
               <CustomText style={{fontSize: 30, color: 'white'}}>
                 시작하기
               </CustomText>
