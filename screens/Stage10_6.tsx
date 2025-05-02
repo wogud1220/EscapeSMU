@@ -19,6 +19,9 @@ import {updateStageData} from '../utils/updateStageData';
 import {onAuthStateChanged} from 'firebase/auth';
 import {auth} from './firebase.config';
 import {decrementStageAttempt} from '../utils/decrementStageAttempt';
+import Animated, { useSharedValue, useAnimatedStyle, withSpring, runOnJS } from 'react-native-reanimated';
+
+const AnimatedTouchableOpacity = Animated.createAnimatedComponent(TouchableOpacity);
 
 type NavigationProp = NativeStackNavigationProp<
   RootStackParamList,
@@ -30,7 +33,7 @@ const {width, height} = Dimensions.get('window');
 const Stage10_6 = () => {
   const navigation = useNavigation<NavigationProp>();
   const route = useRoute<RouteProp<RootStackParamList, 'Stage10_6'>>();
-  const {college, department} = route.params || {};
+  const { college = '', department = '' } = route.params || {};
   const [userId, setUserId] = useState('');
   useEffect(() => {
     onAuthStateChanged(auth, user => {
@@ -129,12 +132,12 @@ const Stage10_6 = () => {
         </View>
 
         {/* ✅ 다음 스테이지로 이동 버튼 */}
-        <AnimatedTouchableOpacity
-          style={[styles.nextButton, animatedStyle]}
+        <TouchableOpacity
+          style={styles.nextButton}
           onPress={handleNextStage}
           activeOpacity={0.7}>
           <CustomText style={styles.buttonText}>다음 ➡️</CustomText>
-        </AnimatedTouchableOpacity>
+        </TouchableOpacity>
       </ImageBackground>
     </View>
   );

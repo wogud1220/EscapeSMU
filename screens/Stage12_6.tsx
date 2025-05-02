@@ -88,12 +88,12 @@ const Stage12_6 = () => {
         </View>
 
         {/* ✅ 다음 스테이지로 이동 버튼 */}
-        <AnimatedTouchableOpacity
-          style={[styles.nextButton, animatedStyle]}
+        <TouchableOpacity
+          style={styles.nextButton}
           onPress={handleNextStage}
           activeOpacity={0.7}>
           <CustomText style={styles.buttonText}>다음 ➡️</CustomText>
-        </AnimatedTouchableOpacity>
+        </TouchableOpacity>
       </ImageBackground>
     </View>
   );
