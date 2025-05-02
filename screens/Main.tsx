@@ -68,7 +68,7 @@ const Main = () => {
   };
 
   const handleNavigate = () => {
-    navigation.navigate('StageFinal');
+    navigation.navigate('StageList');
   };
 
   const handleLoginNavigate = () => {
@@ -95,10 +95,15 @@ const Main = () => {
           <View style={styles.bottomButtonContainer}>
             <AnimatedTouchableOpacity
               onPress={handleStartPress}
-              style={[styles.button, animatedStyle]}
-              activeOpacity={0.7}>
+              style={[
+                styles.button,
+                animatedStyle,
+                !userEmail && styles.disabledButton,
+              ]}
+              activeOpacity={0.7}
+              disabled={!userEmail}>
               <CustomText style={{fontSize: 25, color: 'white'}}>
-                시작하기
+                시작하기fff
               </CustomText>
             </AnimatedTouchableOpacity>
 
@@ -107,7 +112,7 @@ const Main = () => {
               style={styles.logoutButton}
               activeOpacity={0.7}>
               <CustomText style={{fontSize: 25, color: 'white'}}>
-                로그아웃
+                로그아웃ff
               </CustomText>
             </TouchableOpacity>
           </View>
@@ -143,6 +148,9 @@ const Main = () => {
 };
 
 const styles = StyleSheet.create({
+  disabledButton: {
+    backgroundColor: 'rgba(0, 0, 255, 0.2)', // 연한 파란색으로 비활성화 느낌
+  },
   container: {
     flex: 1,
     backgroundColor: '#F5E6C4',
