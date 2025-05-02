@@ -84,7 +84,7 @@ const Stage2_1 = () => {
         <View style={styles.box}>
           {/* ✅ 하얀색 박스 위에 waytostage2.png 추가 */}
           <Image
-            source={require('../assets/cheong1.png')}
+            source={require('../assets/cheong1.jpg')}
             style={styles.wayImage}
             resizeMode="contain"
           />

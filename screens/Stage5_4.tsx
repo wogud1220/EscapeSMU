@@ -15,6 +15,9 @@ import {useNavigation} from '@react-navigation/native';
 import {RootStackParamList} from '../App';
 import {useRoute, RouteProp} from '@react-navigation/native';
 import CustomText from '../CustomText';
+import Animated, { useSharedValue, useAnimatedStyle, withSpring, runOnJS } from 'react-native-reanimated';
+
+const AnimatedTouchableOpacity = Animated.createAnimatedComponent(TouchableOpacity);
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage5_4'>;
 
@@ -29,17 +32,33 @@ const Stage5_4 = () => {
   const navigation = useNavigation<NavigationProp>();
   const route = useRoute<RouteProp<RootStackParamList, 'Stage5_4'>>();
   const {college, department} = route.params || {};
+  const scaleNext = useSharedValue(1);
+  const scaleGuestbook = useSharedValue(1);
 
-  const handleMapPress = () => {
-    navigation.navigate('Map');
-  };
+  const animatedStyleNext = useAnimatedStyle(() => ({
+    transform: [{ scale: scaleNext.value }],
+  }));
+  const animatedStyleGuestbook = useAnimatedStyle(() => ({
+    transform: [{ scale: scaleGuestbook.value }],
+  }));
 
   const handleNextStage = () => {
-    navigation.navigate('Stage5_5', {college, department});
+    scaleNext.value = withSpring(1.2, {}, () => {
+      scaleNext.value = withSpring(1, {}, () => {
+        runOnJS(navigation.navigate)('Stage5_5', {college, department});
+      });
+    });
   };
-
+  
   const handleGoToGuestbook = () => {
-    navigation.navigate('Guestbook', {college, department}); // ✅ 방명록 작성 페이지로 이동
+    scaleGuestbook.value = withSpring(1.2, {}, () => {
+      scaleGuestbook.value = withSpring(1, {}, () => {
+        runOnJS(navigation.navigate)('Guestbook', {college, department});
+      });
+    });
+  };
+  const handleMapPress = () => {
+    navigation.navigate('Map');
   };
 
   return (
@@ -84,21 +103,21 @@ const Stage5_4 = () => {
             꿀팁들을 더 공유해줘!!{'\n'}
           </CustomText>
 
-          <TouchableOpacity
-            style={styles.guestbookButton}
+          <AnimatedTouchableOpacity
+            style={[styles.guestbookButton, animatedStyleGuestbook]}
             onPress={handleGoToGuestbook}
             activeOpacity={0.7}>
             <CustomText style={{fontSize: 20, color: 'white'}}>방명록 남기러 가기</CustomText>
-          </TouchableOpacity>
+          </AnimatedTouchableOpacity>
         </View>
 
         {/* ✅ 다음 스테이지로 이동 버튼 */}
-        <TouchableOpacity
-          style={styles.nextButton}
+        <AnimatedTouchableOpacity
+          style={[styles.nextButton, animatedStyleNext]}
           onPress={handleNextStage}
           activeOpacity={0.7}>
           <CustomText style={{fontSize: 20, color: 'white'}}>다음 ➡️</CustomText>
-        </TouchableOpacity>
+        </AnimatedTouchableOpacity>
       </ImageBackground>
     </View>
   );

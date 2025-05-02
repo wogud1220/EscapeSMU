@@ -7,13 +7,23 @@ import {
   Dimensions,
   Image,
   TouchableOpacity,
-  Animated,
+  Animated as RNAnimated,
 } from 'react-native';
+
+import Reanimated, {
+  useSharedValue,
+  useAnimatedStyle,
+  withSpring,
+  runOnJS,
+} from 'react-native-reanimated';
+
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {useNavigation} from '@react-navigation/native';
 import {RootStackParamList} from '../App';
 import {useRoute, RouteProp} from '@react-navigation/native';
 import CustomText from '../CustomText';
+
+const AnimatedTouchableOpacity = Reanimated.createAnimatedComponent(TouchableOpacity);
 
 type NavigationProp = NativeStackNavigationProp<
   RootStackParamList,
@@ -45,7 +55,22 @@ const Stage13_8 = () => {
   const route = useRoute<RouteProp<RootStackParamList, 'Stage13_8'>>();
   const {college, department} = route.params || {};
   const [randomBook, setRandomBook] = useState<string | null>(null);
-  const fadeAnim = useState(new Animated.Value(0))[0];
+  const fadeAnim = useState(new RNAnimated.Value(0))[0];
+  const scale = useSharedValue(1);
+
+  const animatedStyle = useAnimatedStyle(() => {
+    return {
+      transform: [{ scale: scale.value }],
+    };
+  });
+
+const handleNextStage = () => {
+  scale.value = withSpring(1.2, {}, () => {
+    scale.value = withSpring(1, {}, () => {
+      runOnJS(navigation.navigate)('Stage13_9', {college, department});
+    });
+  });
+};
 
   // ✅ 책 제목 무작위 선택 및 애니메이션 효과
   useEffect(() => {
@@ -53,7 +78,7 @@ const Stage13_8 = () => {
     setRandomBook(bookList[randomIndex]);
 
     // ✅ 페이드 인 애니메이션 설정
-    Animated.timing(fadeAnim, {
+    RNAnimated.timing(fadeAnim, {
       toValue: 1,
       duration: 1000,
       useNativeDriver: true,
@@ -62,10 +87,6 @@ const Stage13_8 = () => {
 
   const handleMapPress = () => {
     navigation.navigate('Map');
-  };
-
-  const handleNextStage = () => {
-    navigation.navigate('Stage13_9', {college, department});
   };
 
   return (
@@ -104,9 +125,9 @@ const Stage13_8 = () => {
 
           {/* ✅ 무작위 책 제목 애니메이션 적용 */}
           {randomBook && (
-            <Animated.Text style={[styles.bookTitle, {opacity: fadeAnim}]}>
+            <RNAnimated.Text style={[styles.bookTitle, {opacity: fadeAnim}]}>
               {randomBook}
-            </Animated.Text>
+            </RNAnimated.Text>
           )}
 
           <CustomText style={styles.subText}>
@@ -115,12 +136,12 @@ const Stage13_8 = () => {
         </View>
 
         {/* ✅ 다음 스테이지 버튼 */}
-        <TouchableOpacity
-          style={styles.nextButton}
+        <AnimatedTouchableOpacity
+          style={[styles.nextButton, animatedStyle]}
           onPress={handleNextStage}
           activeOpacity={0.7}>
           <CustomText style={styles.buttonText}>다음 ➡️</CustomText>
-        </TouchableOpacity>
+        </AnimatedTouchableOpacity>
       </ImageBackground>
     </View>
   );

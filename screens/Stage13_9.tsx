@@ -15,6 +15,9 @@ import {useNavigation} from '@react-navigation/native';
 import {RootStackParamList} from '../App';
 import {useRoute, RouteProp} from '@react-navigation/native';
 import CustomText from '../CustomText';
+import Animated, { useSharedValue, useAnimatedStyle, withSpring, withTiming, withRepeat, withSequence, runOnJS } from 'react-native-reanimated';
+
+const AnimatedTouchableOpacity = Animated.createAnimatedComponent(TouchableOpacity);
 
 type NavigationProp = NativeStackNavigationProp<
   RootStackParamList,
@@ -38,9 +41,49 @@ const Stage13_9 = () => {
     navigation.navigate('Map');
   };
 
-  const handleNextStage = () => {
-    navigation.navigate('Stage13_Sound', {college, department});
-  };
+  const scale = useSharedValue(1);
+
+  const animatedStyle = useAnimatedStyle(() => {
+    return {
+      transform: [{ scale: scale.value }],
+    };
+  });
+
+  const opacity = useSharedValue(0);
+  const translateY = useSharedValue(10);
+
+  const entryStyle = useAnimatedStyle(() => {
+    return {
+      opacity: opacity.value,
+      transform: [
+        { translateY: translateY.value },
+        { scale: scale.value },
+      ],
+    };
+  });
+  
+
+  useEffect(() => {
+    opacity.value = withTiming(1, { duration: 1000 });
+  
+    translateY.value = withRepeat(
+      withSequence(
+        withTiming(-10, { duration: 1000 }),
+        withTiming(0, { duration: 1000 })
+      ),
+      -1,
+      true
+    );
+  }, []);
+  
+
+const handleNextStage = () => {
+  scale.value = withSpring(1.2, {}, () => {
+    scale.value = withSpring(1, {}, () => {
+      runOnJS(navigation.navigate)('Stage13_Sound', {college, department});
+    });
+  });
+};
 
   return (
     <View style={styles.container}>
@@ -85,12 +128,12 @@ const Stage13_9 = () => {
         </View>
 
         {/* ✅ 다음 스테이지로 이동 버튼 */}
-        <TouchableOpacity
-          style={styles.nextButton}
+        <AnimatedTouchableOpacity
+          style={[styles.nextButton, entryStyle]}
           onPress={handleNextStage}
           activeOpacity={0.7}>
-          <CustomText style={styles.buttonText}>시작!</CustomText>
-        </TouchableOpacity>
+          <CustomText style={styles.buttonText}>🤫 시작!</CustomText>
+        </AnimatedTouchableOpacity>
       </ImageBackground>
     </View>
   );

@@ -15,6 +15,9 @@ import {useNavigation} from '@react-navigation/native';
 import {RootStackParamList} from '../App';
 import {useRoute, RouteProp} from '@react-navigation/native';
 import CustomText from '../CustomText';
+import Animated, { useSharedValue, useAnimatedStyle, withSpring, runOnJS } from 'react-native-reanimated';
+
+const AnimatedTouchableOpacity = Animated.createAnimatedComponent(TouchableOpacity);
 
 type NavigationProp = NativeStackNavigationProp<
   RootStackParamList,
@@ -32,9 +35,21 @@ const Stage12_4 = () => {
     navigation.navigate('Map');
   };
 
-  const handleNextStage = () => {
-    navigation.navigate('Stage12_5_1', {college, department});
-  };
+  const scale = useSharedValue(1);
+
+  const animatedStyle = useAnimatedStyle(() => {
+    return {
+      transform: [{ scale: scale.value }],
+    };
+  });
+
+const handleNextStage = () => {
+  scale.value = withSpring(1.2, {}, () => {
+    scale.value = withSpring(1, {}, () => {
+      runOnJS(navigation.navigate)('Stage12_5_1', {college, department});
+    });
+  });
+};
 
   return (
     <View style={styles.container}>
@@ -69,19 +84,21 @@ const Stage12_4 = () => {
         {/* ✅ 가운데 투명한 흰색 박스 */}
         <View style={styles.box}>
           <CustomText style={styles.text}>
-            좋아! 계당관 쉐어라운지에서는 자유롭게 대화를 나눠도 되지만{'\n'}큰
-            소음을 유발하거나 취식, 훼손과 같은 행위는{'\n'}자제하도록 하자!
+            좋아! 계당관 쉐어라운지에서는!
           </CustomText>
-          <Text style={styles.subText}></Text>
+          <CustomText style={styles.subText}>
+          자유롭게 대화를 나눠도 되지만{'\n'}큰
+          소음을 유발하거나 취식, 훼손과 같은 행위는 자제하도록 하자!
+          </CustomText>
         </View>
 
         {/* ✅ 다음 스테이지로 이동 버튼 */}
-        <TouchableOpacity
-          style={styles.nextButton}
+        <AnimatedTouchableOpacity
+          style={[styles.nextButton, animatedStyle]}
           onPress={handleNextStage}
           activeOpacity={0.7}>
           <CustomText style={styles.buttonText}>다음 ➡️</CustomText>
-        </TouchableOpacity>
+        </AnimatedTouchableOpacity>
       </ImageBackground>
     </View>
   );
@@ -120,18 +137,18 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   text: {
-    marginTop: height * 0.05,
     color: '#333',
     fontSize: width * 0.055,
     marginBottom: height * 0.01,
     textAlign: 'center',
-    lineHeight: height * 0.035, // ✅ 줄 간격
+    lineHeight: height * 0.035,
   },
   subText: {
     color: '#555',
     fontSize: width * 0.045,
     textAlign: 'center',
     marginTop: height * 0.02,
+    lineHeight: height * 0.035,
   },
   mapButton: {
     position: 'absolute',
