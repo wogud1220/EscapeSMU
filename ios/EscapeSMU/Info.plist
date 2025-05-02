@@ -50,6 +50,12 @@
 		<key>NSAllowsLocalNetworking</key>
 		<true/>
 	</dict>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>촬영한 사진을 저장하기 위해 사진 접근 권한이 필요합니다.</string>
+
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>위치 기반 기능을 위해 항상 또는 사용 중 위치 접근이 필요합니다.</string>
+
 	<key>NSCameraUsageDescription</key>
 	<string>NsCamera 사용하여 사진 촬영</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
