@@ -103,7 +103,7 @@ const Main = () => {
               activeOpacity={0.7}
               disabled={!userEmail}>
               <CustomText style={{fontSize: 25, color: 'white'}}>
-                시작하기fff
+                시작하기
               </CustomText>
             </AnimatedTouchableOpacity>
 
@@ -112,7 +112,7 @@ const Main = () => {
               style={styles.logoutButton}
               activeOpacity={0.7}>
               <CustomText style={{fontSize: 25, color: 'white'}}>
-                로그아웃ff
+                로그아웃
               </CustomText>
             </TouchableOpacity>
           </View>
