@@ -62,7 +62,7 @@ const Main = () => {
   };
 
   const handleNavigate = () => {
-    navigation.navigate('RankingBoard');
+    navigation.navigate('StageList');
   };
 
   const handleLoginNavigate = () => {
