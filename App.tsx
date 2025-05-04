@@ -3,6 +3,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import LogIn from './screens/Member/LogIn';
 import SignIn from './screens/Member/SignIn';
+import DeleteAccount from './screens/Member/DeleteAccount';
 import Main from './screens/Main';
 import StageList from './screens/StageList';
 import WarningPage from './screens/WarningPage';
@@ -113,6 +114,7 @@ import {TextInput} from 'react-native';
 export type RootStackParamList = {
   LogIn: {college: string; department: string};
   SignIn: {college: string; department: string};
+  DeleteAccount: undefined;
   Main: undefined;
   StageList: {college: string; department: string};
   WarningPage: undefined;
@@ -244,6 +246,11 @@ const App = () => {
           <Stack.Screen
             name="SignIn"
             component={SignIn}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="DeleteAccount"
+            component={DeleteAccount}
             options={{headerShown: false}}
           />
 
