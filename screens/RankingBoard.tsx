@@ -14,14 +14,18 @@ import CustomText from '../CustomText';
 import {useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {RootStackParamList} from '../App';
-import { TouchableOpacity } from 'react-native';
-import Animated, { useSharedValue, useAnimatedStyle, withSpring, runOnJS } from 'react-native-reanimated';
+import {TouchableOpacity} from 'react-native';
+import Animated, {
+  useSharedValue,
+  useAnimatedStyle,
+  withSpring,
+  runOnJS,
+} from 'react-native-reanimated';
 
-const AnimatedTouchableOpacity = Animated.createAnimatedComponent(TouchableOpacity);
-
+const AnimatedTouchableOpacity =
+  Animated.createAnimatedComponent(TouchableOpacity);
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Main'>;
-
 
 interface RankItem {
   uid: string;
@@ -40,8 +44,9 @@ const colleges = [
   '공과대학',
   '디자인학부',
   '융합기술대학',
-  '예술학부',];
-
+  '예술학부',
+  '체육대학',
+];
 
 const RankingBoard = () => {
   const [selectedCollege, setSelectedCollege] = useState('디자인학부');
@@ -116,7 +121,8 @@ const RankingBoard = () => {
     <View style={{flex: 1}}>
       <Picker
         selectedValue={selectedCollege}
-        onValueChange={itemValue => setSelectedCollege(itemValue)}>
+        onValueChange={itemValue => setSelectedCollege(itemValue)}
+        itemStyle={{color: 'black'}}>
         {colleges.map(col => (
           <Picker.Item label={col} value={col} key={col} />
         ))}
@@ -135,7 +141,9 @@ const RankingBoard = () => {
         sections={rankData}
         keyExtractor={item => item.uid}
         renderSectionHeader={({section: {title}}) => (
-          <CustomText style={styles.sectionTitle}>{title} 랭킹 TOP 10</CustomText>
+          <CustomText style={styles.sectionTitle}>
+            {title} 랭킹 TOP 10
+          </CustomText>
         )}
         renderItem={({item}) => (
           <View style={styles.row}>
@@ -155,11 +163,12 @@ const RankingBoard = () => {
         contentContainerStyle={{padding: 20}}
       />
       <TouchableOpacity
-  style={styles.homeButton}
-  onPress={() => navigation.navigate('Main')}>
-  <CustomText style={styles.homeButtonText}>🏠 홈으로 돌아가기</CustomText>
-</TouchableOpacity>
-
+        style={styles.homeButton}
+        onPress={() => navigation.navigate('Main')}>
+        <CustomText style={styles.homeButtonText}>
+          🏠 홈으로 돌아가기
+        </CustomText>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -205,7 +214,6 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 16,
   },
-  
 });
 
 export default RankingBoard;
