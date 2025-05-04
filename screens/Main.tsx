@@ -68,7 +68,7 @@ const Main = () => {
   };
 
   const handleNavigate = () => {
-    navigation.navigate('StageList');
+    navigation.navigate('Stage3_2');
   };
 
   const handleLoginNavigate = () => {

@@ -10,6 +10,7 @@ import {
   Image,
   TouchableOpacity,
   Alert,
+  BackHandler,
 } from 'react-native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {useNavigation} from '@react-navigation/native';
@@ -43,6 +44,16 @@ const Stage5_3 = () => {
   const [disabled, setDisabled] = useState(false); // ✅ 버튼 활성화 상태
   const [countdown, setCountdown] = useState<number | null>(null); // ✅ 남은 시간 상태
   const [userId, setUserId] = useState('');
+
+  useEffect(() => {
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      () => true
+    );
+  
+    return () => backHandler.remove();
+  }, []);
+  
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, user => {

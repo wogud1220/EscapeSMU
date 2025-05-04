@@ -153,7 +153,7 @@ const Stage3Camera = ({navigation}: {navigation: any}) => {
       />
 
       <Image
-        source={require('../assets/deer2.png')}
+        source={require('../assets/maple-removebg-preview.png')}
         style={styles.backImage}
         resizeMode="contain"
       />

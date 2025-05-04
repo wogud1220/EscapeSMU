@@ -281,7 +281,7 @@ const Stage12Camera = ({navigation}: {navigation: any}) => {
       />
 
       <Image
-        source={require('../assets/mulberry.png')}
+        source={require('../assets/robot_trans.png')}
         style={styles.backImage}
         resizeMode="contain"
       />

@@ -10,6 +10,8 @@ import {
   Image,
   TouchableOpacity,
   Alert,
+  BackHandler,
+  
 } from 'react-native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {useNavigation} from '@react-navigation/native';
@@ -43,6 +45,15 @@ const Stage10_4 = () => {
   const [countdown, setCountdown] = useState<number | null>(null); // ✅ 남은 시간 상태
   const [userId, setUserId] = useState('');
   useEffect(() => {
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      () => true
+    );
+    return () => backHandler.remove();
+  }, []);
+
+  // ✅ Firebase 인증 처리 useEffect
+  useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, user => {
       if (user) {
         setUserId(user.uid);
@@ -50,10 +61,11 @@ const Stage10_4 = () => {
     });
     return unsubscribe;
   }, []);
+
+  // ✅ 카운트다운 처리 useEffect
   useEffect(() => {
     let timer: NodeJS.Timeout;
     if (countdown !== null) {
-      // ✅ 매 초마다 countdown 감소
       timer = setInterval(() => {
         setCountdown(prev => (prev !== null ? prev - 1 : null));
       }, 1000);
@@ -61,11 +73,10 @@ const Stage10_4 = () => {
       if (countdown === 0) {
         clearInterval(timer);
         setDisabled(false);
-        setCountdown(null); // ✅ 타이머 초기화
+        setCountdown(null);
       }
     }
-
-    return () => clearInterval(timer); // ✅ 컴포넌트 언마운트 시 클리어
+    return () => clearInterval(timer);
   }, [countdown]);
 
   const handleMapPress = () => {
