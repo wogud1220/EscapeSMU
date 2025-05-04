@@ -117,12 +117,28 @@ const Stage6_2 = () => {
   };
 
   const toggleListening = () => {
+    if (Platform.OS === 'android') {
+      let actualCollege = college;
+      if (department === '디지털만화영상' || department === '사진영상') {
+        actualCollege = '융합기술대학';
+      }
+  
+      updateStageData(userId, actualCollege, 'Stage6_3');
+      navigation.navigate('Stage6_3', {
+        college: actualCollege,
+        department,
+      });
+      return;
+    }
+  
+    // iOS인 경우 기존 음성 인식 로직 사용
     if (isListening) {
       stopListening();
     } else {
       startListening();
     }
   };
+  
 
 useEffect(() => {
   const requestMicrophonePermission = async () => {
@@ -204,22 +220,32 @@ useEffect(() => {
           />
           <CustomText style={styles.text}>독도 조형물이야!</CustomText>
           <CustomText style={styles.subText}>
-            실제 독도 모습을 축소한 조형물을 설치해 '독도사랑, 나라사랑' 정신을
-            되새기게 하기 위한 목적으로 설치되었어! 독도는 우리 땅!을 말해볼까?
-          </CustomText>
+  실제 독도 모습을 축소한 조형물을 설치해 '독도사랑, 나라사랑' 정신을
+  되새기게 하기 위한 목적으로 설치되었어!{'\n\n'}
+  {Platform.OS === 'ios'
+    ? '🎤 "독도는 우리 땅"을 말해보세요!'
+    : ''}
+</CustomText>
+
           <TouchableOpacity
             style={styles.nextButton}
             onPress={toggleListening}
             activeOpacity={0.7}>
-            <CustomText style={styles.buttonText}>
-              {isListening ? '🛑 중지하기' : '🎤 말하기 시작'}
-            </CustomText>
+<CustomText style={styles.buttonText}>
+  {Platform.OS === 'ios'
+    ? isListening
+      ? '🛑 중지하기'
+      : '🎤 말하기 시작'
+    : '다음 ➡️'}
+</CustomText>
+
           </TouchableOpacity>
-          {recognizedText !== '' && (
-            <Text style={styles.recognizedText}>
-              👂 인식된 문장: {recognizedText}
-            </Text>
-          )}
+          {Platform.OS === 'ios' && recognizedText !== '' && (
+  <Text style={styles.recognizedText}>
+    👂 인식된 문장: {recognizedText}
+  </Text>
+)}
+
         </View>
       </ImageBackground>
     </View>
