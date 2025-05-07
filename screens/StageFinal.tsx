@@ -16,9 +16,15 @@ import {RootStackParamList} from '../App';
 import {useRoute, RouteProp} from '@react-navigation/native';
 import CustomText from '../CustomText';
 import {Linking} from 'react-native';
-import Animated, { useSharedValue, useAnimatedStyle, withSpring, runOnJS } from 'react-native-reanimated';
+import Animated, {
+  useSharedValue,
+  useAnimatedStyle,
+  withSpring,
+  runOnJS,
+} from 'react-native-reanimated';
 
-const AnimatedTouchableOpacity = Animated.createAnimatedComponent(TouchableOpacity);
+const AnimatedTouchableOpacity =
+  Animated.createAnimatedComponent(TouchableOpacity);
 
 type NavigationProp = NativeStackNavigationProp<
   RootStackParamList,
@@ -35,17 +41,17 @@ const StageFinal = () => {
 
   const animatedStyle = useAnimatedStyle(() => {
     return {
-      transform: [{ scale: scale.value }],
+      transform: [{scale: scale.value}],
     };
   });
 
-const handleNextStage = () => {
-  scale.value = withSpring(1.2, {}, () => {
-    scale.value = withSpring(1, {}, () => {
-      runOnJS(navigation.navigate)('RankingBoard', {college, department});
+  const handleNextStage = () => {
+    scale.value = withSpring(1.2, {}, () => {
+      scale.value = withSpring(1, {}, () => {
+        runOnJS(navigation.navigate)('RankingBoard', {college, department});
+      });
     });
-  });
-};
+  };
 
   const handleMapPress = () => {
     navigation.navigate('Map');

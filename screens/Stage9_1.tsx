@@ -15,9 +15,15 @@ import {useNavigation} from '@react-navigation/native';
 import {RootStackParamList} from '../App';
 import {useRoute, RouteProp} from '@react-navigation/native';
 import CustomText from '../CustomText';
-import Animated, { useSharedValue, useAnimatedStyle, withSpring, runOnJS } from 'react-native-reanimated';
+import Animated, {
+  useSharedValue,
+  useAnimatedStyle,
+  withSpring,
+  runOnJS,
+} from 'react-native-reanimated';
 
-const AnimatedTouchableOpacity = Animated.createAnimatedComponent(TouchableOpacity);
+const AnimatedTouchableOpacity =
+  Animated.createAnimatedComponent(TouchableOpacity);
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage9_1'>;
 
@@ -31,17 +37,17 @@ const Stage9_1 = () => {
 
   const animatedStyle = useAnimatedStyle(() => {
     return {
-      transform: [{ scale: scale.value }],
+      transform: [{scale: scale.value}],
     };
   });
 
-const handleNextStage = () => {
-  scale.value = withSpring(1.2, {}, () => {
-    scale.value = withSpring(1, {}, () => {
-      runOnJS(navigation.navigate)('Stage9_2', {college, department});
+  const handleNextStage = () => {
+    scale.value = withSpring(1.2, {}, () => {
+      scale.value = withSpring(1, {}, () => {
+        runOnJS(navigation.navigate)('Stage9_2', {college, department});
+      });
     });
-  });
-};
+  };
 
   const handleMapPress = () => {
     navigation.navigate('Map');
@@ -87,7 +93,6 @@ const handleNextStage = () => {
           <CustomText style={styles.text}>
             {'\n'}
             드디어 여기까지 왔구나!{'\n'}
-            벌써 상명대학교 천안캠퍼스의 절반을 돌아봤어!{'\n'}
             이제 디자인관으로 가보자!
           </CustomText>
           <Text style={styles.subText}></Text>

@@ -146,7 +146,7 @@ const Stage13_Sound = () => {
 
   // 모달이 열려있는 상태에서 데시벨이 70을 초과하면 모달을 강제로 닫고 입력값을 초기화
   useEffect(() => {
-    if (isModalVisible && currentDecibel > 70) {
+    if (isModalVisible && currentDecibel > 60) {
       Alert.alert('데시벨 초과', '70dB를 넘어서 창이 닫혔습니다!!');
       setIsModalVisible(false);
       setAnswer('');
@@ -173,13 +173,13 @@ const Stage13_Sound = () => {
     }
     //예술학부지만 융기대 루트 타는 학과
     else if (department === '디지털만화영상' || department === '사진영상') {
-      updateStageData(userId, actualCollege, 'Stage2');
+      updateStageData(userId, actualCollege, 'Stage2_1');
       navigation.navigate('Stage2', {college: actualCollege, department});
     } else if (userDepartment === '디자인학부') {
       updateStageData(userId, actualCollege, 'Stage5');
       navigation.navigate('Stage5', {college: actualCollege, department});
     } else if (userDepartment === '전체') {
-      updateStageData(userId, actualCollege, 'Stage2');
+      updateStageData(userId, actualCollege, 'Stage2_1');
       navigation.navigate('Stage2', {college: actualCollege, department});
     }
   };

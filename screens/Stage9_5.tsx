@@ -73,7 +73,7 @@ const Stage9_5 = () => {
           },
         ]);
       } else if (college.includes('전체')) {
-        updateStageData(userId, college, 'Stage11');
+        updateStageData(userId, college, 'Stage11_1');
         Alert.alert('정답입니다!', '다음 스테이지로 이동합니다.', [
           {
             text: '확인',
