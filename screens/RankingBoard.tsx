@@ -46,6 +46,7 @@ const colleges = [
   '융합기술대학',
   '예술학부',
   '체육대학',
+  '전체',
 ];
 
 const RankingBoard = () => {
