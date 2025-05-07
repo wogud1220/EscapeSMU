@@ -183,6 +183,7 @@ const Stage10Camera = ({navigation}: {navigation: any}) => {
               style={styles.resultButton}
               onPress={() => {
                 if (pass) {
+                  setShowResult(false);
                   goToNextStage();
                 } else {
                   setShowResult(false);
