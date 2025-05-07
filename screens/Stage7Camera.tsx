@@ -43,6 +43,17 @@ const Stage7Camera = ({navigation}: {navigation: any}) => {
   const route = useRoute<Stage7CameraRouteProp>();
   const {college, department} = route.params || {};
   const isFocused = useIsFocused(); // 화면 포커스 상태 가져옴
+
+  useEffect(() => {
+    if (permission && !device) {
+      const timeout = setTimeout(() => {
+        navigation.replace('Stage7_6', { college, department });
+      }, 100);
+  
+      return () => clearTimeout(timeout);
+    }
+  }, [permission, device]);
+
   useEffect(() => {
     const checkPermission = async () => {
       const cameraPermission = await Camera.requestCameraPermission();
@@ -129,9 +140,11 @@ const Stage7Camera = ({navigation}: {navigation: any}) => {
   if (!device) {
     return (
       <View style={styles.modalOverlay}>
-              <ActivityIndicator size="large" color="#fff" />
-              <Text style={{color: '#fff', marginTop: 10}}>뒤로 갔다가 다시 실행해주세요!</Text>
-            </View>
+        <ActivityIndicator size="large" color="#fff" />
+        <Text style={{color: '#fff', marginTop: 20, fontSize: 16}}>
+          📸 카메라 기기 불러오는 중..
+        </Text>
+      </View>
     );
   }
 

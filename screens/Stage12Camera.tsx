@@ -175,6 +175,15 @@ const Stage12Camera = ({navigation}: {navigation: any}) => {
   const {college, department} = route.params || {};
   const isFocused = useIsFocused(); // 화면 포커스 상태 가져옴
   useEffect(() => {
+    if (permission && !device) {
+      const timeout = setTimeout(() => {
+        navigation.replace('Stage12_3', { college, department });
+      }, 100);
+  
+      return () => clearTimeout(timeout);
+    }
+  }, [permission, device]);
+  useEffect(() => {
     const checkPermission = async () => {
       const cameraPermission = await Camera.requestCameraPermission();
       setPermission(cameraPermission === 'granted');
@@ -266,7 +275,12 @@ const Stage12Camera = ({navigation}: {navigation: any}) => {
 
   if (!device) {
     return (
-      <Text>⚠️ 카메라 장치를 찾을 수 없습니다. 실제 기기에서 실행하세요.</Text>
+      <View style={styles.modalOverlay}>
+        <ActivityIndicator size="large" color="#fff" />
+        <Text style={{color: '#fff', marginTop: 20, fontSize: 16}}>
+          📸 카메라 기기 불러오는 중..
+        </Text>
+      </View>
     );
   }
 

@@ -18,12 +18,14 @@ import {onAuthStateChanged} from 'firebase/auth';
 import {auth} from './firebase.config';
 import {incrementStageAttempt} from '../utils/incrementStageAttempt';
 import CustomText from '../CustomText';
+import {BackHandler} from 'react-native';
+import {useFocusEffect} from '@react-navigation/native';
+
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage7_3'>;
 
 const {width, height} = Dimensions.get('window');
 
-// ✅ 객관식 옵션 설정
 const options = [
   {
     label:
@@ -54,6 +56,13 @@ const Stage7_3 = () => {
   const [userId, setUserId] = useState('');
   const [disabled, setDisabled] = useState(false);
   const [countdown, setCountdown] = useState<number | null>(null);
+  useFocusEffect(
+    React.useCallback(() => {
+      const backHandler = BackHandler.addEventListener('hardwareBackPress', () => true);
+      return () => backHandler.remove();
+    }, [])
+  );
+  
   useEffect(() => {
     onAuthStateChanged(auth, user => {
       if (user) {

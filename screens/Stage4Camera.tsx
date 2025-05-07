@@ -161,16 +161,16 @@ const Stage4Camera = ({navigation}: {navigation: any}) => {
         <Text style={styles.buttonText}>📸</Text>
       </TouchableOpacity>
 
-      {/* <TouchableOpacity
+      <TouchableOpacity
         onPress={() => navigation.navigate('Stage4_3', {college, department})}
         style={styles.greenButton}>
         <Text style={styles.greenButtonText}>➡️</Text>
-      </TouchableOpacity> */}
+      </TouchableOpacity>
 
-      {/* ✅ 임시 Stage1_2 이동 버튼
+      {/* ✅ 임시 Stage1_2 이동 버튼 */}
       <TouchableOpacity onPress={goToNextStage} style={styles.tempButton}>
         <Text style={styles.buttonText}>Stage4_3로 이동</Text>
-      </TouchableOpacity> */}
+      </TouchableOpacity>
     </View>
   );
 };
@@ -181,7 +181,7 @@ const styles = StyleSheet.create({
   captureButton: {
     position: 'absolute',
     bottom: 100,
-    alignSelf: 'center',
+    left: '30%',
     backgroundColor: '#fff',
     padding: 20,
     borderRadius: 50,

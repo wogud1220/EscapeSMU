@@ -40,6 +40,16 @@ const Stage9Camera_2 = ({navigation}: {navigation: any}) => {
   const {college, department} = route.params || {};
 
   useEffect(() => {
+    if (permission && !device) {
+      const timeout = setTimeout(() => {
+        navigation.replace('Stage9_3', { college, department });
+      }, 100);
+  
+      return () => clearTimeout(timeout);
+    }
+  }, [permission, device]);
+
+  useEffect(() => {
     const checkPermission = async () => {
       const cameraPermission = await Camera.requestCameraPermission();
       setPermission(cameraPermission === 'granted');
@@ -131,9 +141,11 @@ const Stage9Camera_2 = ({navigation}: {navigation: any}) => {
   if (!device) {
     return (
       <View style={styles.modalOverlay}>
-              <ActivityIndicator size="large" color="#fff" />
-              <Text style={{color: '#fff', marginTop: 10}}>뒤로 갔다가 다시 실행해주세요!</Text>
-            </View>
+        <ActivityIndicator size="large" color="#fff" />
+        <Text style={{color: '#fff', marginTop: 20, fontSize: 16}}>
+          📸 카메라 기기 불러오는 중..
+        </Text>
+      </View>
     );
   }
 

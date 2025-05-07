@@ -66,6 +66,16 @@ const Stage1Camera = ({navigation}: {navigation: any}) => {
   const {college, department} = route.params || {};
 
   useEffect(() => {
+    if (permission && !device) {
+      const timeout = setTimeout(() => {
+        navigation.replace('Stage1_1', { college, department });
+      }, 100);
+  
+      return () => clearTimeout(timeout);
+    }
+  }, [permission, device]);
+
+  useEffect(() => {
     const checkPermission = async () => {
       const cameraPermission = await Camera.requestCameraPermission();
       setPermission(cameraPermission === 'granted');
@@ -182,10 +192,13 @@ const Stage1Camera = ({navigation}: {navigation: any}) => {
     return (
       <View style={styles.modalOverlay}>
         <ActivityIndicator size="large" color="#fff" />
-        <Text style={{color: '#fff', marginTop: 10}}>뒤로 갔다가 다시 실행해주세요!</Text>
+        <Text style={{color: '#fff', marginTop: 20, fontSize: 16}}>
+          📸 카메라 기기 불러오는 중..
+        </Text>
       </View>
     );
   }
+  
 
   return (
     <View style={styles.container}>
@@ -226,7 +239,7 @@ const styles = StyleSheet.create({
     width: width * 0.8,
     height: height * 0.8,
     marginTop: height * 0.05,
-    opacity: 0.7,
+    opacity: 0.4,
   },
   captureButton: {
     position: 'absolute',
