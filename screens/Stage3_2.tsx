@@ -19,9 +19,15 @@ import {onAuthStateChanged} from 'firebase/auth';
 import {auth} from './firebase.config';
 import {decrementStageAttempt} from '../utils/decrementStageAttempt';
 import CustomText from '../CustomText';
-import Animated, { useSharedValue, useAnimatedStyle, withSpring, runOnJS } from 'react-native-reanimated';
+import Animated, {
+  useSharedValue,
+  useAnimatedStyle,
+  withSpring,
+  runOnJS,
+} from 'react-native-reanimated';
 
-const AnimatedTouchableOpacity = Animated.createAnimatedComponent(TouchableOpacity);
+const AnimatedTouchableOpacity =
+  Animated.createAnimatedComponent(TouchableOpacity);
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage3_2'>;
 
@@ -31,15 +37,13 @@ const Stage3_2 = () => {
   const navigation = useNavigation<NavigationProp>();
   const route = useRoute<RouteProp<RootStackParamList, 'Stage3_2'>>();
   const {college, department} = route.params || {};
-    const scale = useSharedValue(1);
+  const scale = useSharedValue(1);
 
   const animatedStyle = useAnimatedStyle(() => {
     return {
-      transform: [{ scale: scale.value }],
+      transform: [{scale: scale.value}],
     };
   });
-
-
 
   const [userId, setUserId] = useState('');
   const handleMapPress = () => {
@@ -53,18 +57,44 @@ const Stage3_2 = () => {
     });
   }, []);
 
+  // const handleNextStageAsync = async () => {
+  //   let actualCollege = college;
+  //   if (department === '디지털만화영상' || department === '사진영상') {
+  //     actualCollege = '융합기술대학';
+  //   }
+
+  //   try {
+  //     await updateStageData(userId, college, 'Stage5');
+  //     decrementStageAttempt(userId, college);
+  //   } catch (err) {
+  //     console.error('🔥 updateStageData error:', err);
+  //   }
+
+  //   navigation.navigate('Stage5', {college, department});
+  // };
 
   const handleNextStageAsync = async () => {
+    let actualCollege = college;
+    let nextStage = 'Stage5';
+
+    if (department === '디지털만화영상' || department === '사진영상') {
+      actualCollege = '융합기술대학';
+      navigation.navigate('Stage5', {college: actualCollege, department});
+    }
+
+    if (college === '전체' && department === '전체') {
+      nextStage = 'Stage4'; // 전체 탐방 루트는 Stage4로
+      navigation.navigate('Stage4', {college: actualCollege, department});
+    }
+
     try {
-      await updateStageData(userId, college, 'Stage5');
-      decrementStageAttempt(userId, college);
+      await updateStageData(userId, actualCollege, nextStage);
+      decrementStageAttempt(userId, actualCollege);
     } catch (err) {
       console.error('🔥 updateStageData error:', err);
     }
-  
-    navigation.navigate('Stage5', { college, department });
   };
-  
+
   const handleNextStage = () => {
     scale.value = withSpring(1.2, {}, () => {
       'worklet';
@@ -74,7 +104,6 @@ const Stage3_2 = () => {
       });
     });
   };
-  
 
   return (
     <View style={styles.container}>
@@ -114,9 +143,12 @@ const Stage3_2 = () => {
             style={styles.wayImage}
             resizeMode="contain"
           />
-          <CustomText style={{fontSize: 25, textAlign: 'center'}}>정말 잘 찾는데??</CustomText>
+          <CustomText style={{fontSize: 25, textAlign: 'center'}}>
+            정말 잘 찾는데??
+          </CustomText>
           <CustomText style={styles.subText}>
-            식물원은 누구나 이용할 수 있는 공간이야! 가끔식 자연을 느껴보고 싶다면 놀러와보자!
+            식물원은 누구나 이용할 수 있는 공간이야! 가끔식 자연을 느껴보고
+            싶다면 놀러와보자!
           </CustomText>
         </View>
 
@@ -125,7 +157,9 @@ const Stage3_2 = () => {
           style={[styles.nextButton, animatedStyle]}
           onPress={handleNextStage}
           activeOpacity={0.7}>
-          <CustomText style={{fontSize: 20, color: 'white'}}>다음 ➡️</CustomText>
+          <CustomText style={{fontSize: 20, color: 'white'}}>
+            다음 ➡️
+          </CustomText>
         </AnimatedTouchableOpacity>
       </ImageBackground>
     </View>

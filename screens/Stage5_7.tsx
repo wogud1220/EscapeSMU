@@ -20,9 +20,15 @@ import {decrementStageAttempt} from '../utils/decrementStageAttempt';
 import {onAuthStateChanged} from 'firebase/auth';
 import {auth} from './firebase.config';
 import CustomText from '../CustomText';
-import Animated, { useSharedValue, useAnimatedStyle, withSpring, runOnJS } from 'react-native-reanimated';
+import Animated, {
+  useSharedValue,
+  useAnimatedStyle,
+  withSpring,
+  runOnJS,
+} from 'react-native-reanimated';
 
-const AnimatedTouchableOpacity = Animated.createAnimatedComponent(TouchableOpacity);
+const AnimatedTouchableOpacity =
+  Animated.createAnimatedComponent(TouchableOpacity);
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage6_1'>;
 
@@ -41,19 +47,38 @@ const Stage5_7 = () => {
 
   const animatedStyle = useAnimatedStyle(() => {
     return {
-      transform: [{ scale: scale.value }],
+      transform: [{scale: scale.value}],
     };
   });
 
-const handleNextStage = () => {
-  scale.value = withSpring(1.2, {}, () => {
-    scale.value = withSpring(1, {}, async () => {
+  // iOS에서 아래 코드 사용시 5_7에서 6_1로 안 넘어감.
+
+  // const handleNextStage = () => {
+  //   scale.value = withSpring(1.2, {}, () => {
+  //     scale.value = withSpring(1, {}, async () => {
+  //       await updateStageData(userId, college, 'Stage6_1');
+  //       decrementStageAttempt(userId, college);
+  //       runOnJS(navigation.navigate)('Stage6_1', {college, department});
+  //     });
+  //   });
+  // };
+
+  //아래 코드 사용시 5_7에서 6_1로 넘어감.
+  const handleNextStage = async () => {
+    scale.value = withSpring(1.2);
+    await new Promise(resolve => setTimeout(resolve, 300));
+    scale.value = withSpring(1);
+
+    if (!userId) return;
+
+    try {
       await updateStageData(userId, college, 'Stage6_1');
-      decrementStageAttempt(userId, college);
-      runOnJS(navigation.navigate)('Stage6_1', {college, department});
-    });
-  });
-};
+      await decrementStageAttempt(userId, college);
+      navigation.navigate('Stage6_1', {college, department});
+    } catch (err) {
+      console.error('🔥 navigation error:', err);
+    }
+  };
 
   const handleMapPress = () => {
     navigation.navigate('Map');
@@ -100,7 +125,7 @@ const handleNextStage = () => {
 
         {/* ✅ 가운데 투명한 흰색 박스 */}
         <View style={styles.box}>
-          <CustomText style={{fontSize: 25, textAlign: 'center', }}>
+          <CustomText style={{fontSize: 25, textAlign: 'center'}}>
             시크릿 오더의 장점은
           </CustomText>
           <CustomText style={styles.subText}>
@@ -116,7 +141,9 @@ const handleNextStage = () => {
           style={[styles.nextButton, animatedStyle]}
           onPress={handleNextStage}
           activeOpacity={0.7}>
-          <CustomText style={{fontSize: 20, color: 'white'}}>다음 ➡️</CustomText>
+          <CustomText style={{fontSize: 20, color: 'white'}}>
+            다음 ➡️
+          </CustomText>
         </AnimatedTouchableOpacity>
       </ImageBackground>
     </View>

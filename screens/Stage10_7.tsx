@@ -56,6 +56,8 @@ const Stage10_7 = () => {
         nextStage = 'StageFinal';
       } else if (college.includes('디자인학부')) {
         nextStage = 'RankingBoard';
+      } else if (college.includes('전체')) {
+        nextStage = 'Stage9_1';
       }
 
       Alert.alert('정답입니다!', '다음 스테이지로 이동합니다.', [
@@ -135,7 +137,9 @@ const Stage10_7 = () => {
 
         {/* ✅ 입력 필드 → 터치 시 모달 열기 */}
         <TouchableOpacity onPress={openModal} style={styles.inputContainer}>
-          <CustomText style={styles.inputText}>{answer || '정답 입력'}</CustomText>
+          <CustomText style={styles.inputText}>
+            {answer || '정답 입력'}
+          </CustomText>
         </TouchableOpacity>
 
         {/* ✅ 모달 */}
@@ -148,7 +152,9 @@ const Stage10_7 = () => {
             <View style={styles.modalBackground}>
               <TouchableWithoutFeedback>
                 <View style={styles.modalContainer}>
-                  <CustomText style={styles.modalTitle}>정답을 입력하세요</CustomText>
+                  <CustomText style={styles.modalTitle}>
+                    정답을 입력하세요
+                  </CustomText>
 
                   {/* ✅ 입력 상자 */}
                   <TextInput

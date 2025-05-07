@@ -178,6 +178,9 @@ const Stage13_Sound = () => {
     } else if (userDepartment === '디자인학부') {
       updateStageData(userId, actualCollege, 'Stage5');
       navigation.navigate('Stage5', {college: actualCollege, department});
+    } else if (userDepartment === '전체') {
+      updateStageData(userId, actualCollege, 'Stage2');
+      navigation.navigate('Stage2', {college: actualCollege, department});
     }
   };
 
@@ -186,20 +189,31 @@ const Stage13_Sound = () => {
     if (department === '디지털만화영상' || department === '사진영상') {
       actualCollege = '융합기술대학';
     }
-    if (answer.trim() === '오늘' || answer.trim() === '그는' || answer.trim() === '그' || answer.trim() === '봄' || answer.trim() === '노란' || answer.trim() === '흰'
-    || answer.trim() === '출근' || answer.trim() === '나' || answer.trim() === '연대기' || answer.trim() === '너희들' || answer.trim() === '너희') {
+    if (
+      answer.trim() === '오늘' ||
+      answer.trim() === '그는' ||
+      answer.trim() === '그' ||
+      answer.trim() === '봄' ||
+      answer.trim() === '노란' ||
+      answer.trim() === '흰' ||
+      answer.trim() === '출근' ||
+      answer.trim() === '나' ||
+      answer.trim() === '연대기' ||
+      answer.trim() === '너희들' ||
+      answer.trim() === '너희'
+    ) {
       // ⛔ 데시벨 수집 중단
       Sound.stop();
       Alert.alert('정답입니다!', '다음 스테이지로 이동합니다.', [
-  //       '이방인', - 오늘
-  // '노인과 바다', - 그는/그
-  // '메리골드 마음세탁소', - 봄
-  // '눈먼 자들의 도시', - 노란
-  // '흰 = The Elegy of Whiteness', - 흰
-  // '불편한 편의점 2', - 출근
-  // '인간실격', - 나
-  // '페스트', - 연대기
-  // '파우스트'(Goethe, Johann Wolfgang von) - 너희들
+        //       '이방인', - 오늘
+        // '노인과 바다', - 그는/그
+        // '메리골드 마음세탁소', - 봄
+        // '눈먼 자들의 도시', - 노란
+        // '흰 = The Elegy of Whiteness', - 흰
+        // '불편한 편의점 2', - 출근
+        // '인간실격', - 나
+        // '페스트', - 연대기
+        // '파우스트'(Goethe, Johann Wolfgang von) - 너희들
 
         {text: '확인', onPress: handleNextStage},
       ]);

@@ -44,16 +44,45 @@ const Stage9_5 = () => {
       }
     });
   }, []);
+  // const handleNextStage = () => {
+  //   if (answer.trim().toLowerCase() === 'bluepot') {
+  //     updateStageData(userId, college, 'Stage10_1');
+  //     Alert.alert('정답입니다!', '다음 스테이지로 이동합니다.', [
+  //       {
+  //         text: '확인',
+  //         onPress: () =>
+  //           navigation.navigate('Stage10_1', {college, department}),
+  //       },
+  //     ]);
+  //     setIsModalVisible(false);
+  //   } else {
+  //     incrementStageAttempt(userId, college);
+  //     Alert.alert('오답입니다.', '다시 시도해 보세요!');
+  //   }
+  // };
+
   const handleNextStage = () => {
     if (answer.trim().toLowerCase() === 'bluepot') {
-      updateStageData(userId, college, 'Stage10_1');
-      Alert.alert('정답입니다!', '다음 스테이지로 이동합니다.', [
-        {
-          text: '확인',
-          onPress: () =>
-            navigation.navigate('Stage10_1', {college, department}),
-        },
-      ]);
+      if (college.includes('디자인')) {
+        updateStageData(userId, college, 'Stage10_1');
+        Alert.alert('정답입니다!', '다음 스테이지로 이동합니다.', [
+          {
+            text: '확인',
+            onPress: () =>
+              navigation.navigate('Stage10_1', {college, department}),
+          },
+        ]);
+      } else if (college.includes('전체')) {
+        updateStageData(userId, college, 'Stage11');
+        Alert.alert('정답입니다!', '다음 스테이지로 이동합니다.', [
+          {
+            text: '확인',
+            onPress: () =>
+              navigation.navigate('Stage11_1', {college, department}),
+          },
+        ]);
+      }
+
       setIsModalVisible(false);
     } else {
       incrementStageAttempt(userId, college);
@@ -122,7 +151,9 @@ const Stage9_5 = () => {
 
         {/* ✅ 입력 필드 → 터치 시 모달 열기 */}
         <TouchableOpacity onPress={openModal} style={styles.inputContainer}>
-          <CustomText style={styles.inputText}>{answer || '정답 입력'}</CustomText>
+          <CustomText style={styles.inputText}>
+            {answer || '정답 입력'}
+          </CustomText>
         </TouchableOpacity>
 
         {/* ✅ 모달 */}
@@ -135,7 +166,9 @@ const Stage9_5 = () => {
             <View style={styles.modalBackground}>
               <TouchableWithoutFeedback>
                 <View style={styles.modalContainer}>
-                  <CustomText style={styles.modalTitle}>정답을 입력하세요</CustomText>
+                  <CustomText style={styles.modalTitle}>
+                    정답을 입력하세요
+                  </CustomText>
 
                   {/* ✅ 입력 상자 */}
                   <TextInput
