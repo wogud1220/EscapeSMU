@@ -20,6 +20,7 @@ import {RootStackParamList} from '../App';
 import {updateStageData} from '../utils/updateStageData';
 import {incrementStageAttempt} from '../utils/incrementStageAttempt';
 import {decrementStageAttempt} from '../utils/decrementStageAttempt';
+import CustomText from '../CustomText';
 
 const {width, height} = Dimensions.get('window');
 
@@ -159,7 +160,7 @@ const Stage7Camera = ({navigation}: {navigation: any}) => {
       />
 
       <TouchableOpacity onPress={openHintModal} style={styles.hintButton}>
-        <Text style={styles.hintButtonText}>💡 힌트</Text>
+        <CustomText style={styles.hintButtonText}>💡 힌트</CustomText>
       </TouchableOpacity>
 
       <Image
@@ -173,7 +174,7 @@ const Stage7Camera = ({navigation}: {navigation: any}) => {
       </TouchableOpacity> */}
 
       <TouchableOpacity onPress={goToNextStage} style={styles.tempButton}>
-        <Text style={styles.buttonText}>Stage7_7로 이동</Text>
+        <CustomText style={styles.buttonText}>Stage7_7로 이동</CustomText>
       </TouchableOpacity>
 
       <Modal visible={isUploading} transparent>
@@ -214,15 +215,15 @@ const Stage7Camera = ({navigation}: {navigation: any}) => {
         onRequestClose={closeHintModal}>
         <View style={styles.modalOverlay}>
           <View style={styles.modalContainer}>
-            <Text style={styles.modalText}>
+            <CustomText style={styles.modalText}>
               📌 만약, 네모칸을 못 맞춰서 글자를 얻기 힘들다면{'\n'} 휴게실 앞의
-              2글자 4번의 6번째 글자{'\n'}4번의 20번째 글자{'\n'}5번의 15번째
+              2글자, 4번의 6번째 글자{'\n'}4번의 20번째 글자{'\n'}5번의 15번째
               글자를 살펴보자!
-            </Text>
+            </CustomText>
             <TouchableOpacity
               style={styles.resultButton}
               onPress={closeHintModal}>
-              <Text style={styles.buttonText}>닫기</Text>
+              <CustomText style={styles.buttonText}>닫기</CustomText>
             </TouchableOpacity>
           </View>
         </View>
@@ -252,7 +253,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 30,
     borderRadius: 50,
   },
-  buttonText: {fontSize: 18, color: 'white', fontWeight: 'bold'},
+  buttonText: {fontSize: 18, color: 'white'},
   permissionText: {
     color: 'black',
     fontSize: 20,
@@ -285,6 +286,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     marginBottom: 20,
     textAlign: 'center',
+    lineHeight: 25,
   },
   resultButton: {
     backgroundColor: '#1E90FF',
@@ -304,7 +306,6 @@ const styles = StyleSheet.create({
   },
   hintButtonText: {
     color: '#000',
-    fontWeight: 'bold',
     fontSize: 16,
   },
 });
