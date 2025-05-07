@@ -155,9 +155,9 @@ const Stage7Camera = ({navigation}: {navigation: any}) => {
         resizeMode="contain"
       />
 
-      <TouchableOpacity onPress={takePicture} style={styles.captureButton}>
+      {/* <TouchableOpacity onPress={takePicture} style={styles.captureButton}>
         <Text style={styles.buttonText}>📸</Text>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
 
       <TouchableOpacity onPress={goToNextStage} style={styles.tempButton}>
         <Text style={styles.buttonText}>Stage7_7로 이동</Text>
@@ -231,14 +231,15 @@ const styles = StyleSheet.create({
   },
   tempButton: {
     position: 'absolute',
+    marginTop: height * 0.1,
     bottom: 160,
     alignSelf: 'center',
-    backgroundColor: '#32CD32',
+    backgroundColor: 'rgba(0, 0, 255, 0.7)',
     paddingVertical: 15,
     paddingHorizontal: 30,
     borderRadius: 50,
   },
-  buttonText: {fontSize: 18, color: '#000', fontWeight: 'bold'},
+  buttonText: {fontSize: 18, color: 'white', fontWeight: 'bold'},
   permissionText: {
     color: 'black',
     fontSize: 20,

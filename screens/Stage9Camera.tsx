@@ -161,9 +161,9 @@ const Stage9Camera = ({navigation}: {navigation: any}) => {
         <Text style={styles.buttonText}>📸</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity onPress={goToNextStage} style={styles.tempButton}>
+      {/* <TouchableOpacity onPress={goToNextStage} style={styles.tempButton}>
         <Text style={styles.buttonText}>Stage9_2_1로 이동</Text>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
 
       <Modal visible={isUploading} transparent>
         <View style={styles.modalOverlay}>
@@ -206,7 +206,7 @@ const styles = StyleSheet.create({
   captureButton: {
     position: 'absolute',
     bottom: 100,
-    left: '30%',
+    alignSelf: 'center',
     backgroundColor: '#fff',
     padding: 20,
     borderRadius: 50,

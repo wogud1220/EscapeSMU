@@ -82,9 +82,9 @@ const Stage11Camera = ({navigation}: {navigation: any}) => {
       </TouchableOpacity>
 
       {/* ✅ 다음 버튼 */}
-      <TouchableOpacity onPress={goToNextStage} style={styles.nextButton}>
+      {/* <TouchableOpacity onPress={goToNextStage} style={styles.nextButton}>
         <Text style={styles.buttonText}>다음 ➡️</Text>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
     </View>
   );
 };

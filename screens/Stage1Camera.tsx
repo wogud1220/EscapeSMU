@@ -589,7 +589,14 @@ const Stage1Camera = ({navigation}: {navigation: any}) => {
 
   if (permission === null) return <Text>🔄 권한 확인 중...</Text>;
   if (!permission) return <Text>⚠️ 카메라 권한이 필요합니다.</Text>;
-  if (!device) return <Text>⚠️ 카메라 로딩 실패</Text>;
+  if (!device) {
+    return (
+      <View style={styles.modalOverlay}>
+        <ActivityIndicator size="large" color="#fff" />
+        <Text style={{color: '#fff', marginTop: 10}}>뒤로 갔다가 다시 실행해주세요!</Text>
+      </View>
+    );
+  }
 
   return (
     <View style={styles.container}>
