@@ -528,7 +528,16 @@ def compare_images(user_image_path, template_path):
     print("\n📊 요약 결과:")
     print(f"SIFT  : 매칭 수 = {len(matches):>3}, 평균 거리 = {avg:6.2f}, 시간 = {(sift_time + match_time):.3f}s, 점수 = {score:.2f}")
 
-    return {"result": "Pass" if score > 4.5 else "Fail", "message": f"성능 점수: {score:.2f}"}
+    score = len(matches) / avg if avg != 0 else 0
+    match_count = len(matches)
+
+    return {
+    "result": "Pass" if match_count >= 50 else "Fail",
+    "message": f"매칭 수: {match_count}, 평균 거리: {avg:.2f}, 점수: {score:.2f}",
+    "matches": match_count,
+    "avg_distance": avg,
+    "score": score
+    }   
 
 if __name__ == "__main__":
     user_image_path = os.path.join(UPLOADS_FOLDER, "captured.jpg")
