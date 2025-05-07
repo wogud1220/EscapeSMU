@@ -45,10 +45,18 @@ const Stage4_4 = () => {
   }, []);
   const handleNextStage = async () => {
     if (answer.trim() === '배상명') {
-      try {
-        await updateStageData(userId, college, 'Stage3');
-      } catch (err) {
-        console.error('🔥 updateStageData error:', err);
+      if (department === '공과대학') {
+        try {
+          await updateStageData(userId, college, 'Stage3');
+        } catch (err) {
+          console.error('🔥 updateStageData error:', err);
+        }
+      } else if (department === '전체') {
+        try {
+          await updateStageData(userId, college, 'Stage5_1');
+        } catch (err) {
+          console.error('🔥 updateStageData error:', err);
+        }
       }
       Alert.alert('정답입니다!', '다음 스테이지로 이동합니다.', [
         {
@@ -56,7 +64,7 @@ const Stage4_4 = () => {
           onPress: () =>
             navigation.navigate(
               // 본관 들리는 건 공과대학이니 false일 경우엔 전체 탐방 루트 적기
-              college === '공과대학' ? 'Stage3' : 'Stage6_1',
+              college === '공과대학' ? 'Stage3' : 'Stage5_1',
               {
                 college,
                 department,
@@ -114,7 +122,9 @@ const Stage4_4 = () => {
 
         {/* ✅ 문제 박스 */}
         <View style={styles.box}>
-          <CustomText style={{fontSize: 25, textAlign: 'center'}}>동상의 이름을 확인해서 입력해보자!</CustomText>
+          <CustomText style={{fontSize: 25, textAlign: 'center'}}>
+            동상의 이름을 확인해서 입력해보자!
+          </CustomText>
 
           {/* ✅ 이미지 추가 */}
           <Image
@@ -123,12 +133,16 @@ const Stage4_4 = () => {
             resizeMode="contain"
           />
 
-          <CustomText style={styles.subText}>동상의 이름은 무엇일까?</CustomText>
+          <CustomText style={styles.subText}>
+            동상의 이름은 무엇일까?
+          </CustomText>
         </View>
 
         {/* ✅ 입력 필드 → 터치 시 모달 열기 */}
         <TouchableOpacity onPress={openModal} style={styles.inputContainer}>
-          <CustomText style={styles.inputText}>{answer || '정답 입력'}</CustomText>
+          <CustomText style={styles.inputText}>
+            {answer || '정답 입력'}
+          </CustomText>
         </TouchableOpacity>
 
         {/* ✅ 모달 */}
@@ -141,7 +155,9 @@ const Stage4_4 = () => {
             <View style={styles.modalBackground}>
               <TouchableWithoutFeedback>
                 <View style={styles.modalContainer}>
-                  <CustomText style={{fontSize: 20, textAlign: 'center'}}>정답을 입력하세요</CustomText>
+                  <CustomText style={{fontSize: 20, textAlign: 'center'}}>
+                    정답을 입력하세요
+                  </CustomText>
 
                   {/* ✅ 입력 상자 */}
                   <TextInput
@@ -159,7 +175,9 @@ const Stage4_4 = () => {
                   <TouchableOpacity
                     style={styles.submitButton}
                     onPress={handleNextStage}>
-                    <CustomText style={{fontSize: 20, color: 'white'}}>제출하기</CustomText>
+                    <CustomText style={{fontSize: 20, color: 'white'}}>
+                      제출하기
+                    </CustomText>
                   </TouchableOpacity>
                 </View>
               </TouchableWithoutFeedback>

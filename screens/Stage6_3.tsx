@@ -59,7 +59,7 @@ const Stage6_3 = () => {
     if (answer.trim() === '팔도총도') {
       let nextStage = 'Stage8_1'; // 기본값
       //인문대학
-      if (college.includes('글로벌인문학부대학')) {
+      if (college.includes('글로벌인문학부대학') || college.includes('전체')) {
         nextStage = 'Stage7_1'; // 송백관 이동
         await updateStageData(userId, actualCollege, 'Stage7_1'); // 스테이지 진행 정보 저장 (송백관)
       }
@@ -152,7 +152,9 @@ const Stage6_3 = () => {
 
         {/* ✅ 입력 필드 → 터치 시 모달 열기 */}
         <TouchableOpacity onPress={openModal} style={styles.inputContainer}>
-          <CustomText style={styles.inputText}>{answer || '정답 입력'}</CustomText>
+          <CustomText style={styles.inputText}>
+            {answer || '정답 입력'}
+          </CustomText>
         </TouchableOpacity>
 
         {/* ✅ 모달 */}
@@ -165,7 +167,9 @@ const Stage6_3 = () => {
             <View style={styles.modalBackground}>
               <TouchableWithoutFeedback>
                 <View style={styles.modalContainer}>
-                  <CustomText style={styles.modalTitle}>정답을 입력하세요</CustomText>
+                  <CustomText style={styles.modalTitle}>
+                    정답을 입력하세요
+                  </CustomText>
 
                   {/* ✅ 입력 상자 */}
                   <TextInput

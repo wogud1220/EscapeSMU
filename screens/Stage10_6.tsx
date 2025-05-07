@@ -19,9 +19,15 @@ import {updateStageData} from '../utils/updateStageData';
 import {onAuthStateChanged} from 'firebase/auth';
 import {auth} from './firebase.config';
 import {decrementStageAttempt} from '../utils/decrementStageAttempt';
-import Animated, { useSharedValue, useAnimatedStyle, withSpring, runOnJS } from 'react-native-reanimated';
+import Animated, {
+  useSharedValue,
+  useAnimatedStyle,
+  withSpring,
+  runOnJS,
+} from 'react-native-reanimated';
 
-const AnimatedTouchableOpacity = Animated.createAnimatedComponent(TouchableOpacity);
+const AnimatedTouchableOpacity =
+  Animated.createAnimatedComponent(TouchableOpacity);
 
 type NavigationProp = NativeStackNavigationProp<
   RootStackParamList,
@@ -33,7 +39,7 @@ const {width, height} = Dimensions.get('window');
 const Stage10_6 = () => {
   const navigation = useNavigation<NavigationProp>();
   const route = useRoute<RouteProp<RootStackParamList, 'Stage10_6'>>();
-  const { college = '', department = '' } = route.params || {};
+  const {college = '', department = ''} = route.params || {};
   const [userId, setUserId] = useState('');
   useEffect(() => {
     onAuthStateChanged(auth, user => {
@@ -82,6 +88,12 @@ const Stage10_6 = () => {
       updateStageData(userId, actualCollege, 'StageFinal');
       decrementStageAttempt(userId, actualCollege);
       navigation.navigate('StageFinal', {college: actualCollege, department});
+
+      //전체 경로 탐방이라면
+    } else if (college.includes('전체')) {
+      updateStageData(userId, actualCollege, 'Stage9_1');
+      decrementStageAttempt(userId, actualCollege);
+      navigation.navigate('Stage9_1', {college: actualCollege, department});
     }
   };
 
