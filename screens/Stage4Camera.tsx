@@ -135,9 +135,11 @@ const Stage4Camera = ({navigation}: {navigation: any}) => {
   if (!device) {
     return (
       <View style={styles.modalOverlay}>
-              <ActivityIndicator size="large" color="#fff" />
-              <Text style={{color: '#fff', marginTop: 10}}>뒤로 갔다가 다시 실행해주세요!</Text>
-            </View>
+        <ActivityIndicator size="large" color="#fff" />
+        <Text style={{color: '#fff', marginTop: 10}}>
+          뒤로 갔다가 다시 실행해주세요!
+        </Text>
+      </View>
     );
   }
 

@@ -118,7 +118,6 @@ const Stage9Camera = ({navigation}: {navigation: any}) => {
 
   const goToNextStage = async () => {
     let actualCollege = college;
-
     await updateStageData(userId, actualCollege, 'Stage9_2_1');
     navigation.navigate('Stage9_2_1', {college: actualCollege, department});
   };
@@ -135,9 +134,11 @@ const Stage9Camera = ({navigation}: {navigation: any}) => {
   if (!device) {
     return (
       <View style={styles.modalOverlay}>
-              <ActivityIndicator size="large" color="#fff" />
-              <Text style={{color: '#fff', marginTop: 10}}>뒤로 갔다가 다시 실행해주세요!</Text>
-            </View>
+        <ActivityIndicator size="large" color="#fff" />
+        <Text style={{color: '#fff', marginTop: 10}}>
+          뒤로 갔다가 다시 실행해주세요!
+        </Text>
+      </View>
     );
   }
 
@@ -184,6 +185,7 @@ const Stage9Camera = ({navigation}: {navigation: any}) => {
               style={styles.resultButton}
               onPress={() => {
                 if (pass) {
+                  setShowResult(false);
                   goToNextStage();
                 } else {
                   setShowResult(false);
