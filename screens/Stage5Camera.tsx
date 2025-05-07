@@ -35,10 +35,11 @@ const Stage5Camera = ({navigation}: {navigation: any}) => {
   const [pass, setPass] = useState(false);
   const [userId, setUserId] = useState<string>('');
   const camera = useRef<Camera>(null);
+  const [zoom, setZoom] = useState(0.5);
 
   const route = useRoute<Stage5CameraRouteProp>();
   const {college, department} = route.params || {};
-  const isFocused = useIsFocused(); // 화면 포커스 상태 가져옴
+  const isFocused = useIsFocused();
 
   useEffect(() => {
     if (permission && !device) {
@@ -158,6 +159,7 @@ const Stage5Camera = ({navigation}: {navigation: any}) => {
         device={device}
         isActive={isFocused}
         photo={true}
+        zoom={zoom}
       />
 
       <Image

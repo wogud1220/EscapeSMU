@@ -87,6 +87,11 @@ const Stage3_2 = () => {
       navigation.navigate('Stage4', {college: actualCollege, department});
     }
 
+    if (college === '공과대학') {
+      nextStage = 'Stage5';
+      navigation.navigate('Stage5', {college: actualCollege, department});
+    }
+
     try {
       await updateStageData(userId, actualCollege, nextStage);
       decrementStageAttempt(userId, actualCollege);

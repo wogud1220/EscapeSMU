@@ -13,7 +13,7 @@ import {
   BackHandler,
 } from 'react-native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, useFocusEffect} from '@react-navigation/native';
 import {RootStackParamList} from '../App';
 import {useRoute, RouteProp} from '@react-navigation/native';
 import {onAuthStateChanged} from 'firebase/auth';
@@ -21,6 +21,7 @@ import {auth} from './firebase.config';
 import {incrementStageAttempt} from '../utils/incrementStageAttempt';
 import {updateStageData} from '../utils/updateStageData';
 import CustomText from '../CustomText';
+import { useCallback } from 'react';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage5_4'>;
 
@@ -45,15 +46,16 @@ const Stage5_3 = () => {
   const [countdown, setCountdown] = useState<number | null>(null); // ✅ 남은 시간 상태
   const [userId, setUserId] = useState('');
 
-  useEffect(() => {
-    const backHandler = BackHandler.addEventListener(
-      'hardwareBackPress',
-      () => true
-    );
-  
-    return () => backHandler.remove();
-  }, []);
-  
+  useFocusEffect(
+    useCallback(() => {
+      const backHandler = BackHandler.addEventListener(
+        'hardwareBackPress',
+        () => true
+      );
+      
+      return () => backHandler.remove();
+    }, [])
+  );
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, user => {

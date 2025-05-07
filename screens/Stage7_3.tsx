@@ -10,7 +10,8 @@ import {
   Alert,
 } from 'react-native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, useFocusEffect} from '@react-navigation/native';
+import { useCallback } from 'react';
 import {RootStackParamList} from '../App';
 import {useRoute, RouteProp} from '@react-navigation/native';
 import {updateStageData} from '../utils/updateStageData';
@@ -19,7 +20,6 @@ import {auth} from './firebase.config';
 import {incrementStageAttempt} from '../utils/incrementStageAttempt';
 import CustomText from '../CustomText';
 import {BackHandler} from 'react-native';
-import {useFocusEffect} from '@react-navigation/native';
 
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage7_3'>;
@@ -56,9 +56,14 @@ const Stage7_3 = () => {
   const [userId, setUserId] = useState('');
   const [disabled, setDisabled] = useState(false);
   const [countdown, setCountdown] = useState<number | null>(null);
+
   useFocusEffect(
-    React.useCallback(() => {
-      const backHandler = BackHandler.addEventListener('hardwareBackPress', () => true);
+    useCallback(() => {
+      const backHandler = BackHandler.addEventListener(
+        'hardwareBackPress',
+        () => true
+      );
+      
       return () => backHandler.remove();
     }, [])
   );

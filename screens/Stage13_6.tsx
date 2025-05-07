@@ -13,7 +13,8 @@ import {
   BackHandler,
 } from 'react-native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, useFocusEffect} from '@react-navigation/native';
+import { useCallback } from 'react';
 import {RootStackParamList} from '../App';
 import {useRoute, RouteProp} from '@react-navigation/native';
 import {updateStageData} from '../utils/updateStageData';
@@ -44,15 +45,17 @@ const Stage13_6 = () => {
   const [disabled, setDisabled] = useState(false); // ✅ 버튼 활성화 상태
   const [countdown, setCountdown] = useState<number | null>(null); // ✅ 남은 시간 상태
   const [userId, setUserId] = useState('');
-
-    useEffect(() => {
+  
+  useFocusEffect(
+    useCallback(() => {
       const backHandler = BackHandler.addEventListener(
         'hardwareBackPress',
         () => true
       );
-    
+      
       return () => backHandler.remove();
-    }, []);
+    }, [])
+  );
 
   useEffect(() => {
     console.log('Stage13_6 log - Department:', department);
