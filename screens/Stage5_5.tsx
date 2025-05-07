@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -11,62 +11,50 @@ import {
   Alert,
   Modal,
   TouchableWithoutFeedback,
+  Keyboard,
 } from 'react-native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, useRoute, RouteProp} from '@react-navigation/native';
 import {RootStackParamList} from '../App';
-import {useRoute, RouteProp} from '@react-navigation/native';
-import {updateStageData} from '../utils/updateStageData';
+import {useDepartment} from './Member/DepartmentContext';
+import CustomText from '../CustomText';
 import {onAuthStateChanged} from 'firebase/auth';
 import {auth} from './firebase.config';
+import {updateStageData} from '../utils/updateStageData';
+import {increment} from 'firebase/firestore';
 import {incrementStageAttempt} from '../utils/incrementStageAttempt';
-import CustomText from '../CustomText';
-import Animated, { useSharedValue, useAnimatedStyle, withSpring, runOnJS } from 'react-native-reanimated';
 
-const AnimatedTouchableOpacity = Animated.createAnimatedComponent(TouchableOpacity);
-
-type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage5_5'>;
+type NavigationProp = NativeStackNavigationProp<
+  RootStackParamList,
+  'Stage5_5'
+>;
 
 const {width, height} = Dimensions.get('window');
 
 const Stage5_5 = () => {
+  const navigation = useNavigation<NavigationProp>();
+  const route = useRoute<RouteProp<RootStackParamList, 'Stage5_5'>>();
+  const {college, department} = route.params || {};
+  const [answer, setAnswer] = useState('');
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [userId, setUserId] = useState('');
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, user => {
+    onAuthStateChanged(auth, user => {
       if (user) {
         setUserId(user.uid);
       }
     });
-    return unsubscribe;
   }, []);
-  useEffect(() => {
-    console.log('Stage5_5 log - Department:', department);
-    console.log('Stage5_5 log - College:', college);
-  }, []);
-
-  const navigation = useNavigation<NavigationProp>();
-  const route = useRoute<RouteProp<RootStackParamList, 'Stage5_5'>>();
-  const {college, department} = route.params || {};
-  const scale = useSharedValue(1);
-
-  const animatedStyle = useAnimatedStyle(() => {
-    return {
-      transform: [{ scale: scale.value }],
-    };
-  });
-
-const handleGoToGuestbook = () => {
-  scale.value = withSpring(1.2, {}, () => {
-    scale.value = withSpring(1, {}, () => {
-      runOnJS(navigation.navigate)('Guestbook', {college, department});
-    });
-  });
-};
-
-  const [answer, setAnswer] = useState('');
-  const [isModalVisible, setIsModalVisible] = useState(false);
-  const [userId, setUserId] = useState('');
   const handleMapPress = () => {
     navigation.navigate('Map');
+  };
+
+  const handleGoToGuestbook = () => {
+    scale.value = withSpring(1.2, {}, () => {
+      scale.value = withSpring(1, {}, () => {
+        runOnJS(navigation.navigate)('Guestbook', {college, department});
+      });
+    });
   };
 
   const handleNextStage = async () => {
@@ -101,12 +89,10 @@ const handleGoToGuestbook = () => {
     navigation.navigate('Main');
   };
 
-  // ✅ 모달 열기
   const openModal = () => {
     setIsModalVisible(true);
   };
 
-  // ✅ 모달 닫기
   const closeModal = () => {
     setIsModalVisible(false);
   };
@@ -119,7 +105,6 @@ const handleGoToGuestbook = () => {
         resizeMode="cover">
         <View style={styles.overlay} />
 
-        {/* ✅ 지도 버튼 */}
         <TouchableOpacity onPress={handleMapPress} style={styles.mapButton}>
           <Image
             source={require('../assets/map.png')}
@@ -128,7 +113,6 @@ const handleGoToGuestbook = () => {
           />
         </TouchableOpacity>
 
-        {/* ✅ 홈 버튼 */}
         <TouchableOpacity onPress={handleHomePress} style={styles.backButton}>
           <Image
             source={require('../assets/home.png')}
@@ -137,7 +121,6 @@ const handleGoToGuestbook = () => {
           />
         </TouchableOpacity>
 
-        {/* ✅ 문제 박스 */}
         <View style={styles.box}>
           <CustomText style={{fontSize: 25, textAlign: 'center'}}>
             혹시 방명록에 수뭉이가 {'\n'} 남긴 글을 봤어??
@@ -146,55 +129,55 @@ const handleGoToGuestbook = () => {
             그렇다면, 수뭉이가 어디로 가라고 했는지 말해볼래? {'\n'}(띄어쓰기
             없이 입력해줘!)
           </CustomText>
-          <AnimatedTouchableOpacity
-            style={[styles.guestbookButton, animatedStyle]}
+          <TouchableOpacity
+            style={[styles.guestbookButton]}
             onPress={handleGoToGuestbook}
             activeOpacity={0.7}>
             <CustomText style={styles.guestbookButtonText}>방명록 확인하기</CustomText>
-          </AnimatedTouchableOpacity>
+          </TouchableOpacity>
         </View>
 
-        {/* ✅ 입력 필드 → 터치 시 모달 열기 */}
         <TouchableOpacity onPress={openModal} style={styles.inputContainer}>
-          <Text style={styles.inputText}>{answer || '정답 입력'}</Text>
+          <CustomText style={styles.inputText}>
+            {answer || '정답 입력'}
+          </CustomText>
         </TouchableOpacity>
-
-        {/* ✅ 모달 */}
-        <Modal
-          animationType="fade"
-          transparent={true}
-          visible={isModalVisible}
-          onRequestClose={closeModal}>
-          <TouchableWithoutFeedback onPress={closeModal}>
-            <View style={styles.modalBackground}>
-              <TouchableWithoutFeedback>
-                <View style={styles.modalContainer}>
-                  <Text style={styles.modalTitle}>정답을 입력하세요</Text>
-
-                  {/* ✅ 입력 상자 */}
-                  <TextInput
-                    style={styles.modalInput}
-                    value={answer}
-                    onChangeText={setAnswer}
-                    placeholder="정답 입력"
-                    placeholderTextColor="#999"
-                    keyboardType="default"
-                    autoCapitalize="none"
-                    autoFocus={true}
-                  />
-
-                  {/* ✅ 제출 버튼 */}
-                  <TouchableOpacity
-                    style={styles.submitButton}
-                    onPress={handleNextStage}>
-                    <CustomText style={styles.buttonText}>제출하기</CustomText>
-                  </TouchableOpacity>
-                </View>
-              </TouchableWithoutFeedback>
-            </View>
-          </TouchableWithoutFeedback>
-        </Modal>
       </ImageBackground>
+
+      <Modal
+        animationType="fade"
+        transparent={true}
+        visible={isModalVisible}
+        onRequestClose={closeModal}>
+        <TouchableWithoutFeedback
+          onPress={() => {
+            Keyboard.dismiss();
+            closeModal();
+          }}>
+          <View style={styles.modalBackground}>
+            <View style={styles.modalContainer}>
+              <CustomText style={styles.modalTitle}>
+                정답을 입력하세요
+              </CustomText>
+              <TextInput
+                style={styles.modalInput}
+                value={answer}
+                onChangeText={setAnswer}
+                placeholder="정답 입력"
+                placeholderTextColor="#999"
+                keyboardType="default"
+                autoCapitalize="none"
+                autoFocus={true}
+              />
+              <TouchableOpacity
+                style={styles.submitButton}
+                onPress={handleNextStage}>
+                <CustomText style={styles.buttonText}>제출하기</CustomText>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </TouchableWithoutFeedback>
+      </Modal>
     </View>
   );
 };
@@ -274,7 +257,6 @@ const styles = StyleSheet.create({
   },
   modalTitle: {
     fontSize: width * 0.05,
-    fontWeight: 'bold',
     marginBottom: height * 0.02,
   },
   modalInput: {
@@ -285,6 +267,7 @@ const styles = StyleSheet.create({
     paddingVertical: height * 0.01,
     marginBottom: height * 0.02,
     color: '#333',
+    fontFamily: 'BMHANNAPro'
   },
   submitButton: {
     backgroundColor: 'rgba(0, 0, 255, 0.7)',
