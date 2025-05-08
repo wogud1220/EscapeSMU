@@ -369,6 +369,11 @@ const RankingBoard = () => {
           alignSelf: 'center',
           marginTop: 80,
         }}
+        textStyle={{
+          fontSize: 16,
+          fontFamily: 'BMHANNAPro',
+          textAlign: 'center',
+        }}
         dropDownContainerStyle={{
           width: 220,
           alignSelf: 'center',
