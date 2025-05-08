@@ -40,13 +40,12 @@ const Stage3Camera = ({navigation}: {navigation: any}) => {
   const {college, department} = route.params || {};
   const isFocused = useIsFocused(); // 화면 포커스 상태 가져옴
 
-  
   useEffect(() => {
     if (permission && !device) {
       const timeout = setTimeout(() => {
-        navigation.replace('Stage3_1', { college, department });
+        navigation.replace('Stage3_1', {college, department});
       }, 100);
-  
+
       return () => clearTimeout(timeout);
     }
   }, [permission, device]);
