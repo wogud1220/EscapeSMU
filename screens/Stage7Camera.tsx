@@ -174,7 +174,7 @@ const Stage7Camera = ({navigation}: {navigation: any}) => {
       </TouchableOpacity> */}
 
       <TouchableOpacity onPress={goToNextStage} style={styles.tempButton}>
-        <CustomText style={styles.buttonText}>Stage7_7로 이동</CustomText>
+        <CustomText style={styles.buttonText}>정답 입력하러 가기</CustomText>
       </TouchableOpacity>
 
       <Modal visible={isUploading} transparent>

@@ -144,10 +144,10 @@ const Stage13_Sound = () => {
     };
   }, []);
 
-  // 모달이 열려있는 상태에서 데시벨이 70을 초과하면 모달을 강제로 닫고 입력값을 초기화
+  // 모달이 열려있는 상태에서 데시벨이 60을 초과하면 모달을 강제로 닫고 입력값을 초기화
   useEffect(() => {
     if (isModalVisible && currentDecibel > 60) {
-      Alert.alert('데시벨 초과', '70dB를 넘어서 창이 닫혔습니다!!');
+      Alert.alert('데시벨 초과', '60dB를 넘어서 창이 닫혔습니다!!');
       setIsModalVisible(false);
       setAnswer('');
     }
