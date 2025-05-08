@@ -469,10 +469,89 @@
 
 
 # 최종 SIFT만 사용하는 코드.
+# import cv2
+# import numpy as np
+# import os
+# import time
+
+# BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+# UPLOADS_FOLDER = os.path.join(BASE_DIR, "uploads")
+# OUTPUT_FOLDER = os.path.join(BASE_DIR, "outputs")
+# os.makedirs(OUTPUT_FOLDER, exist_ok=True)
+
+# def load_image(image_path):
+#     if not os.path.exists(image_path):
+#         print(f"❌ 파일이 존재하지 않습니다: {image_path}")
+#         return None
+#     image = cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)
+#     if image is None:
+#         print(f"🚨 OpenCV가 이미지를 불러올 수 없음: {image_path}")
+#     else:
+#         print(f"✅ 이미지 로드 성공: {image_path}")
+#     image = cv2.resize(image, (1050, 1400))
+#     return image
+
+# def match_and_score(kp1, des1, kp2, des2, matcher):
+#     match_start = time.time()
+#     matches = matcher.knnMatch(des1, des2, k=2)
+#     good = [m for m, n in matches if m.distance < 0.7 * n.distance]
+#     match_time = time.time() - match_start
+#     avg_score = sum(m.distance for m in good) / len(good) if good else float('inf')
+#     print(f"매칭 수: {len(good):>3}, 평균 거리: {avg_score:6.2f}, 소요 시간: {match_time:.3f}s")
+#     return good, avg_score, match_time
+
+# def compare_images(user_image_path, template_path):
+#     template = load_image(template_path)
+#     user_image = load_image(user_image_path)
+
+#     if template is None or user_image is None:
+#         return {"result": "Fail", "message": "이미지를 불러올 수 없음"}
+
+#     # SIFT
+#     sift = cv2.SIFT_create()
+#     sift_start = time.time()
+#     kp1, des1 = sift.detectAndCompute(template, None)
+#     kp2, des2 = sift.detectAndCompute(user_image, None)
+#     sift_time = time.time() - sift_start
+
+#     if des1 is None or des2 is None:
+#         print("❌ SIFT 특징점 실패")
+#         return {"result": "Fail", "message": "SIFT 특징점 추출 실패"}
+
+#     matcher = cv2.FlannBasedMatcher(dict(algorithm=1, trees=5), dict(checks=50))
+#     matches, avg, match_time = match_and_score(kp1, des1, kp2, des2, matcher)
+#     score = len(matches) / avg if avg != 0 else 0
+
+#     sift_img = cv2.drawMatches(template, kp1, user_image, kp2, matches[:30], None)
+#     cv2.imwrite(os.path.join(OUTPUT_FOLDER, "sift.jpg"), sift_img)
+
+#     print("\n📊 요약 결과:")
+#     print(f"SIFT  : 매칭 수 = {len(matches):>3}, 평균 거리 = {avg:6.2f}, 시간 = {(sift_time + match_time):.3f}s, 점수 = {score:.2f}")
+
+#     score = len(matches) / avg if avg != 0 else 0
+#     match_count = len(matches)
+
+#     return {
+#     "result": "Pass" if match_count >= 50 else "Fail",
+#     "message": f"매칭 수: {match_count}, 평균 거리: {avg:.2f}, 점수: {score:.2f}",
+#     "matches": match_count,
+#     "avg_distance": avg,
+#     "score": score
+#     }   
+
+# if __name__ == "__main__":
+#     user_image_path = os.path.join(UPLOADS_FOLDER, "captured.jpg")
+#     template_path = os.path.join(BASE_DIR, "templates", "stage1", "template.jpeg")
+#     result = compare_images(user_image_path, template_path)
+#     print(result)
+
+# compare.py
+
 import cv2
 import numpy as np
 import os
 import time
+import math  # 추가
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 UPLOADS_FOLDER = os.path.join(BASE_DIR, "uploads")
@@ -500,6 +579,9 @@ def match_and_score(kp1, des1, kp2, des2, matcher):
     print(f"매칭 수: {len(good):>3}, 평균 거리: {avg_score:6.2f}, 소요 시간: {match_time:.3f}s")
     return good, avg_score, match_time
 
+def safe_float(val, default=9999.99):
+    return default if (math.isinf(val) or math.isnan(val)) else val
+
 def compare_images(user_image_path, template_path):
     template = load_image(template_path)
     user_image = load_image(user_image_path)
@@ -507,7 +589,6 @@ def compare_images(user_image_path, template_path):
     if template is None or user_image is None:
         return {"result": "Fail", "message": "이미지를 불러올 수 없음"}
 
-    # SIFT
     sift = cv2.SIFT_create()
     sift_start = time.time()
     kp1, des1 = sift.detectAndCompute(template, None)
@@ -520,24 +601,23 @@ def compare_images(user_image_path, template_path):
 
     matcher = cv2.FlannBasedMatcher(dict(algorithm=1, trees=5), dict(checks=50))
     matches, avg, match_time = match_and_score(kp1, des1, kp2, des2, matcher)
-    score = len(matches) / avg if avg != 0 else 0
+    avg = safe_float(avg)
+    score = safe_float(len(matches) / avg if avg != 0 else 0)
+    match_count = len(matches)
 
     sift_img = cv2.drawMatches(template, kp1, user_image, kp2, matches[:30], None)
     cv2.imwrite(os.path.join(OUTPUT_FOLDER, "sift.jpg"), sift_img)
 
     print("\n📊 요약 결과:")
-    print(f"SIFT  : 매칭 수 = {len(matches):>3}, 평균 거리 = {avg:6.2f}, 시간 = {(sift_time + match_time):.3f}s, 점수 = {score:.2f}")
-
-    score = len(matches) / avg if avg != 0 else 0
-    match_count = len(matches)
+    print(f"SIFT  : 매칭 수 = {match_count:>3}, 평균 거리 = {avg:6.2f}, 시간 = {(sift_time + match_time):.3f}s, 점수 = {score:.2f}")
 
     return {
-    "result": "Pass" if match_count >= 50 else "Fail",
-    "message": f"매칭 수: {match_count}, 평균 거리: {avg:.2f}, 점수: {score:.2f}",
-    "matches": match_count,
-    "avg_distance": avg,
-    "score": score
-    }   
+        "result": "Pass" if match_count >= 50 else "Fail",
+        "message": f"매칭 수: {match_count}, 평균 거리: {avg:.2f}, 점수: {score:.2f}",
+        "matches": match_count,
+        "avg_distance": avg,
+        "score": score,
+    }
 
 if __name__ == "__main__":
     user_image_path = os.path.join(UPLOADS_FOLDER, "captured.jpg")
