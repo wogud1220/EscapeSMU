@@ -1,3 +1,4 @@
+// 피커 사용
 // import React, {useEffect, useState} from 'react';
 // import {
 //   View,
@@ -219,25 +220,22 @@
 
 // export default RankingBoard;
 
-// screens/RankingBoard.tsx
-
 import React, {useEffect, useState} from 'react';
 import {
   View,
-  Text,
   StyleSheet,
   ActivityIndicator,
   SectionList,
   TouchableOpacity,
 } from 'react-native';
-import {collection, getDocs, DocumentData} from 'firebase/firestore';
+import {collection, getDocs} from 'firebase/firestore';
 import {onAuthStateChanged} from 'firebase/auth';
 import {db, auth} from './firebase.config';
-import {Picker} from '@react-native-picker/picker';
 import CustomText from '../CustomText';
 import {useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {RootStackParamList} from '../App';
+import DropDownPicker from 'react-native-dropdown-picker';
 
 interface RankItem {
   uid: string;
@@ -253,7 +251,7 @@ interface SectionData {
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Main'>;
 
-const colleges = [
+const rawColleges = [
   '글로벌인문학부대학',
   '공과대학',
   '디자인학부',
@@ -271,6 +269,18 @@ const RankingBoard = () => {
   const [myRank, setMyRank] = useState<RankItem | null>(null);
   const [hasData, setHasData] = useState(true);
   const navigation = useNavigation<NavigationProp>();
+
+  // DropDownPicker 관련 상태
+  const [open, setOpen] = useState(false);
+  const [value, setValue] = useState('디자인학부');
+  const [items, setItems] = useState(
+    [...new Set(rawColleges)].map(col => ({label: col, value: col})),
+  );
+
+  // DropDown 값이 바뀌면 selectedCollege 업데이트
+  useEffect(() => {
+    setSelectedCollege(value);
+  }, [value]);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, user => {
@@ -346,14 +356,30 @@ const RankingBoard = () => {
 
   return (
     <View style={{flex: 1}}>
-      <Picker
-        selectedValue={selectedCollege}
-        onValueChange={itemValue => setSelectedCollege(itemValue)}
-        itemStyle={{color: 'black'}}>
-        {colleges.map(col => (
-          <Picker.Item label={col} value={col} key={col} />
-        ))}
-      </Picker>
+      <DropDownPicker
+        open={open}
+        value={value}
+        items={items}
+        setOpen={setOpen}
+        setValue={setValue}
+        setItems={setItems}
+        placeholder="단과 선택"
+        style={{
+          width: 220,
+          alignSelf: 'center',
+          marginTop: 80,
+        }}
+        dropDownContainerStyle={{
+          width: 220,
+          alignSelf: 'center',
+        }}
+        listMode="SCROLLVIEW"
+        scrollViewProps={{
+          nestedScrollEnabled: true,
+        }}
+        maxHeight={400}
+        zIndex={1000}
+      />
 
       {!hasData && (
         <CustomText style={styles.sectionTitle}>
@@ -395,6 +421,7 @@ const RankingBoard = () => {
         )}
         contentContainerStyle={{padding: 20}}
       />
+
       <TouchableOpacity
         style={styles.homeButton}
         onPress={() => navigation.navigate('Main')}>
