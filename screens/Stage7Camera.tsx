@@ -187,11 +187,11 @@ const Stage7Camera = ({navigation}: {navigation: any}) => {
       <Modal visible={showResult} transparent animationType="fade">
         <View style={styles.modalOverlay}>
           <View style={styles.modalContainer}>
-            <Text style={styles.modalText}>
+            <CustomText style={styles.modalText}>
               {pass
                 ? '✅ 성공! 다음 단계로 이동합니다.'
                 : '❌ 실패! 다시 시도해주세요.'}
-            </Text>
+            </CustomText>
             <TouchableOpacity
               style={styles.resultButton}
               onPress={() => {
@@ -201,9 +201,9 @@ const Stage7Camera = ({navigation}: {navigation: any}) => {
                   setShowResult(false);
                 }
               }}>
-              <Text style={styles.buttonText}>
+              <CustomText style={styles.buttonText}>
                 {pass ? '다음으로' : '다시 시도'}
-              </Text>
+              </CustomText>
             </TouchableOpacity>
           </View>
         </View>

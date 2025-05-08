@@ -50,13 +50,9 @@ const Stage5_5 = () => {
   };
 
   const handleGoToGuestbook = () => {
-    scale.value = withSpring(1.2, {}, () => {
-      scale.value = withSpring(1, {}, () => {
-        runOnJS(navigation.navigate)('Guestbook', {college, department});
-      });
-    });
+    navigation.navigate('Guestbook', {college, department});
   };
-
+  
   const handleNextStage = async () => {
     let actualCollege = college;
     if (department === '디지털만화영상' || department === '사진영상') {
@@ -126,8 +122,7 @@ const Stage5_5 = () => {
             혹시 방명록에 수뭉이가 {'\n'} 남긴 글을 봤어??
           </CustomText>
           <CustomText style={styles.subText}>
-            그렇다면, 수뭉이가 어디로 가라고 했는지 말해볼래? {'\n'}(띄어쓰기
-            없이 입력해줘!)
+            그렇다면, 수뭉이가 어디로 가라고 했는지 말해볼래? {'\n'}(띄어쓰기 없이 입력해줘!)
           </CustomText>
           <TouchableOpacity
             style={[styles.guestbookButton]}

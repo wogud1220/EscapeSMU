@@ -20,6 +20,7 @@ import {RootStackParamList} from '../App';
 import {updateStageData} from '../utils/updateStageData';
 import {incrementStageAttempt} from '../utils/incrementStageAttempt';
 import {decrementStageAttempt} from '../utils/decrementStageAttempt';
+import CustomText from '../CustomText';
 
 const {width, height} = Dimensions.get('window');
 
@@ -186,11 +187,11 @@ const Stage5Camera = ({navigation}: {navigation: any}) => {
       <Modal visible={showResult} transparent animationType="fade">
         <View style={styles.modalOverlay}>
           <View style={styles.modalContainer}>
-            <Text style={styles.modalText}>
+            <CustomText style={styles.modalText}>
               {pass
                 ? '✅ 성공! 다음 단계로 이동합니다.'
                 : '❌ 실패! 다시 시도해주세요.'}
-            </Text>
+            </CustomText>
             <TouchableOpacity
               style={styles.resultButton}
               onPress={() => {
@@ -201,9 +202,9 @@ const Stage5Camera = ({navigation}: {navigation: any}) => {
                   setShowResult(false);
                 }
               }}>
-              <Text style={styles.buttonText}>
+              <CustomText style={styles.buttonText}>
                 {pass ? '다음으로' : '다시 시도'}
-              </Text>
+              </CustomText>
             </TouchableOpacity>
           </View>
         </View>
@@ -232,7 +233,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 30,
     borderRadius: 50,
   },
-  buttonText: {fontSize: 18, color: '#000', fontWeight: 'bold'},
+  buttonText: {fontSize: 18, color: '#000',},
   permissionText: {
     color: 'black',
     fontSize: 20,

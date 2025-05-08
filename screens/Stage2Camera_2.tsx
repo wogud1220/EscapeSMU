@@ -194,9 +194,9 @@ const Stage2Camera_2 = ({navigation}: {navigation: any}) => {
                   setShowResult(false);
                 }
               }}>
-              <Text style={styles.buttonText}>
+              <CustomText style={styles.buttonText}>
                 {pass ? '다음으로' : '다시 시도'}
-              </Text>
+              </CustomText>
             </TouchableOpacity>
           </View>
         </View>
@@ -225,7 +225,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 30,
     borderRadius: 50,
   },
-  buttonText: {fontSize: 18, color: '#000', fontWeight: 'bold'},
+  buttonText: {fontSize: 18, color: '#000',},
   permissionText: {
     color: 'black',
     fontSize: 20,

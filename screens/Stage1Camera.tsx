@@ -248,7 +248,7 @@
 //     padding: 20,
 //     borderRadius: 50,
 //   },
-//   buttonText: {fontSize: 18, color: '#000', fontWeight: 'bold'},
+//   buttonText: {fontSize: 18, color: '#000',},
 //   modalOverlay: {
 //     flex: 1,
 //     backgroundColor: 'rgba(0, 0, 0, 0.6)',
@@ -382,7 +382,7 @@ const Stage1Camera = ({navigation}: {navigation: any}) => {
     } catch (err: any) {
       console.error('🚨 오류:', err);
       setIsUploading(false);
-      Alert.alert('에러', '처리 중 문제가 발생했습니다.');
+      Alert.alert('천천히!', '다시 시도해주세요!');
     }
   };
 
@@ -448,7 +448,7 @@ const styles = StyleSheet.create({
     padding: 20,
     borderRadius: 50,
   },
-  buttonText: {fontSize: 18, color: '#000', fontWeight: 'bold'},
+  buttonText: {fontSize: 18, color: '#000',},
   modalOverlay: {
     flex: 1,
     backgroundColor: 'rgba(0, 0, 0, 0.6)',

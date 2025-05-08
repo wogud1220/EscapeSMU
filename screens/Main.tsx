@@ -69,7 +69,7 @@ const Main = () => {
   };
 
   const handleNavigate = () => {
-    navigation.navigate('StageList');
+    navigation.navigate('WarningPage');
   };
 
   const handleLoginNavigate = () => {
