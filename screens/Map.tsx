@@ -273,11 +273,11 @@ const Map = () => {
   return (
     <View style={{flex: 1}}>
       {/* ✅ 뒤로가기 버튼 */}
-      <TouchableOpacity
+      {/* <TouchableOpacity
         style={styles.backButton}
         onPress={() => navigation.goBack()}>
         <Text style={styles.backText}>⬅️ 뒤로 가기</Text>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
 
       <WebView
         ref={webViewRef}

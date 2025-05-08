@@ -277,7 +277,7 @@ const App = () => {
           <Stack.Screen
             name="Map"
             component={Map}
-            options={{headerShown: false}}
+            options={{headerShown: true}}
           />
           <Stack.Screen
             name="Stage1_2"
@@ -407,7 +407,7 @@ const App = () => {
           <Stack.Screen
             name="Stage5_3"
             component={Stage5_3}
-            options={{headerShown: false}}
+            options={{headerShown: false, gestureEnabled: false}}
           />
           <Stack.Screen
             name="Stage5_4"
@@ -462,7 +462,7 @@ const App = () => {
           <Stack.Screen
             name="Stage7_3"
             component={Stage7_3}
-            options={{headerShown: false}}
+            options={{headerShown: false, gestureEnabled: false}}
           />
           <Stack.Screen
             name="Stage7_4"
@@ -537,7 +537,7 @@ const App = () => {
           <Stack.Screen
             name="Stage9_2_1"
             component={Stage9_2_1}
-            options={{headerShown: false}}
+            options={{headerShown: false, gestureEnabled: false}}
           />
           {/* <Stack.Screen
             name="Stage9_2_2"
@@ -592,7 +592,7 @@ const App = () => {
           <Stack.Screen
             name="Stage10_4"
             component={Stage10_4}
-            options={{headerShown: false}}
+            options={{headerShown: false, gestureEnabled: false}}
           />
           <Stack.Screen
             name="Stage10_5"
@@ -622,7 +622,7 @@ const App = () => {
           <Stack.Screen
             name="Stage11_3"
             component={Stage11_3}
-            options={{headerShown: false}}
+            options={{headerShown: false, gestureEnabled: false}}
           />
           <Stack.Screen
             name="Stage11Run"
@@ -637,7 +637,7 @@ const App = () => {
           <Stack.Screen
             name="Stage11_5"
             component={Stage11_5}
-            options={{headerShown: false}}
+            options={{headerShown: false, gestureEnabled: false}}
           />
           <Stack.Screen
             name="Stage11_6"
@@ -732,7 +732,7 @@ const App = () => {
           <Stack.Screen
             name="Stage13_6_1"
             component={Stage13_6_1}
-            options={{headerShown: false}}
+            options={{headerShown: false, gestureEnabled: false}}
           />
           <Stack.Screen
             name="Stage13_7"
