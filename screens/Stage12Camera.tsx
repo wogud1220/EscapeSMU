@@ -155,6 +155,7 @@ import {RootStackParamList} from '../App';
 import {updateStageData} from '../utils/updateStageData';
 import {incrementStageAttempt} from '../utils/incrementStageAttempt';
 import {decrementStageAttempt} from '../utils/decrementStageAttempt';
+import {set} from 'date-fns';
 
 const {width, height} = Dimensions.get('window');
 
@@ -177,9 +178,9 @@ const Stage12Camera = ({navigation}: {navigation: any}) => {
   useEffect(() => {
     if (permission && !device) {
       const timeout = setTimeout(() => {
-        navigation.replace('Stage12_3', { college, department });
+        navigation.replace('Stage12_3', {college, department});
       }, 100);
-  
+
       return () => clearTimeout(timeout);
     }
   }, [permission, device]);
@@ -241,7 +242,7 @@ const Stage12Camera = ({navigation}: {navigation: any}) => {
       }
       const data = response.data;
       if (data.result === 'Pass') {
-        goToNextStage();
+        // goToNextStage();
         setPass(true);
       } else {
         incrementStageAttempt(userId, actualCollege);
@@ -327,6 +328,7 @@ const Stage12Camera = ({navigation}: {navigation: any}) => {
               style={styles.resultButton}
               onPress={() => {
                 if (pass) {
+                  setShowResult(false);
                   goToNextStage();
                 } else {
                   setShowResult(false);
