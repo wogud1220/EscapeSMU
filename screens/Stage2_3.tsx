@@ -109,7 +109,7 @@ const Stage2_3 = () => {
         {/* ✅ 문제 박스 */}
         <View style={styles.box}>
           <CustomText style={styles.text}>
-            이 사진을 찍은 사람의 이름을 입력해보자!
+            3층으로 올라가보자!
           </CustomText>
 
           {/* ✅ 이미지 추가 */}
@@ -119,7 +119,9 @@ const Stage2_3 = () => {
             resizeMode="contain"
           />
 
-          <CustomText style={styles.subText}>한누리관 211호는 이 분의 강의실이기도 해!!</CustomText>
+          <CustomText style={styles.subText}>
+          이 사진을 찍은 작가의 이름을 입력해보자!{'\n'}
+          한누리관 211호는 이 분의 강의실이기도 해!!</CustomText>
         </View>
 
         {/* ✅ 입력 필드 → 터치 시 모달 열기 */}
@@ -189,7 +191,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(255, 255, 255, 0.7)',
     marginTop: height * 0.15,
     width: width * 0.8,
-    height: height * 0.6,
+    height: height * 0.65,
     padding: height * 0.03,
     borderRadius: width * 0.04,
     alignItems: 'center',
@@ -208,6 +210,7 @@ const styles = StyleSheet.create({
     fontSize: width * 0.045,
     textAlign: 'center',
     marginTop: height * 0.02,
+    lineHeight: height * 0.03,
   },
   inputContainer: {
     marginTop: height * 0.05,
