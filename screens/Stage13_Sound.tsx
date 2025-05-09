@@ -185,7 +185,7 @@ const Stage13_Sound = () => {
       navigation.navigate('Stage5', {college: actualCollege, department});
     } else if (userDepartment === '전체') {
       updateStageData(userId, actualCollege, 'Stage2_1');
-      navigation.navigate('Stage2', {college: actualCollege, department});
+      navigation.navigate('Stage2_1', {college: actualCollege, department});
     }
   };
 
