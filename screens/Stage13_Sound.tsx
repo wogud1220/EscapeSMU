@@ -179,7 +179,7 @@ const Stage13_Sound = () => {
       userDepartment === '예술학부'
     ) {
       updateStageData(userId, actualCollege, 'Stage2_1');
-      navigation.navigate('Stage2', {college: actualCollege, department});
+      navigation.navigate('Stage2_1', {college: actualCollege, department});
     } else if (userDepartment === '디자인학부') {
       updateStageData(userId, actualCollege, 'Stage5');
       navigation.navigate('Stage5', {college: actualCollege, department});
