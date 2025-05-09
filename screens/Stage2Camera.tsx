@@ -43,9 +43,9 @@ const Stage2Camera = ({navigation}: {navigation: any}) => {
   useEffect(() => {
     if (permission && !device) {
       const timeout = setTimeout(() => {
-        navigation.replace('Stage2_2', { college, department });
+        navigation.replace('Stage2_2', {college, department});
       }, 100);
-  
+
       return () => clearTimeout(timeout);
     }
   }, [permission, device]);
@@ -198,6 +198,7 @@ const Stage2Camera = ({navigation}: {navigation: any}) => {
               style={styles.resultButton}
               onPress={() => {
                 if (pass) {
+                  setShowResult(false);
                   goToNextStage();
                 } else {
                   setShowResult(false);
@@ -234,7 +235,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 30,
     borderRadius: 50,
   },
-  buttonText: {fontSize: 18, color: '#000',},
+  buttonText: {fontSize: 18, color: '#000'},
   permissionText: {
     color: 'black',
     fontSize: 20,

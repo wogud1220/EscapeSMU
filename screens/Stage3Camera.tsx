@@ -234,7 +234,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 30,
     borderRadius: 50,
   },
-  buttonText: {fontSize: 18, color: '#000',},
+  buttonText: {fontSize: 18, color: '#000'},
   permissionText: {
     color: 'black',
     fontSize: 20,
