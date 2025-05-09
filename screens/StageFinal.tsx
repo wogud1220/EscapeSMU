@@ -101,8 +101,9 @@ const StageFinal = () => {
                   'https://docs.google.com/forms/d/e/1FAIpQLSf1EDoxfVVbABCT4T15F19yFIe_r-4vAGe1oafI5XoEWW5hPg/viewform?usp=header',
                 )
               }>
-              여기!
+              여기!{'\n'}{'\n'}
             </CustomText>
+            다른 학부의 스테이지들을 경험해보고 싶다면 메인으로 가서 전체 경로를 선택하면 돼!
           </CustomText>
         </View>
 
