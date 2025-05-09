@@ -61,7 +61,7 @@ const SignIn = () => {
 
   return (
     <View style={styles.container}>
-      <CustomText style={styles.label}>본인이 사용하고 있는 이메일을 적어주세요!</CustomText>
+      <CustomText style={styles.label}>연락 가능한 이메일을 적어주세요!</CustomText>
       <TextInput
         placeholder="@를 포함한 이메일 형식으로 적어주세요"
         value={email}
