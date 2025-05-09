@@ -121,7 +121,7 @@ const Stage2_3 = () => {
 
           <CustomText style={styles.subText}>
           이 사진을 찍은 작가의 이름을 입력해보자!{'\n'}
-          한누리관 211호는 이 분의 강의실이기도 해!!</CustomText>
+          한누리관 210호는 이 분의 강의실이기도 해!!</CustomText>
         </View>
 
         {/* ✅ 입력 필드 → 터치 시 모달 열기 */}
