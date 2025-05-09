@@ -171,8 +171,13 @@ const Stage13_Sound = () => {
       updateStageData(userId, actualCollege, 'Stage5');
       navigation.navigate('Stage5', {college: actualCollege, department});
     }
+
     //예술학부지만 융기대 루트 타는 학과
-    else if (department === '디지털만화영상' || department === '사진영상') {
+    else if (
+      department === '디지털만화영상' ||
+      department === '사진영상' ||
+      userDepartment === '예술학부'
+    ) {
       updateStageData(userId, actualCollege, 'Stage2_1');
       navigation.navigate('Stage2', {college: actualCollege, department});
     } else if (userDepartment === '디자인학부') {
