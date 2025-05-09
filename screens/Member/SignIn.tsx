@@ -61,6 +61,7 @@ const SignIn = () => {
 
   return (
     <View style={styles.container}>
+      <CustomText style={styles.label}>본인이 사용하고 있는 이메일을 적어주세요!</CustomText>
       <TextInput
         placeholder="@를 포함한 이메일 형식으로 적어주세요"
         value={email}
@@ -112,6 +113,14 @@ const styles = StyleSheet.create({
     color: 'red',
     marginTop: 10,
   },
+  label: {
+    width: '80%',
+    fontSize: 16,
+    marginBottom: 5,
+    color: '#333',
+    fontFamily: 'BMHANNAPro',
+    textAlign: 'center',
+  },  
 });
 
 export default SignIn;
