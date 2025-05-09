@@ -1,6 +1,6 @@
 //디자인대 문제 수정하자
 
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -17,6 +17,8 @@ import {useRoute, RouteProp} from '@react-navigation/native';
 import CustomText from '../CustomText';
 import {updateStageData} from '../utils/updateStageData';
 import {decrementStageAttempt} from '../utils/decrementStageAttempt';
+import {onAuthStateChanged} from 'firebase/auth';
+import {auth} from './firebase.config';
 
 type NavigationProp = NativeStackNavigationProp<
   RootStackParamList,
@@ -30,18 +32,36 @@ const Stage12_6 = () => {
   const route = useRoute<RouteProp<RootStackParamList, 'Stage12_6'>>();
   const {college, department} = route.params || {};
   const [userId, setUserId] = useState('');
+  useEffect(() => {
+    onAuthStateChanged(auth, user => {
+      if (user) {
+        setUserId(user.uid);
+      }
+    });
+  }, []);
   const handleMapPress = () => {
     navigation.navigate('Map');
   };
 
   const handleNextStage = () => {
+    //어차피 융기대 소속이면 계당관 안 옴.
     let actualCollege = college;
     if (department === '디지털만화영상' || department === '사진영상') {
       actualCollege = '융합기술대학';
     }
-    updateStageData(userId, actualCollege, 'Stage5');
-    decrementStageAttempt(userId, actualCollege);
-    navigation.navigate('Stage13_1', {college, department});
+
+    //예술대학이라면 계당관에서 한누리관으로 이동
+    if (college.includes('예술')) {
+      updateStageData(userId, actualCollege, 'Stage5');
+      decrementStageAttempt(userId, actualCollege);
+      navigation.navigate('Stage5', {college, department});
+    }
+    // 전체라면 계당관에서 StageFinal로 이동
+    else if (college.includes('전체')) {
+      updateStageData(userId, actualCollege, 'StageFinal');
+      decrementStageAttempt(userId, actualCollege);
+      navigation.navigate('StageFinal', {college, department});
+    }
   };
 
   return (

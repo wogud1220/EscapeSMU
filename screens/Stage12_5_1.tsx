@@ -1,7 +1,7 @@
 //계당관 호 맞추기
 //모달 적용해봄
 
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -24,6 +24,8 @@ import CustomText from '../CustomText';
 import {updateStageData} from '../utils/updateStageData';
 import {increment} from 'firebase/firestore';
 import {incrementStageAttempt} from '../utils/incrementStageAttempt';
+import {onAuthStateChanged} from 'firebase/auth';
+import {auth} from './firebase.config';
 
 type NavigationProp = NativeStackNavigationProp<
   RootStackParamList,
@@ -38,7 +40,14 @@ const Stage12_5_1 = () => {
   const {college, department} = route.params || {};
   const [answer, setAnswer] = useState('');
   const [isModalVisible, setIsModalVisible] = useState(false);
-
+  const [userId, setUserId] = useState('');
+  useEffect(() => {
+    onAuthStateChanged(auth, user => {
+      if (user) {
+        setUserId(user.uid);
+      }
+    });
+  }, []);
   const handleMapPress = () => {
     navigation.navigate('Map');
   };
@@ -49,7 +58,7 @@ const Stage12_5_1 = () => {
       actualCollege = '융합기술대학';
     }
     if (answer.trim() === '시련') {
-      updateStageData('userId', actualCollege, 'Stage12_6');
+      updateStageData(userId, actualCollege, 'Stage12_6');
       Alert.alert('정답입니다!', '다음 스테이지로 이동합니다.', [
         {
           text: '확인',
@@ -59,7 +68,7 @@ const Stage12_5_1 = () => {
       ]);
       setIsModalVisible(false);
     } else {
-      incrementStageAttempt('userId', actualCollege);
+      incrementStageAttempt(userId, actualCollege);
       Alert.alert('오답입니다.', '다시 시도해 보세요!');
     }
   };

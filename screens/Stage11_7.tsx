@@ -49,14 +49,38 @@ const Stage11_7 = () => {
     return unsubscribe;
   }, []);
 
+  // const handleNextStage = async () => {
+  //   if (answer.trim() === '2010년 2월 20일') {
+  //     await updateStageData(userId, college, 'StageFinal'); // 스테이지 진행 정보 저장
+  //     Alert.alert('정답입니다!', '다음 스테이지로 이동합니다.', [
+  //       {
+  //         text: '확인',
+  //         onPress: () =>
+  //           navigation.navigate('StageFinal', {college, department}),
+  //       },
+  //     ]);
+  //     setIsModalVisible(false);
+  //   } else {
+  //     incrementStageAttempt(userId, college);
+  //     Alert.alert('오답입니다.', '다시 시도해 보세요!');
+  //   }
+  // };
+
   const handleNextStage = async () => {
     if (answer.trim() === '2010년 2월 20일') {
-      await updateStageData(userId, college, 'StageFinal'); // 스테이지 진행 정보 저장
       Alert.alert('정답입니다!', '다음 스테이지로 이동합니다.', [
         {
           text: '확인',
-          onPress: () =>
-            navigation.navigate('StageFinal', {college, department}),
+          onPress: () => {
+            // ✅ 전체 루트일 경우 Stage12_1로 분기
+            if (college === '전체') {
+              updateStageData(userId, college, 'Stage12_1');
+              navigation.navigate('Stage12_1', {college, department});
+            } else {
+              updateStageData(userId, college, 'StageFinal'); // 스테이지 진행 정보 저장
+              navigation.navigate('StageFinal', {college, department});
+            }
+          },
         },
       ]);
       setIsModalVisible(false);
@@ -109,7 +133,9 @@ const Stage11_7 = () => {
 
         {/* ✅ 문제 박스 */}
         <View style={styles.box}>
-          <CustomText style={styles.text}>계단에서 아래 사진을 찾아보자!</CustomText>
+          <CustomText style={styles.text}>
+            계단에서 아래 사진을 찾아보자!
+          </CustomText>
 
           {/* ✅ 이미지 추가 */}
           <Image
@@ -126,7 +152,9 @@ const Stage11_7 = () => {
 
         {/* ✅ 입력 필드 → 터치 시 모달 열기 */}
         <TouchableOpacity onPress={openModal} style={styles.inputContainer}>
-          <CustomText style={styles.inputText}>{answer || '정답 입력'}</CustomText>
+          <CustomText style={styles.inputText}>
+            {answer || '정답 입력'}
+          </CustomText>
         </TouchableOpacity>
 
         {/* ✅ 모달 */}
@@ -139,7 +167,9 @@ const Stage11_7 = () => {
             <View style={styles.modalBackground}>
               <TouchableWithoutFeedback>
                 <View style={styles.modalContainer}>
-                  <CustomText style={styles.modalTitle}>정답을 입력하세요</CustomText>
+                  <CustomText style={styles.modalTitle}>
+                    정답을 입력하세요
+                  </CustomText>
 
                   {/* ✅ 입력 상자 */}
                   <TextInput

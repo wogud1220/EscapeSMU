@@ -49,22 +49,49 @@ const Stage12_2 = () => {
     navigation.navigate('Map');
   };
 
+  // const handleNextStage = () => {
+  //   let actualCollege = college;
+  //   if (department === '디지털만화영상' || department === '사진영상') {
+  //     actualCollege = '융합기술대학';
+  //   }
+  //   if (answer.trim() === '민정') {
+  //     updateStageData(userId, actualCollege, 'Stage12_3');
+  //     Alert.alert('정답입니다!', '다음 스테이지로 이동합니다.', [
+  //       {
+  //         text: '확인',
+  //         onPress: () =>
+  //           navigation.navigate('Stage12_3', {college, department}),
+  //       },
+  //     ]);
+  //     setIsModalVisible(false);
+  //   } else {
+  //     incrementStageAttempt(userId, actualCollege);
+  //     Alert.alert('오답입니다.', '다시 시도해 보세요!');
+  //   }
+  // };
   const handleNextStage = () => {
-    let actualCollege = college;
-    if (department === '디지털만화영상' || department === '사진영상') {
-      actualCollege = '융합기술대학';
-    }
+    const isSpecialDept =
+      department === '디지털만화영상' || department === '사진영상';
+
     if (answer.trim() === '민정') {
-      updateStageData(userId, actualCollege, 'Stage12_3');
-      Alert.alert('정답입니다!', '다음 스테이지로 이동합니다.', [
-        {
-          text: '확인',
-          onPress: () =>
-            navigation.navigate('Stage12_3', {college, department}),
-        },
-      ]);
+      if (isSpecialDept) {
+        // 예술학부지만 융합기술대 루트, 계당관 들어올 일 없음.
+        updateStageData(userId, '융합기술대학', 'Stage2_1');
+        navigation.navigate('Stage2_1', {college: '융합기술대학', department});
+      }
+      // 전체 루트일 경우 Stage12_3로 분기
+      else if (college === '전체') {
+        updateStageData(userId, '전체', 'Stage12_3');
+        navigation.navigate('Stage12_3', {college, department});
+      } else if (college === '예술학부') {
+        updateStageData(userId, '예술학부', 'Stage12_3');
+        navigation.navigate('Stage12_3', {college, department});
+      }
+
+      Alert.alert('정답입니다!', '다음 스테이지로 이동합니다.');
       setIsModalVisible(false);
     } else {
+      const actualCollege = isSpecialDept ? '융합기술대학' : college;
       incrementStageAttempt(userId, actualCollege);
       Alert.alert('오답입니다.', '다시 시도해 보세요!');
     }
@@ -116,8 +143,8 @@ const Stage12_2 = () => {
             '계당관'이라는 이름은 {'\n'}어디서 따왔을까?
           </CustomText>
           <CustomText style={styles.subText}>
-            '계당'은 상명대학교 설립자인 {'\n'}'배상명'의 호에서 따왔어. 그렇다면
-            '배상명'의 또다른 호는 무엇일까? 한글로 입력해줘!
+            '계당'은 상명대학교 설립자인 {'\n'}'배상명'의 호에서 따왔어.
+            그렇다면 '배상명'의 또다른 호는 무엇일까? 한글로 입력해줘!
           </CustomText>
         </View>
 
