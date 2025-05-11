@@ -626,25 +626,111 @@
 #     print(result)
 
 
-import os
-import cv2
-import time
-import math
+# import os
+# import cv2
+# import time
+# import math
 
-# __file__이 없을 때 현재 경로 기준
-BASE_DIR = os.getcwd()
+# # __file__이 없을 때 현재 경로 기준
+# BASE_DIR = os.getcwd()
+# UPLOADS_FOLDER = os.path.join(BASE_DIR, "uploads")
+# OUTPUT_FOLDER = os.path.join(BASE_DIR, "outputs")
+# os.makedirs(OUTPUT_FOLDER, exist_ok=True)
+
+# # 각 스테이지별 기준 매칭 개수
+# STAGE_THRESHOLDS = {
+#     "Stage2": 100,
+#     "Stage3": 2500,
+#     "Stage5": 150,
+#     "Stage9": 75,
+#     "Stage10": 300,
+#     "Stage12": 150,
+# }
+
+# def load_image(image_path):
+#     if not os.path.exists(image_path):
+#         print(f"❌ 파일이 존재하지 않습니다: {image_path}")
+#         return None
+#     image = cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)
+#     if image is None:
+#         print(f"🚨 OpenCV가 이미지를 불러올 수 없음: {image_path}")
+#     else:
+#         print(f"✅ 이미지 로드 성공: {image_path}")
+#     image = cv2.resize(image, (1050, 1400))
+#     return image
+
+# def match_and_score(kp1, des1, kp2, des2, matcher):
+#     match_start = time.time()
+#     matches = matcher.knnMatch(des1, des2, k=2)
+#     good = [m for m, n in matches if m.distance < 0.7 * n.distance]
+#     match_time = time.time() - match_start
+#     avg_score = sum(m.distance for m in good) / len(good) if good else float('inf')
+#     print(f"매칭 수: {len(good):>3}, 평균 거리: {avg_score:6.2f}, 소요 시간: {match_time:.3f}s")
+#     return good, avg_score, match_time
+
+# def safe_float(val, default=9999.99):
+#     return default if (math.isinf(val) or math.isnan(val)) else val
+
+# def compare_images(user_image_path, template_path, stage_id="Stage1"):
+#     template = load_image(template_path)
+#     user_image = load_image(user_image_path)
+
+#     if template is None or user_image is None:
+#         return {"result": "Fail", "message": "이미지를 불러올 수 없음"}
+
+#     sift = cv2.SIFT_create()
+#     kp1, des1 = sift.detectAndCompute(template, None)
+#     kp2, des2 = sift.detectAndCompute(user_image, None)
+
+#     if des1 is None or des2 is None:
+#         print("❌ SIFT 특징점 실패")
+#         return {"result": "Fail", "message": "SIFT 특징점 추출 실패"}
+
+#     matcher = cv2.FlannBasedMatcher(dict(algorithm=1, trees=5), dict(checks=50))
+#     matches, avg, match_time = match_and_score(kp1, des1, kp2, des2, matcher)
+
+#     match_count = len(matches)
+#     threshold = STAGE_THRESHOLDS.get(stage_id, 100)
+
+#     # 매칭 이미지 저장
+#     result_img = cv2.drawMatches(template, kp1, user_image, kp2, matches[:30], None)
+#     cv2.imwrite(os.path.join(OUTPUT_FOLDER, "sift.jpg"), result_img)
+
+#     print("\n📊 요약 결과:")
+#     print(f"SIFT  : 매칭 수 = {match_count:>3}, 기준 = {threshold}, 결과 = {'Pass' if match_count >= threshold else 'Fail'}")
+
+#     return {
+#         "result": "Pass" if match_count >= threshold else "Fail",
+#         "message": f"매칭 수: {match_count}, 기준: {threshold}",
+#         "matches": match_count,
+#         "threshold": threshold,
+#     }
+
+# if __name__ == "__main__":
+#     user_image_path = os.path.join(UPLOADS_FOLDER, "captured.jpg")
+#     template_path = os.path.join(BASE_DIR, "templates", "stage1", "template.jpeg")
+#     result = compare_images(user_image_path, template_path, stage_id="Stage2")
+#     print(result)
+
+
+import cv2
+import numpy as np
+import os
+import time
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 UPLOADS_FOLDER = os.path.join(BASE_DIR, "uploads")
 OUTPUT_FOLDER = os.path.join(BASE_DIR, "outputs")
 os.makedirs(OUTPUT_FOLDER, exist_ok=True)
 
-# 각 스테이지별 기준 매칭 개수
+# 스테이지별 통과 기준 (소문자 key 사용)
 STAGE_THRESHOLDS = {
-    "Stage2": 100,
-    "Stage3": 2500,
-    "Stage5": 150,
-    "Stage9": 75,
-    "Stage10": 300,
-    "Stage12": 150,
+    "stage2": 100,
+    "stage3": 2500,
+    "stage5": 150,   # 또는 상황에 따라 110으로 분기할 수도 있음
+    "stage9": 75,
+    "stage10": 300,
+    "stage12": 150,
 }
 
 def load_image(image_path):
@@ -668,10 +754,8 @@ def match_and_score(kp1, des1, kp2, des2, matcher):
     print(f"매칭 수: {len(good):>3}, 평균 거리: {avg_score:6.2f}, 소요 시간: {match_time:.3f}s")
     return good, avg_score, match_time
 
-def safe_float(val, default=9999.99):
-    return default if (math.isinf(val) or math.isnan(val)) else val
-
-def compare_images(user_image_path, template_path, stage_id="Stage1"):
+def compare_images(user_image_path, template_path, stage_id=""):
+    stage_id = stage_id.lower()  # 대소문자 구분 방지
     template = load_image(template_path)
     user_image = load_image(user_image_path)
 
@@ -688,26 +772,27 @@ def compare_images(user_image_path, template_path, stage_id="Stage1"):
 
     matcher = cv2.FlannBasedMatcher(dict(algorithm=1, trees=5), dict(checks=50))
     matches, avg, match_time = match_and_score(kp1, des1, kp2, des2, matcher)
-
     match_count = len(matches)
-    threshold = STAGE_THRESHOLDS.get(stage_id, 100)
 
-    # 매칭 이미지 저장
-    result_img = cv2.drawMatches(template, kp1, user_image, kp2, matches[:30], None)
-    cv2.imwrite(os.path.join(OUTPUT_FOLDER, "sift.jpg"), result_img)
+    sift_img = cv2.drawMatches(template, kp1, user_image, kp2, matches[:30], None)
+    cv2.imwrite(os.path.join(OUTPUT_FOLDER, "sift.jpg"), sift_img)
+
+    threshold = STAGE_THRESHOLDS.get(stage_id, 100)  # 기본값 100
+    result = "Pass" if match_count >= threshold else "Fail"
 
     print("\n📊 요약 결과:")
-    print(f"SIFT  : 매칭 수 = {match_count:>3}, 기준 = {threshold}, 결과 = {'Pass' if match_count >= threshold else 'Fail'}")
+    print(f"SIFT  : 매칭 수 = {match_count:>3}, 기준 = {threshold}, 결과 = {result}")
 
     return {
-        "result": "Pass" if match_count >= threshold else "Fail",
-        "message": f"매칭 수: {match_count}, 기준: {threshold}",
+        "result": result,
+        "message": f"매칭 수: {match_count}, 기준: {threshold}, 결과: {result}",
         "matches": match_count,
-        "threshold": threshold,
+        "threshold": threshold
     }
 
 if __name__ == "__main__":
-    user_image_path = os.path.join(UPLOADS_FOLDER, "captured.jpg")
-    template_path = os.path.join(BASE_DIR, "templates", "stage1", "template.jpeg")
-    result = compare_images(user_image_path, template_path, stage_id="Stage2")
+    stage_id = "stage1"  # 테스트용
+    user_image_path = os.path.join(UPLOADS_FOLDER, f"{stage_id}.jpg")
+    template_path = os.path.join(BASE_DIR, "templates", stage_id, "template.jpeg")
+    result = compare_images(user_image_path, template_path, stage_id=stage_id)
     print(result)
