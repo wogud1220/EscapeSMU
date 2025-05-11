@@ -170,7 +170,8 @@ async def compare_images_route(
     template_path = os.path.join(TEMPLATE_FOLDER, stage, "template.jpeg")
     print(f"🔍 템플릿 경로: {template_path}")
 
-    result = compare_images(file_location, template_path)
+    # result = compare_images(file_location, template_path)
+    result = compare_images(file_location, template_path, stage_id=stage)
     return JSONResponse(content=result)
 
 @app.post("/gpt-compare")
