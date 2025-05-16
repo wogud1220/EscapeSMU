@@ -146,7 +146,7 @@ const Stage1Camera = ({navigation}: {navigation: any}) => {
         );
         console.log('📍거리 차이:', distance.toFixed(2), 'm');
 
-        if (distance > 300) {
+        if (distance > 100) {
           Alert.alert('❌ 위치 제한', '조금 더 가까이 가주세요.');
           return;
         }
@@ -264,9 +264,9 @@ const Stage1Camera = ({navigation}: {navigation: any}) => {
       <TouchableOpacity onPress={takePicture} style={styles.captureButton}>
         <Text style={styles.buttonText}>📸</Text>
       </TouchableOpacity>
-      <TouchableOpacity onPress={goToNextStage} style={styles.tempButton}>
+      {/* <TouchableOpacity onPress={goToNextStage} style={styles.tempButton}>
         <Text style={styles.buttonText}>Stage1_2로 이동</Text>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
 
       <Modal visible={isUploading} transparent>
         <View style={styles.modalOverlay}>
