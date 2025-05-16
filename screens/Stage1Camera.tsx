@@ -148,7 +148,7 @@ const Stage1Camera = ({navigation}: {navigation: any}) => {
         console.log('📍거리 차이:', distance.toFixed(2), 'm');
 
         if (distance > 100) {
-          Alert.alert('❌ 위치 제한', '30미터 이내에서만 촬영할 수 있습니다.');
+          Alert.alert('❌ 위치 제한', '조금 더 가까이 가주세요.');
           return;
         }
 
