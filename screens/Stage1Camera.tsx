@@ -29,8 +29,10 @@ const SERVER_URL = 'http://34.47.88.216:8000/gpt-compare';
 const FRONT_GATE = {
   // lat: 37.252781,
   // lng: 127.117477,
-  lat: 36.833661,
-  lng: 127.180094,
+  // lat: 36.833661, H
+  // lng: 127.180094,
+  lat: 36.832716,
+  lng: 127.176849,
 };
 //학교 정문
 //36.832644
@@ -144,8 +146,8 @@ const Stage1Camera = ({navigation}: {navigation: any}) => {
         );
         console.log('📍거리 차이:', distance.toFixed(2), 'm');
 
-        if (distance > 30) {
-          Alert.alert('❌ 위치 제한', '30미터 이내에서만 촬영할 수 있습니다.');
+        if (distance > 100) {
+          Alert.alert('❌ 위치 제한', '조금 더 가까이 가주세요.');
           return;
         }
 
