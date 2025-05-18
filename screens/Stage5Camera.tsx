@@ -173,9 +173,9 @@ const Stage5Camera = ({navigation}: {navigation: any}) => {
         <Text style={styles.buttonText}>📸</Text>
       </TouchableOpacity>
 
-      {/* <TouchableOpacity onPress={goToNextStage} style={styles.tempButton}>
-        <Text style={styles.buttonText}>Stage5_2로 이동</Text>
-      </TouchableOpacity> */}
+      <TouchableOpacity onPress={goToNextStage} style={styles.tempButton}>
+        <Text style={styles.buttonText}>다음</Text>
+      </TouchableOpacity>
 
       <Modal visible={isUploading} transparent>
         <View style={styles.modalOverlay}>

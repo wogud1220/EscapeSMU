@@ -170,7 +170,11 @@ const Stage13_Sound = () => {
     } else if (department === '스포츠융합학부') {
       updateStageData(userId, actualCollege, 'Stage5');
       navigation.navigate('Stage5', {college: actualCollege, department});
-    }
+    } else if (userDepartment === '융합기술대학') {
+  updateStageData(userId, actualCollege, 'Stage3');
+  navigation.navigate('Stage3', {college: actualCollege, department});
+}
+
 
     //예술학부지만 융기대 루트 타는 학과
     else if (department === '디지털만화영상' || department === '사진영상') {
