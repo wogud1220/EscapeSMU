@@ -220,12 +220,12 @@ const Stage2_5 = () => {
             </Text>
           </CustomText>
         </View>
-        {/* <TouchableOpacity
+        <TouchableOpacity
           style={styles.nextButton}
           onPress={handleNextStage}
           activeOpacity={0.7}>
-          <Text style={styles.nextButtonText}>다음 ➡️</Text>
-        </TouchableOpacity> */}
+          <Text style={styles.nextButtonText}>다음</Text>
+        </TouchableOpacity>
 
         <TouchableOpacity
           style={styles.hintButton}
@@ -246,13 +246,12 @@ const gridItemSize = (width * 0.7) / gridSize;
 const styles = StyleSheet.create({
   nextButton: {
     position: 'absolute',
-    bottom: height * 0.14, // 힌트 버튼 위
-    backgroundColor: 'rgba(0, 0, 255, 0.7)',
-    paddingVertical: height * 0.015,
-    paddingHorizontal: width * 0.2,
-    borderRadius: width * 0.03,
-    marginLeft: width * 0.2,
-    alignItems: 'center',
+    bottom: 750,
+    alignSelf: 'center',
+    backgroundColor: '#32CD32',
+    paddingVertical: 15,
+    paddingHorizontal: 30,
+    borderRadius: 50,
   },
   nextButtonText: {
     color: '#FFFFFF',
