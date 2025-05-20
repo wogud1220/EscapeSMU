@@ -101,7 +101,7 @@ const RankingBoard = () => {
         let offset = 0;
 
         all
-          .sort((a, b) => b.score - a.score)
+          .sort((a, b) => a.score - b.score)
           .forEach((user, index) => {
             if (prevScore !== null && user.score === prevScore) {
               offset++;
