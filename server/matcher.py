@@ -726,7 +726,7 @@ os.makedirs(OUTPUT_FOLDER, exist_ok=True)
 # 스테이지별 통과 기준 (소문자 key 사용)
 STAGE_THRESHOLDS = {
     "stage2": 100,
-    "stage3": 200,
+    "stage3": 50,
     "stage5": 150,   # 또는 상황에 따라 110으로 분기할 수도 있음
     "stage9": 75,
     "stage10": 300,
