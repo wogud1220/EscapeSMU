@@ -725,12 +725,12 @@ os.makedirs(OUTPUT_FOLDER, exist_ok=True)
 
 # 스테이지별 통과 기준 (소문자 key 사용)
 STAGE_THRESHOLDS = {
-    "stage2": 50,
-    "stage3": 50,
-    "stage5": 150,   # 또는 상황에 따라 110으로 분기할 수도 있음
-    "stage9": 75,
-    "stage10": 300,
-    "stage12": 150,
+    "stage2": 10, # 100,
+    "stage3": 10, # 200,
+    "stage5": 10, # 150,   # 또는 상황에 따라 110으로 분기할 수도 있음
+    "stage9": 10, # 75,
+    "stage10": 10, # 300,
+    "stage12": 10, # 150,
 }
 
 def load_image(image_path):
