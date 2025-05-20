@@ -91,6 +91,11 @@ const Stage3_2 = () => {
       nextStage = 'Stage5';
       navigation.navigate('Stage5', {college: actualCollege, department});
     }
+    
+    if (actualCollege === '융합기술대학') {
+      nextStage = 'Stage5';
+      navigation.navigate('Stage5', {college: actualCollege, department});
+  }
 
     try {
       await updateStageData(userId, actualCollege, nextStage);
