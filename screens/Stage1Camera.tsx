@@ -122,20 +122,6 @@ const Stage1Camera = ({navigation}: {navigation: any}) => {
     }
 
     Geolocation.getCurrentPosition(
-      // async pos => {
-      //   const {latitude, longitude} = pos.coords;
-      //   const distance = getDistanceFromLatLonInMeters(
-      //     latitude,
-      //     longitude,
-      //     FRONT_GATE.lat,
-      //     FRONT_GATE.lng,
-      //   );
-      //   console.log('📍거리 차이:', distance.toFixed(2), 'm');
-
-      //   if (distance > 30) {
-      //     Alert.alert('❌ 위치 제한', '30미터 이내에서만 촬영할 수 있습니다.');
-      //     return;
-      //   }
       async pos => {
         const {latitude, longitude} = pos.coords;
         const distance = getDistanceFromLatLonInMeters(
