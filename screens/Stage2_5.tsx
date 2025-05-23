@@ -19,10 +19,26 @@ import {onAuthStateChanged} from 'firebase/auth';
 import {auth} from './firebase.config';
 import CustomText from '../CustomText';
 import {LayoutAnimation, UIManager, Platform} from 'react-native';
+import Geolocation from '@react-native-community/geolocation';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Stage2_5'>;
 
 const {width, height} = Dimensions.get('window');
+const TARGET_COORDS = {lat: 36.833505, lng: 127.177536}; // 정문 위치 예시
+
+function getDistanceFromLatLonInMeters(lat1, lon1, lat2, lon2) {
+  const R = 6371000;
+  const dLat = ((lat2 - lat1) * Math.PI) / 180;
+  const dLon = ((lon2 - lon1) * Math.PI) / 180;
+  const a =
+    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos((lat1 * Math.PI) / 180) *
+      Math.cos((lat2 * Math.PI) / 180) *
+      Math.sin(dLon / 2) *
+      Math.sin(dLon / 2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  return R * c;
+}
 
 const correctPuzzleImages = [
   require('../assets/puzzle/1_1_1.png'),
@@ -142,13 +158,49 @@ const Stage2_5 = () => {
       setSelectedImageIndex(null);
     }
   };
+  //원래 정답 이동 코드
+  // const handleImageDoublePress = (index: number) => {
+  //   const centerIndex = Math.floor(puzzleImages.length / 2);
+  //   if (index === centerIndex) {
+  //     checkCompletion();
+  //   }
+  // };
 
   const handleImageDoublePress = (index: number) => {
+    console.log('길게 누른 이미지 버튼 인덱스 표시 번호 ', index);
     const centerIndex = Math.floor(puzzleImages.length / 2);
-    if (index === centerIndex) {
-      checkCompletion();
+    if (index !== centerIndex) {
+      console.log('Center image 아님. 무시함');
+      return;
     }
+
+    Geolocation.getCurrentPosition(
+      position => {
+        const {latitude, longitude} = position.coords;
+        const distance = getDistanceFromLatLonInMeters(
+          latitude,
+          longitude,
+          TARGET_COORDS.lat,
+          TARGET_COORDS.lng,
+        );
+
+        console.log(`📍 퍼즐 제출 위치 거리: ${distance.toFixed(2)}m`);
+
+        if (distance > 100) {
+          Alert.alert('❌ 위치 제한', '조금 더 가까이 가주세요.');
+          return;
+        }
+
+        checkCompletion();
+      },
+      error => {
+        console.log('📛 위치 오류:', error);
+        Alert.alert('위치 정보를 가져오지 못했습니다.');
+      },
+      {enableHighAccuracy: true, timeout: 10000, maximumAge: 0},
+    );
   };
+  //10000
 
   const swapImages = (index1: number, index2: number) => {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
@@ -220,12 +272,12 @@ const Stage2_5 = () => {
             </Text>
           </CustomText>
         </View>
-        {/* <TouchableOpacity
+        <TouchableOpacity
           style={styles.nextButton}
           onPress={handleNextStage}
           activeOpacity={0.7}>
           <Text style={styles.nextButtonText}>다음 ➡️</Text>
-        </TouchableOpacity> */}
+        </TouchableOpacity>
 
         <TouchableOpacity
           style={styles.hintButton}

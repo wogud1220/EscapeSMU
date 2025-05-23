@@ -54,8 +54,11 @@ const Stage1_2 = () => {
       } catch (err) {
         console.error('🔥 updateStageData error:', err);
       }
-      navigation.navigate('Stage13_1', {college: actualCollege, department});
+      // navigation.navigate('Stage13_1', {college: actualCollege, department});
 
+      //청록관 테레비 찍으러 이동하기
+      
+      navigation.navigate('Stage2_1', {college: actualCollege, department});
       Alert.alert('정답입니다!', '다음 스테이지로 이동합니다.');
     } else {
       try {
@@ -96,16 +99,21 @@ const Stage1_2 = () => {
         </TouchableOpacity>
 
         <View style={styles.box}>
-          <CustomText style={{fontSize: 30, color: '#333',
-    marginBottom: height * 0.01,
-    fontWeight: '500',
-    textAlign: 'center',}}>
+          <CustomText
+            style={{
+              fontSize: 30,
+              color: '#333',
+              marginBottom: height * 0.01,
+              fontWeight: '500',
+              textAlign: 'center',
+            }}>
             정문에서 풀어야 할 문제가 발견되었어!{'\n'}
           </CustomText>
           <CustomText style={styles.subText}>
-            1984년 6월 29일에{'\n'}천안 캠퍼스를 준공하였고{'\n'}{'\n'}
-            1984년 10월 6일에{'\n'}상명 여자 대학
-            천안 캠퍼스{'\n'}개설 인가를 받았어!{'\n'}
+            1984년 6월 29일에{'\n'}천안 캠퍼스를 준공하였고{'\n'}
+            {'\n'}
+            1984년 10월 6일에{'\n'}상명 여자 대학 천안 캠퍼스{'\n'}개설 인가를
+            받았어!{'\n'}
             {'\n'}
             그렇다면, 상명대학교 천안캠퍼스가 {'\n'}개교한 연도는 언제일까?
           </CustomText>
@@ -114,43 +122,46 @@ const Stage1_2 = () => {
         <TouchableOpacity
           onPress={() => setIsModalVisible(true)}
           style={styles.inputContainer}>
-          <CustomText style={styles.inputText}>{answer || '정답 입력'}</CustomText>
+          <CustomText style={styles.inputText}>
+            {answer || '정답 입력'}
+          </CustomText>
         </TouchableOpacity>
       </ImageBackground>
 
       <Modal
-  animationType="fade"
-  transparent
-  visible={isModalVisible}
-  onRequestClose={() => setIsModalVisible(false)}>
-  <TouchableWithoutFeedback
-    onPress={() => {
-      Keyboard.dismiss();
-      setIsModalVisible(false); // 모달도 닫기
-    }}>
-    <View style={styles.modalBackground}>
-      <View style={styles.modalContainer}>
-        <CustomText style={{fontSize: 25}}>정답을 입력하세요</CustomText>
-        <TextInput
-          style={styles.modalInput}
-          value={answer}
-          onChangeText={setAnswer}
-          placeholder="정답 입력"
-          placeholderTextColor="#999"
-          keyboardType="numeric"
-          autoCapitalize="none"
-          autoFocus
-        />
-        <TouchableOpacity
-          style={styles.submitButton}
-          onPress={handleNextStage}>
-          <CustomText style={{fontSize: 25, color: 'white'}}>제출하기</CustomText>
-        </TouchableOpacity>
-      </View>
-    </View>
-  </TouchableWithoutFeedback>
-</Modal>
-
+        animationType="fade"
+        transparent
+        visible={isModalVisible}
+        onRequestClose={() => setIsModalVisible(false)}>
+        <TouchableWithoutFeedback
+          onPress={() => {
+            Keyboard.dismiss();
+            setIsModalVisible(false); // 모달도 닫기
+          }}>
+          <View style={styles.modalBackground}>
+            <View style={styles.modalContainer}>
+              <CustomText style={{fontSize: 25}}>정답을 입력하세요</CustomText>
+              <TextInput
+                style={styles.modalInput}
+                value={answer}
+                onChangeText={setAnswer}
+                placeholder="정답 입력"
+                placeholderTextColor="#999"
+                keyboardType="numeric"
+                autoCapitalize="none"
+                autoFocus
+              />
+              <TouchableOpacity
+                style={styles.submitButton}
+                onPress={handleNextStage}>
+                <CustomText style={{fontSize: 25, color: 'white'}}>
+                  제출하기
+                </CustomText>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </TouchableWithoutFeedback>
+      </Modal>
     </View>
   );
 };
