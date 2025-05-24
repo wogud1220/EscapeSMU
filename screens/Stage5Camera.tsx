@@ -304,7 +304,7 @@ import {PermissionsAndroid} from 'react-native';
 const {width, height} = Dimensions.get('window');
 
 const SERVER_URL = 'http://34.47.88.216:8000/compare';
-const STAGE5_LOCATION = {lat: 36.833505, lng: 127.177536};
+const STAGE5_LOCATION = {lat: 36.834182, lng: 127.179103};
 
 const getDistanceFromLatLonInMeters = (lat1, lon1, lat2, lon2) => {
   const R = 6371000;
@@ -459,7 +459,7 @@ const Stage5Camera = ({navigation}: {navigation: any}) => {
       {
         enableHighAccuracy: false,
         timeout: 30000,
-        maximumAge: 10000,
+        maximumAge: 0,
       },
     );
   };

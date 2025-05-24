@@ -304,7 +304,7 @@ import {PermissionsAndroid} from 'react-native';
 
 const {width, height} = Dimensions.get('window');
 const SERVER_URL = 'http://34.47.88.216:8000/compare';
-const STAGE3_LOCATION = {lat: 36.833789, lng: 127.180045}; // example location
+const STAGE3_LOCATION = {lat: 36.83402, lng: 127.176613}; // example location
 
 const getDistanceFromLatLonInMeters = (lat1, lon1, lat2, lon2) => {
   const R = 6371000;
@@ -402,7 +402,8 @@ const Stage3Camera = ({navigation}: {navigation: any}) => {
         console.log('📍거리 차이:', distance.toFixed(2), 'm');
 
         if (distance > 100) {
-          Alert.alert('❌ 위치 제한', '조금 더 가까이 가주세요.');
+          // 거리 제한
+          Alert.alert('❌ 위치 제한', '식물과학관 내부에서 촬영해주세요.'); //경고 문구
           return;
         }
 
