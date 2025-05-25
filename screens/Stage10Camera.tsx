@@ -383,7 +383,7 @@ const Stage10Camera = ({navigation}: {navigation: any}) => {
           STAGE10_LOCATION.lat,
           STAGE10_LOCATION.lng,
         );
-        if (distance > 100) {
+        if (distance > 50) {
           Alert.alert(
             '❌ 위치 제한',
             '학생회관 내부에서만 촬영할 수 있습니다.',

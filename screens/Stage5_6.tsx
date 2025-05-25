@@ -377,7 +377,7 @@ const Stage5_6 = () => {
           TARGET_COORDS.lng,
         );
 
-        if (distance > 100) {
+        if (distance > 80) {
           Alert.alert('❌ 위치 제한', '조금 더 가까이 가주세요.');
           return;
         }

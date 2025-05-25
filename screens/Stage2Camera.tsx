@@ -402,7 +402,7 @@ const Stage2Camera = ({navigation}: {navigation: any}) => {
         );
         console.log('📍거리 차이:', distance.toFixed(2), 'm');
 
-        if (distance > 100) {
+        if (distance > 50) {
           Alert.alert('❌ 위치 제한', '조금 더 가까이 가주세요.');
           return;
         }

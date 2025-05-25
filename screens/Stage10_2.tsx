@@ -435,7 +435,7 @@ const Stage10_2 = () => {
 
         console.log('📍 위치 거리:', distance.toFixed(2), 'm');
 
-        if (distance > 100) {
+        if (distance > 50) {
           //거리 제한
           Alert.alert(
             '❌ 위치 제한',

@@ -401,7 +401,7 @@ const Stage3Camera = ({navigation}: {navigation: any}) => {
 
         console.log('📍거리 차이:', distance.toFixed(2), 'm');
 
-        if (distance > 100) {
+        if (distance > 50) {
           // 거리 제한
           Alert.alert('❌ 위치 제한', '식물과학관 내부에서 촬영해주세요.'); //경고 문구
           return;
